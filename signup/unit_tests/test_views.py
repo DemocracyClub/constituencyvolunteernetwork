@@ -52,7 +52,7 @@ class ViewsTestCase(TestCase):
             self.constituencies.append(const)
 
     def test_viewing_different_models(self):
-        "create a bunch of instance of models and view them"
+        """ Create a bunch of instance of models and view them """
         year = settings.CONSTITUENCY_YEAR
         def page_content(whole_content):
             # rough way of getting the HTML inside the div tag #page-content
@@ -130,8 +130,7 @@ class TestAddConstituencies(TestCase):
         self.assert_(self.client.login(username="Frank", password=""))
 
     def test_postcode_search(self):
-        # user can enter a postcode into the search box to find a
-        # constituency.
+        """ User can enter a postcode into the search box to find a constituency. """
         # Example: a user in Crewe may search for a postcode in Hendon
         newcastle = Constituency.objects.create(
             name = "Hendon",
@@ -142,7 +141,7 @@ class TestAddConstituencies(TestCase):
         self.assertContains(response, "Hendon")
 
     def test_postcode_garbage(self):
-        # user could put garbage in the search box. this should not explode
+        """ User could put garbage in the search box. this should not explode """
         response = self.client.get("/add_constituency/#search", {"q": u"\u2603"})
         # user is still registered in Crewe
         self.assertContains(response, "Crewe")
@@ -150,8 +149,7 @@ class TestAddConstituencies(TestCase):
         self.assertContains(response, "can&#39;t find")
         
     def test_invalid_postcode(self):
-        # there are postcodes with valid formats that are not valid,
-        # eg there are no postcodes that begin with D
+        """ There are postcodes with valid formats that are not valid """
         response = self.client.get("/add_constituency/#search", {"q": u"D7 4XP"})
         # user is still registered in Crewe
         self.assertContains(response, "Crewe")
@@ -159,7 +157,7 @@ class TestAddConstituencies(TestCase):
         self.assertContains(response, "can&#39;t find")
 
     def test_placename(self):
-        # user can also search for a placename
+        """ User can also search for a placename """
         east_devon = Constituency.objects.create(
             name = "East Devon",
             year = this_year)
@@ -168,12 +166,17 @@ class TestAddConstituencies(TestCase):
         self.assertContains(response, "Crewe")
         self.assertContains(response, "Devon")
 
+    def test_common_phrase(self):
+        """ Should not explode if a common phrase is searched for e.g. 'North' """
+        response = self.client.get("/add_constituency/#search", {"q": u"North"})
+        self.assertContains(response, "Search for a place or postcode for its constituency")
+        self.assertContains(response, "</html>") # page isn't truncated.
 
 
 class TestLeaveAllConstituencies(TestCase):
     def runTest(self):
-        # User's can leave constituencies after they have joined them,
-        # potentually leaving them in no constituencies at all. 
+        """ Users can leave constituencies after they have joined them,
+        potentually leaving them in no constituencies at all. """
 
         # user will sign up for Glasgow North
         Constituency.objects.create(
@@ -203,8 +206,6 @@ class TestLeaveAllConstituencies(TestCase):
         self.client.get("/add_constituency/")
 
         
-
-        
 class TestFlatPages(TestCase):
     FLAT_PAGES = [{'url':"/about/", 'title':"About", 'content':"This is a flat page"},
                   {'url':"/faq/", 'title':"FAQ", 'content':"This is another flat page"},]
@@ -227,4 +228,3 @@ class TestFlatPages(TestCase):
         """ Test for issue 3 (navigation disappearing in flat page views) """
         response = self.client.get("/about/")
         self.assertContains(response, "FAQ")
-
