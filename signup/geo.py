@@ -71,12 +71,15 @@ POSTCODE_RE = re.compile(r'\b[A-PR-UWYZ][A-HK-Y0-9][A-HJKSTUW0-9]?[ABEHMNPRVWXY0
 def constituency(place):
     try:
         if POSTCODE_RE.match(place):
-            return twfy.getConstituency(place)
+            const = twfy.getConstituency(place)
+            if const == None:
+                return None
+            else:
+                return [const]
         else:
             _, (lat, lng) = geocode(place)
             consts = twfy.getConstituencies(latitude=lat, longitude=lng, distance=10)
-            if len(consts) > 0:
-                return consts[0]
+            return consts
     except Exception:
         return None
     

@@ -93,21 +93,21 @@ class TestGeoConstituency(TestCase):
 
     def test_town1(self):
         # you can search for a town
-        self.assertEquals("Crewe & Nantwich", geo.constituency("Crewe"))
+        self.assertIn("Crewe & Nantwich", geo.constituency("Crewe"))
 
     def test_town2(self):
-        self.assertEquals("Falkirk", geo.constituency("Alloa"))
+        self.assertIn("Falkirk", geo.constituency("Alloa"))
 
     def test_town3(self):
-        self.assertEquals("Shipley", geo.constituency("Ilkley"))
+        self.assertIn("Shipley", geo.constituency("Ilkley"))
 
     def _test_town4(self): # SKIPPED
         # XXX this is broken because the twfy api have no data about Belfast
-        self.assertEquals("Belfast", geo.constituency("Forkhill"))
+        self.assertIn("Belfast", geo.constituency("Forkhill"))
 
     def test_postcode1(self):
         # Land's End
-        self.assertEquals("St Ives", geo.constituency("TR19 7AA"))
+        self.assertIn("St Ives", geo.constituency("TR19 7AA"))
 
     def test_postcode_nonexistant(self):
         # there are no postcodes that start with D

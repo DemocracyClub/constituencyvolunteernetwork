@@ -82,12 +82,13 @@ def add_constituency(request):
     if request.method == "GET":
         if request.GET.has_key("q"):
             place = request.GET["q"]
-            
-            context['constituencies'] = Constituency.objects.filter(name__icontains=place)
-            
-            const = geo.constituency(place)
-            if const != None:
-                context['constituencies'] = Constituency.objects.filter(name=const) | context['constituencies']
+            cnames = geo.constituency(place)            
+            constituencies = []
+            if cnames:
+                constituencies = Constituency.objects.filter(name__in=cnames)
+            if len(constituencies) == 0:
+                constituencies = Constituency.objects.filter(name__icontains=place)
+            context['constituencies'] = constituencies
             
             if context['constituencies'].count() == 0:
                 context['search_fail'] = "Alas, we can't find '%s'" % place
