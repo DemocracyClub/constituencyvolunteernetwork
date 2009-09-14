@@ -7,6 +7,10 @@ try:
 except ImportError:
     import simplejson as json
 
+import re
+POSTCODE_RE = re.compile(r'\b[A-PR-UWYZ][A-HK-Y0-9][A-HJKSTUW0-9]?[ABEHMNPRVWXY0-9]? {0,2}[0-9][ABD-HJLN-UW-Z]{2}\b',re.I)
+
+
 
 def addToQueryString(orig, extra_data):
     scheme, netloc, path, params, query, fragment = urlparse(orig)

@@ -2,7 +2,7 @@ import math
 import twfy
 import urllib
 
-from utils import json
+from utils import json, POSTCODE_RE
 
 def haversine((lat1, lon1), (lat2, lon2)):
     """
@@ -63,10 +63,6 @@ def geocode(q):
         name += ', ' + place['adminName1']
     return name, (place['lat'], place['lng'])
 
-
-# XX copied from signup/forms.py
-import re
-POSTCODE_RE = re.compile(r'\b[A-PR-UWYZ][A-HK-Y0-9][A-HJKSTUW0-9]?[ABEHMNPRVWXY0-9]? {0,2}[0-9][ABD-HJLN-UW-Z]{2}\b',re.I)
 
 def constituency(place):
     try:
