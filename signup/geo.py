@@ -50,7 +50,8 @@ def geocode(q):
             'q': q,
             'maxRows': 1,
             'lang': 'en',
-            'style': 'full'
+            'style': 'full',
+            'country': 'GB'
         })
     ))
     if not data['geonames']:
@@ -72,13 +73,7 @@ def constituency(place):
         if POSTCODE_RE.match(place):
             return twfy.getConstituency(place)
         else:
-            # Extend 'place' with ", UK" if not already included; helps geocode hit-rate
-            place_geo = place
-            if not " UK" in place:
-                place_geo = "%s, UK" % place
-                
-            _, (lat, lng) = geocode(place_geo)
-            
+            _, (lat, lng) = geocode(place)
             consts = twfy.getConstituencies(latitude=lat, longitude=lng, distance=10)
             if len(consts) > 0:
                 return consts[0]
