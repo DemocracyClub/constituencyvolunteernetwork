@@ -21,18 +21,18 @@
 <form method="post" action="">
   <div id="search-constituency">
     <h2>Help in another constituency</h2>
+    {% if search_feedback %}<div>{{search_feedback}}&nbsp;<b>{{search_term}}</b></div>{% endif %}
     <ul id="constituency-list">
     {% for c in constituencies %}
-       <li><input name="add_c" type="checkbox" value="{{ c.slug }}" /> {{ c.name }}</li>
+       <li><input name="add_c" type="checkbox" value="{{ c.slug }}" />{{ c.name }}</li>
     {% endfor %}
     </ul>
   </div> 
-  <input type="submit" name="add" value="add ticked constituencies" />
+  {%if constituencies %}<input type="submit" name="add" value="add ticked constituencies" />{% endif %}
 </form>
 <form method="get" action="#search">
   <div>
-    {% if search_fail %}<div>{{search_fail}}</div>{% endif %}
-    Search for a place or postcode for its constituency
+    Search for a constituency by place name or postcode
     <input type="text" value="{{q}}" name="q" id="q" size="15" />
     <input type="submit" name="search" value="search" />
   </div>

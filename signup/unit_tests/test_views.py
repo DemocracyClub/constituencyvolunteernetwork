@@ -169,7 +169,7 @@ class TestAddConstituencies(TestCase):
     def test_common_phrase(self):
         """ Should not explode if a common phrase is searched for e.g. 'North' """
         response = self.client.get("/add_constituency/#search", {"q": u"North"})
-        self.assertContains(response, "Search for a place or postcode for its constituency")
+        self.assertContains(response, "Search for a constituency by place name or postcode")
         self.assertContains(response, "</html>") # page isn't truncated.
 
 

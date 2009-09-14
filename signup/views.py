@@ -68,30 +68,43 @@ def delete_constituency(request, slug):
 @login_required
 def add_constituency(request):
     my_constituencies = request.user.current_constituencies.all()
+    context = {'my_constituencies': my_constituencies}
 
-    if len(my_constituencies) > 0:
-        neighbours = Constituency.neighbours(my_constituencies[0])
-        neighbours = neighbours.exclude(pk__in=my_constituencies)
-    else:
-        neighbours = []
     
-    context = {'my_constituencies': my_constituencies,
-               'constituencies': list(neighbours)}
+    if len(my_constituencies) > 0:
+        const = my_constituencies[0]
+        neighbours = Constituency.neighbours(const)
+        neighbours = neighbours.exclude(pk__in=my_constituencies)
+        context["search_term"] = const.name
+        context['search_feedback'] = "Constituencies near"
+        context['constituencies'] = neighbours
+    else:
+        context['constituencies'] = []
 
     # searching for a constituency by postcode or placename
     if request.method == "GET":
         if request.GET.has_key("q"):
             place = request.GET["q"]
-            cnames = geo.constituency(place)            
+            foundplace = geo.constituency(place)            
             constituencies = []
-            if cnames:
-                constituencies = Constituency.objects.filter(name__in=cnames)
-            if len(constituencies) == 0:
-                constituencies = Constituency.objects.filter(name__icontains=place)
-            context['constituencies'] = constituencies
+            if foundplace:
+                feedback = "Constituencies near"
+                constituencies = Constituency.objects.filter(name__in=foundplace)
             
-            if context['constituencies'].count() == 0:
-                context['search_fail'] = "Alas, we can't find '%s'" % place
+            if len(constituencies) == 0:
+                # if this gets results, the query has words that are
+                # contained in the names of constituencies. The order
+                # of the records coming out of the db is undefined, so
+                # alpha by name is reasonable
+                constituencies = sorted(Constituency.objects.filter(name__icontains=place),
+                                        key=lambda c:c.name)
+                if len(constituencies) > 0:
+                    feedback = "Constituencies containing"
+                else:
+                    feedback = "Alas, we can't find"
+            context["search_term"] = place
+            context['constituencies'] = constituencies
+            context['search_feedback'] = feedback
 
     # adding another constituency
     if request.method == "POST":
