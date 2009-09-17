@@ -70,16 +70,19 @@ def add_constituency(request):
     my_constituencies = request.user.current_constituencies.all()
     context = {'my_constituencies': my_constituencies}
 
-    
+    context['constituencies'] = []
     if len(my_constituencies) > 0:
-        const = my_constituencies[0]
-        neighbours = Constituency.neighbours(const)
-        neighbours = neighbours.exclude(pk__in=my_constituencies)
-        context["search_term"] = const.name
-        context['search_feedback'] = "Constituencies near"
-        context['constituencies'] = neighbours
-    else:
-        context['constituencies'] = []
+        try:
+            const = my_constituencies[0]
+            neighbours = Constituency.neighbours(const)
+            neighbours = neighbours.exclude(pk__in=my_constituencies)
+            context["search_term"] = const.name
+            context['search_feedback'] = "Constituencies near"
+            context['constituencies'] = neighbours
+        except Exception:
+            # Any problems looking up neighbours means we pretend to
+            # have none
+            pass
 
     # searching for a constituency by postcode or placename
     if request.method == "GET":

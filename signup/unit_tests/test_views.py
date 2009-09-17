@@ -205,6 +205,40 @@ class TestLeaveAllConstituencies(TestCase):
         # should not go boom
         self.client.get("/add_constituency/")
 
+
+class TestNorthernIreland(TestCase):
+    """
+    The twfy api is based on Borderline from the Ordinance Servay, and
+    that does not cover Northern Ireland. Because support is patchy
+    error cases are more common.
+    """
+    def test_add_consitiuency(self):
+        # if registered in a Northern Irish constituency, can add more
+        # constiuencies without error
+
+        # Our user is registered in South Down
+        south_down = Constituency.objects.create(
+            name = "South Down",
+            year = this_year)
+
+        user = CustomUser.objects.create(
+            username="foo",
+            password="",
+            email="foo@mailinator.com",
+            postcode="BT30 8AH",
+            first_name="foo",
+            last_name="bar",
+            can_cc=False)
+        user.constituencies = [south_down]
+        user.save()
+
+        self.client.login(username="foo")
+        response = self.client.get("/add_constituency/")
+
+            
+        
+
+
         
 class TestFlatPages(TestCase):
     FLAT_PAGES = [{'url':"/about/", 'title':"About", 'content':"This is a flat page"},
