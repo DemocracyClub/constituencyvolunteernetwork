@@ -51,7 +51,15 @@ class UserForm(TemplatedForm):
         code = self.cleaned_data['postcode']
         if not POSTCODE_RE.match(code):
             raise forms.ValidationError("Please enter a valid postcode")
+        constituency = Constituency.objects.all()\
+                       .filter(name=twfy.getConstituency(code))\
+                       .filter(year=CONSTITUENCY_YEAR)
+        if constituency:
+            self.cleaned_data['constituency'] = constituency[0]
+        else:
+            raise forms.ValidationError("Unknown postcode")
         return code
+
         
     def save(self, domain_override=""):
         """
@@ -65,6 +73,7 @@ class UserForm(TemplatedForm):
         can_cc = self.cleaned_data['can_cc']
         first_name = self.cleaned_data['first_name']
         last_name = self.cleaned_data['last_name']
+        constituency = self.cleaned_data['constituency']
         user = CustomUser.objects.create(username=email,
                                          email=email,
                                          postcode=postcode,
@@ -72,11 +81,7 @@ class UserForm(TemplatedForm):
                                          first_name=first_name,
                                          last_name=last_name,
                                          is_active=False)
-        constituency = Constituency.objects.all()\
-                       .filter(name=twfy.getConstituency(postcode))\
-                       .filter(year=CONSTITUENCY_YEAR)
-        if constituency:
-            user.constituencies.add(constituency[0])
+        user.constituencies.add(constituency)
         user.save()
         profile = RegistrationProfile.objects.create_profile(user)
         return profile

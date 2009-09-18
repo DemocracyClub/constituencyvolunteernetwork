@@ -116,6 +116,29 @@ class ViewsTestCase(TestCase):
         self.assertTrue(u"2 vol" in page_content(response.content))
         
 
+class TestSignup(TestCase):
+    def test_validate_fields(self):
+        """ Various field validations """
+        crewe = Constituency.objects.create(
+            name="Crewe & Nantwich",
+            year = this_year)
+        tests = [{'form':{},
+                  'expect':'This field is required'},
+                 {'form':{'email':'asdasd'},
+                  'expect':'Enter a valid e-mail address'},
+                 {'form':{'email':'321@mailinator.com',
+                          'postcode':'asdasd'},
+                  'expect':'Please enter a valid postcode'},
+                 {'form':{'email':'321@mailinator.com',
+                          'postcode':'cw16zz'},
+                  'expect':'Unknown postcode'},
+                 {'form':{'email':'321@mailinator.com',
+                          'postcode':'cw16ar'},
+                  'expect':'Welcome'},]
+        for test in tests:
+            response = self.client.post("/", test['form'], follow=True)
+            self.assertContains(response, test['expect'])
+
 class TestAddConstituencies(TestCase):
     def setUp(self):
         crewe = Constituency.objects.create(
@@ -128,7 +151,7 @@ class TestAddConstituencies(TestCase):
             can_cc = True)
         user.constituencies = [crewe]
         self.assert_(self.client.login(username="Frank", password=""))
-
+        
     def test_postcode_search(self):
         """ User can enter a postcode into the search box to find a constituency. """
         # Example: a user in Crewe may search for a postcode in Hendon
