@@ -1,7 +1,6 @@
 body { 
   color: #333;
-  font-size: 110%;
-  
+  font-size: 100%;
   background:url("images/background_stripe.png") repeat-x white;
 }
 
@@ -175,4 +174,9 @@ p.helptext {
 .quiet {
  font-size: 90%;
  font-style: italic;
+}
+
+#footer {
+ margin: 2em;
+ text-align: center;
 }

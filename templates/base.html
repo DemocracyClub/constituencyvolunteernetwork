@@ -28,7 +28,6 @@
               {% for page in pages %}
                 <li><a href="{{ page.url }}">{{ page.title }}</a></li>
               {% endfor %}
-                <li><a href="http://www.mySociety.org/"><img src='' alt='mySociety'/></a></li>
               {% block navigation %}{% endblock %}
             </ul>
         </div>
@@ -38,8 +37,8 @@
       <div style="background:#3a7bd3">
           <div id="navigation" class="container">
             <ul>
-                <li><a href='/'>Home</a></li>
               {% if not user.is_anonymous %}
+                <li><a href='/'>Home</a></li>
                 <li><a href="{% url add_constituency %}">Your constituencies</a></li>
                 <li><a href="{% url logout %}">Logout</a></li>
               {% endif %}
@@ -62,5 +61,9 @@
 
           {% endblock %}
         </div>
+	<div id="footer" class="quiet">
+	  <hr />
+	  Democracy Club: built by volunteers, and generously hosted by <a href="http://www.fry-it.com">Fry-IT</a>.
+	</div>
     </body>
 </html>

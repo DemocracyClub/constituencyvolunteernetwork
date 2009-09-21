@@ -1,6 +1,6 @@
-Hi,
+{% autoescape off %}Hi,
 
-{{ user.display_name }} has sent an invitation for you to join the Constituency Volunteers Network
+{{ user.display_name }} has sent an invitation for you to join the Democracy Club.
 
 They say:
 {{ message }}
@@ -9,5 +9,5 @@ Join at http://{{ site }}
 
 Thanks,
 
-The Constituency Volunteer Network
-http://{{ site }}
+Democracy Club
+http://{{ site }}{% endautoescape %}
