@@ -79,7 +79,7 @@ def add_constituency(request):
             context["search_term"] = const.name
             context['search_feedback'] = "Constituencies near"
             context['constituencies'] = neighbours
-        except Exception:
+        except KeyError:
             # Any problems looking up neighbours means we pretend to
             # have none
             pass
