@@ -5,38 +5,44 @@
 
 <div class="span-4">
 <h2>Your constituencies</h2>
-<p>You are currently signed up as a volunteer in:</p>
+{% if my_constituencies %}
+ <p>You are currently signed up as a volunteer in:</p>
 
   <ul id="my-constituency-list">
    {% for c in my_constituencies %}
    <li>
     <a href="{% url constituency slug=c.slug %}">{{ c.name }}</a>
-    <a href="{% url delete_constituency slug=c.slug %}">(leave)</a>
+    <a href="{% url delete_constituency slug=c.slug %}"
+       onclick="if(!window.confirm('Are you sure you want to leave {{ c.name }}?')) return false">(leave)</a>
    </li>
    {% endfor %}
   </ul>
+{% else %}
+ <p>You're not signed up for any constituencies.  Try typing your postcode or home town into the search box.</p>
+{% endif %}
 
 </div>
 <div class="span-4 last">
-<form method="post" action="">
   <div id="search-constituency">
     <h2>Help in another constituency</h2>
-    {% if search_feedback %}<div>{{search_feedback}}&nbsp;<b>{{search_term}}</b></div>{% endif %}
-    <ul id="constituency-list">
-    {% for c in constituencies %}
-       <li><input name="add_c" type="checkbox" value="{{ c.slug }}" />{{ c.name }}</li>
-    {% endfor %}
-    </ul>
-  </div> 
+    <form method="get" action="#search">
+      <div id="place-search">
+	<label for="q">Search for a constituency by place name or postcode:</label>
+	<input type="text" value="{{request.GET.q}}" name="q" id="q" size="15" />
+	<input type="submit" name="search" value="search" />
+      </div>
+    </form>
+    <form method="post" action="">
+      {% if search_feedback %}<div id="search-feedback">{{search_feedback}}&nbsp;<b>{{search_term}}</b>{% if constituencies %}:{% endif %}</div>{% endif %}
+      <ul id="constituency-list">
+	{% for c in constituencies %}
+	<li><input name="add_c" type="checkbox" value="{{ c.slug }}" />{{ c.name }}</li>
+	{% endfor %}
+      </ul>
   {%if constituencies %}<input type="submit" name="add" value="add ticked constituencies" />{% endif %}
 </form>
-<form method="get" action="#search">
-  <div>
-    Search for a constituency by place name or postcode
-    <input type="text" value="{{q}}" name="q" id="q" size="15" />
-    <input type="submit" name="search" value="search" />
-  </div>
-</form>
+  </div> 
+
 </div>
 
 {% endblock %}

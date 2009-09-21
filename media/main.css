@@ -115,21 +115,32 @@ ul#links li a:hover {
 }
 
 #search-constituency input {
- font-size: 1.4em;
+ font-size: 1.1em;
  border: solid lightgray 0.2em;
  margin: 0;
+}
+
+#search-feedback {
+ margin-top: 1em;
+}
+
+#place-search label {
+ display: block;
+ font-weight: normal;
 }
 
 #constituency-list {
  margin-top: 1em;
 }
 
-#constituency-list li, #my-constituency-list li {
+#constituency-list li {
  list-style: none;
 }
 
 #constituency-list input {
  margin: 0;
+ margin-right: 5px;
+ vertical-align: top;
 }
 
 #signup input {

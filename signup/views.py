@@ -71,13 +71,14 @@ def add_constituency(request):
     context = {'my_constituencies': my_constituencies}
 
     context['constituencies'] = []
+    tick_instructions = "Tick a box and scroll"
     if len(my_constituencies) > 0:
         try:
             const = my_constituencies[0]
             neighbours = Constituency.neighbours(const)
             neighbours = neighbours.exclude(pk__in=my_constituencies)
             context["search_term"] = const.name
-            context['search_feedback'] = "Constituencies near"
+            context['search_feedback'] = "We found these constituencies near"
             context['constituencies'] = neighbours
         except KeyError:
             # Any problems looking up neighbours means we pretend to
@@ -88,26 +89,34 @@ def add_constituency(request):
     if request.method == "GET":
         if request.GET.has_key("q"):
             place = request.GET["q"]
-            foundplace = geo.constituency(place)            
-            constituencies = []
-            if foundplace:
-                feedback = "Constituencies near"
-                constituencies = Constituency.objects.filter(name__in=foundplace)
-            
-            if len(constituencies) == 0:
-                # if this gets results, the query has words that are
-                # contained in the names of constituencies. The order
-                # of the records coming out of the db is undefined, so
-                # alpha by name is reasonable
-                constituencies = sorted(Constituency.objects.filter(name__icontains=place),
-                                        key=lambda c:c.name)
-                if len(constituencies) > 0:
-                    feedback = "Constituencies containing"
-                else:
-                    feedback = "Alas, we can't find"
-            context["search_term"] = place
-            context['constituencies'] = constituencies
-            context['search_feedback'] = feedback
+            if not place.strip():
+                context['search_feedback'] = "Please enter a postcode or place name"
+            else:
+                foundplace = geo.constituency(place)            
+                constituencies = []
+                if foundplace:
+                    constituencies = Constituency.objects.filter(name__in=foundplace)
+                    if len(constituencies) == 1:
+                        feedback = "We found one constituency matching"
+                    else: 
+                        feedback = "We found these constituencies near"
+
+
+                if len(constituencies) == 0:
+                    # if this gets results, the query has words that are
+                    # contained in the names of constituencies. The order
+                    # of the records coming out of the db is undefined, so
+                    # alpha by name is reasonable
+                    constituencies = Constituency.objects\
+                                     .filter(name__icontains=place)\
+                                     .order_by('name')
+                    if len(constituencies) > 0:
+                        feedback = "We found these constituencies containing"
+                    else:
+                        feedback = "Alas, we can't find"
+                context["search_term"] = place
+                context['constituencies'] = constituencies
+                context['search_feedback'] = feedback
 
     # adding another constituency
     if request.method == "POST":
