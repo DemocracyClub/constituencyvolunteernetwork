@@ -74,7 +74,15 @@ def constituency(place):
                 return [const]
         else:
             _, (lat, lng) = geocode(place)
-            consts = twfy.getConstituencies(latitude=lat, longitude=lng, distance=10)
+            
+            consts = None
+            distance = 10
+            while not consts:
+                # Only likely to actually loop in extreme, circumstances,
+                # e.g. "Haltwhistle". See issue 19
+                consts = twfy.getConstituencies(latitude=lat, longitude=lng, distance=distance)
+                distance = distance * 2
+            
             return consts
     except Exception:
         return None

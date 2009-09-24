@@ -57,19 +57,19 @@ class TestNeighbors(TestCase):
                          geo.center(self.data, "Altrincham & Sale West"))
 
     def test_neigbors_south(self):
-        # Hendon & Hertsmere are closer to Chipping Barnet then Tatton
+        """ Hendon & Hertsmere are closer to Chipping Barnet then Tatton """
         self.assertEqual(geo.neighbors("Chipping Barnet", limit=3, _data=self.data),
                          ["Hendon", "Hertsmere", "Tatton"])
                          
     def test_neigbors_north(self):
-        # Tatton and Stretford are closer to Altrincham then Hertsmere
+        """ Tatton and Stretford are closer to Altrincham then Hertsmere """
         self.assertEqual(geo.neighbors("Altrincham & Sale West", limit=3, _data=self.data),
                          ["Stretford & Urmston", "Tatton", "Hertsmere"])
         
 
     def test_tricky_data(self):
-        # should not explode if the constituency does not have a full
-        # set of data
+        """ should not explode if the constituency does not have a full
+        set of data """
         data = self.data.copy()
         data.update(self.tricky_data)
         self.assertEqual(geo.neighbors("Altrincham & Sale West", limit=3, _data=data),
@@ -92,7 +92,7 @@ class TestGeoConstituency(TestCase):
         self.assertIn(u"Newham", name)
 
     def test_town1(self):
-        # you can search for a town
+        """ You can search for a town """
         self.assertIn("Crewe & Nantwich", geo.constituency("Crewe"))
 
     def test_town2(self):
@@ -102,19 +102,24 @@ class TestGeoConstituency(TestCase):
         self.assertIn("Shipley", geo.constituency("Ilkley"))
 
     def _test_town4(self): # SKIPPED
-        # XXX this is broken because the twfy api have no data about Belfast
+        """ XXX this is broken because the twfy api have no data about Belfast """
         self.assertIn("Belfast", geo.constituency("Forkhill"))
 
     def test_postcode1(self):
-        # Land's End
+        """ Test poscode - Land's End """
         self.assertIn("St Ives", geo.constituency("TR19 7AA"))
 
     def test_postcode_nonexistant(self):
-        # there are no postcodes that start with D
+        """ There are no postcodes that start with D """
         self.assertEquals(None, geo.constituency("D7 7QX"))
 
     def test_postcode_forces(self):
-        # Postcodes run by the British forces post office . We can't
-        # do anything with these (they don't point towards a
-        # constituency)
+        """ Postcodes run by the British forces post office . We can't
+        do anything with these (they don't point towards a
+        constituency) """
         self.assertEquals(None, geo.constituency("BFPO 801"))
+        
+    def test_haltwhistle(self):
+        """ Test for issue 19, names geocoding to locations > 10 miles
+        away from a constituency """
+        self.assertIn("Hexham", geo.constituency("Haltwhistle"))
