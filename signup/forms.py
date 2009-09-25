@@ -29,11 +29,14 @@ class UserForm(TemplatedForm):
     email = forms.EmailField(required=True)
     postcode = forms.CharField(label="Your postcode",
                                required=True)
-    can_cc = forms.BooleanField(label="Share your email address?",
-                                help_text=("If you agree, we'll share your "
-                                           "email address with others in "
-                                           "your constituency, to make "
-                                           "collaboration smooth"),
+    can_cc = forms.BooleanField(label="Let fellow constituents see my name and email",
+                                help_text=("Important Note: this option "
+                                           "means your information is "
+                                           "essentially public (although "
+                                           "not your postcode) so don't "
+                                           "tick if you're very concerned "
+                                           "about keeping your name and "
+                                           "email private."),
                                 required=False)
 
     def clean_email(self):

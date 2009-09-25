@@ -5,9 +5,11 @@
     xml:lang="{% firstof LANGUAGE_CODE 'en' %}"
     lang="{% firstof LANGUAGE_CODE 'en' %}">
     <head>
-        <title>{% block title %}{% endblock %}</title>
+        <title>Democracy Club: {% block title %}{% endblock %}</title>
+	<meta name="description" content="Democracy club is building a network of election volunteers to help improve transparency in the run up to the next general election, and hopefully beyond." />
+	<meta name="keywords" content="democracy, transparency, volunteer, constituency, uk, mysociety, the straight choice" />
+        <link rel="icon" type="image/vnd.microsoft.icon" href="{{ MEDIA_URL }}images/favicon.ico">
         {% block css %}
-        <link rel="icon" type="image/x-icon" href="{{ MEDIA_URL }}favicon.ico" />
         <link rel="stylesheet" href="{{ MEDIA_URL }}screen.css" type="text/css" media="screen, projection"/>
         <link rel="stylesheet" href="{{ MEDIA_URL }}print.css" type="text/css" media="print"/>
         <!--[if IE]><link rel="stylesheet" href="{{ MEDIA_URL }}ie.css" type="text/css" media="screen, projection"/><![endif]-->
@@ -63,7 +65,7 @@
         </div>
 	<div id="footer" class="quiet">
 	  <hr />
-	  Democracy Club: built by volunteers, and generously hosted by <a href="http://www.fry-it.com">Fry-IT</a>.
+	  Democracy Club: <a href="/aboutus/#who">built by volunteers</a>, and generously hosted by <a href="http://www.fry-it.com">Fry-IT</a>.
 	</div>
     </body>
 </html>

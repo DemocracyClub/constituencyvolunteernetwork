@@ -10,7 +10,7 @@ ADMINS = (
 )
 
 MANAGERS = ADMINS
-
+DEFAULT_FROM_EMAIL = 'no-reply@democracyclub.org.uk'
 DATABASE_ENGINE = 'sqlite3'           # 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
 DATABASE_NAME = 'volnet'             # Or path to database file if using sqlite3.
 DATABASE_USER = ''             # Not used with sqlite3.
