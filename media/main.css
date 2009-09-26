@@ -16,6 +16,10 @@ p {
     text-align: justify;
 }
 
+p.small {
+    font-size:0.9em;
+}
+
 #header {
     height:107px;
     padding: 10px;
@@ -138,6 +142,13 @@ ul#links li a:hover {
  margin: 0;
  margin-right: 5px;
  vertical-align: top;
+}
+
+#signup {
+    background:#FFE;
+    padding:0.5em;
+    border:1px solid #CCC;
+    margin-bottom:1em;
 }
 
 #signup input {

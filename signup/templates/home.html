@@ -5,9 +5,9 @@
 
 <div class="span-5">
 {% if user.is_anonymous %}
-<p>
+<h2>
 Sign up to help make this the most accountable general election ever!
-</p>
+</h2>
 <p>
 Democracy Club is an independent network of volunteers who want to help internet-savvy transparency groups like <a href="http://www.mysociety.org/">mySociety</a> and <a href="http://www.thestraightchoice.org/">The Straight Choice</a> to hold election candidates and respresentatives to account. Both of these organisations endorse this project, and are keen for you to sign up.
 </p>
@@ -30,7 +30,7 @@ We already know that mySociety wants to gather information on general election c
   </form>
  {% endif %}
 
-<p>mySociety and TheStraightChoice may occasionally send you tasks from other transparency related groups, but we'll never share your private details with anyone except these two organisations, and we'll never send you more than two emails a week, no matter what.  Read our <a href="/aboutus/#privacy">terms and conditions</a> for more.</p>
+<p class="small">mySociety and TheStraightChoice may occasionally send you tasks from other transparency related groups, but we'll never share your private details with anyone except these two organisations, and we'll never send you more than two emails a week, no matter what.  Read our <a href="/aboutus/#privacy">terms and conditions</a> for more.</p>
 
 {% else %}
 <h2>Welcome, {{user.display_name}}</h2>
