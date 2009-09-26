@@ -8,17 +8,10 @@
 <h2>
 Sign up to help make this the most accountable general election ever!
 </h2>
-<p>
-Democracy Club is an independent network of volunteers who want to help internet-savvy transparency groups like <a href="http://www.mysociety.org/">mySociety</a> and <a href="http://www.thestraightchoice.org/">The Straight Choice</a> to hold election candidates and respresentatives to account. Both of these organisations endorse this project, and are keen for you to sign up.
-</p>
-<p>
-When you sign up, representatives of these organisations will occasionally send you tasks to help them build awesome sites that will make the next election the most transparent ever. They'll also help you to collaborate with other volunteers in your area.
-</p>
-<p>
-We already know that mySociety wants to gather information on general election candidates, and TheStraightChoice wants you to help them find and share election leaflets. As the election approaches there'll be even more things to do, and you can be part of it.
-</p>
-
- {% if form %}
+<script>
+window.onload = function () { document.getElementById('id_first_name').focus(); }
+</script>
+{% if form %}
   <form action="" method="post" id="signup">
   <table>
   {{ form.as_table }}
@@ -29,6 +22,15 @@ We already know that mySociety wants to gather information on general election c
   </table>
   </form>
  {% endif %}
+<p>
+<em>Democracy Club</em> is an independent network of volunteers who want to help internet-savvy transparency groups like <a href="http://www.mysociety.org/">mySociety</a> and <a href="http://www.thestraightchoice.org/">The Straight Choice</a> to hold election candidates and respresentatives to account. Both of these organisations endorse this project, and are keen for you to sign up.
+</p>
+<p>
+When you sign up, representatives of these organisations will occasionally send you tasks, such as gathering information on general election candidates or finding and sharing election leaflets, to help them build awesome sites that will make the next election the most transparent ever. They'll also help you to collaborate with other volunteers in your area.
+</p>
+<!--<p>
+We already know that mySociety wants to gather information on general election candidates, and TheStraightChoice wants you to help them find and share election leaflets. As the election approaches there'll be even more things to do, and you can be part of it.
+</p>-->
 
 <p class="small">mySociety and TheStraightChoice may occasionally send you tasks from other transparency related groups, but we'll never share your private details with anyone except these two organisations, and we'll never send you more than two emails a week, no matter what.  Read our <a href="/aboutus/#privacy">terms and conditions</a> for more.</p>
 
