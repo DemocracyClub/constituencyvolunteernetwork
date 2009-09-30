@@ -3,7 +3,7 @@
 
 {% block content %}
 
-<p style="float:right;"><a href='http://www.theyworkforyou.com/mp/?c={{constituency.name}}'>visit {{constituency.name}} at TheyWorkForYou.com</a></p>
+<p style="float:right;"><a href='http://www.theyworkforyou.com/mp/?c={{constituency.name|urlencode}}'>visit {{constituency.name}} at TheyWorkForYou.com</a></p>
 <h1>{{constituency.name}}</h1>
 
 <p>
