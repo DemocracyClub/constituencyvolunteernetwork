@@ -12,7 +12,7 @@ Sign up to help make this the most accountable general election ever!
 window.onload = function () { document.getElementById('id_first_name').focus(); }
 </script>
 <p>
-<em><a href='/aboutus/'>Democracy Club</a></em> is an independent network of volunteers who want to help internet-savvy transparency groups like <a href="http://www.mysociety.org/">mySociety</a> and <a href="http://www.thestraightchoice.org/">The Straight Choice</a> to hold election candidates and representatives to account. Both of these organisations endorse this project, and are keen for you to sign up.
+<em>Democracy Club</em> is a new, independent network of volunteers who want to help internet-savvy transparency groups like <a href="http://www.mysociety.org/">mySociety</a> and <a href="http://www.thestraightchoice.org/">The Straight Choice</a> to hold election candidates and representatives to account. Both of these organisations endorse this project. If you sign up, we will (in time) suggest ways you might want to help them.
 </p>
 {% if form %}
   <form action="" method="post" id="signup">
@@ -26,18 +26,23 @@ window.onload = function () { document.getElementById('id_first_name').focus(); 
   </form>
  {% endif %}
 <p>
-When you sign up, representatives of these organisations will occasionally send you tasks, <a href='/aboutus/#what'>such as</a> gathering information on general election candidates or finding and sharing election leaflets, to help them build awesome sites that will make the next election the most transparent ever. They'll also help you to collaborate with other volunteers in your area.
+When you sign up, representatives of these organisations will occasionally suggest tasks by email, such as gathering information on general election candidates or finding and sharing election leaflets, to help them build awesome sites that will make the next election the most transparent ever. They'll also help you to collaborate with other volunteers in your area.
 </p>
 <!--<p>
 We already know that mySociety wants to gather information on general election candidates, and TheStraightChoice wants you to help them find and share election leaflets. As the election approaches there'll be even more things to do, and you can be part of it.
 </p>-->
 
-<p class="small">mySociety and TheStraightChoice may occasionally send you tasks from other transparency related groups, but we'll never share your private details with anyone except these two organisations, and we'll never send you more than two emails a week, no matter what.  Read our <a href="/aboutus/#privacy">terms and conditions</a> for more.</p>
+<p class="small">mySociety and TheStraightChoice may occasionally suggest tasks for other transparency related groups, but we'll never share your private details with anyone except these two organisations, and we'll never send you more than two emails a week, no matter what.  Read our <a href="/aboutus/#privacy">terms and conditions</a> for more.</p>
 
 {% else %}
 <h2>Welcome, {{user.display_name}}</h2>
-<p>In time, we'll be adding features to the website to help you volunteer in your constituency. <a href='/aboutus/'>Read about our purpose and what we're planning</a>.</p>
-<p>For now, though, there's not much more to do here, unless you want to <a href="{% url add_constituency %}">volunteer to help in other constituencies</a> or <a href='{% url inviteindex %}'>invite some friends</a>.
+<h3>Thanks for signing up to help out in your constituency!</h3> 
+<p>In time, we'll start dropping you occasional emails asking you if you can help with certain tasks. The first major task will be gathering information about candidates who are standing in the next election in your constituency (<a href="/aboutus/">read more...</a>) </p>
+<p>Until then, your next missions (should you choose to accept them) are:</p>
+<ul>
+<li>If you like, <a href="{% url add_constituency %}">volunteer to help in other constituencies</a> (e.g. somewhere you're studying, or somewhere else very nearby)</li>
+<li>And of course, please <a href='{% url inviteindex %}'>invite some friends</a></li>
+</ul>
 {% endif %}
 
 </div>
