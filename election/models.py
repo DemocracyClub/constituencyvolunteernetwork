@@ -15,7 +15,7 @@ class Party(models.Model):
         return self.name
 
     def get_absolute_url(self):
-        return ("/parties/%s" % self.slug)
+        return ("/election/parties/%s" % self.slug)
 
     def save(self, *args, **kwargs):
         if self.slug == "":
@@ -29,13 +29,16 @@ class Candidate(models.Model):
     """
     name = models.CharField(max_length=80)
     slug = models.SlugField(max_length=80)
-    address = models.TextField(max_length=300, blank=True)
-    email = models.EmailField(blank=True)
-    party = models.ForeignKey(Party, blank=True)
+    party = models.ForeignKey(Party)
     constituency = models.ForeignKey(Constituency)
+    email = models.EmailField(blank=True)
+    address = models.TextField(max_length=300, blank=True)
 
     def __unicode__(self):
         return self.name
+
+    def get_absolute_url(self):
+        return ("/election/candidates/%s" % self.slug)
     
     def save(self, *args, **kwargs):
         if self.slug == "":

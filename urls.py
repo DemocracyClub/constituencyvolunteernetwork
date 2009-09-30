@@ -20,4 +20,5 @@ urlpatterns = patterns('',
       'show_indexes': True}),
     ('^invite/', include('invite.urls')), 
     ('^', include('signup.urls')),
+    ('^election/', include('election.urls')),                       
 )

@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h2>Candidates</h2>
+    <table>
+        {% for candidate in object_list %}
+            <tr><td><a href="{{ candidate.get_absolute_url }}">{{ candidate.name }}</a></td>
+                <td><a href="{{ candidate.party.get_absolute_url }}">{{ candidate.party.name }}</a></td>
+                <td><a href="{{ candidate.constituency.get_absolute_url }}">{{ candidate.constituency.name }}</a></td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endblock %}
+    
