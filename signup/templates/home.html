@@ -8,7 +8,7 @@
 <h2>
 Sign up to help make this the most accountable general election ever!
 </h2>
-<script>
+<script type="text/javascript">
 window.onload = function () { document.getElementById('id_first_name').focus(); }
 </script>
 <p>
@@ -26,7 +26,7 @@ window.onload = function () { document.getElementById('id_first_name').focus(); 
   </form>
  {% endif %}
 <p>
-When you sign up, representatives of these organisations will occasionally suggest tasks by email, <a href="/#what">such as</a> gathering information on general election candidates or finding and sharing election leaflets, to help them build awesome sites that will make the next election the most transparent ever. They'll also help you to collaborate with other volunteers in your area.
+When you sign up, representatives of these organisations will occasionally suggest tasks by email, <a href="/aboutus/#what">such as</a> gathering information on general election candidates or finding and sharing election leaflets, to help them build awesome sites that will make the next election the most transparent ever. They'll also help you to collaborate with other volunteers in your area.
 </p>
 <!--<p>
 We already know that mySociety wants to gather information on general election candidates, and TheStraightChoice wants you to help them find and share election leaflets. As the election approaches there'll be even more things to do, and you can be part of it.
@@ -37,11 +37,11 @@ We already know that mySociety wants to gather information on general election c
 {% else %}
 <h2>Welcome, {{user.display_name}}</h2>
 <h3>Thanks for signing up to help out in your constituency!</h3> 
-<p>In time, we'll start dropping you occasional emails asking you if you can help with certain tasks. The first major task will be gathering information about candidates who are standing in the next election in your constituency. <a href="/aboutus/">Read about our purpose and what we're planning</a>.
+<p>In time, we'll begin to send you occasional emails, asking if you can help with certain tasks. The first major task will be gathering information about candidates who are standing in the next election in your constituency. <a href="/aboutus/">Read about our purpose and what we're planning</a>.
 <p>Until then, your next missions (should you choose to accept them) are:</p>
 <ul>
-<li>If you like, <a href="{% url add_constituency %}">volunteer to help in other constituencies</a> (e.g. somewhere you're studying, or somewhere else very nearby)</li>
-<li>And of course, please <a href='{% url inviteindex %}'>invite some friends</a></li>
+<li>Please <a href='{% url inviteindex %}'>invite three friends</a> (or more!)</li>
+<li>Consider <a href="{% url add_constituency %}">volunteering to help in other constituencies</a> (e.g. somewhere you're studying, or somewhere else very nearby)</li>
 </ul>
 {% endif %}
 
@@ -84,4 +84,3 @@ google.setOnLoadCallback(drawVisualization);
 
 
 {% endblock %}
-
