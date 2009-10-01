@@ -155,13 +155,17 @@ ul#links li a:hover {
     margin: 0;
 }
 
-.errorlist {
+form#signup ul.errorlist {
  margin: 0;
+}
+
+form#signup ul.errorlist li {
  color: red;
  list-style: none;
  font-size: 80%;
  font-style: italic;
 }
+
 tr.errors td input {
  border: solid red 2px;
 }
