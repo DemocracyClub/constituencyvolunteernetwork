@@ -213,7 +213,7 @@ class TestLeaveAllConstituencies(TestCase):
              'can_cc':True,
              'first_name':'foo',
              'last_name':'bar'})
-        self.assertRedirects(response, "/")
+        self.assertRedirects(response, "/welcome")
 
         # they have a constituency
         user = CustomUser.objects.get(email="foo@mailinator.com")
