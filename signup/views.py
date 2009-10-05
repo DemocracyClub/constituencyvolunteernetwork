@@ -49,7 +49,7 @@ def home(request):
             profile = form.save()
             user = authenticate(username=profile.user.email)
             login(request, user)
-            return HttpResponseRedirect("/")
+            return HttpResponseRedirect(reverse('welcome'))
         else:
             context['form'] = form
     else:
