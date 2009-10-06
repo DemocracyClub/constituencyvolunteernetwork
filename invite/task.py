@@ -10,7 +10,10 @@ def callback_assign(sender, **kwargs):
     """
     user = kwargs['user']
     
-    task = Task.objects.get(slug="invite-three-friends")
+    try:
+        task = Task.objects.get(slug="invite-three-friends")
+    except Task.DoesNotExist:
+        return
     
     try:
         TaskUser.objects.assign_task(task, user, reverse("inviteindex"))
