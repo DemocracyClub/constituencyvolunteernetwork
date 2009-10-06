@@ -7,6 +7,8 @@ from django.template import Context, loader
 from models import CustomUser, Constituency, RegistrationProfile
 from settings import CONSTITUENCY_YEAR
 
+import signals
+
 import twfy
 from utils import POSTCODE_RE
 
@@ -86,5 +88,6 @@ class UserForm(TemplatedForm):
                                          is_active=False)
         user.constituencies.add(constituency)
         user.save()
+        signals.user_join.send(self, user=user)
         profile = RegistrationProfile.objects.create_profile(user)
         return profile
