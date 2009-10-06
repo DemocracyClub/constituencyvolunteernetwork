@@ -1,9 +1,9 @@
-#tasks
+ul#tasks
 {
-    list-style: none;
+    margin-left:0.5em;
 }
 
-#tasks li
+ul#tasks li
 {
     list-style: none;
 }

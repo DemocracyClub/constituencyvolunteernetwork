@@ -4,19 +4,16 @@ There are no tasks available
 <ul id="tasks">
 {% for usertask in usertasks %}
     <li class="task-state-{{ usertask.state }}">
-        <a href='{{ usertask.url }}'>{{ usertask.task.name }}</a>
+        <a href='{% url task slug=usertask.task.slug %}'>{{ usertask.task.name }}</a>
         
         <div style="float:right">
-        {% ifequal usertask.state 0 %}<a href=''>start this task</a>{% endifequal %}
-        {% ifequal usertask.state 1 %}started{% endifequal %}
-        {% ifequal usertask.state 2 %}ignored{% endifequal %}
+        {% ifequal usertask.state 0 %}<a href='{% url start_task slug=usertask.task.slug %}'>start this task</a> or <a href='{% url ignore_task slug=usertask.task.slug %}'>ignore it</a>{% endifequal %}
+        {% ifequal usertask.state 1 %}<a href='{% url complete_task slug=usertask.task.slug %}'>say you've completed this task</a>{% endifequal %}
+        {% ifequal usertask.state 2 %}<a href='{% url unignore_task slug=usertask.task.slug %}'>unignore this task</a>{% endifequal %}
         {% ifequal usertask.state 3 %}completed!{% endifequal %}
         </a>
     </li>
 {% endfor %}
-    <li class="task-state-0">Suggested</li>
-    <li class="task-state-1">Started</li>
-    <li class="task-state-2">Ignored</li>
-    <li class="task-state-3">Completed</li>
 </ul>
+<a href=''>show ignored tasks</a>
 {% endif %}

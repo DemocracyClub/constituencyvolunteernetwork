@@ -1,4 +1,9 @@
 from django.db import models
+from django.core.mail import send_mail
+from django.template.loader import render_to_string
+from django.contrib.sites.models import Site
+from django.conf import settings
+
 from signup.models import Model, CustomUser
 
 class Project(Model):
@@ -34,6 +39,21 @@ class TaskUserManager(models.Manager):
     def assign_task(self, task, user, url):
         task_user = TaskUser(task=task, user=user, state=0, url=url)
         task_user.save()
+        
+        current_site = Site.objects.get_current()
+        subject = "New task - %s" % task.name
+        email_context = {'task': task,
+                         'user': user,
+                         'task_user': task_user,
+                         'site': current_site}
+        
+        message = render_to_string('tasks/email_new_task.txt',
+                                   email_context)
+        
+        send_mail(subject,
+                  message,
+                  settings.DEFAULT_FROM_EMAIL,
+                  [user.email,])
 
 class TaskUser(Model):
     task = models.ForeignKey(Task)

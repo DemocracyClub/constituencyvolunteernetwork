@@ -5,7 +5,8 @@
 from signup.signals import *
 from signup.models import Constituency
 from models import Task, TaskUser
-    
+from django.core.urlresolvers import reverse
+
 class Rule:
     def __init__(self):
         self.register()
@@ -37,6 +38,10 @@ class AssignToAll(Rule):
     
     def url(self):
         return self.url_pattern % self.user.id
+        
+class ViewPathAssignToAll(AssignToAll):
+    def url(self):
+        return reverse(self.url_pattern)
 
 class AssignToConstituency(Rule):
     """
