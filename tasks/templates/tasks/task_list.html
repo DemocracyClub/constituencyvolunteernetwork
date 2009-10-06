@@ -15,5 +15,15 @@ There are no tasks available
     </li>
 {% endfor %}
 </ul>
-<a href=''>show ignored tasks</a>
+<script type="text/javascript">
+function show_ignored() {
+    var allHTMLTags=document.getElementsByTagName("li");
+    for (i=0; i<allHTMLTags.length; i++) {
+        if (allHTMLTags[i].className=="task-state-2") {
+            allHTMLTags[i].style.display="block";
+        }
+    }
+}
+</script>
+<a onclick="show_ignored();">show ignored tasks</a>
 {% endif %}

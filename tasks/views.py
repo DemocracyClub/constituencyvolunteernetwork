@@ -39,8 +39,7 @@ def start_task(request, slug):
 
 def ignore_task(request, slug):
     task_user = TaskUser.objects.get(task__slug=slug, user=request.user)
-    task_user.state = 2
-    task_user.save()
+    task_user.ignore()
     
     return HttpResponseRedirect("/")
     
@@ -53,7 +52,6 @@ def unignore_task(request, slug):
 
 def complete_task(request, slug):
     task_user = TaskUser.objects.get(task__slug=slug, user=request.user)
-    task_user.state = 3
-    task_user.save()
+    task_user.complete()
     
     return HttpResponseRedirect("/")

@@ -66,6 +66,18 @@ class TaskUser(Model):
     
     def state_string(self):
         return task_state_string[self.state]
+        
+    def start(self):
+        self.state = 1
+        self.save()
+        
+    def complete(self):
+        self.state = 3
+        self.save()
+        
+    def ignore(self):
+        self.state = 2
+        self.save()
     
     def __unicode__(self):
         return "%s doing %s (%s)" % (self.user, self.task, task_state_string[self.state])

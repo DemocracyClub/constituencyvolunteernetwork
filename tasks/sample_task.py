@@ -1,4 +1,10 @@
-from rules import AssignToAll, AssignToConstituency
+import django.dispatch
+from rules import TaskRouterAssignAll
 
-gather_candidate_cambridge = AssignToConstituency("bar-cambridge", "cambridge", "http://www.theyworkforyou.com/gather/cambridge/%s")
-gather_candidate_info = AssignToAll("gather-candidate-information", "http://www.theyworkforyou.com/gather/%s")
+class GatherCandidateInfo(TaskRouterAssignAll):
+    task_slug = "gather-candidate-information"
+    
+    def url(self, user):
+        return "http://www.theyworkforyou.com/gather/%s" % user.id
+
+gather_candidate_info = GatherCandidateInfo()

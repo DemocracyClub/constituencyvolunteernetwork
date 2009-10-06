@@ -1,4 +1,10 @@
-from tasks.rules import ViewPathAssignToAll
+from tasks.rules import TaskRouterAssignAll
 from django.core.urlresolvers import reverse
 
-invite_task = ViewPathAssignToAll("invite-three-friends", "inviteindex")
+class InviteTask(TaskRouterAssignAll):
+    task_slug = "invite-three-friends"
+    
+    def url(self, user):
+        return reverse("inviteindex")
+        
+invite_task = InviteTask()

@@ -20,6 +20,10 @@ ul#tasks li
     display:none;
 }
 
-#tasks li.task-state-3 {
+#tasks li.task-state-2, #tasks li.task-state-2 a {
     color:#CCC;
+}
+
+#tasks li.task-state-3, #tasks li.task-state-3 a {
+    color:#060
 }
