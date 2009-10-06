@@ -1,44 +1,31 @@
 """
-    Task routers handle the signals that affect tasks. They can assign tasks to
-    users based on signals, and they can change the state of a usertask based on
-    signals.
+    Old code for rules. The Invite example currently does this itself.
 """
 from signup.signals import *
 from signup.models import Constituency
 from models import Task, TaskUser
 from django.core.urlresolvers import reverse
 
-task_completed = django.dispatch.Signal(providing_args=["user", "task_slug"])
-
 class TaskRouter:
-    def __init__(self):
+    def __init__(self, task_slug, url_pattern):
+        self.task_slug = task_slug
+        self.url_pattern = url_pattern
         self.task = Task.objects.get(slug=self.task_slug)
-        self.register()
+        self.register_callbacks()
 
-    def register(self):
+    def register_callbacks(self):
         """
             Register signal callbacks.
         """
-        task_completed.connect(self.callback_completed)  # Activated on task completion
-        
-    def callback_completed(self, sender, **kwargs):
-        """
-            Allows task code to declare that a user has completed a task
-        """
-        task_slug = kwargs['task_slug']
-        
-        if task_slug == self.task_slug:
-            task_user = TaskUser.objects.get(task__slug=task_slug, user=kwargs['user'])
-            task_user.complete()
+        pass
 
 class TaskRouterAssignAll(TaskRouter):
-    def __init__(self):
-        TaskRouter.__init__(self)
+    def __init__(self, task_slug, url_pattern):
+        TaskRouter.__init__(self, task_slug, url_pattern)
 
-    def register(self):
+    def register_callbacks(self):
         user_join.connect(self.callback_assign)
         user_touch.connect(self.callback_assign)
-        task_completed.connect(self.callback_completed)
 
     def callback_assign(self, sender, **kwargs):
         """
@@ -52,20 +39,23 @@ class TaskRouterAssignAll(TaskRouter):
             TaskUser.objects.get(user=user, task=self.task)
         except TaskUser.DoesNotExist:
             TaskUser.objects.assign_task(self.task, user, self.url(user))
+            
+    def url(self, user):
+        return reverse(self.url_pattern)
 
 class TaskRouterAssignConstituency(TaskRouter):
     """
         Assign this task to everyone in or joining this constituency
     """
-    def __init__(self):
-        TaskRouter.__init__(self)
+    def __init__(self, constituency_slug, task_slug, url_pattern):
+        TaskRouter.__init__(self, task_slug, url_pattern)
+        self.constituency_slug = constituency_slug
         self.constituency = Task.objects.get(slug=self.constituency_slug)
     
-    def register(self):
+    def register_callbacks(self):
         user_join.connect(self.callback_assign)
         user_join_constituency.connect(self.callback_assign)
         user_touch.connect(self.callback_assign)
-        task_completed.connect(self.callback_completed)
     
     def callback_assign(self, sender, **kwargs):
         user = kwargs['user']
@@ -79,4 +69,6 @@ class TaskRouterAssignConstituency(TaskRouter):
                 TaskUser.objects.assign_task(self.task, user, self.url(user))
     
     def url(self, user):
-        return self.url_pattern % user.id
+        return reverse(self.url_pattern)
+        
+routers = {'assign_all': TaskRouterAssignAll, 'assign_constituency': TaskRouterAssignConstituency}

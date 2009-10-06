@@ -1,0 +1,6 @@
+import django.dispatch
+
+task_assigned = django.dispatch.Signal(providing_args=["user", "task"])
+task_started = django.dispatch.Signal(providing_args=["user", "task"])
+task_finished = django.dispatch.Signal(providing_args=["user", "task"])
+task_completed = django.dispatch.Signal(providing_args=["user", "task"])

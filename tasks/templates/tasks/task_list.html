@@ -8,7 +8,7 @@ There are no tasks available
         
         <div style="float:right">
         {% ifequal usertask.state 0 %}<a href='{% url start_task slug=usertask.task.slug %}'>start this task</a> or <a href='{% url ignore_task slug=usertask.task.slug %}'>ignore it</a>{% endifequal %}
-        {% ifequal usertask.state 1 %}<a href='{% url complete_task slug=usertask.task.slug %}'>say you've completed this task</a>{% endifequal %}
+        {% ifequal usertask.state 1 %}<a href='{% url complete_task slug=usertask.task.slug %}'>say you've completed this task</a> or <a href='{% url ignore_task slug=usertask.task.slug %}'>ignore it</a>{% endifequal %}
         {% ifequal usertask.state 2 %}<a href='{% url unignore_task slug=usertask.task.slug %}'>unignore this task</a>{% endifequal %}
         {% ifequal usertask.state 3 %}completed!{% endifequal %}
         </a>

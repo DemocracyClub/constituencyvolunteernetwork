@@ -1,10 +1,22 @@
-from tasks.rules import TaskRouterAssignAll
 from django.core.urlresolvers import reverse
 
-class InviteTask(TaskRouterAssignAll):
-    task_slug = "invite-three-friends"
+from tasks.models import Task, TaskUser
+from signup.signals import *
+
+def callback_assign(sender, **kwargs):
+    """
+        Assign this task to everyone who activates the signals and isn't
+        already doing the task.
+    """
+    user = kwargs['user']
     
-    def url(self, user):
-        return reverse("inviteindex")
+    task = Task.objects.get(slug="invite-three-friends")
+    
+    try:
+        TaskUser.objects.assign_task(task, user, reverse("inviteindex"))
+    except TaskUser.AlreadyAssigned:
+        # print "%s already assigned to %s" % (task, user)
+        pass
         
-invite_task = InviteTask()
+user_join.connect(callback_assign)
+user_touch.connect(callback_assign)

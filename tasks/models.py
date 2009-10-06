@@ -25,6 +25,9 @@ class Task(Model):
     
     def __unicode__(self):
         return self.name
+        
+    def get_started_users(self):
+        return TaskUser.objects.filter(task=self, state=1)
     
 TASK_STATES = (
     (0, 'Assigned'),
@@ -37,6 +40,9 @@ task_state_string = {0: 'Assigned', 1:'Started', 2:'Ignored', 3:'Completed'}
 
 class TaskUserManager(models.Manager):
     def assign_task(self, task, user, url):
+        if TaskUser.objects.filter(task=task, user=user):
+            raise TaskUser.AlreadyAssigned()
+        
         task_user = TaskUser(task=task, user=user, state=0, url=url)
         task_user.save()
         
@@ -81,3 +87,6 @@ class TaskUser(Model):
     
     def __unicode__(self):
         return "%s doing %s (%s)" % (self.user, self.task, task_state_string[self.state])
+
+    class AlreadyAssigned(Exception):
+        pass

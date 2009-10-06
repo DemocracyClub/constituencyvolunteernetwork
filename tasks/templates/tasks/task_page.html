@@ -16,4 +16,11 @@
         {% ifequal usertask.state 3 %}completed!{% endifequal %}
     </div>
     {% endif %}
+    
+    <h3>People currently doing this task</h3>
+    <ul id="taskusers">
+    {% for task_user in task.get_started_users %}
+        <li>{{ task_user.user.display_name }}</li>
+    {% endfor %}
+    </ul>
 {% endblock %}
