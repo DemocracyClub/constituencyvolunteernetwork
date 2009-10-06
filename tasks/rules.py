@@ -2,51 +2,60 @@
     Factory functions for pre-made rules for assigning tasks.
 """
 from signup.signals import *
+from signup.models import Constituency
 from models import Task, TaskUser
+    
+class Rule:
+    def __init__(self):
+        self.register()
 
-def assign_to_all(task_slug, url_template):
-    """
-        Assign this task to everyone currently on the site and everyone who joins
-    """
-    # Activated indiscriminately, joining a constituency or by a touch
-    def callback_assign(sender, **kwargs):
-        # print "Signal received %s" % kwargs['user']
-        user = kwargs['user']
-        task = Task.objects.get(slug=task_slug)
+    def register(self):
+        pass
+
+class AssignToAll(Rule):
+    def __init__(self, task_slug, url_pattern):
+        Rule.__init__(self)
+        self.task = Task.objects.get(slug=task_slug)
+        self.url_pattern = url_pattern
+
+    def register(self):
+        user_join.connect(self.callback_assign)
+        user_touch.connect(self.callback_assign)
+    
+    def callback_assign(self, sender, **kwargs):
+        self.user = kwargs['user']
         
         try: # Make sure we're not already assigned this task, unless we want to
              # somehow assign a task multiple times for different constituencies?
-            TaskUser.objects.get(user=user, task=task)
+            TaskUser.objects.get(user=self.user, task=self.task)
         except TaskUser.DoesNotExist:
-            url = url_template % user.email
-            TaskUser.objects.assign_task(task, user, url)
+            TaskUser.objects.assign_task(task, user, self.url())
     
-    user_join.connect(callback_assign)
-    user_touch.connect(callback_assign)
+    def url(self):
+        return self.url_pattern % self.user.id
+
+class AssignToConstituency(Rule):
+    def __init__(self, task_slug, constituency_slug, url_pattern):
+        Rule.__init__(self)
+        self.task = Task.objects.get(slug=task_slug) # Bit of an overhead always loading these objects? Just store slugs?
+        self.constituency = Constituency.objects.get(slug=constituency_slug)
+        self.url_pattern = url_pattern
     
-    return callback_assign
+    def register(self):
+        user_join.connect(self.callback_assign)
+        user_join_constituency.connect(self.callback_assign)
+        user_touch.connect(self.callback_assign)
     
-def assign_to_constituency(task_slug, url_template, constituency_slug):
-    """
-        Assign this task to everyone in or joining a particular constituency
-    """
-    def callback_assign(sender, **kwargs):
-        # print "Signal received %s" % kwargs['user']
-        user = kwargs['user']
+    def callback_assign(self, sender, **kwargs):
+        self.user = kwargs['user']
         
         # Either we know the constituency and we can check it, or we check to see
         # if the user is a member of the constituency
-        if ('constituency' in kwargs and kwargs['constituency'].slug == constituency_slug) or (user.constituencies.filter(slug=constituency_slug)):
-            task = Task.objects.get(slug=task_slug)
-            
+        if ('constituency' in kwargs and kwargs['constituency'] == self.constituency) or (self.user.constituencies.filter(pk=self.constituency.id)):
             try: # Already on this task?
-                TaskUser.objects.get(user=user, task=task)
+                TaskUser.objects.get(user=self.user, task=self.task)
             except TaskUser.DoesNotExist:
-                url = url_template % user.email
-                TaskUser.objects.assign_task(task, user, url)
+                TaskUser.objects.assign_task(self.task, self.user, self.url())
     
-    user_join.connect(callback_assign)
-    user_join_constituency.connect(callback_assign)
-    user_touch.connect(callback_assign)
-    
-    return callback_assign
+    def url(self):
+        return self.url_pattern % self.user.id
