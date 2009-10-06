@@ -1,0 +1,25 @@
+#tasks
+{
+    list-style: none;
+}
+
+#tasks li
+{
+    list-style: none;
+}
+
+#tasks li.task-state-0 {
+    
+}
+
+#tasks li.task-state-1 {
+    background:#EFE;
+}
+
+#tasks li.task-state-2 {
+    display:none;
+}
+
+#tasks li.task-state-3 {
+    color:#CCC;
+}

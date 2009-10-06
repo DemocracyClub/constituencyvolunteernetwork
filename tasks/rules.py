@@ -1,5 +1,6 @@
 """
-    Factory functions for pre-made rules for assigning tasks.
+    Factory functions for pre-made rules for assigning tasks. Can be easily
+    inherited from to change behaviour, e.g. generation of task urls
 """
 from signup.signals import *
 from signup.models import Constituency
@@ -13,6 +14,9 @@ class Rule:
         pass
 
 class AssignToAll(Rule):
+    """
+        Assign this task to everyone on the site, and everyone signing up
+    """
     def __init__(self, task_slug, url_pattern):
         Rule.__init__(self)
         self.task = Task.objects.get(slug=task_slug)
@@ -29,12 +33,15 @@ class AssignToAll(Rule):
              # somehow assign a task multiple times for different constituencies?
             TaskUser.objects.get(user=self.user, task=self.task)
         except TaskUser.DoesNotExist:
-            TaskUser.objects.assign_task(task, user, self.url())
+            TaskUser.objects.assign_task(self.task, self.user, self.url())
     
     def url(self):
         return self.url_pattern % self.user.id
 
 class AssignToConstituency(Rule):
+    """
+        Assign this task to everyone in or joining this constituency
+    """
     def __init__(self, task_slug, constituency_slug, url_pattern):
         Rule.__init__(self)
         self.task = Task.objects.get(slug=task_slug) # Bit of an overhead always loading these objects? Just store slugs?
