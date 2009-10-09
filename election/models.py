@@ -5,6 +5,9 @@ from signup.models import Constituency
 from slugify import smart_slugify
 
 class Party(models.Model):
+    """
+    A Political party.
+    """
     class Meta:
         verbose_name_plural="Parties"
 
@@ -14,9 +17,6 @@ class Party(models.Model):
     def __unicode__(self):
         return self.name
 
-    def get_absolute_url(self):
-        return ("/election/parties/%s" % self.slug)
-
     def save(self, *args, **kwargs):
         if self.slug == "":
             self.slug = smart_slugify(self.name)
@@ -25,20 +25,16 @@ class Party(models.Model):
 
 class Candidate(models.Model):
     """
-    A Candidate stands in a Constituency, possibly reprisenting a Party.
+    A Candidate stands in a constituency, possibly reprisenting a party.
     """
     name = models.CharField(max_length=80)
     slug = models.SlugField(max_length=80)
     party = models.ForeignKey(Party)
     constituency = models.ForeignKey(Constituency)
     email = models.EmailField(blank=True)
-    address = models.TextField(max_length=300, blank=True)
 
     def __unicode__(self):
         return self.name
-
-    def get_absolute_url(self):
-        return ("/election/candidates/%s" % self.slug)
     
     def save(self, *args, **kwargs):
         if self.slug == "":
