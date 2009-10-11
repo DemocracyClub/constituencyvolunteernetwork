@@ -1,8 +1,15 @@
 from django.db import models
+from django.db.models.signals import pre_save
 
 from signup.models import Constituency
 
 from slugify import smart_slugify
+
+def slug_on_save(sender, instance, **kwargs):
+    "signal handler - adds slug if it is not set"
+    if instance.slug == "":
+        instance.slug = smart_slugify(instance.name)
+
 
 class Party(models.Model):
     """
@@ -17,10 +24,7 @@ class Party(models.Model):
     def __unicode__(self):
         return self.name
 
-    def save(self, *args, **kwargs):
-        if self.slug == "":
-            self.slug = smart_slugify(self.name)
-        super(Party, self).save(*args, **kwargs)
+pre_save.connect(slug_on_save, sender=Party)
 
 
 class Candidate(models.Model):
@@ -35,8 +39,5 @@ class Candidate(models.Model):
 
     def __unicode__(self):
         return self.name
-    
-    def save(self, *args, **kwargs):
-        if self.slug == "":
-            self.slug = smart_slugify(self.name)
-        super(Candidate, self).save(*args, **kwargs)
+
+pre_save.connect(slug_on_save, sender=Candidate)
