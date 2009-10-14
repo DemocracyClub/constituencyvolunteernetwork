@@ -33,13 +33,15 @@
       </div>
     </form>
     <form method="post" action="">
-      {% if search_feedback %}<div id="search-feedback">{{search_feedback}}&nbsp;<b>{{search_term}}</b>{% if constituencies %}:{% endif %}</div>{% endif %}
+      {% for feedback, constituencies in search_results %}
+      <div>{{ feedback }}</div>
       <ul id="constituency-list">
-	{% for c in constituencies %}
+      {% for c in constituencies %}
 	<li><input name="add_c" type="checkbox" value="{{ c.slug }}" />{{ c.name }}</li>
-	{% endfor %}
+      {% endfor %}
       </ul>
-  {%if constituencies %}<input type="submit" name="add" value="add ticked constituencies" />{% endif %}
+      {% endfor %}
+      <input type="submit" name="add" value="add ticked constituencies" />
 </form>
   </div> 
 

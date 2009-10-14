@@ -22,7 +22,7 @@ def center(data, c):
     return (data[c]["centre_lat"], data[c]["centre_lon"])
 
 
-def neighbors(constituency, limit=5, _data=None):
+def neighbors(constituency, limit=7, _data=None):
     """
     List of constituency's neighbors.
 

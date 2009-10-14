@@ -9,6 +9,8 @@ from django.contrib.auth import authenticate, login, logout
 from django.db.models import Count
 from django.contrib.flatpages.models import FlatPage
 from django.contrib.auth.decorators import login_required
+from django.utils.html import escape
+from django.utils.safestring import SafeUnicode
 
 from models import CustomUser, Constituency, RegistrationProfile
 from forms import UserForm
@@ -65,6 +67,57 @@ def delete_constituency(request, slug):
     request.user.save()
     return HttpResponseRedirect(reverse('add_constituency'))
 
+
+def search_place(place):
+    "Search for place, return constituencies with that name"
+    foundplace = geo.constituency(place)
+    if foundplace:
+        return Constituency.objects.filter(name__in=foundplace)
+    else:
+        return []
+
+def search_name(place):
+    "constituencies that have place in their name"
+    return Constituency.objects\
+        .filter(name__icontains=place)\
+        .order_by('name')
+
+def feedback(msg, place):
+    "search feedback"
+    return SafeUnicode(escape(msg) + (u"&nbsp;<b>%s</b>" % escape(place)))
+
+def place_search(place):
+    """
+    Attempt to find the constituency for a place.
+
+    Place can be a postcode, the name of a town, or the name of a constituency
+    Returns a mapping that can be included in a context
+    """
+    results = []
+    foundplace = search_place(place)
+    if len(foundplace) > 0:
+        if len(foundplace) == 1:
+            fb = feedback("We found one constituency matching", place)
+        else: 
+            fb = feedback("We found these constituencies near", place)
+        results.append((fb, foundplace))
+
+    foundname = search_name(place)
+    # some constituencies have exactly the same name as a town (eg
+    # Nuneaton), they should not appear twice
+    foundname = foundname.exclude(pk__in=foundplace)
+
+    if len(foundname) > 0:
+        fb = feedback("We found these constituencies containing", place)
+        results.append((fb, foundname))
+        
+    if len(foundname) == 0 and len(foundplace) == 0:
+        fb = feedback("Alas, we can't find", place)
+        results.append((fb, []))
+
+    return results
+
+
 @login_required
 def add_constituency(request):
     my_constituencies = request.user.current_constituencies.all()
@@ -77,9 +130,9 @@ def add_constituency(request):
             const = my_constituencies[0]
             neighbours = Constituency.neighbours(const)
             neighbours = neighbours.exclude(pk__in=my_constituencies)
-            context["search_term"] = const.name
-            context['search_feedback'] = "We found these constituencies near"
-            context['constituencies'] = neighbours
+            context["search_results"] = [
+                (feedback("We found these constituencies near", const.name),
+                 neighbours)]
         except KeyError:
             # Any problems looking up neighbours means we pretend to
             # have none
@@ -90,33 +143,10 @@ def add_constituency(request):
         if request.GET.has_key("q"):
             place = request.GET["q"]
             if not place.strip():
-                context['search_feedback'] = "Please enter a postcode or place name"
+                context['search_results'] = (
+                    "Please enter a postcode or place name", [])
             else:
-                foundplace = geo.constituency(place)            
-                constituencies = []
-                if foundplace:
-                    constituencies = Constituency.objects.filter(name__in=foundplace)
-                    if len(constituencies) == 1:
-                        feedback = "We found one constituency matching"
-                    else: 
-                        feedback = "We found these constituencies near"
-
-
-                if len(constituencies) == 0:
-                    # if this gets results, the query has words that are
-                    # contained in the names of constituencies. The order
-                    # of the records coming out of the db is undefined, so
-                    # alpha by name is reasonable
-                    constituencies = Constituency.objects\
-                                     .filter(name__icontains=place)\
-                                     .order_by('name')
-                    if len(constituencies) > 0:
-                        feedback = "We found these constituencies containing"
-                    else:
-                        feedback = "Alas, we can't find"
-                context["search_term"] = place
-                context['constituencies'] = constituencies
-                context['search_feedback'] = feedback
+                context["search_results"] = place_search(place)
 
     # adding another constituency
     if request.method == "POST":

@@ -12,6 +12,7 @@ from testbase import TestCase
 
 from signup.models import Constituency, CustomUser
 from signup.models import RegistrationManager, RegistrationProfile
+from signup.views import place_search
 
 users = [{'email':'f@mailinator.com',
           'postcode':'G206BT',
@@ -258,11 +259,97 @@ class TestNorthernIreland(TestCase):
         self.client.login(username="foo")
         response = self.client.get("/add_constituency/")
 
-            
-        
+
+class TestBoundryPostcodes(TestCase):
+    """
+    Postcodes normlly fall unambiguously into one constituency.
+    Sometimes they don't.
+    """
+    # See issue 28 for details
+    def setUp(self):
+        Constituency.objects.create(
+            name = "Coventry North West",
+            year = this_year)
+        Constituency.objects.create(
+            name = "Warwickshire North",
+            year = this_year)
+        # user signs up (this postcode lies on constituency border)
+        response = self.client.post("/",
+            {'email':'a@b.com',
+             'postcode': 'CV7 8AH',
+             'can_cc':True,
+             'first_name':'foo',
+             'last_name':'bar'})
+        self.user = CustomUser.objects.get(email="a@b.com")
+
+    def test_signup(self):
+        # the constituency _should_ be North Warwickshire, but it's
+        # wrong in OS Borderline
+        self.assertEquals("Coventry North West",
+                          self.user.constituencies.all()[0].name)
+
+    def test_search(self):
+        # user knows their constituency is wrong, and searches for the
+        # correct constituency
+        response = self.client.get("/add_constituency/#search",
+                                   {"q": u"Warwickshire"})
+        self.assertContains(response, "Warwickshire North")
 
 
-        
+
+class TestPlaceSearch(TestCase):
+    """
+    Test the constituency search box
+    """
+    def assertIn(self, obj, container, msg=None):
+        if msg == None:
+            msg = "%r not in %r" % (obj, container)
+        self.assert_(obj in container, msg=msg)
+
+    def setUp(self):
+        constituencies = [
+            "Coventry North West",
+            "Warwickshire North",
+            "Coventry North East",
+            "Coventry South",
+            "Meriden",
+            "Nuneaton",
+            "Rugby & Kenilworth",
+            "Warwick & Leamington",
+            ]
+        for const in constituencies:
+            Constituency.objects.create(
+                name = const,
+                year = this_year)
+
+    def place_search(self, place):
+        # makes output of views.place_search a bit easier to test.
+        results = place_search(place)
+        constituencies = []
+        for fb, res in results:
+            constituencies.extend(res)
+        return [c.name for c in constituencies]
+
+    def test1(self):
+        # User may look for a constituency that is named after a town
+        # in another constituency.
+
+        # eg The town of Warwick is in Warwick & Lemington, but there
+        # is a constituency called Warwickshire North. See issue 28
+        # for details.
+        self.assertIn("Warwickshire North",
+                      self.place_search("Warwickshire"))
+
+    def test2(self):
+        # Nuneaton is both town and constituency
+        # it should appear exactly once
+        constituencies = self.place_search("Nuneaton")
+        self.assertEquals(1, len(list(
+                c for c in constituencies if c == "Nuneaton")))
+
+
+
+
 class TestFlatPages(TestCase):
     FLAT_PAGES = [{'url':"/about/", 'title':"About", 'content':"This is a flat page"},
                   {'url':"/faq/", 'title':"FAQ", 'content':"This is another flat page"},]
@@ -285,3 +372,5 @@ class TestFlatPages(TestCase):
         """ Test for issue 3 (navigation disappearing in flat page views) """
         response = self.client.get("/about/")
         self.assertContains(response, "FAQ")
+
+        
