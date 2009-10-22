@@ -7,6 +7,13 @@ from django.conf import settings
 from signup.models import Model, CustomUser
 
 class Project(Model):
+    """
+        Represents a grouping of tasks belonging to a particular project/group,
+        along with a description and a url for the main project website
+        
+        e.g. TheyWorkForYou, TheStraightChoice, DemocracyClub
+    """
+    
     name = models.CharField(max_length=80)
     slug = models.SlugField(max_length=80)
     description = models.TextField()
@@ -16,6 +23,11 @@ class Project(Model):
         return self.name
     
 class Task(Model):
+    """
+        A description of a task, attached to a project (optionally), with a
+        list of users doing the task
+    """
+    
     name = models.CharField(max_length=80)
     slug = models.SlugField(max_length=80)
     project = models.ForeignKey(Project)
@@ -37,6 +49,10 @@ TASK_STATES = (
 )
 
 class TaskUserManager(models.Manager):
+    """
+        Managing the TaskUser objects
+    """
+    
     def assign_task(self, task, user, url):
         if TaskUser.objects.filter(task=task, user=user):
             raise TaskUser.AlreadyAssigned()
@@ -60,6 +76,15 @@ class TaskUserManager(models.Manager):
                   [user.email,])
 
 class TaskUser(Model):
+    """
+        Describes the mapping between Tasks and Users,
+        i.e. what tasks a user can do, and their state for those tasks.
+        
+        These objects are created by tasks on reception of signals, allowing
+        them to apply their own criteria for assignment (e.g. users in
+        a particular constituency)
+    """
+    
     task = models.ForeignKey(Task)
     user = models.ForeignKey(CustomUser)
     state = models.SmallIntegerField(choices=TASK_STATES)
@@ -89,4 +114,8 @@ class TaskUser(Model):
         return "%s doing %s (%s)" % (self.user, self.task, self.state_string())
 
     class AlreadyAssigned(Exception):
+        """
+            Thrown by the UserTaskManager on attempted assignment/suggestion of a task
+            which a user already has
+        """
         pass

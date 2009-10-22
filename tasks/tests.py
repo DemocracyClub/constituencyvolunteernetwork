@@ -38,6 +38,9 @@ constituencies = [("Glasgow North", this_year),
          
 class TestInviteAssignment(TestCase):
     def setUp(self):
+        """
+            Create the task and add some constituencies for users
+        """
         dc = Project.objects.create(name="dc")
         Task.objects.create(name="Invite three friends", project=dc)
         
@@ -60,6 +63,9 @@ class TestInviteAssignment(TestCase):
 
 class TestTaskState(TestCase):
     def setUp(self): 
+        """
+            Add a user and login as them, then create a project and some tasks
+        """
         self.users = []    
         for u in users:    
             user = CustomUser.objects.create(**u)
@@ -73,10 +79,17 @@ class TestTaskState(TestCase):
         self.task_user = TaskUser.objects.assign_task(self.task, self.users[0], "http://taskurl/")
         
     def test_task_assigned(self):
+        """
+            Make sure the task is assigned/suggested to the user on their front page
+        """
         response = self.client.get("/")
         self.assertTrue("start this task" in response.content)
         
     def test_task_start(self):
+        """
+            Start the task and make sure the state of the task
+            on the front page has changed appropriately
+        """
         response = self.client.get(reverse("start_task",  args=[self.task.slug]))
         self.assertEqual(response.status_code, 302)
         
@@ -85,6 +98,10 @@ class TestTaskState(TestCase):
         self.assertTrue("ignore it" in response.content)
         
     def test_task_ignore(self):
+        """
+            Ignore the task and make sure the state of the task
+            on the front page has changed appropriately
+        """
         response = self.client.get(reverse("ignore_task", args=[self.task.slug]))
         self.assertEqual(response.status_code, 302)
         
@@ -92,6 +109,10 @@ class TestTaskState(TestCase):
         self.assertTrue("unignore this task" in response.content)
         
     def test_task_complete(self):
+        """
+            Mark the task complete and make sure the state of the
+            task on the front page has changed appropriately
+        """
         response = self.client.get(reverse("complete_task",  args=[self.task.slug]))
         self.assertEqual(response.status_code, 302)
         

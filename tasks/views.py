@@ -24,8 +24,9 @@ def task(request, slug, login_token=None):
     return render_with_context(request, 'tasks/task_page.html', context)
  
 def start_task(request, slug):
-    # Mark this task as started by this user, then redirect the user to the task url
-    
+    """
+        Mark this task as started by this user, then redirect the user to the task url
+    """
     task = Task.objects.get(slug=slug)
 
     try:
@@ -38,12 +39,18 @@ def start_task(request, slug):
         raise Http404()
 
 def ignore_task(request, slug):
+    """
+        Ignore the task then redirect the user to the front page
+    """
     task_user = TaskUser.objects.get(task__slug=slug, user=request.user)
     task_user.ignore()
     
     return HttpResponseRedirect("/")
     
 def unignore_task(request, slug):
+    """
+        Unignore the task then redirect the user to the front page
+    """
     task_user = TaskUser.objects.get(task__slug=slug, user=request.user)
     task_user.state = 0
     task_user.save()
@@ -51,6 +58,9 @@ def unignore_task(request, slug):
     return HttpResponseRedirect("/")
 
 def complete_task(request, slug):
+    """
+        Mark the task as complete then redirect the user to the front page
+    """
     task_user = TaskUser.objects.get(task__slug=slug, user=request.user)
     task_user.complete()
     

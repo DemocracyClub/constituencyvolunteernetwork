@@ -1,3 +1,6 @@
+"""
+    Signals for the task application. Sent when the state of a user on a task changes
+"""
 import django.dispatch
 
 task_assigned = django.dispatch.Signal(providing_args=["user", "task"])
