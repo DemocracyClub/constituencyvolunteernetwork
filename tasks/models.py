@@ -116,11 +116,10 @@ class TaskUser(Model):
     
     def __unicode__(self):
         return "%s doing %s (%s)" % (self.user, self.task, self.state_string())
-
-
-class AlreadyAssigned(Exception):
-    """
-        Thrown by the UserTaskManager on attempted
-        assignment/suggestion of a task which a user already has
-    """
-    pass
+    
+    class AlreadyAssigned(Exception):
+        """
+            Thrown by the UserTaskManager on attempted
+            assignment/suggestion of a task which a user already has
+        """
+        pass
