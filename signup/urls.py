@@ -32,6 +32,9 @@ urlpatterns = patterns('casestudies',
     url(r'^map/fewerthan/(?P<volunteers>\d+)/geo.rss$',
         views.constituencies_with_fewer_than_rss,
         name="constituencies_with_fewer_than_rss"),
+    url(r'^map/morethan/(?P<volunteers>\d+)/geo.rss$',
+        views.constituencies_with_more_than_rss,
+        name="constituencies_with_more_than_rss"),
                       
 )
 

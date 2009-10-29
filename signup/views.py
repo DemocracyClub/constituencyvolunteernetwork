@@ -220,6 +220,16 @@ def constituencies_with_fewer_than_rss(request,
                               context_instance=RequestContext(request),
                               mimetype="application/atom+xml")
     
+def constituencies_with_more_than_rss(request,
+                                       volunteers=1):
+    constituencies = Constituency.objects.\
+                     filter_where_customuser_more_than(volunteers)
+    context = {'constituencies': constituencies}
+    return render_to_response('geo.rss',
+                              context,
+                              context_instance=RequestContext(request),
+                              mimetype="application/atom+xml")
+
 def logout_view(request):
     logout(request)
     return HttpResponseRedirect("/")

@@ -39,7 +39,7 @@ class Model(DjangoModel):
 
 
 class ConstituencyManager(models.Manager):
-    def filter_where_customuser_fewer_than(self, count):
+    def _select_by_signup_count(self, count, operator="<"):
         from django.db import connection
         sql = ("SELECT signup_constituency.id AS id "
                "FROM signup_constituency "
@@ -48,7 +48,8 @@ class ConstituencyManager(models.Manager):
                "signup_customuser_constituencies.constituency_id "
                "GROUP BY signup_constituency.id "
                "HAVING "
-               "count(signup_customuser_constituencies.constituency_id) < %s")
+               "count(signup_customuser_constituencies.constituency_id) "
+               + operator + " %s")
 
         cursor = connection.cursor()
         cursor.execute(sql, [count])
@@ -57,7 +58,13 @@ class ConstituencyManager(models.Manager):
         return Constituency.objects.filter(pk__in=keys,
                                            year=settings.CONSTITUENCY_YEAR)
 
+    def filter_where_customuser_fewer_than(self, count):
+        return self._select_by_signup_count(count, operator="<")
             
+    def filter_where_customuser_more_than(self, count):
+        return self._select_by_signup_count(count, operator=">")
+
+
 class Constituency(Model):
     objects = ConstituencyManager()
 
