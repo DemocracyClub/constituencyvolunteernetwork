@@ -1,5 +1,6 @@
 """
-    Signals for the task application. Sent when the state of a user on a task changes
+    Signals for the task application.
+    Sent when the state of a user on a task changes.
 """
 import django.dispatch
 

@@ -1,7 +1,8 @@
 from django.conf.urls.defaults import *
 import views
 
-################################################################################
+
+###############################################################################
 urlpatterns = patterns('tasks',
     url(r'^tasks/$', views.home, name="home"),
     url(r'^tasks/(?P<slug>[\w-]+)/$',
@@ -23,4 +24,3 @@ urlpatterns = patterns('tasks',
         views.task,
         name="task_login"),
 )
-

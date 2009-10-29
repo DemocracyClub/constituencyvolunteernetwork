@@ -6,41 +6,43 @@ from django.conf import settings
 
 from signup.models import Model, CustomUser
 
+
 class Project(Model):
     """
         Represents a grouping of tasks belonging to a particular project/group,
         along with a description and a url for the main project website
-        
         e.g. TheyWorkForYou, TheStraightChoice, DemocracyClub
     """
-    
+
     name = models.CharField(max_length=80)
     slug = models.SlugField(max_length=80)
     description = models.TextField()
     url = models.URLField()
-    
+
     def __unicode__(self):
         return self.name
-    
+
+
 class Task(Model):
     """
         A description of a task, attached to a project (optionally), with a
         list of users doing the task
     """
-    
+
     name = models.CharField(max_length=80)
     slug = models.SlugField(max_length=80)
     project = models.ForeignKey(Project)
     description = models.TextField()
     date_created = models.DateTimeField(auto_now_add=True)
     users = models.ManyToManyField(CustomUser, through="TaskUser")
-    
+
     def __unicode__(self):
         return self.name
-        
+
     def get_started_users(self):
         return TaskUser.objects.filter(task=self, state=1)
-    
+
+
 TASK_STATES = (
     (0, 'Assigned'),
     (1, 'Started'),
@@ -48,11 +50,12 @@ TASK_STATES = (
     (3, 'Completed'),
 )
 
+
 class TaskUserManager(models.Manager):
     """
         Managing the TaskUser objects
     """
-    
+
     def assign_task(self, task, user, url):
         if TaskUser.objects.filter(task=task, user=user):
             raise TaskUser.AlreadyAssigned()
@@ -73,7 +76,8 @@ class TaskUserManager(models.Manager):
         send_mail(subject,
                   message,
                   settings.DEFAULT_FROM_EMAIL,
-                  [user.email,])
+                  [user.email, ])
+
 
 class TaskUser(Model):
     """
@@ -101,11 +105,11 @@ class TaskUser(Model):
     def start(self):
         self.state = 1
         self.save()
-        
+    
     def complete(self):
         self.state = 3
         self.save()
-        
+    
     def ignore(self):
         self.state = 2
         self.save()
@@ -113,9 +117,10 @@ class TaskUser(Model):
     def __unicode__(self):
         return "%s doing %s (%s)" % (self.user, self.task, self.state_string())
 
-    class AlreadyAssigned(Exception):
-        """
-            Thrown by the UserTaskManager on attempted assignment/suggestion of a task
-            which a user already has
-        """
-        pass
+
+class AlreadyAssigned(Exception):
+    """
+        Thrown by the UserTaskManager on attempted
+        assignment/suggestion of a task which a user already has
+    """
+    pass
