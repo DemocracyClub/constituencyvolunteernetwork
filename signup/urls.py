@@ -29,5 +29,9 @@ urlpatterns = patterns('casestudies',
     url(r'^delete_constituency/(?P<slug>[\w-]+)/$',
         views.delete_constituency,
         name="delete_constituency"),
+    url(r'^map/fewerthan/(?P<volunteers>\d+)/geo.rss$',
+        views.constituencies_with_fewer_than_rss,
+        name="constituencies_with_fewer_than_rss"),
+                      
 )
 

@@ -17,32 +17,6 @@ def haversine((lat1, lon1), (lat2, lon2)):
     return R * c
 
 
-def center(data, c):
-    "lat,lng of the center of a constituency"
-    return (data[c]["centre_lat"], data[c]["centre_lon"])
-
-
-def neighbors(constituency, limit=7, _data=None):
-    """
-    List of constituency's neighbors.
-
-    constituency - name of the constituency you want the neighbors of
-    limit - max number of neighbors to return
-    _data - the data to use for calculations (used for testing)
-    """
-    if _data == None:
-        _data = twfy.getGeometry()
-
-    data = dict((k, v) for k,v in _data.iteritems()
-                if v.has_key("centre_lon") and v.has_key("centre_lat"))
-
-    clat, clng = center(data, constituency)
-    dist_to = lambda c: haversine((clat, clng), center(data, c))
-    distance = dict((c, dist_to(c)) for c in data)
-    nearest = sorted((c for c in data), key=lambda c: distance[c])
-    return nearest[1:limit+1]
-
-
 # nicked from http://github.com/simonw/geocoders/
 def geocode(q):
     data = json.load(urllib.urlopen(
@@ -80,10 +54,12 @@ def constituency(place):
             while not consts:
                 # Only likely to actually loop in extreme, circumstances,
                 # e.g. "Haltwhistle". See issue 19
-                consts = twfy.getConstituencies(latitude=lat, longitude=lng, distance=distance)
+                consts = twfy.getConstituencies(latitude=lat,
+                                                longitude=lng,
+                                                distance=distance)
                 distance = distance * 2
             
-            return consts
+            return [x['name'] for x in consts]
     except Exception:
         return None
     

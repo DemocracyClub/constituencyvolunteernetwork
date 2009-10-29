@@ -37,19 +37,66 @@ class Model(DjangoModel):
                               self._meta.get_all_field_names())
         super(Model, self).__init__(*args, **kwargs)
 
+
+class ConstituencyManager(models.Manager):
+    def filter_where_customuser_fewer_than(self, count):
+        from django.db import connection
+        sql = ("SELECT signup_constituency.id AS id "
+               "FROM signup_constituency "
+               "LEFT JOIN signup_customuser_constituencies "
+               "ON signup_constituency.id = "
+               "signup_customuser_constituencies.constituency_id "
+               "GROUP BY signup_constituency.id "
+               "HAVING "
+               "count(signup_customuser_constituencies.constituency_id) < %s")
+
+        cursor = connection.cursor()
+        cursor.execute(sql, [count])
+        rows = cursor.fetchall()
+        keys = [x[0] for x in rows]
+        return Constituency.objects.filter(pk__in=keys,
+                                           year=settings.CONSTITUENCY_YEAR)
+
+            
 class Constituency(Model):
+    objects = ConstituencyManager()
+
     name = models.CharField(max_length=80)
     slug = models.SlugField(max_length=80)
+    lat = models.FloatField(verbose_name='latitude',
+                            blank=True,
+                            null=True)
+    lon = models.FloatField(verbose_name='longitude',
+                            blank=True,
+                            null=True)
     year = models.DateField()
 
-    @classmethod
-    def neighbours(cls, constituency, limit=None):
-        "consituencies near this one"
-        neighbors = geo.neighbors(constituency.name)
-        return cls.objects.filter(name__in=neighbors)
-    
     def __unicode__(self):
         return "%s (%s)" % (self.name, self.year)
+
+    def distance_from(self, other):
+        if None in (self.lat, self.lon, other.lat, other.lon):
+            # must be Northern Ireland
+            if None in (other.lat, other.lon) \
+                   and None in (self.lat, self.lon):
+                # both in Northern Ireland. For now, pretend they're
+                # all on top of each other
+                distance = 0
+            else:
+                distance = 10000
+        else:            
+            distance = geo.haversine((self.lat, self.lon),
+                                 (other.lat, other.lon))
+        return distance
+    
+    def neighbors(self, limit=7):
+        distances = []
+        for c in Constituency.objects.all():
+            distances.append((c, self.distance_from(c)))
+        nearest = sorted(distances, key=lambda x: x[1])
+        keys = [c[0].id for c in nearest[1:limit+1]]
+        return [Constituency.objects.get(pk=x) \
+                for x in keys]
     
     @permalink
     def get_absolute_url(self):
@@ -57,7 +104,7 @@ class Constituency(Model):
 
     class Meta:
         verbose_name_plural = "Constituencies"
-
+        
     
 class CustomUser(User):
     postcode = models.CharField(max_length=9)

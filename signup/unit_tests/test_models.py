@@ -68,22 +68,70 @@ class ModelsTestCase(TestCase):
         self.assertEqual(self.users[0].current_constituencies.count(), 1)
         
 
+    def test_filter_constituency_by_user(self):
+        empty = Constituency.objects\
+                .filter_where_customuser_fewer_than(1)
+        self.assertEqual(empty.count(), 2)
+        self.users[0].constituencies.add(self.constituencies[0])
+        empty = Constituency.objects\
+                .filter_where_customuser_fewer_than(1)
+        self.assertEqual(empty.count(), 1)
+        
 class TestNeigbours(TestCase):
     # constituency names must match those returned from twfy
-    constituencies = [
-        {"name": "Stirling", "year": this_year},
-        {"name": "West Dunbartonshire", "year": this_year},
-        {"name": "Falkirk", "year": this_year},
-        {"name": "Hendon", "year": this_year}
-        ]
+    data = [{"name" : "Chipping Barnet",
+             "lat" : 51.6395895436,
+             "lon" : -0.192217329457,
+             "year": this_year
+             },
+            {"name" : "Hendon",
+             "lat" : 51.606570454,
+             "lon" : -0.252407672041,
+             "year": this_year
+             },
+            {"name" : "Altrincham & Sale West",
+             "lat" : 53.3989495951,
+             "lon" : -2.38207857643,
+             "year": this_year
+             },
+            {"name" : "Hertsmere",
+             "lat" : 51.6802918234,
+             "lon" : -0.274986273182,
+             "year": this_year
+             },
+            
+            {"name" : "Stretford & Urmston",
+             "lat" : 53.4450638328,
+             "lon" : -2.35374956251,
+             "year": this_year
+             },
+            {"name" : "Tatton",
+             "lat" : 53.2797662137,
+             "lon" : -2.38760476605,
+             "year": this_year
+            },
+            {"name" : "Belfast North",
+             "year": this_year
+            }]
 
     def setUp(self):
-        for c in self.constituencies:
+        for c in self.data:
             Constituency.objects.create(**c)
+
+    def test_center(self):
+        place = Constituency.objects.get(name="Altrincham & Sale West")
+        self.assertEqual((53.3989495951, -2.38207857643),
+                         (place.lat, place.lon))
 
     def test_neigbours(self):
         # Stirling's neighbouring constituencies are Falkirk and West
         # Dunbartonshire. Hendon is a long way away
-        centre = Constituency.objects.get(name="Stirling")
-        names = (c.name for c in Constituency.neighbours(centre, limit=2))
-        self.assertEqual(list(names), ["West Dunbartonshire", "Falkirk"])
+        centre = Constituency.objects.get(name="Chipping Barnet")
+        names = (c.name for c in centre.neighbors(limit=3))
+        self.assertEqual(list(names), ["Hendon", "Hertsmere", "Tatton"])
+
+        centre = Constituency.objects.get(name="Altrincham & Sale West")
+        names = (c.name for c in centre.neighbors(limit=3))
+        self.assertEqual(list(names), ["Stretford & Urmston",
+                                       "Tatton", "Hertsmere"])
+        

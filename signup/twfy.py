@@ -80,7 +80,7 @@ def getConstituencies(**kw):
 
     params = dict((k, v) for k,v in kw.items() if v != None)
     headers, result = fetch(svcurl("getConstituencies", params))
-    return [x['name'] for x in json.loads(result, encoding=charset(headers))]
+    return json.loads(result, encoding=charset(headers))
 
 
 def getGeometry(name=None):
@@ -95,6 +95,9 @@ def getGeometry(name=None):
         params = dict()
 
     headers, result = fetch(svcurl("getGeometry", params))
-    data = json.loads(result, encoding=charset(headers))["data"]
+    if name:
+        data = json.loads(result, encoding=charset(headers))
+    else:
+        data = json.loads(result, encoding=charset(headers))["data"]
     return data
 

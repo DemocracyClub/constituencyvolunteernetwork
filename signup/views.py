@@ -128,8 +128,10 @@ def add_constituency(request):
     if len(my_constituencies) > 0:
         try:
             const = my_constituencies[0]
-            neighbours = Constituency.neighbours(const)
-            neighbours = neighbours.exclude(pk__in=my_constituencies)
+            neighbours = const.neighbors()
+            for n in neighbours:
+                if n in my_constituencies:
+                    neighbours.remove(n)
             context["search_results"] = [
                 (feedback("We found these constituencies near", const.name),
                  neighbours)]
@@ -203,11 +205,21 @@ def constituency(request, slug, year=None):
                        .filter(slug=slug, year=year).get()
     except Constituency.DoesNotExist:
         raise Http404
-    context = {'constituency':constituency}
+    context = {'constituency': constituency}
     return render_with_context(request,
                                'constituency.html',
                                context)
 
+def constituencies_with_fewer_than_rss(request,
+                                       volunteers=1):
+    constituencies = Constituency.objects.\
+                     filter_where_customuser_fewer_than(volunteers)
+    context = {'constituencies': constituencies}
+    return render_to_response('geo.rss',
+                              context,
+                              context_instance=RequestContext(request),
+                              mimetype="application/atom+xml")
+    
 def logout_view(request):
     logout(request)
     return HttpResponseRedirect("/")
