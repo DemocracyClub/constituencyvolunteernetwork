@@ -31,12 +31,12 @@ def home(request):
     context = {}
     year = settings.CONSTITUENCY_YEAR
     constituencies = Constituency.objects.filter(year=year)
-    count = CustomUser.objects\
-            .aggregate(Count('constituencies',
-                             distinct=True)).values()[0]
+    volunteers = CustomUser.objects.filter(is_active=True)
+    count = volunteers.aggregate(Count('constituencies',
+                                       distinct=True)).values()[0]
     total = constituencies.count()
     
-    context['volunteers'] = CustomUser.objects.count()
+    context['volunteers'] = volunteers.count()
     context['total'] = total
     context['count'] = count
     if total:
