@@ -3,11 +3,12 @@ import datetime
 import random
 import re
 import sha
-
+from itertools import chain
 # django
 from django.db import models
 from django.db.models import Model as DjangoModel
 from django.db.models import permalink
+from django.db.models import Count
 from django.contrib.auth.models import User, UserManager
 from django.conf import settings
 from django.template.loader import render_to_string
@@ -38,36 +39,7 @@ class Model(DjangoModel):
         super(Model, self).__init__(*args, **kwargs)
 
 
-class ConstituencyManager(models.Manager):
-    def _select_by_signup_count(self, count, operator="<"):
-        from django.db import connection
-        sql = ("SELECT signup_constituency.id AS id "
-               "FROM signup_constituency "
-               "LEFT JOIN signup_customuser_constituencies "
-               "ON signup_constituency.id = "
-               "signup_customuser_constituencies.constituency_id "
-               "GROUP BY signup_constituency.id "
-               "HAVING "
-               "count(signup_customuser_constituencies.constituency_id) "
-               + operator + " %s")
-
-        cursor = connection.cursor()
-        cursor.execute(sql, [count])
-        rows = cursor.fetchall()
-        keys = [x[0] for x in rows]
-        return Constituency.objects.filter(pk__in=keys,
-                                           year=settings.CONSTITUENCY_YEAR)
-
-    def filter_where_customuser_fewer_than(self, count):
-        return self._select_by_signup_count(count, operator="<")
-            
-    def filter_where_customuser_more_than(self, count):
-        return self._select_by_signup_count(count, operator=">")
-
-
 class Constituency(Model):
-    objects = ConstituencyManager()
-
     name = models.CharField(max_length=80)
     slug = models.SlugField(max_length=80)
     lat = models.FloatField(verbose_name='latitude',
@@ -240,3 +212,50 @@ class RegistrationProfile(Model):
         return not self.activated and \
                (self.user.date_joined + expiration_date <= datetime.datetime.now())
     activation_key_expired.boolean = True
+
+###############
+# Raw SQL queries
+
+def date_joined_histogram(previous_days=90):
+    from django.db import connection
+    sql = ("SELECT to_char(auth_user.date_joined, 'DD Mon') AS shortdate, "
+           "COUNT(*), DATE_TRUNC('day', auth_user.date_joined) AS date "
+           "FROM auth_user WHERE is_active = True "
+           "AND auth_user.date_joined > now() - interval '%s days' "
+           "GROUP BY date, shortdate "
+           "ORDER BY date;")
+    cursor = connection.cursor()
+    cursor.execute(sql, [previous_days])
+    return cursor
+    
+
+
+
+
+def _select_by_signup_count(count, operator="lt"):
+
+    active = CustomUser.objects.filter(is_active=True)
+    cons = Constituency.objects\
+           .filter(year=CONSTITUENCY_YEAR)\
+           .filter(customuser__in=active)\
+           .annotate(num_users=Count('customuser'))
+    zero_cons = Constituency.objects\
+                .filter(year=CONSTITUENCY_YEAR)
+    if cons:
+        zero_cons = zero_cons.exclude(pk__in=[x.id for x in cons])
+    for z in zero_cons:
+        z.num_users = 0
+    if operator == "lt":
+        cons = cons.filter(num_users__lt=count)
+        cons = list(chain(zero_cons, cons))
+    elif operator == "gt":
+        cons = cons.filter(num_users__gt=count)
+    return cons
+
+def filter_where_customuser_fewer_than(count):
+    return _select_by_signup_count(count, operator="lt")
+
+def filter_where_customuser_more_than(count):
+    return _select_by_signup_count(count, operator="gt")
+
+

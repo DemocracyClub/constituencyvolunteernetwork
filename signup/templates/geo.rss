@@ -9,14 +9,14 @@
     <name>Democracy Club</name>
     <email>seb.bacon@gmail.com</email>
   </author>
-  <id>urn:uuid:60a76c80-d399-11d9-b93C-0003939e0af6</id>
+  <id>urn:uuid:60a76c40-d399-11d9-b93C-0f03939e0af6</id>
   {% for c in constituencies %}
   <entry>
     <title>{{ c.name }}</title>
-    <link href="{% url constituency slug=c.slug %}"/>
-    <id>{% url constituency slug=c.slug %}</id>
+    <link href="http://{{ site }}{% url constituency slug=c.slug %}"/>
+    <id>{{ c.slug }}-{{ c.lat }}-{{ c.lon }}-{{ c.num_users }}</id>
     <updated></updated>
-    <summary></summary>
+    <summary>{{ c.num_users }} volunteers</summary>
     <georss:point>{{ c.lat }} {{c.lon }}</georss:point>
   </entry>
   {% endfor %}

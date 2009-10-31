@@ -1,5 +1,6 @@
 import types
 import time
+from itertools import chain
 
 from django.shortcuts import render_to_response, get_object_or_404
 from django.http import HttpResponseRedirect, Http404
@@ -11,7 +12,9 @@ from django.contrib.flatpages.models import FlatPage
 from django.contrib.auth.decorators import login_required
 from django.utils.html import escape
 from django.utils.safestring import SafeUnicode
+from django.contrib.sites.models import Site
 
+import models
 from models import CustomUser, Constituency, RegistrationProfile
 from forms import UserForm
 
@@ -212,9 +215,10 @@ def constituency(request, slug, year=None):
 
 def constituencies_with_fewer_than_rss(request,
                                        volunteers=1):
-    constituencies = Constituency.objects.\
-                     filter_where_customuser_fewer_than(volunteers)
+    current_site = Site.objects.get_current()
+    constituencies = models.filter_where_customuser_fewer_than(volunteers)
     context = {'constituencies': constituencies}
+    context['site'] = current_site
     return render_to_response('geo.rss',
                               context,
                               context_instance=RequestContext(request),
@@ -222,14 +226,23 @@ def constituencies_with_fewer_than_rss(request,
     
 def constituencies_with_more_than_rss(request,
                                        volunteers=1):
-    constituencies = Constituency.objects.\
-                     filter_where_customuser_more_than(volunteers)
+    current_site = Site.objects.get_current()
+    constituencies = models.filter_where_customuser_more_than(volunteers)
     context = {'constituencies': constituencies}
+    context['site'] = current_site
     return render_to_response('geo.rss',
                               context,
                               context_instance=RequestContext(request),
                               mimetype="application/atom+xml")
 
+def statistics(request):
+    context = {}
+    context['histogram'] = models.date_joined_histogram()
+    num_rows = context['histogram'].rowcount
+    context['categorystep'] = int(num_rows / 40.0 * 4) + 1
+    return render_with_context(request,
+                               'statistics.html',
+                               context)
 def logout_view(request):
     logout(request)
     return HttpResponseRedirect("/")
