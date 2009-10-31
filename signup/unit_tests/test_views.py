@@ -52,6 +52,11 @@ class ViewsTestCase(TestCase):
             const.save()
             self.constituencies.append(const)
 
+    def _hack_confirm(self, userdict):
+        user = CustomUser.objects.get(email=userdict['email'])
+        user.is_active = True
+        user.save()
+            
     def test_viewing_different_models(self):
         """ Create a bunch of instance of models and view them """
         year = settings.CONSTITUENCY_YEAR
@@ -73,9 +78,13 @@ class ViewsTestCase(TestCase):
         response = self.client.post("/", users[0])
         self.assertEqual(response.status_code, 302)
         response = self.client.get("/")
-        self.assertTrue(users[0]['first_name'] in page_content(response.content))
-        self.assertTrue("1 volunteers in 1 constituencies (out of a total 2)"\
-                        in page_content(response.content))
+        self.assertContains(response, users[0]['first_name'])
+        # no-one is active
+        self.assertContains(response, "0 volunteers in 0")
+        self._hack_confirm(users[0])
+        response = self.client.get("/")
+        self.assertContains(response,
+                            "1 volunteers in 1 constituencies (out of a total 2)")
         
 
         response = self.client.get("/add_constituency/")
@@ -88,6 +97,7 @@ class ViewsTestCase(TestCase):
         # add the second user
         response = self.client.post("/", users[1])
         self.assertEqual(response.status_code, 302)
+        self._hack_confirm(users[1])
         response = self.client.get("/")
         self.assertTrue(users[1]['first_name'] in page_content(response.content))
         self.assertTrue("2 volunteers in 2 constituencies (out of a total 2)"\
@@ -104,6 +114,7 @@ class ViewsTestCase(TestCase):
         # and the third user
         response = self.client.post("/", users[2])
         self.assertEqual(response.status_code, 302)
+        self._hack_confirm(users[2])
         response = self.client.get("/")
         self.assertTrue(users[2]['first_name'] in page_content(response.content))
         self.assertTrue("3 volunteers in 2 constituencies (out of a total 2)"\

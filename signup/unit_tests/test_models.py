@@ -7,8 +7,8 @@ from django.conf import settings
 # app
 from testbase import TestCase
 
+from signup import models
 from signup.models import Constituency, CustomUser
-from signup.models import RegistrationManager, RegistrationProfile
 
 this_year = settings.CONSTITUENCY_YEAR
 last_year = settings.CONSTITUENCY_YEAR - datetime.timedelta(365)
@@ -25,15 +25,23 @@ USERS = [{'email':'f@mailinator.com',
           'can_cc':True,
           'first_name':'f',
           'last_name':'f',
-          'username':'f@mailinator.com'},
+          'username':'f@mailinator.com',
+          'is_active':True},
          {'email':'g@mailinator.com',
           'postcode':'WC2H8DN',
           'can_cc':True,
           'first_name':'g',
           'last_name':'g',
-          'username':'g@mailinator.com'},
+          'username':'g@mailinator.com',
+          'is_active':True},
+         {'email':'h@mailinator.com',
+          'postcode':'WC2H8DN',
+          'can_cc':True,
+          'first_name':'h',
+          'last_name':'h',
+          'username':'h@mailinator.com',
+          'is_active':False},
          ]
-        
 
 class ModelsTestCase(TestCase):
 
@@ -48,9 +56,10 @@ class ModelsTestCase(TestCase):
 
         for u in USERS:    
             user = CustomUser.objects.create(**u)
+            user.is_active = u['is_active']
             user.save()
             self.users.append(user)        
-    
+            
     def test_basic_instance_creation(self):
         """test to make sure the various models can be created"""
         first = self.constituencies[0]
@@ -69,14 +78,21 @@ class ModelsTestCase(TestCase):
         
 
     def test_filter_constituency_by_user(self):
-        empty = Constituency.objects\
-                .filter_where_customuser_fewer_than(1)
-        self.assertEqual(empty.count(), 2)
-        self.users[0].constituencies.add(self.constituencies[0])
-        empty = Constituency.objects\
-                .filter_where_customuser_fewer_than(1)
-        self.assertEqual(empty.count(), 1)
+        empty = models.filter_where_customuser_fewer_than(1)
+        self.assertEqual(len(empty), 2)
+        # add an inactive user.  Shouldn't make a difference
+        self.users[2].constituencies.add(self.constituencies[0])
+        empty = models.filter_where_customuser_fewer_than(1)
         
+        self.assertEqual(len(empty), 2)
+        
+        self.users[1].constituencies.add(self.constituencies[0])
+        empty = models.filter_where_customuser_fewer_than(1)
+        self.assertEqual(len(empty), 1)
+
+        more = models.filter_where_customuser_more_than(0)
+        self.assertEqual(len(more), 1)
+
 class TestNeigbours(TestCase):
     # constituency names must match those returned from twfy
     data = [{"name" : "Chipping Barnet",
