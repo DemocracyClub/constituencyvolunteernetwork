@@ -208,7 +208,17 @@ def constituency(request, slug, year=None):
                        .filter(slug=slug, year=year).get()
     except Constituency.DoesNotExist:
         raise Http404
+    
+    missing = models.filter_where_customuser_fewer_than(1)
+    missing_neighbours = constituency.neighbors(
+        limit=5,
+        constituency_set=missing)
+    furthest = missing_neighbours[-1]
+    latspan = abs(furthest.lat - constituency.lat) * 2
+    lonspan = abs(furthest.lon - constituency.lon) * 2
     context = {'constituency': constituency}
+    context['latspan'] = latspan
+    context['lonspan'] = lonspan
     return render_with_context(request,
                                'constituency.html',
                                context)
