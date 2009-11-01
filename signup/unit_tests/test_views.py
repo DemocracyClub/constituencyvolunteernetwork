@@ -36,19 +36,29 @@ users = [{'email':'f@mailinator.com',
 
 this_year = settings.CONSTITUENCY_YEAR
 last_year = settings.CONSTITUENCY_YEAR - datetime.timedelta(365)
-constituencies = [("Glasgow North", this_year),
-                  ("Holborn & St Pancras", this_year),
-                  ("Holborn & St Pancras", last_year)
-                  ]
+constituencies = [{'name':'Glasgow North',
+                   'year':this_year,
+                   'lat':53.2797662137,
+                   'lon':-2.38760476605,
+                   },
+                  {'name':'Holborn & St Pancras',
+                   'year':this_year,
+                   'lat':53.2797662137,
+                   'lon':-2.38760476605,
+                   },
+                  {'name':'Holborn & St Pancras',
+                   'year':last_year,
+                   'lat':53.2797662137,
+                   'lon':-2.38760476605,
+                   }]
         
 class ViewsTestCase(TestCase):
     
     def setUp(self):
         self.users = []
         self.constituencies = []
-        for const, yr in constituencies:
-            const = Constituency.objects.create(name=const,
-                                                year=yr)
+        for item in constituencies:
+            const = Constituency.objects.create(**item)
             const.save()
             self.constituencies.append(const)
 

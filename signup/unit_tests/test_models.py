@@ -151,3 +151,8 @@ class TestNeigbours(TestCase):
         self.assertEqual(list(names), ["Stretford & Urmston",
                                        "Tatton", "Hertsmere"])
         
+        subset = Constituency.objects.filter(name__in=["Tatton",
+                                                       "Hendon"])
+        centre = subset[0]
+        self.assertEqual(subset[1],
+                         centre.neighbors(constituency_set=subset)[0])

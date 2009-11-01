@@ -68,9 +68,12 @@ class Constituency(Model):
                                  (other.lat, other.lon))
         return distance
     
-    def neighbors(self, limit=7):
+    def neighbors(self, limit=7, constituency_set=None):
         distances = []
-        for c in Constituency.objects.all():
+        if constituency_set is None:
+            constituency_set = Constituency.objects\
+                               .filter(year=CONSTITUENCY_YEAR) 
+        for c in constituency_set:
             distances.append((c, self.distance_from(c)))
         nearest = sorted(distances, key=lambda x: x[1])
         keys = [c[0].id for c in nearest[1:limit+1]]
@@ -229,11 +232,7 @@ def date_joined_histogram(previous_days=90):
     return cursor
     
 
-
-
-
 def _select_by_signup_count(count, operator="lt"):
-
     active = CustomUser.objects.filter(is_active=True)
     cons = Constituency.objects\
            .filter(year=CONSTITUENCY_YEAR)\
