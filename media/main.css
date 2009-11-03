@@ -5,7 +5,20 @@ body {
 }
 
 h1, h2, h3, h4, h5 {
- color: #0a5196;
+    color: #0a5196;
+    margin:0;
+    margin-top:0.75em;
+    margin-bottom:0.5em;
+}
+
+h2
+{
+    margin:0;
+    margin-bottom:0.5em;
+}
+
+a {
+    cursor:pointer;
 }
 
 .clear {
@@ -173,7 +186,7 @@ tr.errors td input {
 span.required {
  color: red;
  float: right;
-}
+}color: #0a5196;
 
 input {
  font-size: 110%;
@@ -198,3 +211,34 @@ p.helptext {
  list-style: disc outside url("images/bullet.png");
  margin-bottom: 0.3em;
 }
+
+/* Task page styles */
+#section-task .project
+{
+    color:#666;
+    margin-left:1em;
+    font-size:0.9em;
+}
+
+#section-task .description
+{
+    font-size:1.1em;
+    padding:0.5em;
+    margin:0.5em;
+    margin-bottom:0;
+}
+
+#section-task .actions
+{
+    margin:0.5em;
+    margin-bottom:1.5em;
+    margin-top:0;
+}
+
+#section-task .actions a
+{
+    padding:0.5em;
+    border-bottom:1px solid #CCC;
+    background-color:#EEF;
+}
+

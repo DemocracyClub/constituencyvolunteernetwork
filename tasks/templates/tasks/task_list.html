@@ -1,0 +1,29 @@
+{% if not usertasks %}
+There are no tasks available
+{% else %}
+<ul id="tasks">
+{% for usertask in usertasks %}
+    <li class="task-state-{{ usertask.state }}">
+        <a href='{% url task slug=usertask.task.slug %}'>{{ usertask.task.name }}</a>
+        
+        <div style="float:right">
+        {% ifequal usertask.state 0 %}<a href='{% url task slug=usertask.task.slug %}'>start this task</a> or <a href='{% url ignore_task slug=usertask.task.slug %}'>ignore it</a>{% endifequal %}
+        {% ifequal usertask.state 1 %}<a href='{% url complete_task slug=usertask.task.slug %}'>say you've completed this task</a> or <a href='{% url ignore_task slug=usertask.task.slug %}'>ignore it</a>{% endifequal %}
+        {% ifequal usertask.state 2 %}<a href='{% url unignore_task slug=usertask.task.slug %}'>unignore this task</a>{% endifequal %}
+        {% ifequal usertask.state 3 %}completed!{% endifequal %}
+        </a>
+    </li>
+{% endfor %}
+</ul>
+<script type="text/javascript">
+function show_ignored() {
+    var allHTMLTags=document.getElementsByTagName("li");
+    for (i=0; i<allHTMLTags.length; i++) {
+        if (allHTMLTags[i].className=="task-state-2") {
+            allHTMLTags[i].style.display="block";
+        }
+    }
+}
+</script>
+<a onclick="show_ignored();">show ignored tasks</a>
+{% endif %}

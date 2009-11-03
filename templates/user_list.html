@@ -1,0 +1,11 @@
+{# Anonymised user list, respects datasharing checkbox, pass "users" #}
+
+<ul class="users">
+{% for user in users %}
+    {% if user.can_cc %}
+        <li>{{ user.display_name }} (<a href=''>{{ user.email }}</a>)</li>
+    {% else %}
+        <li>Hidden user</li>
+    {% endif %}
+{% endfor %}
+</ul>

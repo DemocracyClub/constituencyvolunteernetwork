@@ -1,4 +1,9 @@
 {% extends 'base.html' %}
+
+{% block extra-head %}
+<link rel="stylesheet" type="text/css"  media="screen" href="{{ MEDIA_URL }}tasks/tasks.css" />
+{% endblock %}
+
 {% block title %}Transparency through volunteering{% endblock %}
 
 {% block content %}
@@ -45,12 +50,8 @@ We already know that mySociety wants to gather information on general election c
 <li>Consider <a href="{% url add_constituency %}">volunteering to help in other constituencies</a> (e.g. somewhere you're studying, or somewhere else very nearby)</li>
 </ul>
 
-<h3>Your tasks</h3>
-<ul id="tasks">
-{% for usertask in usertasks %}
-    <li><a href='{{ usertask.url }}'>{{ usertask.task.name }}</a> - {{ usertask.state_string }}</li>
-{% endfor %}
-</ul>
+<h3>Available tasks</h3>
+{% include "tasks/task_list.html" %}
 {% endif %}
 
 </div>

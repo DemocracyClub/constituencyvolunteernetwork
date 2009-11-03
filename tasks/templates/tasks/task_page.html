@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ task.name }}{% endblock %}
+{% block section %}task{% endblock %}
+
+{% block content %}
+    <h2>{{ task.name }}</h2>
+    <div class="project">task suggested by <a href='{{ task.project.url }}'>{{ task.project.name }}</a></div>
+    <div class="description">
+        {{ task.description|linebreaks }}
+    </div>
+
+    {% if usertask %}
+    <div class="actions">
+        {% ifequal usertask.state 0 %}You haven't accepted this task <a href='{% url start_task slug=usertask.task.slug %}'>start this task</a> or <a href='{% url ignore_task slug=usertask.task.slug %}'>ignore it</a>{% endifequal %}
+        {% ifequal usertask.state 1 %}You've started this task, <a href='{% url complete_task slug=usertask.task.slug %}'>say you've completed this task</a> or <a href='{% url ignore_task slug=usertask.task.slug %}'>ignore it</a>{% endifequal %}
+        {% ifequal usertask.state 2 %}You've ignored this task, <a href='{% url unignore_task slug=usertask.task.slug %}'>unignore this task</a>{% endifequal %}
+        {% ifequal usertask.state 3 %}You've completed this task!{% endifequal %}
+    </div>
+    {% endif %}
+    
+    <h3>{{ task.get_started_users.count }} {% ifequal task.get_started_users.count 1 %}person{% else %}people{% endifequal %} currently doing this task</h3>
+    <ul class="taskusers">
+    {% with task.get_started_users as users %}
+        {% include "user_list.html" %}
+    {% endwith %}
+    </ul>
+{% endblock %}

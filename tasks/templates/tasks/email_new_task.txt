@@ -1,0 +1,12 @@
+Hi {{ user.display_name }},
+
+There is a new task available for you on Democracy Club: {{ task.name }},
+
+{{ task.description }}
+
+If you want to check it out and help out, visit http://{{ site.domain }}{% url task_login slug=task.slug,login_token="FGHJKLKJHG" %}.
+
+Thanks,
+Democracy Club
+
+http://{{ site.domain }}
