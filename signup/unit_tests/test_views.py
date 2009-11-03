@@ -395,3 +395,22 @@ class TestFlatPages(TestCase):
         self.assertContains(response, "FAQ")
 
         
+class TestConstituencyMap(TestCase):
+    def setUp(self):
+        crewe = Constituency.objects.create(
+            name="Crewe & Nantwich",
+            year=this_year)
+        user = CustomUser.objects.create(
+            username="Frank",
+            password="",
+            postcode="CW1 6AR",
+            can_cc=True,
+            is_active=True)
+        user.constituencies = [crewe]
+        self.assert_(self.client.login(username="Frank", password=""))
+        
+    def test_map(self):
+        """ Checks that flatpages work """
+        response = self.client.get("/statistics/heatmap.svg")
+        self.assertContains(response, '<path id="seat-166" class="none')
+        self.assertContains(response, '<path id="seat-167" class="level1')

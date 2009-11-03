@@ -231,7 +231,6 @@ def date_joined_histogram(previous_days=90):
     cursor.execute(sql, [previous_days])
     return cursor
     
-
 def _select_by_signup_count(count, operator="lt"):
     active = CustomUser.objects.filter(is_active=True)
     cons = Constituency.objects\

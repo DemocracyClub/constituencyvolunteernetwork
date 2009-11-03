@@ -1,9 +1,11 @@
 import types
 import time
-from itertools import chain
+from itertools import chain, takewhile
+import re
 
 from django.shortcuts import render_to_response, get_object_or_404
 from django.http import HttpResponseRedirect, Http404
+from django.http import HttpResponse
 from django.core.urlresolvers import reverse
 from django.template import RequestContext
 from django.contrib.auth import authenticate, login, logout
@@ -13,11 +15,12 @@ from django.contrib.auth.decorators import login_required
 from django.utils.html import escape
 from django.utils.safestring import SafeUnicode
 from django.contrib.sites.models import Site
+from django.template.loader import render_to_string
 
 import models
 from models import CustomUser, Constituency, RegistrationProfile
 from forms import UserForm
-
+import utils
 from utils import addToQueryString
 import settings
 
@@ -254,6 +257,45 @@ def statistics(request):
     return render_with_context(request,
                                'statistics.html',
                                context)
+
+def generate_map(request):
+    source_map = render_to_string('constituency-map.svg',{})
+    year = settings.CONSTITUENCY_YEAR
+    levels = {0:'level1',
+              0.1:'level2',
+              0.2:'level3',
+              0.3:'level4',
+              0.4:'level5',
+              0.5:'level6',
+              0.6:'level7',
+              0.7:'level8',
+              0.8:'level9',
+              0.9:'level10'}
+    level_keys = levels.keys()
+    level_keys.sort()
+    lines = []
+    mapping = utils.map_id_to_const_name
+    for line in source_map.splitlines():
+        the_id = re.search('id="(seat-\d+)"', line)
+        if the_id:
+            level = 'none'
+            the_name = mapping[the_id.group(1)]
+            the_place = Constituency.objects\
+                        .filter(year=year)\
+                        .filter(name=the_name)
+            if the_place:
+                the_count = the_place[0]\
+                            .customuser_set\
+                            .filter(is_active=True)\
+                            .count()
+                score = min(float(the_count)/10, 1)
+                for l in takewhile(lambda x: score > x, level_keys):
+                    level = levels[l]
+            line = line.replace('class="', 'class="%s ' % level)
+        lines.append(line)
+    return HttpResponse("\n".join(lines), mimetype="image/svg+xml")
+
 def logout_view(request):
     logout(request)
     return HttpResponseRedirect("/")
+
