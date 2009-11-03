@@ -94,6 +94,7 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     'signup',
     'invite',
+    'tasks',
 )
 
 AUTHENTICATION_BACKENDS = ('backends.NoAuthBackend',

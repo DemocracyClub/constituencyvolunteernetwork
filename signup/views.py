@@ -20,7 +20,10 @@ from django.template.loader import render_to_string
 import models
 from models import CustomUser, Constituency, RegistrationProfile
 from forms import UserForm
+
 import utils
+import signals
+
 from utils import addToQueryString
 import settings
 
@@ -177,6 +180,7 @@ def do_login(request, key):
     if profile:
         user = authenticate(username=profile.user.email)
         login(request, user)
+        signals.user_login.send(None, user=user)
     return HttpResponseRedirect("/")
     
 def activate_user(request, key):
