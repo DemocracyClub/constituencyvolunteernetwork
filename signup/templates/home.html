@@ -36,12 +36,20 @@ We already know that mySociety wants to gather information on general election c
 
 {% else %}
 <h2>Welcome, {{user.display_name}}</h2>
+
 <h3>Thanks for signing up to help out in your constituency!</h3> 
 <p>In time, we'll begin to send you occasional emails, asking if you can help with certain tasks. The first major task will be gathering information about candidates who are standing in the next election in your constituency. <a href="/aboutus/">Read about our purpose and what we're planning</a>.
 <p>Until then, your next missions (should you choose to accept them) are:</p>
 <ul>
 <li>Please <a href='{% url inviteindex %}'>invite three friends</a> (or more!)</li>
 <li>Consider <a href="{% url add_constituency %}">volunteering to help in other constituencies</a> (e.g. somewhere you're studying, or somewhere else very nearby)</li>
+</ul>
+
+<h3>Your tasks</h3>
+<ul id="tasks">
+{% for usertask in usertasks %}
+    <li><a href='{{ usertask.url }}'>{{ usertask.task.name }}</a> - {{ usertask.state_string }}</li>
+{% endfor %}
 </ul>
 {% endif %}
 

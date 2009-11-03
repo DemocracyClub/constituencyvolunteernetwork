@@ -28,6 +28,8 @@ TASK_STATES = (
     (3, 'Completed'),
 )
 
+task_state_string = {0: 'Assigned', 1:'Started', 2:'Ignored', 3:'Completed'}
+
 class TaskUserManager(models.Manager):
     def assign_task(self, task, user, url):
         task_user = TaskUser(task=task, user=user, state=0, url=url)
@@ -42,5 +44,8 @@ class TaskUser(Model):
     
     objects = TaskUserManager()
     
+    def state_string(self):
+        return task_state_string[self.state]
+    
     def __unicode__(self):
-        return "%s doing %s" % (self.user, self.task)
+        return "%s doing %s (%s)" % (self.user, self.task, task_state_string[self.state])

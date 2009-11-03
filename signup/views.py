@@ -24,6 +24,8 @@ from forms import UserForm
 import utils
 import signals
 
+from tasks.models import TaskUser
+
 from utils import addToQueryString
 import settings
 
@@ -65,6 +67,10 @@ def home(request):
             context['form'] = form
     else:
         context['form'] = UserForm()
+        
+    if request.user.is_authenticated():
+        context['usertasks'] = TaskUser.objects.filter(user=request.user)
+    
     return render_with_context(request,
                                'home.html',
                                context)
