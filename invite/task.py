@@ -21,5 +21,5 @@ def callback_assign(sender, **kwargs):
         # print "%s already assigned to %s" % (task, user)
         pass
         
-user_join.connect(callback_assign)
-user_touch.connect(callback_assign)
+#user_join.connect(callback_assign)
+#user_touch.connect(callback_assign)
