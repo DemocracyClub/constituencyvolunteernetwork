@@ -7,7 +7,12 @@ from models import Task, TaskUser
 
 
 def home(request):
-    pass
+    context = {}
+
+    if request.user.is_authenticated():
+        context['usertasks'] = TaskUser.objects.filter(user=request.user)
+
+    return render_with_context(request, 'tasks/tasks.html', context)
 
 def task(request, slug, login_token=None):
     """

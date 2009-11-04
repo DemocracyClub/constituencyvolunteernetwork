@@ -68,8 +68,8 @@ def home(request):
     else:
         context['form'] = UserForm()
         
-    if request.user.is_authenticated():
-        context['usertasks'] = TaskUser.objects.filter(user=request.user)
+    # if request.user.is_authenticated():
+    #    context['usertasks'] = TaskUser.objects.filter(user=request.user)
     
     return render_with_context(request,
                                'home.html',

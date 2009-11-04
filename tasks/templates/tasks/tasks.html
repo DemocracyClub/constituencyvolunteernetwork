@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block extra-head %}
+<link rel="stylesheet" type="text/css"  media="screen" href="{{ MEDIA_URL }}tasks/tasks.css" />
+{% endblock %}
+
+{% block title %}Tasks{% endblock %}
+{% block section %}tasks{% endblock %}
+
+{% block content %}
+<h2>Your tasks</h2>
+{% include "tasks/task_list.html" %}
+{% endblock %}
