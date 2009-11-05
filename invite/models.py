@@ -17,7 +17,7 @@ class InvitationManager(models.Manager):
       
       current_site = Site.objects.get_current()
       
-      subject = strings.INVITE_SUBJECT % user
+      subject = strings.INVITE_SUBJECT % user.display_name
       email_context = { 'message': message,
                         'site': current_site, 
                         'user': user }

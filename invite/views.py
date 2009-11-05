@@ -10,25 +10,25 @@ from django.contrib.sites.models import Site
 
 from forms import InviteForm
 from signup.views import render_with_context
-from utils import addToQueryString
-import strings
 
 @login_required
 def index(request):
     vars = {}
-
     if request.method == "POST":
         invite_form = InviteForm(request.POST, request.FILES)
         if invite_form.is_valid():
             invite_form.save(request.user)
 
-            return HttpResponseRedirect(addToQueryString(reverse("inviteindex"),
-                {'notice': strings.INVITE_NOTICE_SUCCESS}))
+            return HttpResponseRedirect(reverse('thankyou'))
         else:
             vars['invite_form'] = invite_form
     else:
         vars['invite_form'] = InviteForm()
         
     vars['siteurl'] = quote("http://%s" % Site.objects.get_current().domain)
-    
-    return render_with_context(request, "invite/invite_page.html", vars)
+    request.user.seen_invite = True
+    request.user.save()    
+    return render_with_context(request,
+                               "invite/invite_page.html",
+                               vars)
+

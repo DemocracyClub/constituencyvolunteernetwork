@@ -168,18 +168,23 @@ ul#links li a:hover {
     margin: 0;
 }
 
-form#signup ul.errorlist {
+form ul.errorlist {
  margin: 0;
+ list-style: none;
 }
 
-form#signup ul.errorlist li {
+form ul.errorlist li {
  color: red;
  list-style: none;
  font-size: 80%;
  font-style: italic;
 }
 
-tr.errors td input {
+form {
+ margin-top: 1em;
+}
+
+tr.errors td input, tr.errors td textarea {
  border: solid red 2px;
 }
 
@@ -207,7 +212,7 @@ p.helptext {
  text-align: center;
 }
 
-#main ul li {
+ul li {
  list-style: disc outside url("images/bullet.png");
  margin-bottom: 0.3em;
 }

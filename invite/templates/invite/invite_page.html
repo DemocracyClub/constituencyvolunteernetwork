@@ -11,9 +11,24 @@ function onABCommComplete() {
   // OPTIONAL: do something here after the new data has been populated in your text area
 }
 //--></script>
+<style>
+ p.notice {
+  display: none;
+ }
+</style>
 {% endblock %}
 
+
 {% block content %}
-    <h2>Tell other people about Democracy Club</h2>
+
+<h3>Thanks for signing up to help out in your constituency!</h3> 
+<div class="span-3">
+<p>Before we can really start making a difference, we need to try to get at least one volunteer in every constituency in the United Kingdom.</p>
+<p>Please tell as many friends as possible about Democracy Club, wherever they live in the country!  It will really help if you write a personal message explaining about the site and why you think it's important.</p>
+<p>You can also use the "ShareThis" link below to tell friends on Facebook, Twitter, MySpace and other social networking sites.</p>
+<script type="text/javascript" src="http://w.sharethis.com/button/sharethis.js#publisher=b709ae1d-96fa-4a11-b622-2e53080cec42&amp;type=website&amp;style=rotate"></script>
+</div>
+<div class="span-4 box last">
     {% include "invite/invite_block.html" %}
+</div>
 {% endblock %}

@@ -3,15 +3,30 @@
 from urlparse import urlparse
 from cgi import parse_qs
 import urllib
-
 try:
     import json
 except ImportError:
     import simplejson as json
-
 import re
+from django import forms
+from django.template import Context, loader
+
 POSTCODE_RE = re.compile(r'\b[A-PR-UWYZ][A-HK-Y0-9][A-HJKSTUW0-9]?[ABEHMNPRVWXY0-9]? {0,2}[0-9][ABD-HJLN-UW-Z]{2}\b',re.I)
 
+class TemplatedForm(forms.Form):
+    """Helper class that allows us to provide our own custom form
+    rendering
+    """
+    def output_via_template(self):
+        bound_fields = [forms.forms.BoundField(self, field, name)\
+                        for name, field in self.fields.items()]
+        c = Context(dict(form = self, bound_fields = bound_fields))
+        t = loader.get_template('forms/form.html')
+        return t.render(c)
+
+    def as_table(self):
+        return self.output_via_template()
+    
 
 def addToQueryString(orig, extra_data):
     scheme, netloc, path, params, query, fragment = urlparse(orig)

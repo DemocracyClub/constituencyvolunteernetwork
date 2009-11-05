@@ -33,7 +33,16 @@
       </div>
     </form>
     <form method="post" action="">
+      <p>Tick constituencies that you want to join, then scroll to the bottom of the page and click the "add" button.</p>
       {% for feedback, constituencies in search_results %}
+      <div>{{ feedback }}</div>
+      <ul id="constituency-list">
+      {% for c in constituencies %}
+	<li><input name="add_c" type="checkbox" value="{{ c.slug }}" />{{ c.name }}</li>
+      {% endfor %}
+      </ul>
+      {% endfor %}
+      {% for feedback, constituencies in missing_search_results %}
       <div>{{ feedback }}</div>
       <ul id="constituency-list">
       {% for c in constituencies %}

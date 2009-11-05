@@ -1,6 +1,5 @@
 import types
-import time
-from itertools import chain, takewhile
+from itertools import takewhile
 import re
 
 from django.shortcuts import render_to_response, get_object_or_404
@@ -10,7 +9,6 @@ from django.core.urlresolvers import reverse
 from django.template import RequestContext
 from django.contrib.auth import authenticate, login, logout
 from django.db.models import Count
-from django.contrib.flatpages.models import FlatPage
 from django.contrib.auth.decorators import login_required
 from django.utils.html import escape
 from django.utils.safestring import SafeUnicode
@@ -20,7 +18,6 @@ from django.template.loader import render_to_string
 import models
 from models import CustomUser, Constituency, RegistrationProfile
 from forms import UserForm
-
 import utils
 import signals
 
@@ -28,7 +25,6 @@ from tasks.models import TaskUser
 
 from utils import addToQueryString
 import settings
-
 import geo
 
 def render_with_context(request,
@@ -40,7 +36,8 @@ def render_with_context(request,
                               context,
                               **kw)
 
-def home(request):
+
+def _get_statistics_context():
     context = {}
     year = settings.CONSTITUENCY_YEAR
     constituencies = Constituency.objects.filter(year=year)
@@ -53,28 +50,47 @@ def home(request):
     context['total'] = total
     context['count'] = count
     if total:
-        context['percent_complete'] = int(float(count)/total*100)
+        percent = int(float(count)/total*100)
+        context['percent_complete'] = percent
     else:
         context['percent_complete'] = 0
-    if request.method == "POST":
-        form = UserForm(request.POST, request.FILES)
-        if form.is_valid():
-            profile = form.save()
-            user = authenticate(username=profile.user.email)
-            login(request, user)
-            return HttpResponseRedirect(reverse('welcome'))
+    return context
+
+def home(request):
+    context = _get_statistics_context()
+    if request.user.is_anonymous():
+        if request.method == "POST":
+            form = UserForm(request.POST, request.FILES)
+            if form.is_valid():
+                profile = form.save()
+                user = authenticate(username=profile.user.email)
+                login(request, user)
+                return HttpResponseRedirect(reverse('welcome'))
+            else:
+                context['form'] = form
         else:
-            context['form'] = form
-    else:
-        context['form'] = UserForm()
-        
-    # if request.user.is_authenticated():
-    #    context['usertasks'] = TaskUser.objects.filter(user=request.user)
-    
-    return render_with_context(request,
+            context['form'] = UserForm()
+        return render_with_context(request,
                                'home.html',
                                context)
-                               
+    else:
+        return HttpResponseRedirect(reverse('welcome'))
+
+def welcome(request):
+    context = _get_statistics_context()        
+    #if request.user.is_authenticated():
+    #    context['usertasks'] = TaskUser.objects\
+    #                           .filter(user=request.user)
+
+    # "force" all new users to recruit for us
+    if not request.user.seen_invite:
+        return HttpResponseRedirect(reverse('inviteindex'))
+    else:
+        return render_with_context(request,
+                                   'welcome.html',
+                                   context)
+
+    
 @login_required
 def delete_constituency(request, slug):
     c = Constituency.objects.get(slug=slug)
@@ -99,7 +115,7 @@ def search_name(place):
 
 def feedback(msg, place):
     "search feedback"
-    return SafeUnicode(escape(msg) + (u"&nbsp;<b>%s</b>" % escape(place)))
+    return SafeUnicode(escape(msg) + (u"&nbsp;<b>%s</b>:" % escape(place)))
 
 def place_search(place):
     """
@@ -135,7 +151,7 @@ def place_search(place):
 
 @login_required
 def add_constituency(request):
-    my_constituencies = request.user.current_constituencies.all()
+    my_constituencies = request.user.ordered_constituencies.all()
     context = {'my_constituencies': my_constituencies}
 
     context['constituencies'] = []
@@ -143,13 +159,22 @@ def add_constituency(request):
     if len(my_constituencies) > 0:
         try:
             const = my_constituencies[0]
-            neighbours = const.neighbors()
-            for n in neighbours:
-                if n in my_constituencies:
-                    neighbours.remove(n)
+            all_const = Constituency.objects.exclude(
+                pk__in=my_constituencies)
+            neighbours = const.neighbors(limit=5,
+                                         constituency_set=all_const)
+            missing = models.filter_where_customuser_fewer_than(1)
+            missing_neighbours = const.neighbors(
+                limit=5,
+                constituency_set=missing)
+
             context["search_results"] = [
                 (feedback("We found these constituencies near", const.name),
                  neighbours)]
+            context["missing_search_results"] = [
+                (feedback(("These are the nearest places where there "
+                           "aren't any volunteers yet"), ""),
+                 missing_neighbours)]
         except KeyError:
             # Any problems looking up neighbours means we pretend to
             # have none

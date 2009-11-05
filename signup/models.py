@@ -92,6 +92,8 @@ class CustomUser(User):
     postcode = models.CharField(max_length=9)
     constituencies = models.ManyToManyField(Constituency)
     can_cc = models.BooleanField(default=False)
+    login_count = models.IntegerField(default=0)
+    seen_invite = models.BooleanField(default=False)
     objects = UserManager()
 
     @property
@@ -99,6 +101,18 @@ class CustomUser(User):
         "Return constituencies matching current year"
         return self.constituencies.filter(year=CONSTITUENCY_YEAR)
 
+    @property
+    def ordered_constituencies(self):
+        "Return constituencies in the order in which they were added"
+        return self.current_constituencies\
+               .order_by('signup_customuser_constituencies.id')
+
+    @property
+    def home_constituency(self):
+        "Return the first constituency the user subscribed to"
+        return self.ordered_constituencies[0]
+
+        
     @property
     def display_name(self):
         if self.first_name:

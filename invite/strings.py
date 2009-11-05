@@ -1,9 +1,11 @@
-INVITE_TEXT = "Join Democracy Club to help out in your constituency for the upcoming election!"
 INVITE_SUBJECT = "Invitation from %s for Democracy Club"
 
-INVITE_NOTICE_SUCCESS = "Invitation(s) sent. Thanks!"
-
-INVITE_ERROR_REGISTERED = "%s is already registered"
-INVITE_ERROR_INVITED = "%s has already been invited"
 INVITE_ERROR_HONEYPOT = "Begone, foul bot"
 
+INVITE_TEXT = """
+I recently joined Democracy Club, an independent 
+website for helping you volunteer to improve democractic
+accountability in your local area.
+
+They're trying to recruit as many volunteers as possible, and I
+thought you'd be interested in joining."""

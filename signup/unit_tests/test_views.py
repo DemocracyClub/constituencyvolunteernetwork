@@ -11,7 +11,6 @@ from django.contrib.sites.models import Site
 from testbase import TestCase
 
 from signup.models import Constituency, CustomUser
-from signup.models import RegistrationManager, RegistrationProfile
 from signup.views import place_search
 
 users = [{'email':'f@mailinator.com',
@@ -87,12 +86,17 @@ class ViewsTestCase(TestCase):
         # add the first user
         response = self.client.post("/", users[0])
         self.assertEqual(response.status_code, 302)
-        response = self.client.get("/")
+        response = self.client.get("/", follow=True)
+        # first time we see a screen trying to convince us to sign
+        # folks up
+        self.assertContains(response, "Thanks")
+        # second time, we see the usual welcome screen
+        response = self.client.get("/", follow=True)
         self.assertContains(response, users[0]['first_name'])
         # no-one is active
         self.assertContains(response, "0 volunteers in 0")
         self._hack_confirm(users[0])
-        response = self.client.get("/")
+        response = self.client.get("/", follow=True)
         self.assertContains(response,
                             "1 volunteers in 1 constituencies (out of a total 2)")
         
@@ -105,10 +109,12 @@ class ViewsTestCase(TestCase):
         self.assertTrue(u"the only vol" in page_content(response.content))
         
         # add the second user
-        response = self.client.post("/", users[1])
-        self.assertEqual(response.status_code, 302)
+        response = self.client.get("/logout/", follow=True)
+        response = self.client.post("/", users[1], follow=True)
+        response = self.client.get("/", follow=True) # twice to skip
+                                                     # invite step 
         self._hack_confirm(users[1])
-        response = self.client.get("/")
+        response = self.client.get("/", follow=True) 
         self.assertTrue(users[1]['first_name'] in page_content(response.content))
         self.assertTrue("2 volunteers in 2 constituencies (out of a total 2)"\
                         in page_content(response.content))
@@ -122,10 +128,11 @@ class ViewsTestCase(TestCase):
         self.assertTrue(u"the only vol" in page_content(response.content))
         
         # and the third user
+        response = self.client.get("/logout/", follow=True)
         response = self.client.post("/", users[2])
-        self.assertEqual(response.status_code, 302)
+        response = self.client.get("/", follow=True) # twice to skip invite step
         self._hack_confirm(users[2])
-        response = self.client.get("/")
+        response = self.client.get("/", follow=True)
         self.assertTrue(users[2]['first_name'] in page_content(response.content))
         self.assertTrue("3 volunteers in 2 constituencies (out of a total 2)"\
                         in page_content(response.content))
@@ -156,7 +163,7 @@ class TestSignup(TestCase):
                   'expect':'Unknown postcode'},
                  {'form':{'email':'321@mailinator.com',
                           'postcode':'cw16ar'},
-                  'expect':'Welcome'},]
+                  'expect':'A short message'},]
         for test in tests:
             response = self.client.post("/", test['form'], follow=True)
             self.assertContains(response, test['expect'])
@@ -234,8 +241,9 @@ class TestLeaveAllConstituencies(TestCase):
              'postcode':'G206BT',
              'can_cc':True,
              'first_name':'foo',
-             'last_name':'bar'})
-        self.assertRedirects(response, "/welcome")
+             'last_name':'bar'},
+                                    follow=True)
+        self.assertRedirects(response, "/invite/")
 
         # they have a constituency
         user = CustomUser.objects.get(email="foo@mailinator.com")

@@ -1,29 +1,11 @@
-import datetime
-import re
-
 from django import forms
-from django.template import Context, loader
-
-from models import CustomUser, Constituency, RegistrationProfile
-from settings import CONSTITUENCY_YEAR
-
 import signals
 
 import twfy
 from utils import POSTCODE_RE
-
-
-class TemplatedForm(forms.Form):
-    def output_via_template(self):
-        "Helper function for fieldsting fields data from form."
-        bound_fields = [forms.forms.BoundField(self, field, name) for name, field \
-                        in self.fields.items()]
-        c = Context(dict(form = self, bound_fields = bound_fields))
-        t = loader.get_template('forms/form.html')
-        return t.render(c)
-
-    def as_table(self):
-        return self.output_via_template()
+from utils import TemplatedForm
+from models import CustomUser, Constituency, RegistrationProfile
+from settings import CONSTITUENCY_YEAR
 
 class UserForm(TemplatedForm):
     first_name = forms.CharField(required=False)

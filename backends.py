@@ -8,7 +8,10 @@ class NoAuthBackend(ModelBackend):
     """
     def authenticate(self, username=None, password=None):
         try:
-            return CustomUser.objects.get(username=username)            
+            user = CustomUser.objects.get(username=username)
+            user.login_count += 1
+            user.save()
+            return user
         except CustomUser.DoesNotExist:
             return None
 

@@ -4,7 +4,7 @@ import views
 ################################################################################
 urlpatterns = patterns('casestudies',
     url(r'^$', views.home, name="home"),
-    url(r'^welcome$', views.home, name="welcome"),
+    url(r'^welcome$', views.welcome, name="welcome"),
     url(r'^user/(?P<id>[\w-]+)/$',
         views.user,
         name="user"),

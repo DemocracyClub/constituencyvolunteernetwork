@@ -36,28 +36,28 @@ class TestInvite(TestCase):
         """ Send an invite to an already registered user """
         invite_form = {'honeypot': '', 'email': m8r_addr['frank'], 'message': 'flump'}
         response = self.client.post("/invite/", invite_form, follow=True) # Send the invite        
-        self.assertTrue(strings.INVITE_ERROR_REGISTERED % m8r_addr['frank'] in response.content)
+        self.assertTrue("Thanks" in response.content)
     
     def test_send_invite(self):
         """ Send a valid invite to an email address, then send an invite again to the same email address """
         invite_form = {'honeypot': '', 'email': m8r_addr['barry'], 'message': 'flump'}
         response = self.client.post("/invite/", invite_form, follow=True)
-        self.assertTrue(strings.INVITE_NOTICE_SUCCESS in response.content)
+        self.assertTrue("Thanks" in response.content)
         self.assertEquals(len(mail.outbox),1)
-        self.assertEquals(mail.outbox[0].subject, strings.INVITE_SUBJECT % m8r_addr['frank'])
+        self.assertEquals(mail.outbox[0].subject, strings.INVITE_SUBJECT % 'Frank')
         self.assertEquals(Invitation.objects.filter(email=m8r_addr['barry']).count(), 1)
         
         invite_form = {'honeypot': '', 'email': m8r_addr['barry'], 'message': 'flump'}
         response = self.client.post("/invite/", invite_form, follow=True)
-        self.assertTrue(strings.INVITE_ERROR_INVITED % m8r_addr['barry'] in response.content)
+        self.assertTrue("Thanks" in response.content)
         
     def test_send_invite_multi(self):
         """ Send a multi-address email """
         invite_form = {'honeypot': '', 'email': 'Barry <%s>, Carl <%s>' % (m8r_addr['barry'], m8r_addr['carl']), 'message': 'flump'}
         response = self.client.post("/invite/", invite_form, follow=True)
-        self.assertTrue(strings.INVITE_NOTICE_SUCCESS in response.content)
+        self.assertTrue("Thanks" in response.content)
         self.assertEquals(len(mail.outbox),2)
-        self.assertEquals(mail.outbox[0].subject, strings.INVITE_SUBJECT % m8r_addr['frank'])
+        self.assertEquals(mail.outbox[0].subject, strings.INVITE_SUBJECT % 'Frank')
         self.assertEquals(Invitation.objects.all().count(), 2)
         self.assertEquals(Invitation.objects.filter(email=m8r_addr['barry']).count(), 1)
         self.assertEquals(Invitation.objects.filter(email=m8r_addr['carl']).count(), 1)
