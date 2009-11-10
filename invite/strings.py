@@ -4,7 +4,7 @@ INVITE_ERROR_HONEYPOT = "Begone, foul bot"
 
 INVITE_TEXT = """
 I recently joined Democracy Club, an independent 
-website for helping you volunteer to improve democractic
+website for helping you volunteer to improve democratic
 accountability in your local area.
 
 They're trying to recruit as many volunteers as possible, and I
