@@ -154,5 +154,6 @@ class TestNeigbours(TestCase):
         subset = Constituency.objects.filter(name__in=["Tatton",
                                                        "Hendon"])
         centre = subset[0]
+        import pdb; pdb.set_trace()
         self.assertEqual(subset[1],
                          centre.neighbors(constituency_set=subset)[0])

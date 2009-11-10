@@ -72,7 +72,7 @@ class Constituency(Model):
         distances = []
         if constituency_set is None:
             constituency_set = Constituency.objects\
-                               .filter(year=CONSTITUENCY_YEAR) 
+                               .filter(year=CONSTITUENCY_YEAR)
         for c in constituency_set:
             distances.append((c, self.distance_from(c)))
         nearest = sorted(distances, key=lambda x: x[1])

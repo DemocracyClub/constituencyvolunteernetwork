@@ -254,8 +254,12 @@ def constituency(request, slug, year=None):
         constituency_set=missing)
     if missing_neighbours:
         furthest = missing_neighbours[-1]
-        latspan = abs(furthest.lat - constituency.lat) * 2
-        lonspan = abs(furthest.lon - constituency.lon) * 2
+        
+        if None not in (furthest.lat, furthest.lon,
+                        constituency.lat, constituency.lon):
+            # not in Northern Ireland
+            latspan = abs(furthest.lat - constituency.lat) * 2
+            lonspan = abs(furthest.lon - constituency.lon) * 2
     context['latspan'] = latspan
     context['lonspan'] = lonspan
     return render_with_context(request,

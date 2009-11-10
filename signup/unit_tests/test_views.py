@@ -284,10 +284,30 @@ class TestNorthernIreland(TestCase):
             can_cc=False)
         user.constituencies = [south_down]
         user.save()
-
         self.client.login(username="foo")
         response = self.client.get("/add_constituency/")
 
+    def test_missing_neighbours(self):
+        belfast_north = Constituency.objects.create(
+            name = "Belfast North",
+            year = this_year)
+        belfast_north.save()
+        south_down = Constituency.objects.create(
+            name = "South Down",
+            year = this_year)
+        south_down.save()
+        user = CustomUser.objects.create(
+            username="foo",
+            password="",
+            email="foo@mailinator.com",
+            postcode="BT30 8AH",
+            first_name="foo",
+            last_name="bar",
+            can_cc=False)
+        user.constituencies = [south_down]
+        user.save()
+        self.client.login(username="foo")
+        response = self.client.get("/constituency/south-down/")
 
 class TestBoundryPostcodes(TestCase):
     """
