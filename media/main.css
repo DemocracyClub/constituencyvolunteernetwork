@@ -99,10 +99,17 @@ ul#links li a:hover {
     padding-left:10px;
     padding-right:10px;
     background:url("images/navigation_gradient.png") repeat-x;
+    background-position:bottom;
     color:white;
     clear:left;
-    height:3.0em;
     font-size:0.9em;
+}
+
+#navigation h1, #navigation h2, #navigation h3, #navigation h4, #navigation h5
+{
+    color:white;
+    line-height:2.0em;
+    margin:0;
 }
 
 #navigation ul {
@@ -110,7 +117,7 @@ ul#links li a:hover {
     margin:0;
     padding-top: 0.65em;
     list-style-type: none;
-    height:3.0em;
+    height:2.0em;
 }
 
 #navigation ul li {
@@ -252,3 +259,28 @@ ul li {
     background-color:#EEF;
 }
 
+/* Homepage2 styles */
+div.topbox
+{
+    background:rgba(238, 238, 255, 0.5);
+    margin:0.5em;
+    padding:1.0em;
+    height:12em;
+}
+
+div.topbox p
+{
+    text-align:left;
+}
+
+div.topbox > h3
+{
+    margin-top:0;
+}
+
+#section-home2 > .container
+{
+    background:url("images/heatmap.png") no-repeat white;
+    background-position:top right;
+    min-height:600px;
+}

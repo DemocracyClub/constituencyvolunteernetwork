@@ -76,6 +76,11 @@ def home(request):
     else:
         return HttpResponseRedirect(reverse('welcome'))
 
+def home2(request):
+    context = _get_statistics_context()
+    context['form'] = UserForm()
+    return render_with_context(request, 'home_2.html', context)
+
 def welcome(request):
     context = _get_statistics_context()        
     #if request.user.is_authenticated():
