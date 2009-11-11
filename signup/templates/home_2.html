@@ -8,7 +8,7 @@
 
 {% block section %}home2{% endblock %}
 
-{% block sneakytitle %}<h3>Sign up to help make this the <em>most accountable</em> general election ever!</h3>{% endblock %}
+{% block sneakytitle %}<h3>Join Democracy Club to help make this the <em>most accountable</em> general election ever!</h3>{% endblock %}
 
 {% block content %}
 <div class="span-2 topbox">
@@ -23,12 +23,13 @@
 
 <div class="span-3 topbox">
     <h3>Help everyone</h3>
-    <p>And in doing so help everyone by giving them the information they need to hold election candidates and representatives to account.</p>
+    <p>... and in doing so help everyone by giving them the information they need to hold election candidates and representatives to account.</p>
 </div>
 
 <div class="span-5 last">
 {% if form %}
   <form action="" method="post" id="signup">
+  <h3>Join now!</h3>
   <table>
   {{ form.as_table }}
   <tr>
@@ -38,6 +39,7 @@
   </table>
   </form>
 {% endif %}
+<p class="small">We will occasionally suggest tasks on behalf of other transparency related groups, but we'll never share your private details with anyone, and we'll never send you more than two emails a week, no matter what.  Read our <a href="/aboutus/#privacy">terms and conditions</a> for more.</p>
 </div>
 
 <div class="span-7">

@@ -173,11 +173,23 @@ ul#links li a:hover {
     background:#FFE;
     padding:0.5em;
     border:1px solid #EEE;
+    margin:0.5em;
     margin-bottom:1em;
 }
 
 #signup input {
     margin: 0;
+    width:75%;
+}
+
+#signup input[type=submit]
+{
+    width:150px;
+}
+
+#signup h3
+{
+    margin-top:0;
 }
 
 form ul.errorlist {
