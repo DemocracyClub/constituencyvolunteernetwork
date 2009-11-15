@@ -13,23 +13,24 @@
 {% block content %}
 <div class="span-2 topbox">
     <h3>Sign up ></h3>
-    <p><a href="/aboutus/">Democracy Club</a></em> is a new, independent network of volunteers who want to help internet-savvy transparency groups like <a href="http://www.mysociety.org/">mySociety</a> and <a href="http://www.thestraightchoice.org/">The Straight Choice</a>.</p>
+    <p><a href="/aboutus/">Democracy Club</a></em> is a new, non-partisan network of volunteers who want to help internet-savvy transparency groups like <a href="http://www.mysociety.org/">mySociety</a> and <a href="http://www.thestraightchoice.org/">The Straight Choice</a>.</p>
 </div>
 
 <div class="span-2 topbox">
     <h3>Do tasks ></h3>
-    <p>If you sign up with us, we'll suggest tasks you can help organisations like these with - tasks like finding out who election candidates are, and finding out what they're saying</p>
+    <p>If you sign up with us, we'll suggest tasks you can help organisations like these with - <a href='/aboutus/#what'>tasks like</a> finding out who election candidates are, and finding out what they're saying</p>
 </div>
 
-<div class="span-3 topbox">
+<div class="span-2 topbox">
     <h3>Help everyone</h3>
     <p>... and in doing so help everyone by giving them the information they need to hold election candidates and representatives to account.</p>
 </div>
 
-<div class="span-5 last">
+<div class="span-5">
 {% if form %}
   <form action="" method="post" id="signup">
   <h3>Join now!</h3>
+  <p class="small">We're trying to get volunteers in every part of the UK.  So far, we've recruited {{ volunteers }} volunteers in {{ count }} constituencies (out of a total {{ total }}).</p>
   <table>
   {{ form.as_table }}
   <tr>
@@ -39,11 +40,14 @@
   </table>
   </form>
 {% endif %}
+</div>
+
+<div class="span-5">
 <p class="small">We will occasionally suggest tasks on behalf of other transparency related groups, but we'll never share your private details with anyone, and we'll never send you more than two emails a week, no matter what.  Read our <a href="/aboutus/#privacy">terms and conditions</a> for more.</p>
 </div>
 
-<div class="span-7">
-<p>We're trying to get volunteers in every part of the UK.  So far, we've recruited {{ volunteers }} volunteers in {{ count }} constituencies (out of a total {{ total }}).  <a href="/statistics/">Read more about how we're doing.</a></p>
+<div class="span-3 last">
+<p class="small">On this map, the redder the constituency, the more volunteers we have there. <a href="/statistics/">Read more about how we're doing.</a></p>
 <p class="quiet">Right now we're signing people up to the current constituencies; things will automatically work with new constituencies as and when they're available.</p>
 </div>
 

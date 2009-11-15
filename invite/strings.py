@@ -3,7 +3,7 @@ INVITE_SUBJECT = "Invitation from %s for Democracy Club"
 INVITE_ERROR_HONEYPOT = "Begone, foul bot"
 
 INVITE_TEXT = """
-I recently joined Democracy Club, an independent 
+I recently joined Democracy Club, a non-partisan 
 website for helping you volunteer to improve democratic
 accountability in your local area.
 
