@@ -11,22 +11,33 @@
 {% block sneakytitle %}<h3>Join Democracy Club to help make this the <em>most accountable</em> general election ever!</h3>{% endblock %}
 
 {% block content %}
-<div class="span-2 topbox">
+<script type="text/javascript">
+window.onload = function () { document.getElementById('id_first_name').focus(); }
+</script>
+
+<div class="span-8">
+<div class="topboxwrap"><div class="topbox">
     <h3>Sign up ></h3>
     <p><a href="/aboutus/">Democracy Club</a></em> is a new, non-partisan network of volunteers who want to help internet-savvy transparency groups like <a href="http://www.mysociety.org/">mySociety</a> and <a href="http://www.thestraightchoice.org/">The Straight Choice</a>.</p>
-</div>
+</div></div>
 
-<div class="span-2 topbox">
+<div class="topboxwrap"><div class="topbox">
     <h3>Do tasks ></h3>
     <p>If you sign up with us, we'll suggest tasks you can help organisations like these with - <a href='/aboutus/#what'>tasks like</a> finding out who election candidates are, and finding out what they're saying</p>
-</div>
+</div></div>
 
-<div class="span-2 topbox">
+<div class="topboxwrap"><div class="topbox last">
     <h3>Help everyone</h3>
     <p>... and in doing so help everyone by giving them the information they need to hold election candidates and representatives to account.</p>
+</div></div>
+
+<div class="span-3">
+    <p class="small">We will occasionally suggest tasks on behalf of other transparency related groups, but we'll never share your private details with anyone, and we'll never send you more than two emails a week, no matter what.  Read our <a href="/aboutus/#privacy">terms and conditions</a> for more.</p>
+    <p class="quiet">Right now we're signing people up to the current constituencies; things will automatically work with new constituencies as and when they're available.</p>
+    <p class="small">On the background map, the redder the constituency, the more volunteers we have there. <em><a href="/statistics/">Read more about how we're doing.</a></em></p>
 </div>
 
-<div class="span-5">
+<div class="span-5 last">
 {% if form %}
   <form action="" method="post" id="signup">
   <h3>Join now!</h3>
@@ -40,15 +51,6 @@
   </table>
   </form>
 {% endif %}
-</div>
-
-<div class="span-5">
-<p class="small">We will occasionally suggest tasks on behalf of other transparency related groups, but we'll never share your private details with anyone, and we'll never send you more than two emails a week, no matter what.  Read our <a href="/aboutus/#privacy">terms and conditions</a> for more.</p>
-</div>
-
-<div class="span-3 last">
-<p class="small">On this map, the redder the constituency, the more volunteers we have there. <a href="/statistics/">Read more about how we're doing.</a></p>
-<p class="quiet">Right now we're signing people up to the current constituencies; things will automatically work with new constituencies as and when they're available.</p>
 </div>
 
 {% endblock %}
