@@ -78,8 +78,23 @@ def home(request):
 
 def home2(request):
     context = _get_statistics_context()
-    context['form'] = UserForm()
-    return render_with_context(request, 'home_2.html', context)
+    if request.user.is_anonymous():
+        if request.method == "POST":
+            form = UserForm(request.POST, request.FILES)
+            if form.is_valid():
+                profile = form.save()
+                user = authenticate(username=profile.user.email)
+                login(request, user)
+                return HttpResponseRedirect(reverse('welcome'))
+            else:
+                context['form'] = form
+        else:
+            context['form'] = UserForm()
+        return render_with_context(request,
+                               'home_2.html',
+                               context)
+    else:
+        return HttpResponseRedirect(reverse('welcome'))
 
 def welcome(request):
     context = _get_statistics_context()        

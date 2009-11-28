@@ -10,8 +10,7 @@
 
 <div class="span-5">
 
-<h2>
-Sign up to help make this the most accountable general election ever!
+<h2>Sign up to help make this the most accountable general election ever!
 </h2>
 <script type="text/javascript">
 window.onload = function () { document.getElementById('id_first_name').focus(); }
@@ -46,7 +45,24 @@ We already know that mySociety wants to gather information on general election c
 <p>We're trying to get volunteers in every part of the UK.  So far, we've recruited {{ volunteers }} volunteers in {{ count }} constituencies (out of a total {{ total }}).  <a href="/statistics/">Read more about how we're doing.</a></p>
 <p class="quiet">Right now we're signing people up to the current constituencies; things will automatically work with new constituencies as and when they're available.</p>
 
+{% endblock %}
+
 {% block js %}
+<!-- Google Website Optimizer Control Script -->
+<script>
+function utmx_section(){}function utmx(){}
+(function(){var k='3802548282',d=document,l=d.location,c=d.cookie;function f(n){
+if(c){var i=c.indexOf(n+'=');if(i>-1){var j=c.indexOf(';',i);return c.substring(i+n.
+length+1,j<0?c.length:j)}}}var x=f('__utmx'),xx=f('__utmxx'),h=l.hash;
+d.write('<sc'+'ript src="'+
+'http'+(l.protocol=='https:'?'s://ssl':'://www')+'.google-analytics.com'
++'/siteopt.js?v=1&utmxkey='+k+'&utmx='+(x?x:'')+'&utmxx='+(xx?xx:'')+'&utmxtime='
++new Date().valueOf()+(h?'&utmxhash='+escape(h.substr(1)):'')+
+'" type="text/javascript" charset="utf-8"></sc'+'ript>')})();
+</script><script>utmx("url",'A/B');</script>
+<!-- End of Google Website Optimizer Control Script -->
+
+
 <script type="text/javascript" src="http://www.google.com/jsapi"></script>
 <script type="text/javascript">
   google.load('visualization', '1', {packages: ['gauge']});
@@ -76,5 +92,16 @@ google.setOnLoadCallback(drawVisualization);
 </script>
 {% endblock %}
 
-
+{% block endpage %}
+<!-- Google Website Optimizer Tracking Script -->
+<script type="text/javascript">
+if(typeof(_gat)!='object')document.write('<sc'+'ript src="http'+
+(document.location.protocol=='https:'?'s://ssl':'://www')+
+'.google-analytics.com/ga.js"></sc'+'ript>')</script>
+<script type="text/javascript">
+try {
+var gwoTracker=_gat._getTracker("UA-4976987-2");
+gwoTracker._trackPageview("/3802548282/test");
+}catch(err){}</script>
+<!-- End of Google Website Optimizer Tracking Script -->
 {% endblock %}

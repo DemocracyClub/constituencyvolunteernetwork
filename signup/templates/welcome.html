@@ -15,9 +15,21 @@
  <img src="/media/images/heatmap.png" width="300" />
 <p class="quiet">We're trying to get volunteers in every part of the UK.  So far, we've recruited {{ volunteers }} volunteers in {{ count }} constituencies (out of a total {{ total }}).  On this map, the redder the constituency, the more volunteers we have there. <a href="/statistics/">Read more about how we're doing.</a></p>
 
- 
 </div>
 
 {% endblock %}
 
 
+{% block endpage %}
+<!-- Google Website Optimizer Conversion Script -->
+<script type="text/javascript">
+if(typeof(_gat)!='object')document.write('<sc'+'ript src="http'+
+(document.location.protocol=='https:'?'s://ssl':'://www')+
+'.google-analytics.com/ga.js"></sc'+'ript>')</script>
+<script type="text/javascript">
+try {
+var gwoTracker=_gat._getTracker("UA-4976987-2");
+gwoTracker._trackPageview("/3802548282/goal");
+}catch(err){}</script>
+<!-- End of Google Website Optimizer Conversion Script -->
+{% endblock %}
