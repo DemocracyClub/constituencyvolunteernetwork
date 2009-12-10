@@ -26,9 +26,5 @@ class Command(BaseCommand):
         elif args[0] == 'unconfirmed-poke':
             for user in models.CustomUser.objects\
                     .filter(is_active=False):
-                if user.email.startswith('asd'):
-                    print user.registrationprofile_set.get()
-                    profile = user.registrationprofile_set.get()
-                    print profile.resend_activation_email()
-                else:
-                    continue
+                profile = user.registrationprofile_set.get()
+                print profile.resend_activation_email()
