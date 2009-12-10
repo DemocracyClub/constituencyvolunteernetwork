@@ -1,0 +1,15 @@
+Dear {{ user.display_name }},
+
+A while ago you signed up to help us improve democratic accountability in your local area -- thankyou!
+
+At the time, we sent you an email asking you to confirm your signup by clicking a link.  According to our records your account isn't confirmed.  It's really important that we get as many signups as possible, so your help is very much appreciated.
+
+We're assuming most people who didn't confirm their accounts forgot, or that the email got marked as spam.  However, if you're no longer interested, then just ignore this email and we won't get in touch with you again.
+
+Please confirm your interest by following this link:
+
+http://{{ site.domain }}{% url activate key=activation_key %}
+
+Thanks,
+
+Democracy Club
