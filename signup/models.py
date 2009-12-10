@@ -193,7 +193,7 @@ class RegistrationManager(models.Manager):
                   [user.email,])
         return profile
     
-        
+
     def delete_expired_users(self):
         for profile in RegistrationProfile.all():
             if profile.activation_key_expired():
@@ -228,6 +228,22 @@ class RegistrationProfile(Model):
             days=settings.ACCOUNT_ACTIVATION_DAYS)
         return not self.activated and \
                (self.user.date_joined + expiration_date <= datetime.datetime.now())
+
+    def resend_activation_email(self):
+        current_site = Site.objects.get_current()
+        subject = "Can you confirm your Democracy Club registration?"
+        email_context = {'activation_key': self.activation_key,
+                         'site': current_site,
+                         'user': self.user}
+        message = render_to_string('activation_email_resend.txt',
+                                   email_context)
+        
+        send_mail(subject,
+                  message,
+                  settings.DEFAULT_FROM_EMAIL,
+                  [self.user.email,])
+        return self.user.email
+
     activation_key_expired.boolean = True
 
 ###############
