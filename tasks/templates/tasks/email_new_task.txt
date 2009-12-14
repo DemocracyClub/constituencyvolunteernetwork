@@ -4,7 +4,7 @@ There is a new task available for you on Democracy Club: {{ task.name }},
 
 {{ task.description }}
 
-If you want to check it out and help out, visit http://{{ site.domain }}{% url task_login slug=task.slug,login_token="FGHJKLKJHG" %}.
+If you want to check it out and help out, visit http://{{ site.domain }}{% url task_login slug=task.slug,login_key=user_profile.activation_key %}.
 
 Thanks,
 Democracy Club

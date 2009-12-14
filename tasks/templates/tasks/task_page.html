@@ -20,9 +20,11 @@
     {% endif %}
     
     <h3>{{ task.get_started_users.count }} {% ifequal task.get_started_users.count 1 %}person{% else %}people{% endifequal %} currently doing this task</h3>
+    {% if usertask %}
     <ul class="taskusers">
     {% with task.get_started_users as users %}
         {% include "user_list.html" %}
     {% endwith %}
+    {% endif %}
     </ul>
 {% endblock %}

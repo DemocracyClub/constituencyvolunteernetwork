@@ -4,7 +4,7 @@ from django.template.loader import render_to_string
 from django.contrib.sites.models import Site
 from django.conf import settings
 
-from signup.models import Model, CustomUser
+from signup.models import Model, CustomUser, RegistrationProfile
 
 
 class Project(Model):
@@ -63,12 +63,14 @@ class TaskUserManager(models.Manager):
         task_user = TaskUser(task=task, user=user, state=0, url=url)
         task_user.save()
         
+        user_profile = user.registrationprofile_set.get()
         current_site = Site.objects.get_current()
         subject = "New task - %s" % task.name
         email_context = {'task': task,
                          'user': user,
                          'task_user': task_user,
-                         'site': current_site}
+                         'site': current_site,
+                         'user_profile': user_profile,}
         
         message = render_to_string('tasks/email_new_task.txt',
                                    email_context)

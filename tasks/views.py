@@ -2,6 +2,7 @@ from django.shortcuts import render_to_response, get_object_or_404
 from django.http import HttpResponseRedirect, HttpResponse, Http404
 from django.core.urlresolvers import reverse
 
+import signup.views
 from signup.views import render_with_context
 from models import Task, TaskUser
 
@@ -14,20 +15,27 @@ def home(request):
 
     return render_with_context(request, 'tasks/tasks.html', context)
 
-def task(request, slug, login_token=None):
+def task(request, slug, login_key=None):
     """
         Check out a task. Needs to also optionally take a login token to allow
         direct access to the task by email.
     """
     context = {}
+
+    if login_key is not None:
+        # should we generate separate login keys for each taskuser for security?
+        signup.views.do_login(request, login_key)
     
     context['task'] = Task.objects.get(slug=slug)
     
-    try:
-        context['usertask'] = TaskUser.objects.get(task=context['task'],
-                                                   user=request.user)
-    except Taskuser.DoesNotExist:
-        pass
+    if request.user.is_authenticated():
+        try:
+            context['usertask'] = TaskUser.objects.get(task=context['task'],
+                                                       user=request.user)
+        except Taskuser.DoesNotExist:
+            pass
+    else:
+        context['usertask'] = None
     
     return render_with_context(request, 'tasks/task_page.html', context)
 

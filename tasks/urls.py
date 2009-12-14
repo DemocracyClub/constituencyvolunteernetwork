@@ -20,7 +20,7 @@ urlpatterns = patterns('tasks',
     url(r'^tasks/(?P<slug>[\w-]+)/unignore/$',
         views.unignore_task,
         name="unignore_task"),
-    url(r'^tasks/(?P<slug>[\w-]+)/(?P<login_token>[\w-]+)$',
+    url(r'^tasks/(?P<slug>[\w-]+)/(?P<login_key>[\w-]+)$',
         views.task,
         name="task_login"),
 )
