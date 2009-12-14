@@ -40,3 +40,4 @@ class Invitation(models.Model):
     class Meta:
         verbose_name = 'invitation'
         verbose_name_plural = 'invitations'
+
