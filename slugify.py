@@ -74,11 +74,11 @@ def smart_slugify(s, entities=False, decimal=False, hexadecimal=False, invalid=N
         
 if __name__=='__main__':
     x = u" Peter & Marcus "
-    assert get_slugify(x) == 'Peter-Marcus'
-    assert isinstance(get_slugify(x), str) is True
-    assert get_slugify(x, lower_case=True) == 'peter-marcus'
+    assert smart_slugify(x) == 'Peter-Marcus'
+    assert isinstance(smart_slugify(x), str) is True
+    assert smart_slugify(x, lower_case=True) == 'peter-marcus'
     
-    assert get_slugify(u' Extra \x92 cheap \xa3100 "food" ') == \
+    assert smart_slugify(u' Extra \x92 cheap \xa3100 "food" ') == \
       'Extra-cheap-100-food'
       
       
