@@ -6,8 +6,6 @@ from signup.models import CustomUser
 from utils import TemplatedForm
 from models import Invitation
 
-import signals
-
 import strings
 
 def _extractEmails(emails_string):
@@ -84,6 +82,4 @@ class InviteForm(TemplatedForm):
             Invitation.objects.create_invitation(email=email,
                                                  message=message,
                                                  user=user)
-
-        signals.invitation_sent.send(self, user=user)
 

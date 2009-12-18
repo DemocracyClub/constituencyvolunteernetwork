@@ -5,29 +5,34 @@ from django.conf import settings
 from django.template.loader import render_to_string
 
 from signup.models import CustomUser
-import strings
 
-"""
-  Shortcuts for invitation creation and automated sending of the emails
-"""
+import strings
+import signals
+
 class InvitationManager(models.Manager):
+    """
+      Shortcuts for invitation creation and automated sending of the emails
+    """
+
     def create_invitation(self, email, message, user):
-      invite = Invitation(email=email, user_from=user)
-      invite.save()
-      
-      current_site = Site.objects.get_current()
-      
-      subject = strings.INVITE_SUBJECT % user.display_name
-      email_context = { 'message': message,
+        invite = Invitation(email=email, user_from=user)
+        invite.save()
+
+        current_site = Site.objects.get_current()
+
+        subject = strings.INVITE_SUBJECT % user.display_name
+        email_context = { 'message': message,
                         'site': current_site, 
                         'user': user }
-      text = render_to_string('invite/invitation_email.txt',
+        text = render_to_string('invite/invitation_email.txt',
                                  email_context)
-      
-      send_mail(subject,
+
+        send_mail(subject,
                 text,
                 settings.DEFAULT_FROM_EMAIL,
                 [email,])
+
+        signals.invitation_sent.send(self, user=user)
 
 class Invitation(models.Model):
     email = models.CharField(max_length=80)
