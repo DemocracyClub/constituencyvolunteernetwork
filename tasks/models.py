@@ -123,7 +123,7 @@ class TaskUser(Model):
         self.state = 2
         self.save()
         
-        signals.task_ingored.send(self, task_user=self)
+        signals.task_ignored.send(self, task_user=self)
     
     def __unicode__(self):
         return "%s doing %s (%s)" % (self.user, self.task, self.state_string())
