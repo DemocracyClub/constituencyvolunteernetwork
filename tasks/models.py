@@ -6,6 +6,7 @@ from django.conf import settings
 
 from signup.models import Model, CustomUser, RegistrationProfile
 
+import signals
 
 class Project(Model):
     """
@@ -80,6 +81,8 @@ class TaskUserManager(models.Manager):
                   settings.DEFAULT_FROM_EMAIL,
                   [user.email, ])
 
+        signals.task_assigned.send(self, task_user=task_user)
+
 
 class TaskUser(Model):
     """
@@ -107,14 +110,20 @@ class TaskUser(Model):
     def start(self):
         self.state = 1
         self.save()
+
+        signals.task_started.send(self, task_user=self)
     
     def complete(self):
         self.state = 3
         self.save()
+
+        signals.task_completed.send(self, task_user=self)
     
     def ignore(self):
         self.state = 2
         self.save()
+        
+        signals.task_ingored.send(self, task_user=self)
     
     def __unicode__(self):
         return "%s doing %s (%s)" % (self.user, self.task, self.state_string())
