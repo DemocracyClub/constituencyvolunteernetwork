@@ -40,9 +40,9 @@ def callback_assign(sender, **kwargs):
         pass
 
 # Assignment signals
-#user_join.connect(callback_assign)
-#user_touch.connect(callback_assign)
+user_join.connect(callback_assign)
+user_touch.connect(callback_assign)
 
 # Completion signals
-#invitation_sent.connect(callback_invites_sent)
-#user_touch.connect(callback_invites_sent)
+invitation_sent.connect(callback_invites_sent)
+user_touch.connect(callback_invites_sent)
