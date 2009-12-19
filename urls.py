@@ -19,6 +19,7 @@ urlpatterns = patterns('',
      {'document_root': MEDIA_ROOT,
       'show_indexes': True}),
     ('^invite/', include('invite.urls')), 
+    ('^tsc/', include('tsc.urls')),
     ('^', include('tasks.urls')),
     ('^', include('signup.urls')),
 )

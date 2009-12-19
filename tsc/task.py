@@ -1,31 +1,38 @@
 from django.core.urlresolvers import reverse
 
 from models import Invitation
-from tasks.models import Task, TaskUser, Badge
+from tasks.models import Task, TaskUser
 from signup.signals import *
-from invite.signals import *
+from signals import *
 
-def callback_invites_sent(sender, **kwargs):
+task_slug = "upload-a-leaflet"
+tsc_url = "http://www.thestraightchoice.org/addupload.php"
+
+def callback_leaflet_added(sender, **kwargs):
     """
         Automatically set this task as complete if we've sent three or more invitations
         Possibility: Make this only trigger if three friends ACCEPT an invitation?
     """
     user = kwargs['user']
-    task = Task.objects.get(slug="invite-three-friends")
+    task = Task.objects.get(slug=task_slug)
 
     print "Checking user %s on task %s" % (user, task)
 
-    if Invitation.objects.filter(user_from=user).count() > 2:
-        try:
-            task_user = TaskUser.objects.get(task=task,user=user)
-            task_user.complete()
+    try:
+        task_user = TaskUser.objects.get(task=task,user=user)
+    except:
+        TaskUser.DoesNotExist:
+        return None
 
-            badge = Badge.objects.create(name="Invited three friends", task=task, user=user)
-            badge.save()
+    # Only do the task once?
+    if task_user.state != 3:
+        task_user.complete()
+    
+    # But give them another badge every time they do it
+    badge = Badge.objects.create(name="Uploaded a leaflet", task=task, user=user)
+    badge.save()
 
-            print "Completed %s" % task_user
-        except TaskUser.DoesNotExist:
-            return None
+    print "Completed %s" % task_user
 
 def callback_assign(sender, **kwargs):
     """
@@ -35,12 +42,12 @@ def callback_assign(sender, **kwargs):
     user = kwargs['user']
     
     try:
-        task = Task.objects.get(slug="invite-three-friends")
+        task = Task.objects.get(slug=task_slug)
     except Task.DoesNotExist:
         return None
     
     try:
-        TaskUser.objects.assign_task(task, user, reverse("inviteindex"))
+        TaskUser.objects.assign_task(task, user, tsc_url)
     except TaskUser.AlreadyAssigned:
         print "%s already assigned to %s" % (task, user)
         pass
@@ -50,5 +57,4 @@ user_join.connect(callback_assign)
 user_touch.connect(callback_assign)
 
 # Completion signals
-invitation_sent.connect(callback_invites_sent)
-user_touch.connect(callback_invites_sent)
+leaflet_added.connect(callback_leaflet_added)

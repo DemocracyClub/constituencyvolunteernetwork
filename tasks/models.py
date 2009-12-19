@@ -134,3 +134,8 @@ class TaskUser(Model):
             assignment/suggestion of a task which a user already has
         """
         pass
+
+class Badge(Model):
+	name = models.CharField(max_length=80)
+	task = models.ForeignKey(Task)
+	user = models.ForeignKey(CustomUser)
