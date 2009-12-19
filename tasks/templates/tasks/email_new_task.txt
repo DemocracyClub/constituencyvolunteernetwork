@@ -4,9 +4,9 @@ There is a new task available for you on Democracy Club:
 
 = {{ task.name }} =
 
-{{ description }}
+{{ task_user.description }}
 
-You can start this task here http://{{ site.domain }}{% url task slug=task.slug,login_key=user_profile.activation_key %}.
+You can read more about this task at http://{{ site.domain }}{% url task slug=task.slug,login_key=user_profile.activation_key %}.
 
 Thanks,
 Democracy Club

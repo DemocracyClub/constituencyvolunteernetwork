@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Added a leaflet to The Straight Choice?</h2>
+<form method="post" action="{% url tsc_add %}">
+Paste your leaflet url here<br/>
+<input name="leaflet_url" value=""/> <input type="submit" value="claim badge"/>
+</form>
+{% endblock %}

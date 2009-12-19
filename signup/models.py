@@ -19,6 +19,7 @@ from django.core.mail import send_mail
 import geo
 from slugify import smart_slugify
 from settings import CONSTITUENCY_YEAR
+import signals
 
 SHA1_RE = re.compile('^[a-f0-9]{40}$')
 
@@ -154,6 +155,7 @@ class RegistrationManager(models.Manager):
             user.save()
             profile.activated = True
             profile.save()
+            signals.user_activated.send(self, user=user)
             return profile
         else:
             return False

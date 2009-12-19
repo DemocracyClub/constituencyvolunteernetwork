@@ -95,6 +95,7 @@ INSTALLED_APPS = (
     'signup',
     'invite',
     'tasks',
+    'tsc',
 )
 
 AUTHENTICATION_BACKENDS = ('backends.NoAuthBackend',

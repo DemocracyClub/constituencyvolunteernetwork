@@ -1,6 +1,7 @@
 from django.core.urlresolvers import reverse
+from django.contrib.sites.models import Site
 
-from tasks.models import Task, TaskUser
+from tasks.models import Task, TaskUser, Badge
 from signup.signals import *
 from signals import *
 
@@ -46,17 +47,18 @@ def callback_assign(sender, **kwargs):
     
     try:
         user_profile = user.registrationprofile_set.get()
+        current_site = Site.objects.get_current()
 
-        complete_url = "http://%s%s" % \
-               (current_site.domain, reverse("task_add", args=[user_profile.activation_key]))
+        post_url = "http://%s%s" % \
+               (current_site.domain, reverse("tsc_add", kwargs={'login_key': user_profile.activation_key}))
 
-        TaskUser.objects.assign_task(task, user, tsc_url, complete_url)
+        TaskUser.objects.assign_task(task, user, tsc_url, post_url)
     except TaskUser.AlreadyAssigned:
         print "%s already assigned to %s" % (task, user)
         pass
 
 # Assignment signals
-user_join.connect(callback_assign)
+user_activated.connect(callback_assign)
 user_touch.connect(callback_assign)
 
 # Completion signals

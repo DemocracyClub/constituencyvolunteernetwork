@@ -32,7 +32,7 @@ def task(request, slug, login_key=None):
         try:
             context['usertask'] = TaskUser.objects.get(task=context['task'],
                                                        user=request.user)
-        except Taskuser.DoesNotExist:
+        except TaskUser.DoesNotExist:
             pass
     else:
         context['usertask'] = None
@@ -91,5 +91,9 @@ def complete_task(request, slug):
     """
     task_user = TaskUser.objects.get(task__slug=slug, user=request.user)
     task_user.complete()
-    
-    return HttpResponseRedirect(reverse("task", args={slug: slug}))
+
+    if task_user.post_url:
+        HttpResponseRedirect(task_user.post_url)
+    else:
+        return HttpResponseRedirect(reverse("task", args={slug: slug}))
+

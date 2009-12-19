@@ -58,27 +58,21 @@ class TaskUserManager(models.Manager):
         Managing the TaskUser objects
     """
 
-    def assign_task(self, task, user, url, complete_url):
+    def assign_task(self, task, user, url, post_url):
         if TaskUser.objects.filter(task=task, user=user):
             raise TaskUser.AlreadyAssigned()
         
-        task_user = TaskUser(task=task, user=user, state=0, url=url, complete_url=complete_url)
+        task_user = TaskUser(task=task, user=user, state=0, url=url, post_url=post_url)
         task_user.save()
         
         user_profile = user.registrationprofile_set.get()
         current_site = Site.objects.get_current()
         subject = "%s - from Democracy Club" % task.name
 
-        # Build task description from db with optional tags
-        description = task.description % { 'task_url': task_user.url,
-              'complete_url': complete_url,
-             }
-
         email_context = {'task': task,
                          'user': user,
                          'task_user': task_user,
                          'site': current_site,
-                         'description': description,
                          'user_profile': user_profile,}
         
         message = render_to_string('tasks/email_new_task.txt',
@@ -107,7 +101,7 @@ class TaskUser(Model):
     state = models.SmallIntegerField(choices=TASK_STATES)
     date_assigned = models.DateTimeField(auto_now_add=True)
     url = models.URLField()
-    complete_url = models.URLField()
+    post_url = models.URLField(blank=True)
     
     objects = TaskUserManager()
     
@@ -133,6 +127,12 @@ class TaskUser(Model):
         self.save()
         
         signals.task_ignored.send(self, task_user=self)
+
+    def description(self):
+        """
+            Build the description text with optional url insertion points
+        """
+        return self.task.description % {'task_url': self.url, 'post_url': self.post_url}
     
     def __unicode__(self):
         return "%s doing %s (%s)" % (self.user, self.task, self.state_string())
@@ -145,6 +145,9 @@ class TaskUser(Model):
         pass
 
 class Badge(Model):
-	name = models.CharField(max_length=80)
-	task = models.ForeignKey(Task)
-	user = models.ForeignKey(CustomUser)
+    name = models.CharField(max_length=80)
+    task = models.ForeignKey(Task)
+    user = models.ForeignKey(CustomUser)
+
+    def __unicode__(self):
+        return 'Badge "%s" for %s' % (self.name, self.user)

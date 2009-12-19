@@ -6,11 +6,12 @@
 {% block content %}
     <h2>{{ task.name }}</h2>
     <div class="project">task suggested by <a href='{{ task.project.url }}'>{{ task.project.name }}</a></div>
-    <div class="description">
-        {{ task.description|linebreaks }}
-    </div>
-
+    
     {% if usertask %}
+    <div class="description">{% autoescape off %}
+        {{ usertask.description|urlize|linebreaks }}
+    {% endautoescape %}</div>
+
     <div class="actions">
         {% ifequal usertask.state 0 %}You haven't accepted this task <a href='{% url start_task slug=usertask.task.slug %}'>start this task</a> or <a href='{% url ignore_task slug=usertask.task.slug %}'>ignore it</a>{% endifequal %}
         {% ifequal usertask.state 1 %}You've started this task, <a href='{% url complete_task slug=usertask.task.slug %}'>say you've completed this task</a> or <a href='{% url ignore_task slug=usertask.task.slug %}'>ignore it</a>{% endifequal %}

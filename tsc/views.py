@@ -14,8 +14,12 @@ def add(request, login_key=None):
     
     if not request.user.is_authenticated():
 	return HttpResponseRedirect(reverse('home'))
-    
-    # Emit signal. Intercepted by the task.py code
-    signals.leaflet_added.send(None, user=request.user)
 
-    return HttpResponseRedirect(reverse('welcome'))
+    context = {}
+    
+    if 'leaflet_url' in request.POST:
+        # Emit signal. Intercepted by the task.py code
+        signals.leaflet_added.send(None, user=request.user)
+        context['message'] = "Thanks for adding a leaflet"
+
+    return render_with_context(request, 'tsc/add.html', {})

@@ -5,5 +5,8 @@ import views
 urlpatterns = patterns('tsc',
         url(r'^add/(?P<login_key>[\w-]+)$',
         views.add,
-        name="task_add"),
+        name="tsc_add"),
+        url(r'^add/$',
+        views.add,
+        name="tsc_add"),
 )

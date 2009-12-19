@@ -70,6 +70,6 @@ class UserForm(TemplatedForm):
                                          is_active=False)
         user.constituencies.add(constituency)
         user.save()
-        signals.user_join.send(self, user=user)
         profile = RegistrationProfile.objects.create_profile(user)
+        signals.user_join.send(self, user=user)
         return profile
