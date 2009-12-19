@@ -14,7 +14,11 @@ def callback_leaflet_added(sender, **kwargs):
         Possibility: Make this only trigger if three friends ACCEPT an invitation?
     """
     user = kwargs['user']
-    task = Task.objects.get(slug=task_slug)
+
+    try:
+        task = Task.objects.get(slug=task_slug)
+    except Task.DoesNotExist:
+        return None
 
     print "Checking user %s on task %s" % (user, task)
 

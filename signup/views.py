@@ -21,7 +21,7 @@ from forms import UserForm
 import utils
 import signals
 
-from tasks.models import TaskUser
+from tasks.models import TaskUser, Badge
 
 from utils import addToQueryString
 import settings
@@ -251,8 +251,7 @@ def activate_user(request, key):
 def user(request, id):
     context = {}
     user = get_object_or_404(CustomUser, pk=id)
-    if user == request.user:
-        context['user'] = user
+    context['profile_user'] = user
     return render_with_context(request,
                                'user.html',
                                context)

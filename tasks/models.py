@@ -58,7 +58,7 @@ class TaskUserManager(models.Manager):
         Managing the TaskUser objects
     """
 
-    def assign_task(self, task, user, url, post_url):
+    def assign_task(self, task, user, url, post_url=None):
         if TaskUser.objects.filter(task=task, user=user):
             raise TaskUser.AlreadyAssigned()
         
@@ -101,7 +101,7 @@ class TaskUser(Model):
     state = models.SmallIntegerField(choices=TASK_STATES)
     date_assigned = models.DateTimeField(auto_now_add=True)
     url = models.URLField()
-    post_url = models.URLField(blank=True)
+    post_url = models.URLField(null=True, blank=True)
     
     objects = TaskUserManager()
     

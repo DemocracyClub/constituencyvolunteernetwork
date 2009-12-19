@@ -3,9 +3,9 @@
 
 {% block content %}
 
-Hello {{ user.email }}
+Hello {{ profile_user.email }}
 
-{% for c in user.constituencies.all %}
+{% for c in profile_user.constituencies.all %}
  <a href="{% url constituency c.slug %}">{{ c.name }}</a>,
 {% endfor %}
 
@@ -16,5 +16,11 @@ Hello {{ user.email }}
 </form>
 {% endif %}
 
+<h3>Badges</h3>
+<ul>
+{% for badge in profile_user.badge_set.all %}
+    <li><a href='{% url task slug=badge.task.slug %}'>{{ badge.name }}</a></li>
+{% endfor %}
+</ul>
 
 {% endblock %}

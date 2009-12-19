@@ -11,7 +11,11 @@ def callback_invites_sent(sender, **kwargs):
         Possibility: Make this only trigger if three friends ACCEPT an invitation?
     """
     user = kwargs['user']
-    task = Task.objects.get(slug="invite-three-friends")
+
+    try:
+        task = Task.objects.get(slug="invite-three-friends")
+    except Task.DoesNotExist:
+        return None
 
     print "Checking user %s on task %s" % (user, task)
 
