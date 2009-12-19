@@ -7,6 +7,7 @@ from django.core.urlresolvers import reverse
 
 from signup.models import Model, CustomUser, RegistrationProfile
 
+from tasks.util import reverse_login_key
 import signals
 
 class Project(Model):
@@ -35,6 +36,7 @@ class Task(Model):
     slug = models.SlugField(max_length=80)
     project = models.ForeignKey(Project)
     description = models.TextField()
+    email = models.TextField()
     date_created = models.DateTimeField(auto_now_add=True)
     users = models.ManyToManyField(CustomUser, through="TaskUser")
 
@@ -69,9 +71,17 @@ class TaskUserManager(models.Manager):
         current_site = Site.objects.get_current()
         subject = "%s - from Democracy Club" % task.name
 
+        task_url = "http://%s%s" % (current_site.domain, reverse_login_key('start_task', user, kwargs={'slug': task.slug}))
+        post_url = "http://%s%s" % (current_site.domain, reverse_login_key('complete_task', user, kwargs={'slug': task.slug}))
+
+        description_text = task.email % \
+            {'task_url': task_url,
+            'post_url': post_url,}
+
         email_context = {'task': task,
                          'user': user,
                          'task_user': task_user,
+                         'description_text': description_text,
                          'site': current_site,
                          'user_profile': user_profile,}
         
@@ -128,11 +138,12 @@ class TaskUser(Model):
         
         signals.task_ignored.send(self, task_user=self)
 
-    def description(self):
+    def email(self):
         """
-            Build the description text with optional url insertion points
+            Build the email text with optional url insertion points
         """
-        return self.task.description % {'task_url': self.url, 'post_url': self.post_url}
+        current_site = Site.objects.get_current()
+        
     
     def __unicode__(self):
         return "%s doing %s (%s)" % (self.user, self.task, self.state_string())

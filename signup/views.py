@@ -21,8 +21,6 @@ from forms import UserForm
 import utils
 import signals
 
-from tasks.models import TaskUser, Badge
-
 from utils import addToQueryString
 import settings
 import geo
@@ -100,8 +98,8 @@ def home2(request):
 def welcome(request):
     context = _get_statistics_context()        
 
-    context['usertasks'] = TaskUser.objects\
-                               .filter(user=request.user)
+    #context['usertasks'] = TaskUser.objects\
+    #                           .filter(user=request.user)
 
     # "force" all new users to recruit for us
     if not request.user.seen_invite:

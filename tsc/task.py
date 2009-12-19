@@ -5,6 +5,8 @@ from tasks.models import Task, TaskUser, Badge
 from signup.signals import *
 from signals import *
 
+from tasks.util import reverse_login_key
+
 task_slug = "upload-leaflet"
 tsc_url = "http://www.thestraightchoice.org/addupload.php"
 
@@ -50,11 +52,10 @@ def callback_assign(sender, **kwargs):
         return None
     
     try:
-        user_profile = user.registrationprofile_set.get()
         current_site = Site.objects.get_current()
 
         post_url = "http://%s%s" % \
-               (current_site.domain, reverse("tsc_add", kwargs={'login_key': user_profile.activation_key}))
+               (current_site.domain, reverse_login_key("tsc_add", user))
 
         TaskUser.objects.assign_task(task, user, tsc_url, post_url)
     except TaskUser.AlreadyAssigned:

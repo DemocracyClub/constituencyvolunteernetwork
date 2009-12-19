@@ -1,11 +1,12 @@
 from django.shortcuts import render_to_response, get_object_or_404
 from django.http import HttpResponseRedirect, HttpResponse, Http404
 from django.core.urlresolvers import reverse
+from django.contrib.auth.decorators import login_required
 
-import signup.views
-from signup.views import render_with_context
 from models import Task, TaskUser
+from signup.views import render_with_context
 
+from tasks.util import login_key
 
 def home(request):
     context = {}
@@ -15,17 +16,14 @@ def home(request):
 
     return render_with_context(request, 'tasks/tasks.html', context)
 
-def task(request, slug, login_key=None):
+@login_key
+def task(request, slug):
     """
         Check out a task. Needs to also optionally take a login token to allow
         direct access to the task by email.
     """
     context = {}
-
-    if login_key is not None:
-        # should we generate separate login keys for each taskuser for security?
-        signup.views.do_login(request, login_key)
-    
+   
     context['task'] = Task.objects.get(slug=slug)
     
     if request.user.is_authenticated():
@@ -39,31 +37,25 @@ def task(request, slug, login_key=None):
     
     return render_with_context(request, 'tasks/task_page.html', context)
 
-
-def start_task(request, slug, login_key=None):
+@login_key
+@login_required
+def start_task(request, slug):
     """
         Mark this task as started by this user,then redirect the user to
         the task url
     """
-    if login_key is not None:
-        # should we generate separate login keys for each taskuser for security?
-        signup.views.do_login(request, login_key)
+    task = Task.objects.get(slug=slug)
 
-    if request.user.is_authenticated():
-        task = Task.objects.get(slug=slug)
-
-        try:
-            task_user = TaskUser.objects.get(task=task, user=request.user)
-            task_user.state = 1
-            task_user.save()
+    try:
+        task_user = TaskUser.objects.get(task=task, user=request.user)
+        task_user.state = 1
+        task_user.save()
             
-            return HttpResponseRedirect(task_user.url)
-        except TaskUser.DoesNotExist:
-            raise Http404()
-    else:
-        raise HttpResponseRedirect(reverse('home'))
+        return HttpResponseRedirect(task_user.url)
+    except TaskUser.DoesNotExist:
+        raise Http404()
 
-
+@login_required
 def ignore_task(request, slug):
     """
         Ignore the task then redirect the user to the front page
@@ -73,7 +65,7 @@ def ignore_task(request, slug):
     
     return HttpResponseRedirect(reverse("task", args=[slug]))
 
-
+@login_required
 def unignore_task(request, slug):
     """
         Unignore the task then redirect the user to the front page
@@ -84,7 +76,8 @@ def unignore_task(request, slug):
     
     return HttpResponseRedirect(reverse("task", args={slug: slug}))
 
-
+@login_key
+@login_required
 def complete_task(request, slug):
     """
         Mark the task as complete then redirect the user to the front page
@@ -93,7 +86,7 @@ def complete_task(request, slug):
     task_user.complete()
 
     if task_user.post_url:
-        HttpResponseRedirect(task_user.post_url)
+        return HttpResponseRedirect(task_user.post_url)
     else:
         return HttpResponseRedirect(reverse("task", args={slug: slug}))
 
