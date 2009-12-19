@@ -20,6 +20,6 @@ urlpatterns = patterns('',
       'show_indexes': True}),
     ('^invite/', include('invite.urls')), 
     ('^tsc/', include('tsc.urls')),
-    ('^', include('tasks.urls')),
+    ('^tasks/', include('tasks.urls')),
     ('^', include('signup.urls')),
 )
