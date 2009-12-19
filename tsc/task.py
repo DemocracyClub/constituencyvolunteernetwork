@@ -1,11 +1,10 @@
 from django.core.urlresolvers import reverse
 
-from models import Invitation
 from tasks.models import Task, TaskUser
 from signup.signals import *
 from signals import *
 
-task_slug = "upload-a-leaflet"
+task_slug = "upload-leaflet"
 tsc_url = "http://www.thestraightchoice.org/addupload.php"
 
 def callback_leaflet_added(sender, **kwargs):
@@ -20,8 +19,7 @@ def callback_leaflet_added(sender, **kwargs):
 
     try:
         task_user = TaskUser.objects.get(task=task,user=user)
-    except:
-        TaskUser.DoesNotExist:
+    except TaskUser.DoesNotExist:
         return None
 
     # Only do the task once?
@@ -47,7 +45,12 @@ def callback_assign(sender, **kwargs):
         return None
     
     try:
-        TaskUser.objects.assign_task(task, user, tsc_url)
+        user_profile = user.registrationprofile_set.get()
+
+        complete_url = "http://%s%s" % \
+               (current_site.domain, reverse("task_add", args=[user_profile.activation_key]))
+
+        TaskUser.objects.assign_task(task, user, tsc_url, complete_url)
     except TaskUser.AlreadyAssigned:
         print "%s already assigned to %s" % (task, user)
         pass

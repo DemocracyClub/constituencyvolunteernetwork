@@ -3,6 +3,7 @@ from django.core.mail import send_mail
 from django.template.loader import render_to_string
 from django.contrib.sites.models import Site
 from django.conf import settings
+from django.core.urlresolvers import reverse
 
 from signup.models import Model, CustomUser, RegistrationProfile
 
@@ -57,20 +58,27 @@ class TaskUserManager(models.Manager):
         Managing the TaskUser objects
     """
 
-    def assign_task(self, task, user, url):
+    def assign_task(self, task, user, url, complete_url):
         if TaskUser.objects.filter(task=task, user=user):
             raise TaskUser.AlreadyAssigned()
         
-        task_user = TaskUser(task=task, user=user, state=0, url=url)
+        task_user = TaskUser(task=task, user=user, state=0, url=url, complete_url=complete_url)
         task_user.save()
         
         user_profile = user.registrationprofile_set.get()
         current_site = Site.objects.get_current()
-        subject = "New task - %s" % task.name
+        subject = "%s - from Democracy Club" % task.name
+
+        # Build task description from db with optional tags
+        description = task.description % { 'task_url': task_user.url,
+              'complete_url': complete_url,
+             }
+
         email_context = {'task': task,
                          'user': user,
                          'task_user': task_user,
                          'site': current_site,
+                         'description': description,
                          'user_profile': user_profile,}
         
         message = render_to_string('tasks/email_new_task.txt',
@@ -99,6 +107,7 @@ class TaskUser(Model):
     state = models.SmallIntegerField(choices=TASK_STATES)
     date_assigned = models.DateTimeField(auto_now_add=True)
     url = models.URLField()
+    complete_url = models.URLField()
     
     objects = TaskUserManager()
     

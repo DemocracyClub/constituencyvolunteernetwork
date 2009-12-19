@@ -96,11 +96,12 @@ def home2(request):
     else:
         return HttpResponseRedirect(reverse('welcome'))
 
+@login_required
 def welcome(request):
     context = _get_statistics_context()        
-    #if request.user.is_authenticated():
-    #    context['usertasks'] = TaskUser.objects\
-    #                           .filter(user=request.user)
+
+    context['usertasks'] = TaskUser.objects\
+                               .filter(user=request.user)
 
     # "force" all new users to recruit for us
     if not request.user.seen_invite:

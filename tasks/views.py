@@ -40,21 +40,28 @@ def task(request, slug, login_key=None):
     return render_with_context(request, 'tasks/task_page.html', context)
 
 
-def start_task(request, slug):
+def start_task(request, slug, login_key=None):
     """
         Mark this task as started by this user,then redirect the user to
         the task url
     """
-    task = Task.objects.get(slug=slug)
+    if login_key is not None:
+        # should we generate separate login keys for each taskuser for security?
+        signup.views.do_login(request, login_key)
 
-    try:
-        task_user = TaskUser.objects.get(task=task, user=request.user)
-        task_user.state = 1
-        task_user.save()
+    if request.user.is_authenticated():
+        task = Task.objects.get(slug=slug)
+
+        try:
+            task_user = TaskUser.objects.get(task=task, user=request.user)
+            task_user.state = 1
+            task_user.save()
             
-        return HttpResponseRedirect(task_user.url)
-    except TaskUser.DoesNotExist:
-        raise Http404()
+            return HttpResponseRedirect(task_user.url)
+        except TaskUser.DoesNotExist:
+            raise Http404()
+    else:
+        raise HttpResponseRedirect(reverse('home'))
 
 
 def ignore_task(request, slug):
@@ -64,7 +71,7 @@ def ignore_task(request, slug):
     task_user = TaskUser.objects.get(task__slug=slug, user=request.user)
     task_user.ignore()
     
-    return HttpResponseRedirect(reverse("task", args={slug: slug}))
+    return HttpResponseRedirect(reverse("task", args=[slug]))
 
 
 def unignore_task(request, slug):
