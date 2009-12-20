@@ -7,7 +7,7 @@
 
 <h3>Available tasks</h3>
 {% if not user.is_active %}
-   You need to activate your account to recieve tasks. Please check your inbox (and your spam folder) for a confirmation email.
+   You need to activate your account to receive tasks. Please check your inbox (and your spam folder) for a confirmation email.
 {% else %}
    {% with user.taskuser_set.all as usertasks %}
    {% include "tasks/task_list.html" %}
