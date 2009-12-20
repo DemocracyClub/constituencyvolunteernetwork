@@ -111,6 +111,7 @@ def welcome(request):
     context['activity'] = TaskUser.objects.\
         filter(user__can_cc=True).\
         filter(user__constituencies__id__in=user_constituencies).\
+        filter(state__in=[1,2,3]).\
         order_by('-date_modified')
     
     if not request.user.seen_invite:

@@ -106,7 +106,6 @@ class TaskUserManager(models.Manager):
         
         signals.task_assigned.send(self, task_user=task_user)
 
-
 class TaskUser(Model):
     """
         Describes the mapping between Tasks and Users,

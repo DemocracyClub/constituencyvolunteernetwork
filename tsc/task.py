@@ -49,6 +49,7 @@ def callback_assign(sender, **kwargs):
     try:
         task = Task.objects.get(slug=task_slug)
     except Task.DoesNotExist:
+        print "Could not find task %s" % task_slug
         return None
     
     try:
