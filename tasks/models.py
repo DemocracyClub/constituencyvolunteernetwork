@@ -46,6 +46,10 @@ class Task(Model):
     def get_started_users(self):
         return CustomUser.objects.filter(taskuser__task=self, taskuser__state=1)
 
+    @models.permalink
+    def get_absolute_url(self):
+        return ("task", (self.slug,))
+
 
 TASK_STATES = (
     (0, 'Assigned'),
@@ -117,6 +121,7 @@ class TaskUser(Model):
     user = models.ForeignKey(CustomUser)
     state = models.SmallIntegerField(choices=TASK_STATES)
     date_assigned = models.DateTimeField(auto_now_add=True)
+    date_modified = models.DateTimeField(auto_now=True, auto_now_add=True)
     url = models.CharField(max_length=2048)
     post_url = models.CharField(max_length=2048, null=True, blank=True)
     

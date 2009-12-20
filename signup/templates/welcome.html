@@ -14,6 +14,13 @@
    {% endwith %}
 {% endif %}
 
+<h3>Recent activity near you</h3>
+<ul>
+{% for item in activity %}
+    <li><a href='{{ item.user.get_absolute_url }}'>{{ item.user }}</a> ({{ item.user.constituencies.get.name }}) doing <a href='{{ item.task.get_absolute_url }}'>{{ item.task }}</a>, {{ item.state_string }} <span class="quiet" style="font-size:0.7em">{{ item.date_modified.date }}</span></li>
+{% endfor %}
+</ul>
+
 <h3>What now?</h3>
 <p>Apart from helping with available tasks, before we can really start making a difference we need to try to get <atrong>at least one volunteer in every constituency</strong> in the United Kingdom.</p>
 <p>Please think if you can <a href="{% url inviteindex %}">invite some friends</a> who might be interested, or consider <a href="{% url add_constituency %}">volunteering to help in other places</a> (e.g. somewhere you're studying, or somewhere else nearby)</p>

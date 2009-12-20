@@ -102,6 +102,17 @@ def welcome(request):
     #                           .filter(user=request.user)
 
     # "force" all new users to recruit for us
+    from tasks.models import TaskUser
+    
+    user_constituencies = []
+    for constituency in request.user.constituencies.all():
+        user_constituencies.append(constituency.id)
+
+    context['activity'] = TaskUser.objects.\
+        filter(user__can_cc=True).\
+        filter(user__constituencies__id__in=user_constituencies).\
+        order_by('-date_modified')
+    
     if not request.user.seen_invite:
         return HttpResponseRedirect(reverse('inviteindex'))
     else:
