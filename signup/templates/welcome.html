@@ -4,16 +4,21 @@
 {% block content %}
 <div class="span-5">
 <h2>Thanks for signing up to help out in your constituency, {{ user.display_name }}</h2> 
-<h4>What now?</h4>
-<p>Before we can really start making a difference, we need to try to get <atrong>at least one volunteer in every constituency</strong> in the United Kingdom.</p>
+
+<h3>Available tasks</h3>
+{% if not user.is_active %}
+   You need to activate your account to recieve tasks. Please check your inbox (and your spam folder) for a confirmation email.
+{% else %}
+   {% with user.taskuser_set.all as usertasks %}
+   {% include "tasks/task_list.html" %}
+   {% endwith %}
+{% endif %}
+
+<h3>What now?</h3>
+<p>Apart from helping with available tasks, before we can really start making a difference we need to try to get <atrong>at least one volunteer in every constituency</strong> in the United Kingdom.</p>
 <p>Please think if you can <a href="{% url inviteindex %}">invite some friends</a> who might be interested, or consider <a href="{% url add_constituency %}">volunteering to help in other places</a> (e.g. somewhere you're studying, or somewhere else nearby)</p>
 
 <p>In time, we'll begin to send you occasional emails, asking if you can help with certain tasks. The first major task will be gathering information about candidates who are standing in the next election in your constituency. <a href="/aboutus/">Read about our purpose and what we're planning</a>.
-
-<h3>Available tasks</h3>
-{% with user.taskuser_set.all as usertasks %}
-{% include "tasks/task_list.html" %}
-{% endwith %}
 </div>
 
 <div class="span-3  last">

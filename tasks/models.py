@@ -1,5 +1,5 @@
 from django.db import models
-from django.core.mail import send_mail
+from django.core.mail import send_mail, EmailMultiAlternatives
 from django.template.loader import render_to_string
 from django.contrib.sites.models import Site
 from django.conf import settings
@@ -81,18 +81,25 @@ class TaskUserManager(models.Manager):
         email_context = {'task': task,
                          'user': user,
                          'task_user': task_user,
+                         'task_url': task_url,
+                         'post_url': post_url,
                          'description_text': description_text,
                          'site': current_site,
                          'user_profile': user_profile,}
         
         message = render_to_string('tasks/email_new_task.txt',
                                    email_context)
-        
-        send_mail(subject,
-                  message,
-                  settings.DEFAULT_FROM_EMAIL,
-                  [user.email, ])
+        message_html = render_to_string('tasks/email_new_task.html',
+                                   email_context)
 
+        # Now using EmailMultiAlternatives to send HTML version
+        msg = EmailMultiAlternatives(subject,
+                                     message,
+                                     settings.DEFAULT_FROM_EMAIL,
+                                     [user.email, ])
+        msg.attach_alternative(message_html, "text/html")
+        msg.send()
+        
         signals.task_assigned.send(self, task_user=task_user)
 
 
@@ -110,8 +117,8 @@ class TaskUser(Model):
     user = models.ForeignKey(CustomUser)
     state = models.SmallIntegerField(choices=TASK_STATES)
     date_assigned = models.DateTimeField(auto_now_add=True)
-    url = models.URLField()
-    post_url = models.URLField(null=True, blank=True)
+    url = models.CharField(max_length=2048)
+    post_url = models.CharField(max_length=2048, null=True, blank=True)
     
     objects = TaskUserManager()
     

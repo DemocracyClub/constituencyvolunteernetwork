@@ -12,11 +12,23 @@
     {% endautoescape %}</div>
 
     {% if usertask %}
+    <script type="text/javascript">
+        function reload_page()
+        {
+            setTimeout("window.location.reload()", 500)
+        }
+    </script>
+
     <div class="actions">
-        {% ifequal usertask.state 0 %}You haven't accepted this task <a href='{% url start_task slug=usertask.task.slug %}'>start this task</a> or <a href='{% url ignore_task slug=usertask.task.slug %}'>ignore it</a>{% endifequal %}
+        {% ifequal usertask.state 0 %}You haven't accepted this task <a href='{% url start_task slug=usertask.task.slug %}' target='_blank' onclick='reload_page()'>do this task</a> or <a href='{% url ignore_task slug=usertask.task.slug %}'>ignore it</a>{% endifequal %}
         {% ifequal usertask.state 1 %}You've started this task, <a href='{% url complete_task slug=usertask.task.slug %}'>say you've completed this task</a> or <a href='{% url ignore_task slug=usertask.task.slug %}'>ignore it</a>{% endifequal %}
         {% ifequal usertask.state 2 %}You've ignored this task, <a href='{% url unignore_task slug=usertask.task.slug %}'>unignore this task</a>{% endifequal %}
-        {% ifequal usertask.state 3 %}You've completed this task!{% endifequal %}
+        {% ifequal usertask.state 3 %}You've completed this task!
+            <a href='{{ usertask.url }}'>Do this task again</a>
+          {% if usertask.post_url %}
+            <a href='{{ usertask.post_url }}'>Complete this task again</a>
+          {% endif %}
+        {% endifequal %}
     </div>
     {% endif %}
     
@@ -28,4 +40,11 @@
     {% endwith %}
     {% endif %}
     </ul>
+
+    <h3>How do tasks work?</h3>
+    <p>When we or other organisations suggest a task that you can do we will send you an email. This email will contain links to either start the task, say you've completed the task, or to ignore the task. You can also do this by logging in and looking at the list of tasks on the home page.</p>
+
+    <p>The reason we let you say you've completed the task is firstly to let us mark you as it being done in your constituency, but also so that you can claim credit. Some tasks, such as The Straight Choice leaflet uploading, allow you to say what you've done when you've completed a task so we can then display it on your user page. Some tasks can automatically tell if you've completed it, but not all.</p>
+
+    <p>So for any task you want to do, you first do the task, and then you tell use you've done it.</p>
 {% endblock %}

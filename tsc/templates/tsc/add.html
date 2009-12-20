@@ -2,8 +2,10 @@
 
 {% block content %}
 <h2>Added a leaflet to The Straight Choice?</h2>
+<p>{% autoescape off %}{{ message }}{% endautoescape %}</p>
+<p>Go to <a href='http://www.thestraightchoice.org/addupload.php'>The Straight Choice</a> to upload political leaflets, then paste your leaflet's url below</p>
 <form method="post" action="{% url tsc_add %}">
-Paste your leaflet url here<br/>
-<input name="leaflet_url" value=""/> <input type="submit" value="claim badge"/>
+<input name="leaflet_url" value=""/> <input type="submit" value="claim badge"/><br/>
+<div class="quiet">the leaflet url is like http://www.thestraightchoice.org/leaflet.php?q=XXX</div>
 </form>
 {% endblock %}

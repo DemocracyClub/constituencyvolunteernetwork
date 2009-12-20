@@ -57,7 +57,7 @@
       
         <div id="main" class="container">
           {% if not user.is_anonymous %}{% if not user.is_active %}
-            <div class="prepend-2 span-4 append-2 last"><p class="notice">You've not confirmed your email address yet.  Please check your inbox (and your spam folder) for a confirmation email.</p></div>
+            <div class="prepend-2 span-4 append-2 last"><p class="notice">You've not confirmed your email address yet. You need to do this to recieve tasks. Please check your inbox (and your spam folder) for a confirmation email.</p></div>
           {% endif %}{% endif %}
           {% if request.GET.notice %}
             <div class="prepend-2 span-4"><p class="notice">{{ request.GET.notice }}</p></div>
