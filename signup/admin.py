@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-import models
+import models    
 
 class ConstituencyAdmin(admin.ModelAdmin):
     prepopulated_fields = {'slug':('name',),}

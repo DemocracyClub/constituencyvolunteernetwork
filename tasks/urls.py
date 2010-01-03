@@ -5,6 +5,8 @@ import views
 ###############################################################################
 urlpatterns = patterns('tasks',
     url(r'^$', views.home, name="tasks"),
+    url(r'^admin/assign$', views.admin_assign_all, name="admin_assign_all"),
+
     url(r'^(?P<slug>[\w-]+)/start/(?P<login_key>[\w-]+)$',
         views.start_task,
         name="start_task"),

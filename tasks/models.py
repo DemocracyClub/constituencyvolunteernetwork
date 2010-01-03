@@ -63,7 +63,20 @@ class TaskUserManager(models.Manager):
     """
         Managing the TaskUser objects
     """
+    def trigger_assign(self, task, user_set):
+        from signup.signals import user_touch
+        
+        assigned = []
+        already_assigned = []
+        for user in user_set:
+            try:
+                user_touch.send(self, user=user, task_slug=task.slug)
+                assigned.append(user)
+            except TaskUser.AlreadyAssigned:
+                already_assigned.append(user)
 
+        return (assigned, already_assigned)
+        
     def assign_task(self, task, user, url, post_url=None):
         if TaskUser.objects.filter(task=task, user=user):
             raise TaskUser.AlreadyAssigned()

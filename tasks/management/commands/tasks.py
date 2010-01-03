@@ -20,8 +20,16 @@ class Command(BaseCommand):
         
         users = CustomUser.objects.all()
         
+        task_slug = None
+        if len(args) > 1:
+            task_slug = args[1]
+            print "Touching users only for task %s" % task_slug
+        
         for user in users:
-            user_touch.send(self, user=user)
-            print "Touched user %s" % user
+            try:
+                user_touch.send(self, user=user, task_slug=task_slug)
+                print "Touched user %s" % user
+            except TaskUser.AlreadyAssigned:
+                print "Already assigned to %s" % user
         
         

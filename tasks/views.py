@@ -1,7 +1,7 @@
 from django.shortcuts import render_to_response, get_object_or_404
 from django.http import HttpResponseRedirect, HttpResponse, Http404
 from django.core.urlresolvers import reverse
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, permission_required
 
 from models import Task, TaskUser
 from signup.views import render_with_context
@@ -90,3 +90,25 @@ def complete_task(request, slug):
     else:
         return HttpResponseRedirect(reverse("task", args={slug: slug}))
 
+def admin_assign_all(request):
+    from forms import AssignForm
+    from signup.models import CustomUser
+    
+    context = {}
+
+    if request.method == "POST":
+        form = AssignForm(request.POST, request.FILES)
+        if form.is_valid():
+            all_users = CustomUser.objects.all()
+            context['message'] = []
+            for task in form.cleaned_data['tasks']:
+                (assigned, already_assigned) = TaskUser.objects.trigger_assign(task, all_users)
+                context['message'].append((task, assigned, already_assigned))
+                
+            context['form'] = form
+        else:
+            context['form'] = form
+    else:
+        context['form'] = AssignForm()
+    
+    return render_with_context(request, 'tasks/task_admin.html', context)
