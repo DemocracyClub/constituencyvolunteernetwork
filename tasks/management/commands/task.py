@@ -6,6 +6,8 @@ from django.core.management.base import CommandError
 from signup.models import CustomUser
 from signup.signals import user_touch
 
+from tasks.models import TaskUser
+
 class Command(BaseCommand):
     def handle(self, *args, **options):
         """

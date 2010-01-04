@@ -50,15 +50,6 @@ class Task(Model):
     def get_absolute_url(self):
         return ("task", (self.slug,))
 
-
-TASK_STATES = (
-    (0, 'Assigned'),
-    (1, 'Started'),
-    (2, 'Ignored'),
-    (3, 'Completed'),
-)
-
-
 class TaskUserManager(models.Manager):
     """
         Managing the TaskUser objects
@@ -128,10 +119,23 @@ class TaskUser(Model):
         them to apply their own criteria for assignment (e.g. users in
         a particular constituency)
     """
+    class States:
+        """ Enum of TaskUser states """
+        assigned = 0
+        started = 1
+        ignored = 2
+        completed = 3
+
+        strings = (
+            (0, 'Assigned'),
+            (1, 'Started'),
+            (2, 'Ignored'),
+            (3, 'Completed'),
+        )
     
     task = models.ForeignKey(Task)
     user = models.ForeignKey(CustomUser)
-    state = models.SmallIntegerField(choices=TASK_STATES)
+    state = models.SmallIntegerField(choices=States.strings)
     date_assigned = models.DateTimeField(auto_now_add=True)
     date_modified = models.DateTimeField(auto_now=True, auto_now_add=True)
     url = models.CharField(max_length=2048)
@@ -139,25 +143,25 @@ class TaskUser(Model):
     
     objects = TaskUserManager()
     
-    task_state_string = dict(TASK_STATES)
+    task_state_string = dict(States.strings)
     
     def state_string(self):
         return self.task_state_string[self.state]
     
     def start(self):
-        self.state = 1
+        self.state = TaskUser.States.started
         self.save()
 
         signals.task_started.send(self, task_user=self)
     
     def complete(self):
-        self.state = 3
+        self.state = TaskUser.States.completed
         self.save()
 
         signals.task_completed.send(self, task_user=self)
     
     def ignore(self):
-        self.state = 2
+        self.state = TaskUser.States.ignored
         self.save()
         
         signals.task_ignored.send(self, task_user=self)
