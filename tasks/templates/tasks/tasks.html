@@ -13,17 +13,16 @@
 <p>Thanks for joining Democracy Club! You've joined thousands of people across the country to create a powerful team of volunteers who want to hold our representatives to account.</p>
 {% endif %}
  <h2>Tasks you could do now</h2>
- {% if usertasks %}
- <span class="quiet">Click on a task title to see more information.</span>
- {% include "tasks/task_list.html" %}
- {% else %}
-  {% if not user.is_active %}
+ {% if not user.is_active %}
     <p>You need to activate your account to participate in the website. Please check your inbox (and your spam folder) for a confirmation email.</p>
+ {% else %} 
+  {% if usertasks %}
+   <span class="quiet">Click on a task title to see more information.</span>
+   {% include "tasks/task_list.html" %}
   {% else %}
     <p>There's no tasks currently assigned to you.</p>
   {% endif %}
- {% endif %}
-
+ {% endif %}    
  <hr class="space" />
 
  <h3>Your achievements</h3>
