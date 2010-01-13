@@ -42,8 +42,6 @@ def callback_leaflet_added(sender, **kwargs):
                                      task=task,
                                      user=user)
 
-    print "Completed %s" % task_user
-
 @task_assign(task_slug)
 def callback_assign(sender, **kwargs):
     """

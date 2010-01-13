@@ -27,7 +27,6 @@ def callback_invites_sent(sender, **kwargs):
     if invite_count > 2:
         if task_user.state != TaskUser.States.completed:
             task_user.complete()
-            print "Completed %s" % task_user
     
     # Only award the badge at particular stages. Bit messy, but has to work
     # for users with existing invites and for bulk invites

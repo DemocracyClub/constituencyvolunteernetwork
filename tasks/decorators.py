@@ -44,9 +44,6 @@ def task_completion(task_slug):
                 kwargs['task'] = Task.objects.get(slug=task_slug)
             except Task.DoesNotExist:
                 return None
-
-            print "Checking user %s on task %s" % (user, kwargs['task'])
-
             try:
                 items = TaskUser.objects
                 kwargs['task_user'] = items.get(task=kwargs['task'],

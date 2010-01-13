@@ -45,8 +45,6 @@ def callback_issue_added(sender, **kwargs):
                                      user=user)
 
 
-    print "Completed %s" % task_user
-
 @task_assign(task_slug)
 def callback_assign(sender, **kwargs):
     """
