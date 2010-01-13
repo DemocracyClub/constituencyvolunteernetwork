@@ -140,7 +140,8 @@ class TaskUserManager(models.Manager):
         
     def assign_task(self, task, user, url,
                     post_url=None,
-                    constituency=None):
+                    constituency=None,
+                    email=False):
         if TaskUser.objects.filter(task=task,
                                    user=user,
                                    constituency=constituency):
@@ -153,45 +154,8 @@ class TaskUserManager(models.Manager):
                              post_url=post_url,
                              constituency=constituency)
         task_user.save()
-        
-        user_profile = user.registrationprofile_set.get()
-        current_site = Site.objects.get_current()
-        subject = "%s - from Democracy Club" % task.name
-
-        task_url = "http://%s%s" % (current_site.domain,
-                                    reverse_login_key('start_task',
-                                                      user,
-                                                      kwargs={'slug': task.slug}))
-        post_url = "http://%s%s" % (current_site.domain,
-                                    reverse_login_key('complete_task',
-                                                      user,
-                                                      kwargs={'slug': task.slug}))
-
-        description_text = task.email % \
-            {'task_url': task_url,
-            'post_url': post_url,}
-
-        email_context = {'task': task,
-                         'user': user,
-                         'task_user': task_user,
-                         'task_url': task_url,
-                         'post_url': post_url,
-                         'description_text': description_text,
-                         'site': current_site,
-                         'user_profile': user_profile,}
-        
-        message = render_to_string('tasks/email_new_task.txt',
-                                   email_context)
-        message_html = render_to_string('tasks/email_new_task.html',
-                                   email_context)
-
-        # Now using EmailMultiAlternatives to send HTML version
-        msg = EmailMultiAlternatives(subject,
-                                     message,
-                                     settings.DEFAULT_FROM_EMAIL,
-                                     [user.email, ])
-        msg.attach_alternative(message_html, "text/html")
-        msg.send()
+        if email:
+            task_user.send_email()
         
         signals.task_assigned.send(self, task_user=task_user)
 
@@ -226,7 +190,7 @@ class TaskUser(Model):
     date_modified = models.DateTimeField(auto_now=True, auto_now_add=True)
     url = models.CharField(max_length=2048)
     post_url = models.CharField(max_length=2048, null=True, blank=True)
-    
+    emails_sent = models.IntegerField(default=0)
     objects = TaskUserManager()
     
     task_state_string = dict(States.strings)
@@ -306,6 +270,50 @@ class TaskUser(Model):
         """
         current_site = Site.objects.get_current()
         
+    def send_email(self):
+        """Send an email to the user telling them about this task.
+        """
+        user = self.user
+        task = self.task
+        user_profile = user.registrationprofile_set.get()
+        current_site = Site.objects.get_current()
+        subject = "%s - from Democracy Club" % self.task.name
+
+        task_url = "http://%s%s" % (current_site.domain,
+                                    reverse_login_key('start_task',
+                                                      user,
+                                                      kwargs={'slug': task.slug}))
+        post_url = "http://%s%s" % (current_site.domain,
+                                    reverse_login_key('complete_task',
+                                                      user,
+                                                      kwargs={'slug': task.slug}))
+
+        description_text = task.email % \
+            {'task_url': task_url,
+            'post_url': post_url,}
+
+        email_context = {'task': task,
+                         'user': user,
+                         'task_user': self,
+                         'task_url': task_url,
+                         'post_url': post_url,
+                         'description_text': description_text,
+                         'site': current_site,
+                         'user_profile': user_profile,}
+
+        message = render_to_string('tasks/email_new_task.txt',
+                                   email_context)
+        message_html = render_to_string('tasks/email_new_task.html',
+                                   email_context)
+
+        # Now using EmailMultiAlternatives to send HTML version
+        msg = EmailMultiAlternatives(subject,
+                                     message,
+                                     settings.DEFAULT_FROM_EMAIL,
+                                     [user.email, ])
+        msg.attach_alternative(message_html, "text/html")
+        msg.send()
+        self.emails_sent += 1
     
     def __unicode__(self):
         return "%s doing %s (%s)" % (self.user, self.task, self.state_string())
