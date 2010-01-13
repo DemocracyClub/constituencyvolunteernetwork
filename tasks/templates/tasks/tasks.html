@@ -8,6 +8,77 @@
 {% block section %}tasks{% endblock %}
 
 {% block content %}
-<h2>Your tasks</h2>
-{% include "tasks/task_list.html" %}
+<div class="span-5">
+{% if first_time %}
+<p>Thanks for joining Democracy Club! You've joined thousands of people across the country to create a powerful team of volunteers who want to hold our representatives to account.</p>
+{% endif %}
+ <h2>Tasks you could do now</h2>
+ {% if usertasks %}
+ <span class="quiet">Click on a task title to see more information.</span>
+ {% include "tasks/task_list.html" %}
+ {% else %}
+  {% if not user.is_active %}
+    <p>You need to activate your account to participate in the website. Please check your inbox (and your spam folder) for a confirmation email.</p>
+  {% else %}
+    <p>There's no tasks currently assigned to you.</p>
+  {% endif %}
+ {% endif %}
+
+ <hr class="space" />
+
+ <h3>Your achievements</h3>
+ {% if badges %}
+  <ul class="badges">
+   {% for badge in badges %}
+    <li><span class="badge">{{ badge.name }}</span></li> 
+   {% endfor %}
+  </ul>
+ {% else %}
+  <p>You've not carried out any tasks yet.  When you do so, you are awarded "badges" for your work.</p>
+ {% endif %}
+  <p>Badges don't have any effect on the site; they're simply a sign of accomplishment and bragging rights.</p>
+  
+</div>
+
+<div id="task-description" class="span-3 last">
+ <div class="instructions-box">
+  <h3>About your tasks</h3>
+  <p>On this page, we display a list of tasks that we've asked you to consider doing.  Click on a task title to display more information about the task.</p>
+  <p>Click "begin task" to get started with one of them.</p>
+  <p>You can always igore a task that you can't do (or don't want to do).</p>
+ </div>
+
+</div>
+
+<div class="quiet span-5">
+ <h3>Recent activity in your {% ifnotequal request.user.constituencies.count 1 %}constituencies{% else %}constituency{% endifnotequal %}</h3>
+ {% if activity %}
+   {% include "tasks/activity_list.html" %}
+ {% else %}
+   There has been no activity near you - be the first, do a task! Maybe you need to <a href='{% url inviteindex %}'>invite some friends</a>.
+ {% endif %}
+</div>
+
+<div class="quiet span-3 last">
+<h3>Recent signups</h3>
+{% include "new_signup_list.html" %}
+</div>
+ 
 {% endblock %}
+
+
+{% block js %}
+ <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script> 
+ <script type="text/javascript">
+   $(document).ready(function () {
+	$('div.tasks a.usertask').click(function() {
+           var target = $('#task-description div');
+           var desc = $(this).parent().parent().find('div.task-description');
+           target.html(desc.html());
+           return false;
+	});
+    });
+
+ </script>
+{% endblock %}
+

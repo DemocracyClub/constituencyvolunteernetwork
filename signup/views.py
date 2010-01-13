@@ -8,24 +8,23 @@ from django.http import HttpResponse
 from django.core.urlresolvers import reverse
 from django.template import RequestContext
 from django.contrib.auth import authenticate, login, logout
-from django.db.models import Count
 from django.contrib.auth.decorators import login_required
 from django.utils.html import escape
 from django.utils.safestring import SafeUnicode
 from django.contrib.sites.models import Site
 from django.template.loader import render_to_string
+from django.core.mail import send_mail
 
 import models
 from models import CustomUser, Constituency, RegistrationProfile
 from forms import UserForm
-import utils
 import signals
-
-from tasks.models import TaskUser
+import utils
 
 from utils import addToQueryString
 import settings
 import geo
+
 
 def render_with_context(request,
                         template,
@@ -42,8 +41,9 @@ def _get_statistics_context():
     year = settings.CONSTITUENCY_YEAR
     constituencies = Constituency.objects.filter(year=year)
     volunteers = CustomUser.objects.filter(is_active=True)
-    count = volunteers.aggregate(Count('constituencies',
-                                       distinct=True)).values()[0]
+    count = constituencies.filter(customuser__in=volunteers)\
+            .distinct()\
+            .count()
     total = constituencies.count()
     
     context['volunteers'] = volunteers.count()
@@ -54,6 +54,8 @@ def _get_statistics_context():
         context['percent_complete'] = percent
     else:
         context['percent_complete'] = 0
+    context['new_signups'] = CustomUser.objects.order_by('-date_joined')\
+                                               .filter(can_cc=True)[:5]
     return context
 
 def home(request):
@@ -96,21 +98,43 @@ def home2(request):
     else:
         return HttpResponseRedirect(reverse('welcome'))
 
+@login_required
 def welcome(request):
+     # XXX why can't we import these at module level?
+    from tasks.models import Task, TaskUser
     context = _get_statistics_context()        
-    #if request.user.is_authenticated():
-    #    context['usertasks'] = TaskUser.objects\
-    #                           .filter(user=request.user)
-
-    # "force" all new users to recruit for us
-    if not request.user.seen_invite:
+    user_constituencies = []
+    if not request.user.is_superuser:
+        for constituency in request.user.constituencies.all():
+            user_constituencies.append(constituency.id)
+    context['activity'] = TaskUser.objects.\
+        filter(user__can_cc=True).\
+        filter(user__constituencies__id__in=user_constituencies).\
+        filter(state__in=[TaskUser.States.started,TaskUser.States.completed]).\
+        order_by('-date_modified').distinct()
+    tasks = TaskUser.objects\
+            .order_by('date_assigned')\
+            .filter(state__in=[TaskUser.States.started,
+                               TaskUser.States.assigned])
+    my_tasks = tasks.filter(user=request.user)
+    open_tasks = Task.objects\
+                 .order_by('-date_created')\
+                 .filter(taskuser__state__in=[TaskUser.States.started,
+                                              TaskUser.States.assigned])
+    completed_tasks = tasks.filter(state=TaskUser.States.completed)
+    my_taskuser = my_tasks.count() and my_tasks[0] or None
+    my_taskuser_task = my_taskuser and my_taskuser.task or None
+    context['my_current_task'] = my_taskuser
+    context['current_task'] = my_taskuser_task \
+                              or open_tasks.count() and open_tasks[0] or None
+    context['completed_tasks'] = completed_tasks
+    if not request.user.is_superuser and not request.user.seen_invite:
         return HttpResponseRedirect(reverse('inviteindex'))
     else:
         return render_with_context(request,
                                    'welcome.html',
                                    context)
 
-    
 @login_required
 def delete_constituency(request, slug):
     c = Constituency.objects.get(slug=slug)
@@ -171,9 +195,10 @@ def place_search(place):
 
 @login_required
 def add_constituency(request):
-    my_constituencies = request.user.ordered_constituencies.all()
+    my_constituencies = []
+    if request.user.ordered_constituencies:
+        my_constituencies = request.user.ordered_constituencies.all()
     context = {'my_constituencies': my_constituencies}
-
     context['constituencies'] = []
     tick_instructions = "Tick a box and scroll"
     if len(my_constituencies) > 0:
@@ -220,6 +245,10 @@ def add_constituency(request):
             constituencies = constituencies.exclude(pk__in=my_constituencies)
             request.user.constituencies.add(*constituencies.all())
             request.user.save()
+            signals.user_join_constituency.send(None,
+                                                user=request.user,
+                                                constituencies=constituencies.all())
+
             return HttpResponseRedirect("/add_constituency/")
 
     return render_with_context(request,
@@ -248,10 +277,16 @@ def activate_user(request, key):
     return HttpResponseRedirect(addToQueryString("/", context))
 
 def user(request, id):
+    from tasks.models import TaskUser
     context = {}
     user = get_object_or_404(CustomUser, pk=id)
-    if user == request.user:
-        context['user'] = user
+    context['profile_user'] = user
+    context['activity'] = TaskUser.objects.\
+        filter(user=user).\
+        filter(user__can_cc=True).\
+        filter(state__in=[TaskUser.States.started,TaskUser.States.completed]).\
+        order_by('-date_modified').distinct()
+    context['badges'] = user.badge_set.order_by('-date_awarded')
     return render_with_context(request,
                                'user.html',
                                context)
@@ -266,25 +301,50 @@ def constituency(request, slug, year=None):
                        .filter(slug=slug, year=year).get()
     except Constituency.DoesNotExist:
         raise Http404
-    context = {'constituency': constituency}
-    latspan = lonspan = 1
-    missing = models.filter_where_customuser_fewer_than(1)
-    missing_neighbours = constituency.neighbors(
-        limit=5,
-        constituency_set=missing)
-    if missing_neighbours:
-        furthest = missing_neighbours[-1]
-        
-        if None not in (furthest.lat, furthest.lon,
-                        constituency.lat, constituency.lon):
-            # not in Northern Ireland
-            latspan = abs(furthest.lat - constituency.lat) * 2
-            lonspan = abs(furthest.lon - constituency.lon) * 2
-    context['latspan'] = latspan
-    context['lonspan'] = lonspan
-    return render_with_context(request,
-                               'constituency.html',
-                               context)
+    if request.method == "POST":
+        context = {'constituency': constituency}
+        within_km = int(request.POST['within_km'])
+        nearest = constituency.neighbors(limit=100,
+                                         within_km=within_km)
+        context['nearest'] = nearest
+        context['subject'] = request.POST['subject']
+        context['message'] = request.POST['message']
+        context['within_km'] = within_km
+        if request.POST.get('go', ''):
+            count = 0
+            for c in constituency.neighbors(limit=100,
+                                            within_km=within_km):
+                for user in c.customuser_set.filter(is_active=True).all():
+                    send_mail(request.POST['subject'],
+                              request.POST['message'],
+                              settings.DEFAULT_FROM_EMAIL,
+                              [user.email,])
+                count += 1
+            context['recipients'] = count
+
+        return render_with_context(request,
+                                   'constituency_email.html',
+                                   context)
+    else:
+        context = {'constituency': constituency}
+        latspan = lonspan = 1
+        missing = models.filter_where_customuser_fewer_than(1)
+        missing_neighbours = constituency.neighbors(
+            limit=5,
+            constituency_set=missing)
+        if missing_neighbours:
+            furthest = missing_neighbours[-1]
+
+            if None not in (furthest.lat, furthest.lon,
+                            constituency.lat, constituency.lon):
+                # not in Northern Ireland
+                latspan = abs(furthest.lat - constituency.lat) * 2
+                lonspan = abs(furthest.lon - constituency.lon) * 2
+        context['latspan'] = latspan
+        context['lonspan'] = lonspan
+        return render_with_context(request,
+                                   'constituency.html',
+                                   context)
 
 def constituencies_with_fewer_than_rss(request,
                                        volunteers=1):
@@ -317,7 +377,7 @@ def statistics(request):
                                'statistics.html',
                                context)
 
-def generate_map(request):
+def generate_map(request, date=None):
     source_map = render_to_string('constituency-map.svg',{})
     year = settings.CONSTITUENCY_YEAR
     levels = {0:'level1',
@@ -345,8 +405,10 @@ def generate_map(request):
             if the_place:
                 the_count = the_place[0]\
                             .customuser_set\
-                            .filter(is_active=True)\
-                            .count()
+                            .filter(is_active=True)
+                if date:
+                    the_count = the_count.filter(date_joined__lt=date)
+                the_count = the_count.count()
                 score = min(float(the_count)/10, 1)
                 for l in takewhile(lambda x: score > x, level_keys):
                     level = levels[l]

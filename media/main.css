@@ -38,11 +38,24 @@ p.small {
     font-size:0.9em;
 }
 
+.instructions-box {
+ background: #e5ecf9;
+ padding: 10px;
+}
+
+.instructions-box h2, .instructions-box h3 {
+ margin: 0;
+}
+
 #header {
     height:107px;
     padding: 10px;
     padding-top:0;
     padding-bottom:0;
+}
+
+#constituency-header h3 {
+ font-size: 1em;
 }
 
 #logo
@@ -173,15 +186,10 @@ ul#links li a:hover {
     background:#FFE;
     padding:0.5em;
     border:1px solid #EEE;
-    margin:0;
     margin-bottom:1em;
 }
 
-#signup td {
-    vertical-align:top;
-}
-
-#signup input {
+#signup input[type="text"] {
     margin: 0;
     width:75%;
 }
@@ -189,11 +197,6 @@ ul#links li a:hover {
 #signup input[type=submit]
 {
     width:150px;
-}
-
-#signup input[type=checkbox]
-{
-    width:auto;
 }
 
 #signup h3, #signup form
@@ -273,12 +276,6 @@ ul li {
     margin-top:0;
 }
 
-#section-task .actions a
-{
-    padding:0.5em;
-    border-bottom:1px solid #CCC;
-    background-color:#EEF;
-}
 
 /* Homepage2 styles */
 div.topboxwrap
@@ -308,9 +305,9 @@ div.topbox > h3
 
 #section-home2 > .container
 {
-/*    background:url("images/heatmap.png") no-repeat white;
+    background:url("images/heatmap.png") no-repeat white;
     background-position:top right;
-    min-height:600px; */
+    min-height:600px;
 }
 
 #signup

@@ -1,0 +1,19 @@
+/* CSS specific to user pages */
+.badges
+{
+    list-style:none;
+}
+
+.badge
+{
+    display:block;
+    float:left;
+    width:150px;
+    height:50px;
+    margin:0.25em;
+    padding:0.25em;
+    padding-top:0.5em;
+    border:1px solid #CCC;
+    text-align:center;
+    background:#FFFFEE;
+}

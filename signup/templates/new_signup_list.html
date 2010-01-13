@@ -1,0 +1,3 @@
+{% for user in new_signups %}
+{% if user.can_cc %}{{ user.display_name }}{% else %}someone{% endif %} joined in <a href='{{ user.home_constituency.get_absolute_url }}'>{{ user.home_constituency.name }}</a> <span class="quiet" style="font-size:0.7em">{{ user.date_joined.date }}</span><br/>
+{% endfor %}

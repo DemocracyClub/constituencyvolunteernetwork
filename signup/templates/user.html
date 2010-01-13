@@ -1,13 +1,31 @@
 {% extends 'base.html' %}
 {% block title %}Welcome{% endblock %}
 
+{% block extra-head %}
+<link rel="stylesheet" type="text/css"  media="screen" href="{{ MEDIA_URL }}user.css" />
+{% endblock %}
+
 {% block content %}
 
-Hello {{ user.email }}
+<h2>{{ profile_user.display_name }}</h2>
 
-{% for c in user.constituencies.all %}
- <a href="{% url constituency c.slug %}">{{ c.name }}</a>,
+{{ profile_user.display_name }} is in 
+{% for c in profile_user.constituencies.all %}
+{% if forloop.last and not forloop.first %}and {% endif %}
+<a href="{% url constituency c.slug %}">{{ c.name }}</a>{% if not forloop.last %}, 
+{% endif %}
 {% endfor %}
+
+<h3>Recent activity</h3>
+{% if activity %}
+  <ul>
+  {% for item in activity %}
+    <li><a href='{{ item.task.get_absolute_url }}'>{{ item.task }}</a>, {{ item.state_string }} <span class="quiet" style="font-size:0.7em">{{ item.date_modified.date }}</span></li>
+  {% endfor %}
+  </ul>
+{% else %}
+  {{ profile_user.display_name }} hasn't done anything recently.
+{% endif %}
 
 {% if form %}
 <form action="" method="post">
@@ -16,5 +34,11 @@ Hello {{ user.email }}
 </form>
 {% endif %}
 
+<h3>Badges</h3>
+<ul class="badges">
+{% for badge in badges %}
+  <li class="badge"><a href='{% url task slug=badge.task.slug %}'>{{ badge.name }}</a><br/><small>{{ badge.date_awarded.date }}</small></li>
+{% endfor %}
+</ul>
 
 {% endblock %}

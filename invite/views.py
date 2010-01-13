@@ -19,7 +19,7 @@ def index(request):
         if invite_form.is_valid():
             invite_form.save(request.user)
 
-            return HttpResponseRedirect(reverse('thankyou'))
+            return HttpResponseRedirect(reverse('home'))
         else:
             vars['invite_form'] = invite_form
     else:

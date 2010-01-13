@@ -92,9 +92,11 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.flatpages',
     'django.contrib.admin',
+    'tasks', # note: 'tasks' must be first app (due to Proxy models)
     'signup',
     'invite',
-#    'tasks',
+    'issue',
+    'tsc',
 )
 
 AUTHENTICATION_BACKENDS = ('backends.NoAuthBackend',

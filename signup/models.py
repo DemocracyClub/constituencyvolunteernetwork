@@ -19,6 +19,7 @@ from django.core.mail import send_mail
 import geo
 from slugify import smart_slugify
 from settings import CONSTITUENCY_YEAR
+import signals
 
 SHA1_RE = re.compile('^[a-f0-9]{40}$')
 
@@ -68,7 +69,7 @@ class Constituency(Model):
                                  (other.lat, other.lon))
         return distance
     
-    def neighbors(self, limit=7, constituency_set=None):
+    def neighbors(self, limit=7, within_km=100, constituency_set=None):
         distances = []
         if constituency_set is None:
             constituency_set = Constituency.objects\
@@ -76,10 +77,17 @@ class Constituency(Model):
         for c in constituency_set:
             distances.append((c, self.distance_from(c)))
         nearest = sorted(distances, key=lambda x: x[1])
-        keys = [c[0].id for c in nearest[1:limit+1]]
-        return [Constituency.objects.get(pk=x) \
-                for x in keys]
-    
+        neighbours = []
+        count = 0
+        for place, distance in nearest[1:]:
+            if count >= limit:
+                break
+            if distance > within_km:
+                break
+            neighbours.append(place)
+            count += 1
+        return neighbours
+
     @permalink
     def get_absolute_url(self):
         return ("constituency", (self.slug,))
@@ -111,14 +119,16 @@ class CustomUser(User):
     def home_constituency(self):
         "Return the first constituency the user subscribed to"
         return self.ordered_constituencies[0]
-
         
     @property
     def display_name(self):
-        if self.first_name:
-            name = self.first_name
+        if self.can_cc:
+            if self.first_name:
+                name = self.first_name
+            else:
+                name = self.email
         else:
-            name = self.email
+            name = "Someone"
         return name
     
     def __unicode__(self):
@@ -154,6 +164,7 @@ class RegistrationManager(models.Manager):
             user.save()
             profile.activated = True
             profile.save()
+            signals.user_activated.send(self, user=user)
             return profile
         else:
             return False
@@ -243,6 +254,14 @@ class RegistrationProfile(Model):
                   settings.DEFAULT_FROM_EMAIL,
                   [self.user.email,])
         return self.user.email
+
+    # XXX This is used in the admin interface, but not yet in the template.
+    @permalink
+    def get_activation_url(self):
+        return ( "activate", (), { "key" : self.activation_key } )
+    @permalink
+    def get_login_url(self):
+        return ( "login", (), { "key" : self.activation_key } )
 
     activation_key_expired.boolean = True
 

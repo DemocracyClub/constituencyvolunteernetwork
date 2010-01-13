@@ -1,7 +1,10 @@
 import urllib
 import copy
-
+import csv
+import datetime
 from utils import json
+
+import settings
 
 api_key = "FH8qJGE5t7opGVTuXTDumuUK"
 service_url = "http://www.theyworkforyou.com/api/"
@@ -9,6 +12,7 @@ service_url = "http://www.theyworkforyou.com/api/"
 params = {'key': api_key,
           'output': 'js'}
 
+URL_OF_2010_TSV = "http://www.theyworkforyou.com/boundaries/new-constituencies.tsv"
 
 from django.core.cache import cache
 
@@ -48,7 +52,12 @@ def svcurl(method, sparams):
 
 def getConstituency(postcode):
     "Constituency postcode is in"
-    _, response = fetch(svcurl("getConstituency", {"postcode": postcode}))
+    params = {"postcode": postcode}
+    if settings.CONSTITUENCY_YEAR.strftime("%Y") >= "2010":
+        # XXX this is temporary hack until elegant TWFY API solution
+        # happens 
+        params['future'] = 1
+    _, response = fetch(svcurl("getConstituency", params))
     result = json.loads(response)
     if not result.has_key('error'):
         return result['name']
@@ -79,9 +88,16 @@ def getConstituencies(**kw):
             raise ValueError("Need all geoargs")
 
     params = dict((k, v) for k,v in kw.items() if v != None)
-    headers, result = fetch(svcurl("getConstituencies", params))
-    return json.loads(result, encoding=charset(headers))
-
+    new_constituency_date = "2010"
+    date = kw.get('date', '2009')
+    if date < new_constituency_date:
+        headers, result = fetch(svcurl("getConstituencies", params))
+        return json.loads(result, encoding=charset(headers))
+    else:
+        # XXX hopefully there will be a proper API for this in the future
+        tsv_data = csv.DictReader(urllib.urlopen(URL_OF_2010_TSV),
+                                  dialect='excel-tab')
+        return tsv_data
 
 def getGeometry(name=None):
     """
@@ -93,7 +109,10 @@ def getGeometry(name=None):
         params = dict(name=name)
     else:
         params = dict()
-
+    if settings.CONSTITUENCY_YEAR.strftime("%Y") >= "2010":
+        # XXX this is temporary hack until elegant TWFY API solution
+        # happens 
+        params['future'] = 1
     headers, result = fetch(svcurl("getGeometry", params))
     if name:
         data = json.loads(result, encoding=charset(headers))

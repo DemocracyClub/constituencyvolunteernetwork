@@ -5,6 +5,8 @@ from django.conf import settings
 from django.template.loader import render_to_string
 
 from signup.models import CustomUser
+from tasks.models import Task
+from tasks.models import TaskUser
 
 import strings
 import signals
@@ -14,7 +16,7 @@ class InvitationManager(models.Manager):
       Shortcuts for invitation creation and automated sending of the emails
     """
 
-    def create_invitation(self, email, message, user):
+    def create_invitation(self, email, message, user, send_signal=True):
         invite = Invitation(email=email, user_from=user)
         invite.save()
 
@@ -32,7 +34,8 @@ class InvitationManager(models.Manager):
                 settings.DEFAULT_FROM_EMAIL,
                 [email,])
 
-        signals.invitation_sent.send(self, user=user)
+        if send_signal:
+            signals.invitation_sent.send(self, user=user)
 
 class Invitation(models.Model):
     email = models.CharField(max_length=80)
@@ -45,4 +48,3 @@ class Invitation(models.Model):
     class Meta:
         verbose_name = 'invitation'
         verbose_name_plural = 'invitations'
-

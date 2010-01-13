@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+
+{% block title %}Local issue gathering{% endblock %}
+
+{% block content %}
+
+<div class="span-5 task">
+
+
+{% if submitted %}
+ <h3>Thank you for adding an issue!</h3>
+ <p>Please carry on adding more issues for as long as you have the energy. <a href="{% url tasks %}">No thanks, I've finished</a></p>
+</p>
+
+{% else %}
+ <h3>
+  Task &mdash; Find local issues candidates at the next
+  election are likely to have differing opinions on
+ </h3>
+{% endif %}
+
+{% if form %}
+    <form action="" method="post" id="signup">
+         <div class="fieldWrapper">
+            {{ form.constituency.errors }}
+            {{ form.question.errors }}
+            <label for="id_question">
+                1. Enter a controversial local question 
+                to ask candidates 
+                about.
+            </label>
+            {{ form.question }}
+            <p class="helptext">
+                e.g. Should the bypass round Lancaster be built?
+                <br>
+                Keep it <strong>genuinely local</strong>
+                    to {{ constituency.name }} constituency.
+                We'll ask candidates national questions anyway, separately.
+                Make sure it <strong>divides the candidates</strong>. 
+            </p>
+        </div>
+        <div class="fieldWrapper">
+            {{ form.reference_url.errors }}
+            <label for="id_question">
+                2. Provide a link explaining the issue.
+        </label>
+            {{ form.reference_url }}
+            <p class="helptext">
+                e.g. http://www.cares.ukhome.net/
+            </p>
+        </div>
+        <input type="submit" value="Save" />
+    </form>
+{% endif %}
+</div>
+
+<div class="span-3 last">
+{% if issues %}
+ <h3>Existing issues</h3>
+ <ul>
+ {% for issue in issues %}
+  <li><a href="{{ issue.reference_url }}" target="_blank">{{ issue.question }}</a></li>
+ {% endfor %}
+ </ul>
+{% endif %}
+</div>
+
+{% endblock %}

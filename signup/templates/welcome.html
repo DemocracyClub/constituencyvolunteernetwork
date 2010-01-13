@@ -1,23 +1,95 @@
 {% extends 'base.html' %}
 {% block title %}Transparency through volunteering{% endblock %}
+{% block extra-head %}
+<link rel="stylesheet" type="text/css"  media="screen" href="{{ MEDIA_URL }}tasks/tasks.css" />
+{% endblock %}
 
 {% block content %}
 <div class="span-5">
-<h2>Thanks for signing up to help out in your constituency, {{ user.display_name }}</h2> 
-<h4>What now?</h4>
-<p>Before we can really start making a difference, we need to try to get <atrong>at least one volunteer in every constituency</strong> in the United Kingdom.</p>
-<p>Please think if you can <a href="{% url inviteindex %}">invite some friends</a> who might be interested, or consider <a href="{% url add_constituency %}">volunteering to help in other places</a> (e.g. somewhere you're studying, or somewhere else nearby)</p>
-
-<p>In time, we'll begin to send you occasional emails, asking if you can help with certain tasks. The first major task will be gathering information about candidates who are standing in the next election in your constituency. <a href="/aboutus/">Read about our purpose and what we're planning</a>.
+ <h3>Welcome to Democracy Club</h3>
+ <p>You've joined thousands of people across the country to create a powerful team of volunteers who want to hold our representatives to account.</p>
+ <p>On this page, you'll find information about the next task we'd like you to carry out.  You can see a full list of tasks on the <a href="{% url tasks %}">Your tasks</a> page.</p>
+ <div class="span-5 last">
+ {% if not user.is_active %}
+    <p>The most recent task we've assigned people is <a href="{% url task slug=current_task.slug %}">{{ current_task.name }}</a>.
+      You can see our progress on this to the right.</p>
+    <p>You need to activate your account to participate in the website. Please check your inbox (and your spam folder) for a confirmation email.</p>
+ {% else %}
+  {% if my_current_task %}
+   <div id="usertask-{{ my_current_task.id }}">
+    <div class="task instructions-box">
+     <h4>Your next task: {{ my_current_task.description_link|safe }}</h4>
+     <p>{{ my_current_task.task.description }}</p>
+    </div>
+    <div class="task-actions span-2 last">
+    {% for link in my_current_task.transition_links %}
+      {{ link|safe }}
+    {% endfor %}
+    </div>
+   </div>
+  {% else %}
+    <p>You're up to date with available tasks!</p>
+    {% if current_task %}
+    <p>The most recent task we've assigned people is <a href="{% url task slug=current_task.slug %}">{{ current_task.name }}</a>.
+      You can see our progress on this to the right.</p>
+    {% endif %}
+  {% endif %}
+ {% endif %}
+ </div>
+ <div class="span-5 last">
+ <h3>Recent activity near you</h3>
+ {% if activity %}
+   {% include "tasks/activity_list.html" %}
+ {% else %}
+   There has been no activity near you - be the first, do a task! Maybe you need to <a href='{% url inviteindex %}'>invite some friends</a>.
+ {% endif %}
+ </div>
 </div>
 
-<div class="span-3  last">
- <img src="/media/images/heatmap.png" width="300" />
-<p class="quiet">We're trying to get volunteers in every part of the UK.  So far, we've recruited {{ volunteers }} volunteers in {{ count }} constituencies (out of a total {{ total }}).  On this map, the redder the constituency, the more volunteers we have there. <a href="/statistics/">Read more about how we're doing.</a></p>
+<div class="span-3 last">
+{% if current_task %}
+<h3>Progress on <em>{{ current_task.name }}</em></h3>
+<div id="visualization">
+</div>
 
+{% block js %}
+ <script type="text/javascript" src="http://www.google.com/jsapi"></script>
+ <script type="text/javascript">
+   google.load('visualization', '1', {packages: ['gauge']});
+ </script>
+ <script type="text/javascript">
+ function drawVisualization() {
+   // Create and populate the data table.
+   var data = new google.visualization.DataTable();
+   data.addColumn('string', 'Label');
+   data.addColumn('number', 'Value');
+   data.addRows(1);
+   data.setValue(0, 0, '% complete');
+   data.setValue(0, 1, {{ current_task.percent_complete }});
+
+   // Create and draw the visualization.
+   var chart = new google.visualization.Gauge(document.getElementById('visualization'));
+   var opts = {redFrom: 90, 
+               redTo: 100, 
+               yellowFrom: 75,
+               yellowTo: 90, 
+               greenFrom: 35, 
+               greenTo: 75};
+
+    chart.draw(data, opts);
+ }
+ google.setOnLoadCallback(drawVisualization);
+ </script>
+{% endblock %}
+{% endif %}
  
+<h3>Recent signups</h3>
+{% include "new_signup_list.html" %}
+</p>
 </div>
 
 {% endblock %}
+
+
 
 

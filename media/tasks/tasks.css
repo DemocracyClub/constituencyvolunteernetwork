@@ -1,29 +1,82 @@
-ul#tasks
-{
-    margin-left:0.5em;
+/* icons from http://www.visualpharm.com/must_have_icon_set/ */
+
+div.tasks hr {
+ margin: 0;
 }
 
-ul#tasks li
-{
-    list-style: none;
+div.tasks h3 {
+ font-size: 1em;
+ margin: 0;
 }
 
-#tasks li.task-state-0 {
-    
+div.tasks p {
+ font-size: 0.8em;
 }
 
-#tasks li.task-state-1 {
-    background:#EFE;
+div.tasks h3 {
+ border-bottom: dotted 1px gray;
 }
 
-#tasks li.task-state-2 {
-    display:none;
+div.task p {
+ margin-bottom: 0;
 }
 
-#tasks li.task-state-2, #tasks li.task-state-2 a {
-    color:#CCC;
+div.task-description {
+ display: none;
 }
 
-#tasks li.task-state-3, #tasks li.task-state-3 a {
-    color:#060
+a.action {
+ font-size: 0.9em;
+ padding: 3px;
+ padding-left: 22px;
+ background-position: 3px 3px;
+ background-repeat: no-repeat;
+ text-decoration: none;
+ border: solid #bbd1f9 1px;
+ border-top: solid #ecf1f9 1px;
+ border-left: solid #ecf1f9 1px;
+ background-color: #e5ecf9;
+ width: 8em;
+}
+
+a.complete-task {
+ background-image: url("./complete.png");
+}
+
+a.ignore-task {
+ background-image: url("./ignore.png");
+}
+
+a.unignore-task {
+ background-image: url("./unignore.png");
+}
+
+a.start-task {
+ background-image: url("./start.png");
+}
+
+span.completed {
+ background-color: green;
+ color: white;
+ padding: 0.25em;
+}
+
+span.badge { 
+ background: #0a5196;
+ padding: 3px;
+ border: solid #ffd400 3px;
+ color: white;
+ white-space: nowrap;
+ line-height: 2em;
+}
+
+ul.badges {
+ margin-left: 0;
+}
+ul.badges li {
+ list-style: none;
+ margin: 10px;
+ padding: 0;
+ margin-left: 0;
+ display: inline;
 }
