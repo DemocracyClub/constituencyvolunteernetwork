@@ -5,27 +5,19 @@ from signup.unit_tests.testbase import TestCase
 
 from tasks.models import Project, Task, TaskUser
 
-from tests import constituencies, users
+from tests import users
 
 class TestTSCAssignment(TestCase):
     """
         Makes sure the invite task is assigned to users on sign up
     """
+    fixtures = ['default_data.json']
 
     def setUp(self):
         """
             Create the task and add some constituencies for users
         """
-        tsc = Project.objects.create(name="tsc")
-        Task.objects.create(name="Upload a leaflet", slug="upload-leaflet", email="Honk", project=tsc)
-        
-        self.constituencies = []
-        for const, yr in constituencies:
-            const = Constituency.objects.create(name=const,
-                                                year=yr)
-            const.save()
-            self.constituencies.append(const)
-    
+   
     def test_signup(self):
         """
             Test that the invite task is assigned to all users on activation
