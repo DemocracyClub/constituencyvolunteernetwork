@@ -43,12 +43,15 @@ a.action {
  background-repeat: no-repeat;
  text-decoration: none;
  border:1px solid white;
-/* border: solid #bbd1f9 1px;
+ border: solid #bbd1f9 1px;
  border-top: solid #ecf1f9 1px;
- border-left: solid #ecf1f9 1px; */
+ border-left: solid #ecf1f9 1px;
  background-color: white;/*#F9FBFF;*/
  width: 8em;
  outline:none;
+ border-radius:0.4em;
+ -moz-border-radius:0.4em;
+ -webkit-border-radius:0.4em;
 }
 
 a.complete-task {

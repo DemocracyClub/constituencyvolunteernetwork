@@ -19,7 +19,10 @@
     margin-left:-0.25em;
     padding:0.25em;
     padding-top:0.5em;
-    border:1px solid #CCC;
+    border:1px solid #D8CF84;
     text-align:center;
     background:#FFFFEE;
+    border-radius:0.5em;
+    -moz-border-radius:0.5em;
+    -webkit-border-radius:0.5em;
 }
