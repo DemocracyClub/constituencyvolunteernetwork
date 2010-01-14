@@ -1,5 +1,5 @@
 <ul class="activity">
 {% for item in activity %}
-    <li>{% if item.user.can_cc %}<a href='{{ item.user.get_absolute_url }}'>{% endif %}{{ item.user.display_name }}{% if item.user.can_cc %}</a>{% endif %} in <a href='{{ item.user.home_constituency.get_absolute_url }}'>{{ item.user.home_constituency.name }}</a> {{ item.state_string|lower }} <a href='{{ item.task.get_absolute_url }}'>{{ item.task }}</a> <span class="quiet" style="font-size:0.7em">{{ item.date_modified.date }}</span></li>
+    <li>{% if item.user.can_cc %}<a href='{{ item.user.get_absolute_url }}'>{% endif %}{{ item.user.display_name }}{% if item.user.can_cc %}</a>{% endif %} in {% if item.constituency.name %}<a href='{{ item.constituency.get_absolute_url }}'>{{ item.constituency.name }}</a>{% else %}<a href='{{ item.user.home_constituency.get_absolute_url }}'>{{ iitem.user.home_constituency.name }}</a>{% endif %} {{ item.state_string|lower }} <a href='{{ item.task.get_absolute_url }}'>{{ item.task }}</a> <span class="quiet" style="font-size:0.7em">{{ item.date_modified.date }}</span></li>
 {% endfor %}
 </ul>
