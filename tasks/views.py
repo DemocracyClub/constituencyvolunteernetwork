@@ -18,10 +18,13 @@ def home(request):
         tasks = TaskUser.objects.filter(
                 user=request.user).order_by('state', 'date_assigned')
         open_tasks = tasks.filter(state__in=[TaskUser.States.started,
-                                             TaskUser.States.assigned])
+                                             TaskUser.States.assigned,
+                                             TaskUser.States.ignored])
         completed_tasks = tasks.filter(state=TaskUser.States.completed)
-        context['usertasks'] = open_tasks
+        ignored_tasks = tasks.filter(state=TaskUser.States.ignored)
+        context['open_tasks'] = open_tasks
         context['completed_tasks'] = completed_tasks
+        context['ignored_tasks'] = ignored_tasks
         context['badges'] = Badge.objects.filter(user=request.user)
         context['new_signups'] = CustomUser.objects\
                                  .order_by('-date_joined')[:5]
