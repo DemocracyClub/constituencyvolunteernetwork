@@ -265,6 +265,16 @@ class RegistrationProfile(Model):
 
     activation_key_expired.boolean = True
 
+def constituency_volunteers_histogram(constituencies):
+    count = {}
+    for constituency in constituencies:
+        k = constituency.customuser_set.filter(is_active=True).count()
+        if k in count:
+            count[k] += 1
+        else:
+            count[k] = 1
+    return count
+
 ###############
 # Raw SQL queries
 

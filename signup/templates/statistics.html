@@ -18,14 +18,17 @@
 
 <div id="signupchart" class="span-8">Chart goes here</div>
 
+<h3>Constituency membership</h3>
+
+<div id="membershipchart" class="span-8">Chart goes here</div>
 {% endblock %}
 
 {% block js %}
 <script type='text/javascript' src='http://www.google.com/jsapi'></script>
  <script type='text/javascript'>
    google.load('visualization', '1', {packages:['imagelinechart']});
-   google.setOnLoadCallback(drawChart);
-   function drawChart() {
+   google.setOnLoadCallback(drawCharts);
+   function drawSignupChart() {
      var data = new google.visualization.DataTable();
      data.addColumn('string', 'Date');
      data.addColumn('number', 'Signups');
@@ -36,6 +39,24 @@
     {% endfor %}
      var chart = new google.visualization.ImageLineChart(document.getElementById('signupchart'));
      chart.draw(data, {width: 800, height: 240, min: 0});
+   }
+   
+   function drawMembershipChart() {
+     var data = new google.visualization.DataTable();
+     data.addColumn('string', 'Volunteers in constituency');
+     data.addColumn('number', 'Number of constituencies');
+     data.addRows({{ const_volunteers|length }});
+    {% for key,val in const_volunteers.items %}
+     data.setValue({{ forloop.counter0 }}, 0, '{{ key }}');
+     data.setValue({{ forloop.counter0 }}, 1, {{ val }});
+    {% endfor %}
+     var chart = new google.visualization.ImageLineChart(document.getElementById('membershipchart'));
+     chart.draw(data, {width: 800, height: 240, min: 0});
+   }
+
+   function drawCharts() {
+       drawSignupChart();
+       drawMembershipChart();
    }
  </script>
 
