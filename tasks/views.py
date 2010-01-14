@@ -73,9 +73,8 @@ def start_task(request, slug, constituency=None):
                                          user=request.user,
                                          constituency__slug=constituency)
         
-        if task_user.state != TaskUser.States.completed:
-            task_user.state = TaskUser.States.started
-            task_user.save()
+        task_user.state = TaskUser.States.started
+        task_user.save()
         url = task_user.url
         if task_user.post_url:
             url += "?callback=" + urlquote(task_user.post_url)

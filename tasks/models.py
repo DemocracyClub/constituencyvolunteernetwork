@@ -237,7 +237,13 @@ class TaskUser(Model):
                                  "unignore-task",
                                  "unignore"))
         elif self.state == self.States.completed:
-            links.append('<span class="completed">You have completed this task!</span>')
+            links.append('<span class="completed">' \
+                         + 'You have completed this task!</span>') 
+            url = reverse("start_task", kwargs=kwargs)
+            links.append(href % (url,
+                                "start-task",
+                                 "Start it again"))
+
         # a maximim of three links can appear.  Pad the list
         # so it's always 3 items long
         links.extend([''] * (3 - len(links)))
