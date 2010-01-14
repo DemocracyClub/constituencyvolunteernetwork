@@ -1,25 +1,23 @@
-<div class="span-5">
-{% if not usertasks %}
-There are no tasks for you to do at this time.
-{% else %}
- <div class="tasks">
+<div class="tasks span-5">
+ {% if not usertasks %}
+   There are no tasks for you to do at this time.
+ {% else %}
  {% for usertask in usertasks %}
   <div id="usertask-{{ usertask.id }}" class="task">
    <div class="span-3">
     <h3>{{ usertask.description_link|safe }}</h3>
-    <div class="task-description">
-      <h3>About <em>{{ usertask.task.name }}</em></h3>
-      <p>{{ usertask.task.description }}</p>
-    <a class="quiet" href="{% url task slug=usertask.task.slug %}">See overall progress for this task</a>
-    </div>
    </div>
    <div class="task-actions span-2 last">
    {% for link in usertask.transition_links %}
      {{ link|safe }} 
    {% endfor %}
    </div>
+   <div class="task-description">
+      <p>{{ usertask.task.description }}</p>
+      <a class="quiet" href="{% url task slug=usertask.task.slug %}">See overall progress for this task</a>
+    </div>
   </div>
  {% endfor %}
- </div>
-{% endif %}
+ {% endif %}
+ <div class="clear"> </div>
 </div>

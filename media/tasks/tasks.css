@@ -4,6 +4,10 @@ div.tasks hr {
  margin: 0;
 }
 
+div.tasks {
+  padding-bottom:1em;
+}
+
 div.tasks h3 {
  font-size: 1em;
  margin: 0;
@@ -14,7 +18,12 @@ div.tasks p {
 }
 
 div.tasks h3 {
- border-bottom: dotted 1px gray;
+  border-bottom:1px solid #CCC;
+  margin-bottom:0.5em;
+}
+
+div.task {
+ margin-top:0.5em;
 }
 
 div.task p {
@@ -23,6 +32,7 @@ div.task p {
 
 div.task-description {
  display: none;
+ clear:left;
 }
 
 a.action {
@@ -32,11 +42,13 @@ a.action {
  background-position: 3px 3px;
  background-repeat: no-repeat;
  text-decoration: none;
- border: solid #bbd1f9 1px;
+ border:1px solid white;
+/* border: solid #bbd1f9 1px;
  border-top: solid #ecf1f9 1px;
- border-left: solid #ecf1f9 1px;
- background-color: #e5ecf9;
+ border-left: solid #ecf1f9 1px; */
+ background-color: white;/*#F9FBFF;*/
  width: 8em;
+ outline:none;
 }
 
 a.complete-task {
@@ -44,7 +56,9 @@ a.complete-task {
 }
 
 a.ignore-task {
- background-image: url("./ignore.png");
+  background-color:transparent;
+  border:1px solid white;
+  background-image: url("./ignore.png")
 }
 
 a.unignore-task {
@@ -55,8 +69,28 @@ a.start-task {
  background-image: url("./start.png");
 }
 
+a.action:hover {
+ border: solid #bbd1f9 1px;
+ border-top: solid #ecf1f9 1px;
+ border-left: solid #ecf1f9 1px;
+}
+
+a.action:active {
+  background-color:#E8F0FF;
+}
+
 span.completed {
- background-color: green;
- color: white;
+ background-color: #ECFFEB;
  padding: 0.25em;
+}
+
+ul.activity {
+  list-style-type:none;
+  padding: 0;
+  margin: 0;
+  margin-bottom:1em;
+}
+
+ul.activity li {
+  list-style: none;
 }

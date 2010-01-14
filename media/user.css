@@ -1,7 +1,12 @@
 /* CSS specific to user pages */
 .badges
 {
-    list-style:none;
+    clear:left;
+    list-style-type:none;
+    margin:0;
+    padding:0;
+    padding-left:0.25em;
+    margin-bottom:0.25em;
 }
 
 .badge
@@ -11,6 +16,7 @@
     width:150px;
     height:50px;
     margin:0.25em;
+    margin-left:-0.25em;
     padding:0.25em;
     padding-top:0.5em;
     border:1px solid #CCC;

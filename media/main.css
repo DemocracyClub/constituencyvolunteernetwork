@@ -32,6 +32,7 @@ a {
 
 p {
     text-align: justify;
+    margin-bottom:0.5em;
 }
 
 p.small {
@@ -39,7 +40,7 @@ p.small {
 }
 
 .instructions-box {
- background: #e5ecf9;
+/* background: #F5FcFF; */
  padding: 10px;
 }
 
@@ -251,6 +252,10 @@ p.helptext {
 ul li {
  list-style: disc outside url("images/bullet.png");
  margin-bottom: 0.3em;
+}
+
+.activity-bar {
+  font-size:0.9em;
 }
 
 /* Task page styles */

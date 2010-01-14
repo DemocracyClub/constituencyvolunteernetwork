@@ -211,12 +211,6 @@ class TaskUser(Model):
         kwargs = {'slug': self.task.slug}
         if self.constituency:
             kwargs['constituency'] = self.constituency.slug
-        if self.state in [self.States.assigned, self.States.started]:
-            url = reverse("ignore_task",
-                          kwargs=kwargs)
-            links.append(href % (url,
-                                 "ignore-task",
-                                 "Ignore"))
         if self.state == self.States.assigned:
             url = reverse("start_task", kwargs=kwargs)
             links.append(href % (url,
@@ -244,6 +238,13 @@ class TaskUser(Model):
                                 "start-task",
                                  "Start it again"))
 
+        if self.state in [self.States.assigned, self.States.started]:
+            url = reverse("ignore_task",
+                          kwargs=kwargs)
+            links.append(href % (url,
+                                 "ignore-task",
+                                 "Ignore"))
+        
         # a maximim of three links can appear.  Pad the list
         # so it's always 3 items long
         links.extend([''] * (3 - len(links)))
