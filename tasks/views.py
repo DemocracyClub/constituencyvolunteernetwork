@@ -7,11 +7,12 @@ from models import Task, TaskUser
 from models import Badge
 from signup.models import CustomUser
 from signup.views import render_with_context
+from signup.views import _get_statistics_context
 
 from tasks.util import login_key
 
 def home(request):
-    context = {}
+    context = _get_statistics_context()        
 
     if request.user.is_authenticated():
         tasks = TaskUser.objects.filter(
