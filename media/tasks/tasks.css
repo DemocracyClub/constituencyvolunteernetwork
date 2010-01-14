@@ -60,23 +60,3 @@ span.completed {
  color: white;
  padding: 0.25em;
 }
-
-span.badge { 
- background: #0a5196;
- padding: 3px;
- border: solid #ffd400 3px;
- color: white;
- white-space: nowrap;
- line-height: 2em;
-}
-
-ul.badges {
- margin-left: 0;
-}
-ul.badges li {
- list-style: none;
- margin: 10px;
- padding: 0;
- margin-left: 0;
- display: inline;
-}

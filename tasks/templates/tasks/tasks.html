@@ -2,6 +2,7 @@
 
 {% block extra-head %}
 <link rel="stylesheet" type="text/css"  media="screen" href="{{ MEDIA_URL }}tasks/tasks.css" />
+<link rel="stylesheet" type="text/css"  media="screen" href="{{ MEDIA_URL }}user.css" />
 {% endblock %}
 
 {% block title %}Tasks{% endblock %}
@@ -29,12 +30,13 @@
  {% if badges %}
   <ul class="badges">
    {% for badge in badges %}
-    <li><span class="badge">{{ badge.name }}</span></li> 
+  <li class="badge"><a href='{% url task slug=badge.task.slug %}'>{{ badge.name }}</a><br/><small>{{ badge.date_awarded.date }}</small></li>
    {% endfor %}
   </ul>
  {% else %}
   <p>You've not carried out any tasks yet.  When you do so, you are awarded "badges" for your work.</p>
  {% endif %}
+  <hr class="space" />
   <p>Badges don't have any effect on the site; they're simply a sign of accomplishment and bragging rights.</p>
   
 </div>
