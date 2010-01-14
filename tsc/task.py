@@ -57,7 +57,8 @@ def callback_assign(sender, **kwargs):
         TaskUser.objects.assign_task(task,
                                      user,
                                      tsc_url,
-                                     post_url=post_url)
+                                     post_url=post_url,
+                                     email=True)
     except TaskUser.AlreadyAssigned:
         return "%s already assigned to %s" % (task, user)
 
