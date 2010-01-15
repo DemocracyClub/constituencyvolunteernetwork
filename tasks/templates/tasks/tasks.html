@@ -10,10 +10,10 @@
 
 {% block content %}
 <div class="span-5">
-{% if first_time %}
-<p>Hi {{ user.display_name}}, and thanks for joining Democracy Club! You've joined thousands of people across the country to create a powerful team of volunteers who want to hold our representatives to account.</p>
-{% endif %}
- <div style="margin-left:-10px; padding-left:10px; margin-right:-10px; background:url('/media/gradient.png') repeat-x;background-position:bottom;">
+ <div style="margin-left:-10px; padding-left:10px; margin-right:-10px; padding-bottom:0.5em; background:url('/media/gradient.png') repeat-x;background-position:bottom;">
+ {% if first_time %}
+   <p>Hi {{ user.display_name}}, and thanks for joining Democracy Club! You've joined thousands of people across the country to create a powerful team of volunteers who want to hold our representatives to account.</p>
+ {% endif %}
  <h2>Your Democracy Club tasks</h2>
  {% if not user.is_active %}
     <p>You need to activate your account to participate in the website. Please check your inbox (and your spam folder) for a confirmation email.</p>
@@ -34,18 +34,6 @@
 
  <h4>About your tasks</h4>
   <p>On this page, we display a list of tasks that we've asked you to consider doing.  Click on a task title to display more information about the task. Click "begin task" to get started with one of them. You can always igore a task that you can't do (or don't want to do).</p>
-
- <h3>Your achievements</h3>
- {% if badges %}
-  <ul class="badges">
-   {% for badge in badges %}
-    <li class="badge"><a href='{% url task slug=badge.task.slug %}'>{{ badge.name }}</a><br/><small>{{ badge.date_awarded.date }}</small></li>
-   {% endfor %}
-  </ul>
- {% else %}
-  <p>You've not carried out any tasks yet.  When you do so, you are awarded "badges" for your work.</p>
- {% endif %}
-  <p class="clear quiet">Badges don't have any effect on the site; they're simply a sign of accomplishment and bragging rights.</p>
   
   <h3>Recent activity in your {% ifnotequal request.user.constituencies.count 1 %}constituencies{% else %}constituency{% endifnotequal %}</h3>
  {% if activity %}
@@ -56,11 +44,20 @@
 </div>
 
 <div class="span-3 activity-bar last">
+<h3>Your achievements</h3>
+    {% if badges %}
+        <ul class="badges">
+        {% for badge in badges %}
+            <li class="badge"><a href='{% url task slug=badge.task.slug %}'>{{ badge.name }}</a><br/><small>{{ badge.date_awarded.date }}</small></li>
+        {% endfor %}
+        </ul>
+    {% else %}
+        <p>You've not carried out any tasks yet.  When you do so, you are awarded "badges" for your work.</p>
+    {% endif %}
+    <p class="clear quiet">Badges don't have any effect on the site; they're simply a sign of accomplishment and bragging rights.</p>
 
-<h3>Recent signups</h3>
-{% include "new_signup_list.html" %}
-<br/>
-<script src="http://widgets.twimg.com/j/2/widget.js"></script>
+    <br/>
+    <script src="http://widgets.twimg.com/j/2/widget.js"></script>
     <script>
     new TWTR.Widget({
       version: 2,
@@ -93,6 +90,9 @@
     </script>
     <br/>
     <p>We're trying to get volunteers in every part of the UK.  So far, we've recruited {{ volunteers }} volunteers in {{ count }} constituencies (out of a total {{ total }}). <a href="/statistics/">Read more about how we're doing</a>. You can also <a href='http://twitter.com/democlub'>follow us on Twitter</a>.</p>
+
+    <h3>Recent signups</h3>
+    {% include "new_signup_list.html" %}
 </div>
  
 {% endblock %}
