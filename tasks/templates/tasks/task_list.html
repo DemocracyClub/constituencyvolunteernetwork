@@ -11,7 +11,7 @@
    </div>
    <div class="task-description">
       <p>{{ usertask.task.description }}</p>
-      <a class="quiet" href="{% url task slug=usertask.task.slug %}">See overall progress for this task</a>
+      <a class="quiet" href="{{ usertask.get_absolute_url|safe }}">See overall progress for this task</a>
     </div>
   </div>
  {% endfor %}

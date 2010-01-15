@@ -9,6 +9,7 @@
 
 {% block content %}
 <div class="span-5">
+<div style="margin-left:-10px; padding-left:10px; margin-right:-10px; padding-right:10px; padding-bottom:0.5em; background:url('/media/gradient.png') repeat-x;background-position:bottom;">
     <h2>{{ task.name }}{% if usertask.constituency %} in {{ usertask.constituency.name }}{% endif %}</h2>
     <div class="project">task suggested by <a href='{{ task.project.url }}'>{{ task.project.name }}</a></div>
     
@@ -32,7 +33,7 @@
     {% endwith %}
     {% endif %}
     </ul>
-    
+</div>    
     <div class="quiet"><h3>How do tasks work?</h3>
     <p>When we or other organisations suggest a task that you can do we will send you an email. This email will contain links to either start the task, say you've completed the task, or to ignore the task. You can also do this by logging in and looking at the list of tasks on the tasks page, or the task currently displayed on the home page.</p>
     <p>We can tell when you've finished some tasks, but with others, you'll need to tell us when you've done it by clicking a "completed" button.</p>
