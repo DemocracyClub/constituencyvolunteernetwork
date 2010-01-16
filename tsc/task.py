@@ -29,13 +29,7 @@ def callback_leaflet_added(sender, **kwargs):
     # But upgrade their badge every time they do it
     try:
         badge = Badge.objects.get(task=task, user=user)
-        match = re.search(r"Uploaded (.+) leaflet",
-                          badge.name).group(1)
-        if match == 'a':
-            name = "Uploaded 2 leaflets"
-        else:
-            name = "Uploaded %d leaflets" % (int(match) + 1)
-        badge.name = name
+        badge.number += 1
         badge.save()
     except Badge.DoesNotExist:
         badge = Badge.objects.create(name="Uploaded a leaflet",

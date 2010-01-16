@@ -258,6 +258,37 @@ ul li {
   font-size:0.9em;
 }
 
+.gradient-box {
+  margin-left:-10px;
+  padding-left:10px;
+  margin-right:-10px;
+  padding-bottom:0.5em;
+  background:url('/media/gradient.png') repeat-x #f6fbff;
+  background-position:top;
+}
+
+a.help_button {
+  font-size:0.8em;
+  padding:0.3em;
+  border:1px solid white;
+  outline:none;
+  color:#666;
+  border-radius:0.4em;
+  -moz-border-radius:0.4em;
+  -webkit-border-radius:0.4em;
+  margin-right:10px;
+}
+
+a.help_button:hover {
+  border: solid #bbd1f9 1px;
+  border-top: solid #ecf1f9 1px;
+  border-left: solid #ecf1f9 1px;
+}
+
+a.help_button:active {
+
+}
+
 /* Task page styles */
 #section-task .project
 {

@@ -341,6 +341,7 @@ class Badge(Model):
     task = models.ForeignKey(Task)
     user = models.ForeignKey(CustomUser)
     date_awarded = models.DateTimeField(auto_now_add=True)
+    number = models.IntegerField(default=1)
 
     def __unicode__(self):
         return 'Badge "%s" for %s' % (self.name, self.user)

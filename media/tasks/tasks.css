@@ -14,7 +14,7 @@ div.tasks h3 {
 }
 
 div.tasks p {
- font-size: 0.8em;
+ font-size: 0.9em;
 }
 
 div.tasks h3 {
@@ -100,4 +100,8 @@ ul.activity {
 
 ul.activity li {
   list-style: none;
+}
+#about_tasks, #about_activity {
+  display:none;
+  clear:both;
 }

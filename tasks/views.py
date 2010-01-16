@@ -2,6 +2,7 @@ from django.http import HttpResponseRedirect, Http404
 from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
 from django.utils.http import urlquote
+from django.db.models import Count
 
 from models import Task, TaskUser
 from models import Badge
