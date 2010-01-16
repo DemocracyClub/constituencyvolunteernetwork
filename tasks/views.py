@@ -6,7 +6,7 @@ from django.db.models import Count
 
 from models import Task, TaskUser
 from models import Badge
-from signup.models import CustomUser
+from signup.models import CustomUser, Constituency
 from signup.views import render_with_context
 from signup.views import _get_statistics_context
 
@@ -51,14 +51,25 @@ def task(request, slug, constituency=None):
     """
     context = {}
     context['task'] = Task.objects.get(slug=slug)
+
+    if constituency is not None:
+        context['constituency'] = Constituency.objects.get(slug=constituency)
+    else:
+        context['constituency'] = None;
+    
     if request.user.is_authenticated():
-        try:
-            items = TaskUser.objects
-            context['usertask'] = items.get(task=context['task'],
-                                            user=request.user,
-                                            constituency__slug=constituency)
-        except TaskUser.DoesNotExist:
-            pass
+        items = TaskUser.objects
+        
+        if constituency is not None:
+            try:
+                context['usertasks'] = [items.get(task=context['task'],
+                                                user=request.user,
+                                                constituency=context['constituency'])]
+            except TaskUser.DoesNotExist:
+                pass
+        else: # For the root task page, list all constituencies
+            context['usertasks'] = items.filter(task=context['task'],
+                                                user=request.user)
     else:
         context['usertask'] = None
     
