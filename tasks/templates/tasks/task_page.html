@@ -22,7 +22,7 @@
 
     {% if usertasks %}
         {% for usertask in usertasks %}
-        {% if usertask.constituency %}{% if not constituency %}<h4>In {{ usertask.constituency.name }}</h4>{% endif %}{% endif %}
+        {% if usertask.constituency %}{% if not constituency %}<h4>In <a href='{% url task slug=task.slug,constituency=usertask.constituency.slug %}'>{{ usertask.constituency.name }}</a></h4>{% endif %}{% endif %}
         <div class="actions">
           {% for link in usertask.transition_links %}
             {{ link|safe }}
@@ -30,16 +30,16 @@
         </div>
         {% endfor %}
     {% endif %}
-    
-    <h3>{{ task.get_started_users.count }} {% ifequal task.get_started_users.count 1 %}person{% else %}people{% endifequal %} currently doing this task</h3>
-    {% if usertask %}
+</div>
+    <h3>{{ started_users.count }} {% ifequal started_users.count 1 %}person{% else %}people{% endifequal %} currently doing this task{% if constituency %} in {{ constituency.name }}{% endif %}</h3>
+    {% if started_users %}
     <ul class="taskusers">
-    {% with task.get_started_users as users %}
+    {% with started_users as users %}
         {% include "user_list.html" %}
     {% endwith %}
     {% endif %}
     </ul>
-</div>    
+
     <div class="quiet"><h3>How do tasks work?</h3>
     <p>When we or other organisations suggest a task that you can do we will send you an email. This email will contain links to either start the task, say you've completed the task, or to ignore the task. You can also do this by logging in and looking at the list of tasks on the tasks page, or the task currently displayed on the home page.</p>
     <p>We can tell when you've finished some tasks, but with others, you'll need to tell us when you've done it by clicking a "completed" button.</p>

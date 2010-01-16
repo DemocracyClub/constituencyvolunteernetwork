@@ -72,6 +72,14 @@ def task(request, slug, constituency=None):
                                                 user=request.user)
     else:
         context['usertask'] = None
+
+    started_tu = TaskUser.objects.filter(task=context['task'],\
+                                         state=TaskUser.States.started)
+    if constituency is not None:
+        started_tu = started_tu.filter(constituency=context['constituency'])
+    
+    context['started_users'] = \
+        CustomUser.objects.filter(taskuser__in=started_tu).distinct()
     
     return render_with_context(request, 'tasks/task_page.html', context)
 
