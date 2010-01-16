@@ -53,12 +53,12 @@
             {% endblock %}
           </div> 
       </div>
-        {% if constituency %}
-        <div id="constituency-header" class="container">
-  	  <h3>{{ constituency.name }}</h3>
-        </div>
-        {% endif %}
         <div id="main" class="container">
+          {% if constituency %}
+          <div id="constituency-header" class="container">
+  	        <h2>{{ constituency.name }}</h2>
+          </div>
+          {% endif %}
           {% if not user.is_anonymous %}{% if not user.is_active %}
             <div class="prepend-2 span-4 append-2 last"><p class="notice">You've not confirmed your email address yet. You need to do this to receive tasks. Please check your inbox (and your spam folder) for a confirmation email.</p></div>
           {% endif %}{% endif %}

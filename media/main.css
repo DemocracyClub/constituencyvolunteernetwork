@@ -55,8 +55,9 @@ p.small {
     padding-bottom:0;
 }
 
-#constituency-header h3 {
+#constituency-header h2 {
  font-size: 1em;
+ border-bottom:1px solid #CCC;
 }
 
 #logo

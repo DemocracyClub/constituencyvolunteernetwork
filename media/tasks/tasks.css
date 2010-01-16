@@ -35,8 +35,13 @@ div.task p {
 }
 
 div.task-description {
- display: none;
- clear:left;
+  display: none;
+  clear:left;
+  background:white;
+  padding:0.25em;
+  border-radius:0.4em;
+ -moz-border-radius:0.4em;
+ -webkit-border-radius:0.4em;
 }
 
 a.action {

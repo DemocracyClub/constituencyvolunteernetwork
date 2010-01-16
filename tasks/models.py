@@ -205,9 +205,12 @@ class TaskUser(Model):
         return href % (reverse("task", kwargs=kwargs),
                        name)
 
-    @models.permalink
     def get_absolute_url(self):
-        return ("task", (self.task.slug, self.constituency.slug))
+        if self.constituency:
+            return reverse("task", kwargs={'slug': self.task.slug,
+                                    'constituency': self.constituency.slug})
+        else:
+            return reverse("task", kwargs={'slug': self.task.slug})
 
     def transition_links(self):
         links = []
