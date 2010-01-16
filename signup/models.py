@@ -126,7 +126,7 @@ class CustomUser(User):
             if self.first_name:
                 name = self.first_name
             else:
-                name = self.email
+                name = "Someone"
         else:
             name = "Someone"
         return name
