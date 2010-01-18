@@ -31,26 +31,27 @@
             {% endif %}
         </li>
     {% endfor %}
+        <li><a href='{% url add_issue constituency=constituency.slug %}'>Add issue for {{ constituency.name }}</a></li>
     </ul>
     {% endifnotequal %}
-</div>
-
-<div class="span-4 last">
-    <h3>Help us get better coverage</h3>
-    <p>The markers on this map mark the centres of nearby constituencies where we don't currently have any volunteers. If you know anyone who might live there, please <a href="/invite/">invite them</a> and help us get volunteers in the whole country!</p>  
-    <iframe width="425" height="350" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="http://maps.google.co.uk/maps?f=q&amp;source=s_q&amp;hl=en&amp;geocode=&amp;q=http:%2F%2Fwww.democracyclub.org.uk%2Fstatistics%2Ffewerthan%2F1%2Fgeo.rss&amp;sll=&amp;sspn={{latspan}},{{lonspan}}&amp;ie=UTF8&amp;ll={{constituency.lat}},{{constituency.lon}}&amp;spn={{latspan}},{{lonspan}}&amp;z=&amp;output=embed"></iframe><br /><small><a href="http://maps.google.co.uk/maps?f=q&amp;source=embed&amp;hl=en&amp;geocode=&amp;q=http:%2F%2Fwww.democracyclub.org.uk%2Fstatistics%2Ffewerthan%2F1%2Fgeo.rss&amp;sll=53.800651,-4.064941&amp;sspn=16.261859,33.618164&amp;ie=UTF8&amp;ll={{constituency.lat}},{{constituency.lon}}&amp;spn={{latspan}},{{lonspan}}&amp;z=10" style="color:#0000FF;text-align:left">View Larger Map</a></small>
-
+    
     {% if request.user.is_superuser %}
     <h3>Send message to users in this constituency (admin only)</h3>
     <form method="post">
         Subject: <input type="text" name="subject" /><br />
-        <textarea name="message" cols="79" rows="12"></textarea><br />
+        <textarea name="message" style="width:100%; height:10em;"></textarea><br />
 
         Send message to people in all constituencies within
         <input name="within_km" size="3" value="50" />km of here<br />
         <input type="submit" />
     </form>
     {% endif %}
+</div>
+
+<div class="span-4 last">
+    <h3>Help us get better coverage</h3>
+    <p>The markers on this map mark the centres of nearby constituencies where we don't currently have any volunteers. If you know anyone who might live there, please <a href="/invite/">invite them</a> and help us get volunteers in the whole country!</p>  
+    <iframe width="425" height="350" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="http://maps.google.co.uk/maps?f=q&amp;source=s_q&amp;hl=en&amp;geocode=&amp;q=http:%2F%2Fwww.democracyclub.org.uk%2Fstatistics%2Ffewerthan%2F1%2Fgeo.rss&amp;sll=&amp;sspn={{latspan}},{{lonspan}}&amp;ie=UTF8&amp;ll={{constituency.lat}},{{constituency.lon}}&amp;spn={{latspan}},{{lonspan}}&amp;z=&amp;output=embed"></iframe><br /><small><a href="http://maps.google.co.uk/maps?f=q&amp;source=embed&amp;hl=en&amp;geocode=&amp;q=http:%2F%2Fwww.democracyclub.org.uk%2Fstatistics%2Ffewerthan%2F1%2Fgeo.rss&amp;sll=53.800651,-4.064941&amp;sspn=16.261859,33.618164&amp;ie=UTF8&amp;ll={{constituency.lat}},{{constituency.lon}}&amp;spn={{latspan}},{{lonspan}}&amp;z=10" style="color:#0000FF;text-align:left">View Larger Map</a></small>
 </div>
 
 {% endblock %}
