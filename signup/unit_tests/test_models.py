@@ -65,7 +65,7 @@ class ModelsTestCase(TestCase):
         first = self.constituencies[0]
         self.assertEqual(first.slug, 'my-place')
         self.assertEqual(first.get_absolute_url(),
-                         u"/constituency/%s/" % first.slug)
+                         u"/constituencies/%s/" % first.slug)
         count = 0
         for user in self.users:
             self.assertEqual(user.postcode, USERS[count]['postcode'])
@@ -143,11 +143,13 @@ class TestNeigbours(TestCase):
         # Stirling's neighbouring constituencies are Falkirk and West
         # Dunbartonshire. Hendon is a long way away
         centre = Constituency.objects.get(name="Chipping Barnet")
-        names = (c.name for c in centre.neighbors(limit=3))
-        self.assertEqual(list(names), ["Hendon", "Hertsmere", "Tatton"])
+        names = [c.name for c in centre.neighbors(limit=3,
+                                                  within_km=500)]
+        
+        self.assertEqual(names, ["Hendon", "Hertsmere", "Tatton"])
 
         centre = Constituency.objects.get(name="Altrincham & Sale West")
-        names = (c.name for c in centre.neighbors(limit=3))
+        names = (c.name for c in centre.neighbors(limit=3, within_km=500))
         self.assertEqual(list(names), ["Stretford & Urmston",
                                        "Tatton", "Hertsmere"])
         
@@ -155,4 +157,5 @@ class TestNeigbours(TestCase):
                                                        "Hendon"])
         centre = subset[0]
         self.assertEqual(subset[1],
-                         centre.neighbors(constituency_set=subset)[0])
+                         centre.neighbors(constituency_set=subset,
+                                          within_km=500)[0])

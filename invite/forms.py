@@ -7,6 +7,7 @@ from utils import TemplatedForm
 from models import Invitation
 
 import strings
+import signals
 
 def _extractEmails(emails_string):
     if "," in emails_string:
@@ -81,5 +82,9 @@ class InviteForm(TemplatedForm):
             message = self.cleaned_data['message']
             Invitation.objects.create_invitation(email=email,
                                                  message=message,
-                                                 user=user)
+                                                 user=user,
+                                                 send_signal=False)
+         
+        # More efficient to deal with signal here for bulk invite sends
+        signals.invitation_sent.send(self, user=user)
 

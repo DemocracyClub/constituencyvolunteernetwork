@@ -1,0 +1,59 @@
+[
+  {
+    "model": "tasks.project",
+    "fields": {
+      "slug": "democracy-club",
+      "name": "Democracy Club",
+      "url": "http:\/\/www.democracyclub.org.uk\/",
+      "description": "This is the Democracy Club \"project\" for collectings DC tasks in one place"
+    },
+    "pk": 1
+  },
+  {
+    "model": "tasks.project",
+    "fields": {
+      "slug": "straight-choice",
+      "name": "The Straight Choice",
+      "url": "http:\/\/thestraightchoice.org\/",
+      "description": "The Straight Choice is a project to collect election leaflets and materials"
+    },
+    "pk": 2
+  },
+  {
+    "model": "tasks.task",
+    "fields": {
+      "name": "Invite Three Friends",
+      "slug": "invite-three-friends",
+      "project": 1,
+      "description": "Invite more people to join.  It will really help. What you can do is have a look of the list of places where we don't have anyone.  That would be especially helpful.  Thanks.",
+      "email": "This is an email. Invite more people to join.  It will really help. What you can do is have a look of the list of places where we don't have anyone.  That would be especially helpful.  Thanks. ",
+      "date_created": "2010-01-09 17:20:44"
+    },
+    "pk": 1
+  },
+  {
+    "model": "tasks.task",
+    "fields": {
+      "name": "Upload Leaflet",
+      "slug": "upload-leaflet",
+      "project": 2,
+      "description": "If you get any election leaflets posted through your door, please take a photo of them and upload them to the Straight Choice website.  You can find out more about this project on their website.",
+      "email": "Email: If you get any leaflets posted through your door, please take a photo of them and upload them to the Straight Choice website.",
+      "date_created": "2010-01-09 17:22:00"
+    },
+    "pk": 2
+  },
+  {
+    "model": "tasks.task",
+    "fields": {
+      "decorator_class": "tasks.models.ConstituencyCompletenessTask",
+      "name": "Add Local Issue",
+      "slug": "add-issue",
+      "project": 1,
+      "description": "Add a local issue to your constituency page.  Eventually we'll use local issues as a basis to ask your candidates questions and hold them to their answers.",
+      "email": "Add a local issue to your constituency page.  Eventually we'll use local issues as a basis to ask your candidates questions and hold them to their answers.",
+      "date_created": "2010-01-09 17:23:00"
+    },
+    "pk": 3
+  }
+]

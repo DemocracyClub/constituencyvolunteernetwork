@@ -44,7 +44,6 @@
               {% if not user.is_anonymous %}
                 <li><a href="{% url welcome %}">Home</a></li>
                 <li><a href="{% url add_constituency %}">Your constituencies</a></li>
-                {#<li><a href="{% url tasks %}">Your tasks</a></li>#}
                 <li><a href="{% url logout %}">Logout</a></li>
               {% else %}
                 <li><a href="{% url home %}">Home</a></li>
@@ -54,10 +53,15 @@
             {% endblock %}
           </div> 
       </div>
-      
         <div id="main" class="container">
+          {% if constituency %}
+          <div id="constituency-header">
+            <a href='http://www.theyworkforyou.com/mp/?c={{constituency.name|urlencode}}' style="float:right;" target="_blank">{{constituency.name}} at TheyWorkForYou.com</a>
+            <h2><a href='{{ constituency.get_absolute_url }}'>{{ constituency.name }}</a></h2>
+          </div>
+          {% endif %}
           {% if not user.is_anonymous %}{% if not user.is_active %}
-            <div class="prepend-2 span-4 append-2 last"><p class="notice">You've not confirmed your email address yet.  Please check your inbox (and your spam folder) for a confirmation email.</p></div>
+            <div class="prepend-2 span-4 append-2 last"><p class="notice">You've not confirmed your email address yet. You need to do this to receive tasks. Please check your inbox (and your spam folder) for a confirmation email.</p></div>
           {% endif %}{% endif %}
           {% if request.GET.notice %}
             <div class="prepend-2 span-4"><p class="notice">{{ request.GET.notice }}</p></div>
@@ -72,8 +76,9 @@
         </div>
 	<div id="footer" class="quiet">
 	  <hr />
-	  Democracy Club: <a href="/aboutus/#who">built by volunteers</a>, and generously hosted by <a href="http://www.fry-it.com">Fry-IT</a>.
+	  Democracy Club: <a href="/aboutus/#who">built by volunteers</a>, and generously hosted by <a href="http://www.fry-it.com">Fry-IT</a>. <a href="http://www.twitter.com/democlub"><img src="http://twitter-badges.s3.amazonaws.com/t_mini-b.png" alt="Follow democlub on Twitter"/></a> <a href="http://www.twitter.com/democlub">Follow us on Twitter</a>
 	</div>
+    {% block endpage %}{% endblock %}
     <!-- Google Analytics -->
     <script type="text/javascript">
     /*var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");

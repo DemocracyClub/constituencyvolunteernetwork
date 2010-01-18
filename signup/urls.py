@@ -1,11 +1,12 @@
 from django.conf.urls.defaults import *
 import views
+from tasks.views import home
 
 ################################################################################
 urlpatterns = patterns('casestudies',
     url(r'^$', views.home, name="home"),
     url(r'^home2$', views.home2, name="home2"),
-    url(r'^welcome$', views.welcome, name="welcome"),
+    url(r'^welcome$', home, name="welcome"),
     url(r'^user/(?P<id>[\w-]+)/$',
         views.user,
         name="user"),
@@ -18,10 +19,10 @@ urlpatterns = patterns('casestudies',
     url(r'^activate/(?P<key>\w+)/$',
         views.activate_user,
         name="activate"),
-    url(r'^constituency/(?P<slug>[\w-]+)/$',
+    url(r'^constituencies/(?P<slug>[\w-]+)/$',
         views.constituency,
         name="constituency"),
-    url(r'^constituency/(?P<slug>[\w-]+)/(?P<year>\d+)/$',
+    url(r'^constituencies/(?P<slug>[\w-]+)/(?P<year>\d+)/$',
         views.constituency,
         name="constituency-by-year"),
     url(r'^add_constituency/$',
@@ -42,6 +43,9 @@ urlpatterns = patterns('casestudies',
     url(r'^statistics/heatmap.svg$',
         views.generate_map,
         name="map"),
+    url(r'^statistics/(?P<date>[\w-]+)/heatmap.svg$',
+        views.generate_map,
+        name="map_on_date"),
                       
 )
 

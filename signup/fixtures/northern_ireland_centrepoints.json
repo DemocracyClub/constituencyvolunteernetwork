@@ -1,0 +1,200 @@
+[
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "name": "Belfast East",
+      "lon": -5.892792,
+      "slug": "belfast-east",
+      "year": "2009-01-01",
+      "lat": 54.598324
+    },
+    "pk": 27
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "name": "Belfast North",
+      "lon": -5.917511,
+      "slug": "belfast-north",
+      "year": "2009-01-01",
+      "lat": 54.618607
+    },
+    "pk": 28
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "name": "Belfast South",
+      "lon": -5.925064,
+      "slug": "belfast-south",
+      "year": "2009-01-01",
+      "lat": 54.582409
+    },
+    "pk": 29
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "name": "Belfast West",
+      "lon": -5.95665,
+      "slug": "belfast-west",
+      "year": "2009-01-01",
+      "lat": 54.606277
+    },
+    "pk": 30
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "name": "East Antrim",
+      "lon": -5.883179,
+      "slug": "east-antrim",
+      "year": "2009-01-01",
+      "lat": 54.832336
+    },
+    "pk": 169
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "name": "East Londonderry",
+      "lon": -6.904907,
+      "slug": "east-londonderry",
+      "year": "2009-01-01",
+      "lat": 54.980766
+    },
+    "pk": 173
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "name": "Fermanagh & South Tyrone",
+      "lon": -7.443237,
+      "slug": "fermanagh-south-tyrone",
+      "year": "2009-01-01",
+      "lat": 54.354958
+    },
+    "pk": 198
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "name": "Foyle",
+      "lon": -7.267456,
+      "slug": "foyle",
+      "year": "2009-01-01",
+      "lat": 54.933453
+    },
+    "pk": 202
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "name": "Lagan Valley",
+      "lon": -6.108398,
+      "slug": "lagan-valley",
+      "year": "2009-01-01",
+      "lat": 54.441296
+    },
+    "pk": 274
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "name": "Mid Ulster",
+      "lon": -6.795044,
+      "slug": "mid-ulster",
+      "year": "2009-01-01",
+      "lat": 54.721447
+    },
+    "pk": 322
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "name": "Newry & Armagh",
+      "lon": -7.443237,
+      "slug": "newry-armagh",
+      "year": "2009-01-01",
+      "lat": 54.354958
+    },
+    "pk": 344
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "name": "North Antrim",
+      "lon": -6.328125,
+      "slug": "north-antrim",
+      "year": "2009-01-01",
+      "lat": 54.993374
+    },
+    "pk": 346
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "name": "North Down",
+      "lon": -5.718384,
+      "slug": "north-down",
+      "year": "2009-01-01",
+      "lat": 54.651592
+    },
+    "pk": 350
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "name": "South Antrim",
+      "lon": -6.102905,
+      "slug": "south-antrim",
+      "year": "2009-01-01",
+      "lat": 54.699234
+    },
+    "pk": 451
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "name": "South Down",
+      "lon": -6.152344,
+      "slug": "south-down",
+      "year": "2009-01-01",
+      "lat": 54.21386
+    },
+    "pk": 455
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "name": "Strangford",
+      "lon": -5.751343,
+      "slug": "strangford",
+      "year": "2009-01-01",
+      "lat": 54.514706
+    },
+    "pk": 492
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "name": "Upper Bann",
+      "lon": -6.350098,
+      "slug": "upper-bann",
+      "year": "2009-01-01",
+      "lat": 54.39975
+    },
+    "pk": 526
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "name": "West Tyrone",
+      "lon": -7.410278,
+      "slug": "west-tyrone",
+      "year": "2009-01-01",
+      "lat": 54.619797
+    },
+    "pk": 560
+  }
+]

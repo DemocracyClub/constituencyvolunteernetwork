@@ -1,29 +1,18 @@
-{% if not usertasks %}
-There are no tasks available
-{% else %}
-<ul id="tasks">
-{% for usertask in usertasks %}
-    <li class="task-state-{{ usertask.state }}">
-        <a href='{% url task slug=usertask.task.slug %}'>{{ usertask.task.name }}</a>
-        
-        <div style="float:right">
-        {% ifequal usertask.state 0 %}<a href='{% url task slug=usertask.task.slug %}'>start this task</a> or <a href='{% url ignore_task slug=usertask.task.slug %}'>ignore it</a>{% endifequal %}
-        {% ifequal usertask.state 1 %}<a href='{% url complete_task slug=usertask.task.slug %}'>say you've completed this task</a> or <a href='{% url ignore_task slug=usertask.task.slug %}'>ignore it</a>{% endifequal %}
-        {% ifequal usertask.state 2 %}<a href='{% url unignore_task slug=usertask.task.slug %}'>unignore this task</a>{% endifequal %}
-        {% ifequal usertask.state 3 %}completed!{% endifequal %}
-        </a>
-    </li>
-{% endfor %}
-</ul>
-<script type="text/javascript">
-function show_ignored() {
-    var allHTMLTags=document.getElementsByTagName("li");
-    for (i=0; i<allHTMLTags.length; i++) {
-        if (allHTMLTags[i].className=="task-state-2") {
-            allHTMLTags[i].style.display="block";
-        }
-    }
-}
-</script>
-<a onclick="show_ignored();">show ignored tasks</a>
-{% endif %}
+<div class="tasks span-5">
+ {% for usertask in usertasks %}
+  <div id="usertask-{{ usertask.id }}" class="task task-{{ usertask.state_string|lower }}">
+   <div class="span-3">
+    <h3>{{ usertask.description_link|safe }}</h3>
+   </div>
+   <div class="task-actions span-2 last">
+   {% for link in usertask.transition_links %}
+     {{ link|safe }}
+   {% endfor %}
+   </div>
+   <div class="task-description">
+      <p>{{ usertask.task.description }} <a class="" href="{{ usertask.get_absolute_url|safe }}">See overall progress for this task</a> {% if usertask.task.project %}<span class="quiet">Suggested by <a href='{{ usertask.task.project.url }}'>{{ usertask.task.project.name }}</a></span>{% endif %}</p>
+    </div>
+  </div>
+ {% endfor %}
+ <div class="clear"> </div>
+</div>

@@ -1,0 +1,29 @@
+/* CSS specific to user pages */
+.badges
+{
+    clear:left;
+    list-style-type:none;
+    margin:0;
+    padding:0;
+    padding-left:0.25em;
+    margin-bottom:0.25em;
+}
+
+.badge
+{
+    display:block;
+    float:left;
+    width:150px;
+    height:50px;
+    margin:0.25em;
+    margin-left:-0.25em;
+    margin-right:0.5em;
+    padding:0.25em;
+    padding-top:0.5em;
+    border:1px solid #D8CF84;
+    text-align:center;
+    background:#FFFFEE;
+    border-radius:0.5em;
+    -moz-border-radius:0.5em;
+    -webkit-border-radius:0.5em;
+}

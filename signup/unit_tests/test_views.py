@@ -27,7 +27,7 @@ users = [{'email':'f@mailinator.com',
           'username':'g@mailinator.com'},
          {'email':'h@mailinator.com',
           'postcode':'WC2H8DN',
-          'can_cc':False,
+          'can_cc':True,
           'first_name':'hoogly',
           'last_name':'h',
           'username':'h@mailinator.com'},
@@ -86,11 +86,6 @@ class ViewsTestCase(TestCase):
         # add the first user
         response = self.client.post("/", users[0])
         self.assertEqual(response.status_code, 302)
-        response = self.client.get("/", follow=True)
-        # first time we see a screen trying to convince us to sign
-        # folks up
-        self.assertContains(response, "Thanks")
-        # second time, we see the usual welcome screen
         response = self.client.get("/", follow=True)
         self.assertContains(response, users[0]['first_name'])
         # no-one is active
@@ -163,9 +158,10 @@ class TestSignup(TestCase):
                   'expect':'Unknown postcode'},
                  {'form':{'email':'321@mailinator.com',
                           'postcode':'cw16ar'},
-                  'expect':'A short message'},]
+                  'expect':'thanks for joining'},]
         for test in tests:
-            response = self.client.post("/", test['form'], follow=True)
+            response = self.client.post("/", test['form'],
+                                        follow=True)
             self.assertContains(response, test['expect'])
 
 class TestAddConstituencies(TestCase):
@@ -243,7 +239,7 @@ class TestLeaveAllConstituencies(TestCase):
              'first_name':'foo',
              'last_name':'bar'},
                                     follow=True)
-        self.assertRedirects(response, "/invite/")
+        self.assertRedirects(response, "/welcome")
 
         # they have a constituency
         user = CustomUser.objects.get(email="foo@mailinator.com")

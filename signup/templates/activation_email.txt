@@ -6,6 +6,8 @@ Please confirm your email by following this link:
 
 http://{{ site.domain }}{% url activate key=activation_key %}
 
+You need to do this to be suggested tasks.
+
 In future, you can always access your account at this address:
 
 http://{{ site.domain }}{% url login key=activation_key %}
@@ -13,3 +15,7 @@ http://{{ site.domain }}{% url login key=activation_key %}
 Thanks,
 
 Democracy Club
+
+http://{{ site.domain }}
+http://www.twitter.com/democlub/
+

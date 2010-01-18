@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% block title %}{{constituency.name}}{% endblock %}
+
+{% block content %}
+{% if recipients %}
+<p>Message sent to {{ recipients }} recipients</p>
+{% else %}
+<p>I'll send your email to people in the constituencies listed below.</p>
+<form method="post">
+<ul>
+ <li>Yes, please send it now <input type="submit" name="go" value="go" /></li>
+ <li>Don't send it; show me constituencies within <input name="within_km" size="3" value="{{ within_km }}" />km instead <input type="submit" value="go" /></li>
+</ul>
+
+Subject: <input type="text" name="subject" value="{{ subject|safe }}" /><br />
+<textarea name="message" cols="79" rows="12">{{ message|safe }}</textarea><br />
+</form>
+<hr />
+
+{% for c in nearest %}
+ {{ c }}<br />
+{% endfor %}
+
+{% endif %}
+
+{% endblock %}

@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Assign tasks to everyone</h2>
+
+{% for task, assigned, already_assigned in message %}
+{% if assigned %}
+Assigned <em>{{ task }}</em> to<br/>
+<ul>
+    {% for user in assigned %}
+      <li>{{ user }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+{% if already_assigned %}
+Already assigned <em>{{ task }}</em> to<br/>
+<ul>
+    {% for user in already_assigned %}
+      <li>{{ user }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+{% endfor %}
+
+<form action="" method="post">
+  <table>
+  {{ form.as_table }}
+  <tr>
+   <td></td>
+   <td><input type="submit" value="assign" /></td>
+  </tr>
+  </table>
+</form>
+{% endblock %}

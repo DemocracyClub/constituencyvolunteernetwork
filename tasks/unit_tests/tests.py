@@ -3,12 +3,11 @@ import datetime
 from django.conf import settings
 from django.core.urlresolvers import reverse
 
-from signup.models import Constituency, CustomUser
+from signup.models import Constituency, CustomUser, RegistrationProfile
 from signup.unit_tests.testbase import TestCase
 
-from models import Project, Task, TaskUser
-import views
-
+from tasks.models import Project, Task, TaskUser
+import tasks.views
 
 users = [{'email':'f@mailinator.com',
           'postcode':'G206BT',
@@ -31,43 +30,6 @@ users = [{'email':'f@mailinator.com',
          ]
 
 
-this_year = settings.CONSTITUENCY_YEAR
-last_year = settings.CONSTITUENCY_YEAR - datetime.timedelta(365)
-constituencies = [("Glasgow North", this_year),
-                  ("Holborn & St Pancras", this_year),
-                  ("Holborn & St Pancras", last_year)]
-
-
-class TestInviteAssignment(TestCase):
-    """
-        Makes sure the invite task is assigned to users on sign up
-    """
-
-    def setUp(self):
-        """
-            Create the task and add some constituencies for users
-        """
-        dc = Project.objects.create(name="dc")
-        Task.objects.create(name="Invite three friends", project=dc)
-        
-        self.constituencies = []
-        for const, yr in constituencies:
-            const = Constituency.objects.create(name=const,
-                                                year=yr)
-            const.save()
-            self.constituencies.append(const)
-    
-    def test_signup(self):
-        """
-            Test that the invite task is assigned to all users on sign up
-        """
-        response = self.client.post("/", users[0])
-        self.assertEqual(response.status_code, 302)
-        
-        response = self.client.get("/")
-        self.assertTrue("Invite three friends" in response.content)
-
-
 class TestTaskState(TestCase):
     """
         Make sure the task state changes as appropriate on the activation of
@@ -82,6 +44,7 @@ class TestTaskState(TestCase):
         for u in users:    
             user = CustomUser.objects.create(**u)
             user.save()
+            profile = RegistrationProfile.objects.create_profile(user)
             self.users.append(user)
         
         self.assertTrue(self.client\

@@ -1,0 +1,7108 @@
+[
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "belfast-east",
+      "name": "Belfast East",
+      "lon": null,
+      "year": "2009-01-01",
+      "lat": null
+    },
+    "pk": 27
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "belfast-north",
+      "name": "Belfast North",
+      "lon": null,
+      "year": "2009-01-01",
+      "lat": null
+    },
+    "pk": 28
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "belfast-south",
+      "name": "Belfast South",
+      "lon": null,
+      "year": "2009-01-01",
+      "lat": null
+    },
+    "pk": 29
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "belfast-west",
+      "name": "Belfast West",
+      "lon": null,
+      "year": "2009-01-01",
+      "lat": null
+    },
+    "pk": 30
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "east-antrim",
+      "name": "East Antrim",
+      "lon": null,
+      "year": "2009-01-01",
+      "lat": null
+    },
+    "pk": 169
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "east-londonderry",
+      "name": "East Londonderry",
+      "lon": null,
+      "year": "2009-01-01",
+      "lat": null
+    },
+    "pk": 173
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "fermanagh-south-tyrone",
+      "name": "Fermanagh & South Tyrone",
+      "lon": null,
+      "year": "2009-01-01",
+      "lat": null
+    },
+    "pk": 198
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "foyle",
+      "name": "Foyle",
+      "lon": null,
+      "year": "2009-01-01",
+      "lat": null
+    },
+    "pk": 202
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "lagan-valley",
+      "name": "Lagan Valley",
+      "lon": null,
+      "year": "2009-01-01",
+      "lat": null
+    },
+    "pk": 274
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "mid-ulster",
+      "name": "Mid Ulster",
+      "lon": null,
+      "year": "2009-01-01",
+      "lat": null
+    },
+    "pk": 322
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "newry-armagh",
+      "name": "Newry & Armagh",
+      "lon": null,
+      "year": "2009-01-01",
+      "lat": null
+    },
+    "pk": 344
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "north-antrim",
+      "name": "North Antrim",
+      "lon": null,
+      "year": "2009-01-01",
+      "lat": null
+    },
+    "pk": 346
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "north-down",
+      "name": "North Down",
+      "lon": null,
+      "year": "2009-01-01",
+      "lat": null
+    },
+    "pk": 350
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "hertsmere",
+      "name": "Hertsmere",
+      "lon": -0.274986273182,
+      "year": "2009-01-01",
+      "lat": 51.6802918234
+    },
+    "pk": 242
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "south-antrim",
+      "name": "South Antrim",
+      "lon": null,
+      "year": "2009-01-01",
+      "lat": null
+    },
+    "pk": 451
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "south-down",
+      "name": "South Down",
+      "lon": null,
+      "year": "2009-01-01",
+      "lat": null
+    },
+    "pk": 455
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "strangford",
+      "name": "Strangford",
+      "lon": null,
+      "year": "2009-01-01",
+      "lat": null
+    },
+    "pk": 492
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "upper-bann",
+      "name": "Upper Bann",
+      "lon": null,
+      "year": "2009-01-01",
+      "lat": null
+    },
+    "pk": 526
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "west-tyrone",
+      "name": "West Tyrone",
+      "lon": null,
+      "year": "2009-01-01",
+      "lat": null
+    },
+    "pk": 560
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "aberavon",
+      "name": "Aberavon",
+      "lon": -3.72589279201,
+      "year": "2009-01-01",
+      "lat": 51.6229406626
+    },
+    "pk": 1
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "aldershot",
+      "name": "Aldershot",
+      "lon": -0.793642952164,
+      "year": "2009-01-01",
+      "lat": 51.2919575737
+    },
+    "pk": 2
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "aldridge-brownhills",
+      "name": "Aldridge-Brownhills",
+      "lon": -1.93167981456,
+      "year": "2009-01-01",
+      "lat": 52.6120515493
+    },
+    "pk": 3
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "altrincham-sale-west",
+      "name": "Altrincham & Sale West",
+      "lon": -2.38207857643,
+      "year": "2009-01-01",
+      "lat": 53.3989495951
+    },
+    "pk": 4
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "alyn-deeside",
+      "name": "Alyn & Deeside",
+      "lon": -3.0469491774,
+      "year": "2009-01-01",
+      "lat": 53.1627986328
+    },
+    "pk": 5
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "amber-valley",
+      "name": "Amber Valley",
+      "lon": -1.40882582938,
+      "year": "2009-01-01",
+      "lat": 53.0268261001
+    },
+    "pk": 6
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "arundel-south-downs",
+      "name": "Arundel & South Downs",
+      "lon": -0.405303270027,
+      "year": "2009-01-01",
+      "lat": 50.9088097786
+    },
+    "pk": 7
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "ashfield",
+      "name": "Ashfield",
+      "lon": -1.2543985629,
+      "year": "2009-01-01",
+      "lat": 53.0871361874
+    },
+    "pk": 8
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "ashford",
+      "name": "Ashford",
+      "lon": 0.81028660775,
+      "year": "2009-01-01",
+      "lat": 51.1312763129
+    },
+    "pk": 9
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "ashton-under-lyne",
+      "name": "Ashton-under-Lyne",
+      "lon": -2.11322897876,
+      "year": "2009-01-01",
+      "lat": 53.5007927302
+    },
+    "pk": 10
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "aylesbury",
+      "name": "Aylesbury",
+      "lon": -0.80648066796,
+      "year": "2009-01-01",
+      "lat": 51.7270784102
+    },
+    "pk": 11
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "banbury",
+      "name": "Banbury",
+      "lon": -1.2835699676,
+      "year": "2009-01-01",
+      "lat": 51.9817251459
+    },
+    "pk": 12
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "barking",
+      "name": "Barking",
+      "lon": 0.107531083393,
+      "year": "2009-01-01",
+      "lat": 51.5380702973
+    },
+    "pk": 13
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "barnsley-central",
+      "name": "Barnsley Central",
+      "lon": -1.4491131303,
+      "year": "2009-01-01",
+      "lat": 53.5736942758
+    },
+    "pk": 14
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "barnsley-east-mexborough",
+      "name": "Barnsley East & Mexborough",
+      "lon": -1.2966400022,
+      "year": "2009-01-01",
+      "lat": 53.553299937
+    },
+    "pk": 15
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "barnsley-west-penistone",
+      "name": "Barnsley West & Penistone",
+      "lon": -1.61590197364,
+      "year": "2009-01-01",
+      "lat": 53.5236596691
+    },
+    "pk": 16
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "barrow-furness",
+      "name": "Barrow & Furness",
+      "lon": -3.17517104277,
+      "year": "2009-01-01",
+      "lat": 54.1334109254
+    },
+    "pk": 17
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "basildon",
+      "name": "Basildon",
+      "lon": 0.432197219764,
+      "year": "2009-01-01",
+      "lat": 51.5417896667
+    },
+    "pk": 18
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "basingstoke",
+      "name": "Basingstoke",
+      "lon": -1.09354246381,
+      "year": "2009-01-01",
+      "lat": 51.2584574419
+    },
+    "pk": 19
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "bassetlaw",
+      "name": "Bassetlaw",
+      "lon": -0.978781504098,
+      "year": "2009-01-01",
+      "lat": 53.3371152883
+    },
+    "pk": 20
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "bath",
+      "name": "Bath",
+      "lon": -2.36461438133,
+      "year": "2009-01-01",
+      "lat": 51.38400662
+    },
+    "pk": 21
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "batley-spen",
+      "name": "Batley & Spen",
+      "lon": -1.67034297587,
+      "year": "2009-01-01",
+      "lat": 53.7294190164
+    },
+    "pk": 22
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "battersea",
+      "name": "Battersea",
+      "lon": -0.163509521662,
+      "year": "2009-01-01",
+      "lat": 51.4640119863
+    },
+    "pk": 23
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "beaconsfield",
+      "name": "Beaconsfield",
+      "lon": -0.624730228257,
+      "year": "2009-01-01",
+      "lat": 51.5651534766
+    },
+    "pk": 24
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "beckenham",
+      "name": "Beckenham",
+      "lon": -0.0294753075481,
+      "year": "2009-01-01",
+      "lat": 51.3858303064
+    },
+    "pk": 25
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "bedford",
+      "name": "Bedford",
+      "lon": -0.462268187836,
+      "year": "2009-01-01",
+      "lat": 52.1359159582
+    },
+    "pk": 26
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "berwick-upon-tweed",
+      "name": "Berwick-upon-Tweed",
+      "lon": -1.93089494588,
+      "year": "2009-01-01",
+      "lat": 55.4696738644
+    },
+    "pk": 31
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "bethnal-green-bow",
+      "name": "Bethnal Green & Bow",
+      "lon": -0.046720770431,
+      "year": "2009-01-01",
+      "lat": 51.5231758939
+    },
+    "pk": 32
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "beverley-holderness",
+      "name": "Beverley & Holderness",
+      "lon": -0.238294194313,
+      "year": "2009-01-01",
+      "lat": 53.773993557
+    },
+    "pk": 33
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "bexhill-battle",
+      "name": "Bexhill & Battle",
+      "lon": 0.495901302206,
+      "year": "2009-01-01",
+      "lat": 50.93854839
+    },
+    "pk": 34
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "bexleyheath-crayford",
+      "name": "Bexleyheath & Crayford",
+      "lon": 0.165804401058,
+      "year": "2009-01-01",
+      "lat": 51.4640070916
+    },
+    "pk": 35
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "billericay",
+      "name": "Billericay",
+      "lon": 0.471371733886,
+      "year": "2009-01-01",
+      "lat": 51.5903652892
+    },
+    "pk": 36
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "birkenhead",
+      "name": "Birkenhead",
+      "lon": -3.03071963704,
+      "year": "2009-01-01",
+      "lat": 53.3883667795
+    },
+    "pk": 37
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "birmingham-edgbaston",
+      "name": "Birmingham, Edgbaston",
+      "lon": -1.9549907664,
+      "year": "2009-01-01",
+      "lat": 52.4475855391
+    },
+    "pk": 38
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "birmingham-erdington",
+      "name": "Birmingham, Erdington",
+      "lon": -1.82880894939,
+      "year": "2009-01-01",
+      "lat": 52.5297969199
+    },
+    "pk": 39
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "birmingham-hall-green",
+      "name": "Birmingham, Hall Green",
+      "lon": -1.87407128757,
+      "year": "2009-01-01",
+      "lat": 52.4217460783
+    },
+    "pk": 40
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "birmingham-hodge-hill",
+      "name": "Birmingham, Hodge Hill",
+      "lon": -1.81009673039,
+      "year": "2009-01-01",
+      "lat": 52.489128559
+    },
+    "pk": 41
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "birmingham-ladywood",
+      "name": "Birmingham, Ladywood",
+      "lon": -1.90021900685,
+      "year": "2009-01-01",
+      "lat": 52.4936253189
+    },
+    "pk": 42
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "birmingham-northfield",
+      "name": "Birmingham, Northfield",
+      "lon": -1.99133388104,
+      "year": "2009-01-01",
+      "lat": 52.4137268961
+    },
+    "pk": 43
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "birmingham-perry-barr",
+      "name": "Birmingham, Perry Barr",
+      "lon": -1.91843394717,
+      "year": "2009-01-01",
+      "lat": 52.5323417004
+    },
+    "pk": 44
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "birmingham-selly-oak",
+      "name": "Birmingham, Selly Oak",
+      "lon": -1.91246063979,
+      "year": "2009-01-01",
+      "lat": 52.4229578898
+    },
+    "pk": 45
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "birmingham-sparkbrook-small-heath",
+      "name": "Birmingham, Sparkbrook & Small Heath",
+      "lon": -1.85543493171,
+      "year": "2009-01-01",
+      "lat": 52.4549537536
+    },
+    "pk": 46
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "birmingham-yardley",
+      "name": "Birmingham, Yardley",
+      "lon": -1.80192240848,
+      "year": "2009-01-01",
+      "lat": 52.4641778765
+    },
+    "pk": 47
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "bishop-auckland",
+      "name": "Bishop Auckland",
+      "lon": -1.95913092102,
+      "year": "2009-01-01",
+      "lat": 54.5914955565
+    },
+    "pk": 48
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "blaby",
+      "name": "Blaby",
+      "lon": -1.19924468977,
+      "year": "2009-01-01",
+      "lat": 52.5097794519
+    },
+    "pk": 49
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "blackburn",
+      "name": "Blackburn",
+      "lon": -2.49843048458,
+      "year": "2009-01-01",
+      "lat": 53.7246901025
+    },
+    "pk": 50
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "blackpool-north-fleetwood",
+      "name": "Blackpool North & Fleetwood",
+      "lon": -3.02170711676,
+      "year": "2009-01-01",
+      "lat": 53.8866148243
+    },
+    "pk": 51
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "blackpool-south",
+      "name": "Blackpool South",
+      "lon": -3.03047631766,
+      "year": "2009-01-01",
+      "lat": 53.8069338622
+    },
+    "pk": 52
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "blaenau-gwent",
+      "name": "Blaenau Gwent",
+      "lon": -3.20736979207,
+      "year": "2009-01-01",
+      "lat": 51.7534233272
+    },
+    "pk": 53
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "blaydon",
+      "name": "Blaydon",
+      "lon": -1.7040986182,
+      "year": "2009-01-01",
+      "lat": 54.9312428346
+    },
+    "pk": 54
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "blyth-valley",
+      "name": "Blyth Valley",
+      "lon": -1.55362240167,
+      "year": "2009-01-01",
+      "lat": 55.0937527113
+    },
+    "pk": 55
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "bognor-regis-littlehampton",
+      "name": "Bognor Regis & Littlehampton",
+      "lon": -0.639810954208,
+      "year": "2009-01-01",
+      "lat": 50.7934759557
+    },
+    "pk": 56
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "bolsover",
+      "name": "Bolsover",
+      "lon": -1.3187392722,
+      "year": "2009-01-01",
+      "lat": 53.1969526477
+    },
+    "pk": 57
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "bolton-north-east",
+      "name": "Bolton North East",
+      "lon": -2.41825872257,
+      "year": "2009-01-01",
+      "lat": 53.6083881765
+    },
+    "pk": 58
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "bolton-south-east",
+      "name": "Bolton South East",
+      "lon": -2.40362679391,
+      "year": "2009-01-01",
+      "lat": 53.5530612256
+    },
+    "pk": 59
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "bolton-west",
+      "name": "Bolton West",
+      "lon": -2.5377313591,
+      "year": "2009-01-01",
+      "lat": 53.5749018047
+    },
+    "pk": 60
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "bootle",
+      "name": "Bootle",
+      "lon": -2.99321903394,
+      "year": "2009-01-01",
+      "lat": 53.466787541
+    },
+    "pk": 61
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "boston-skegness",
+      "name": "Boston & Skegness",
+      "lon": 0.0539961924629,
+      "year": "2009-01-01",
+      "lat": 53.039716548
+    },
+    "pk": 62
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "bosworth",
+      "name": "Bosworth",
+      "lon": -1.40641127558,
+      "year": "2009-01-01",
+      "lat": 52.6086991743
+    },
+    "pk": 63
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "bournemouth-east",
+      "name": "Bournemouth East",
+      "lon": -1.80971001955,
+      "year": "2009-01-01",
+      "lat": 50.742344641
+    },
+    "pk": 64
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "bournemouth-west",
+      "name": "Bournemouth West",
+      "lon": -1.89027398832,
+      "year": "2009-01-01",
+      "lat": 50.7447443578
+    },
+    "pk": 65
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "bracknell",
+      "name": "Bracknell",
+      "lon": -0.815486731322,
+      "year": "2009-01-01",
+      "lat": 51.4007415344
+    },
+    "pk": 66
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "bradford-north",
+      "name": "Bradford North",
+      "lon": -1.73276154797,
+      "year": "2009-01-01",
+      "lat": 53.8172920284
+    },
+    "pk": 67
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "bradford-south",
+      "name": "Bradford South",
+      "lon": -1.75694414981,
+      "year": "2009-01-01",
+      "lat": 53.7597631717
+    },
+    "pk": 68
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "bradford-west",
+      "name": "Bradford West",
+      "lon": -1.81485548687,
+      "year": "2009-01-01",
+      "lat": 53.7996779055
+    },
+    "pk": 69
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "braintree",
+      "name": "Braintree",
+      "lon": 0.580440475457,
+      "year": "2009-01-01",
+      "lat": 51.8818247414
+    },
+    "pk": 70
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "brecon-radnorshire",
+      "name": "Brecon & Radnorshire",
+      "lon": -3.38378734514,
+      "year": "2009-01-01",
+      "lat": 52.1097829667
+    },
+    "pk": 71
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "brent-east",
+      "name": "Brent East",
+      "lon": -0.229947455396,
+      "year": "2009-01-01",
+      "lat": 51.5503916337
+    },
+    "pk": 72
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "brent-north",
+      "name": "Brent North",
+      "lon": -0.291712527609,
+      "year": "2009-01-01",
+      "lat": 51.5767503416
+    },
+    "pk": 73
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "brent-south",
+      "name": "Brent South",
+      "lon": -0.268695372733,
+      "year": "2009-01-01",
+      "lat": 51.5504761114
+    },
+    "pk": 74
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "brentford-isleworth",
+      "name": "Brentford & Isleworth",
+      "lon": -0.322358041149,
+      "year": "2009-01-01",
+      "lat": 51.4758236739
+    },
+    "pk": 75
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "brentwood-ongar",
+      "name": "Brentwood & Ongar",
+      "lon": 0.259734588037,
+      "year": "2009-01-01",
+      "lat": 51.6813419981
+    },
+    "pk": 76
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "bridgend",
+      "name": "Bridgend",
+      "lon": -3.63803661935,
+      "year": "2009-01-01",
+      "lat": 51.4980085366
+    },
+    "pk": 77
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "bridgwater",
+      "name": "Bridgwater",
+      "lon": -3.25796140186,
+      "year": "2009-01-01",
+      "lat": 51.144170626
+    },
+    "pk": 78
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "brigg-goole",
+      "name": "Brigg & Goole",
+      "lon": -0.724864645566,
+      "year": "2009-01-01",
+      "lat": 53.5922957729
+    },
+    "pk": 79
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "brighton-kemptown",
+      "name": "Brighton, Kemptown",
+      "lon": -0.0520133168698,
+      "year": "2009-01-01",
+      "lat": 50.8231047627
+    },
+    "pk": 80
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "brighton-pavilion",
+      "name": "Brighton, Pavilion",
+      "lon": -0.136961114786,
+      "year": "2009-01-01",
+      "lat": 50.8551131572
+    },
+    "pk": 81
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "bristol-east",
+      "name": "Bristol East",
+      "lon": -2.55132810296,
+      "year": "2009-01-01",
+      "lat": 51.4483129371
+    },
+    "pk": 82
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "bristol-north-west",
+      "name": "Bristol North West",
+      "lon": -2.82136586896,
+      "year": "2009-01-01",
+      "lat": 51.4448275251
+    },
+    "pk": 83
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "bristol-south",
+      "name": "Bristol South",
+      "lon": -2.59939181044,
+      "year": "2009-01-01",
+      "lat": 51.4238844221
+    },
+    "pk": 84
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "bristol-west",
+      "name": "Bristol West",
+      "lon": -2.60978569314,
+      "year": "2009-01-01",
+      "lat": 51.4751007652
+    },
+    "pk": 85
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "bromley-chislehurst",
+      "name": "Bromley & Chislehurst",
+      "lon": 0.0475371052243,
+      "year": "2009-01-01",
+      "lat": 51.3957364369
+    },
+    "pk": 86
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "bromsgrove",
+      "name": "Bromsgrove",
+      "lon": -2.00658210836,
+      "year": "2009-01-01",
+      "lat": 52.3616774631
+    },
+    "pk": 87
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "broxbourne",
+      "name": "Broxbourne",
+      "lon": -0.0789198820604,
+      "year": "2009-01-01",
+      "lat": 51.7318471905
+    },
+    "pk": 88
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "broxtowe",
+      "name": "Broxtowe",
+      "lon": -1.24570131399,
+      "year": "2009-01-01",
+      "lat": 52.9701436216
+    },
+    "pk": 89
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "buckingham",
+      "name": "Buckingham",
+      "lon": -0.837229143896,
+      "year": "2009-01-01",
+      "lat": 51.9082969398
+    },
+    "pk": 90
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "burnley",
+      "name": "Burnley",
+      "lon": -2.22716416899,
+      "year": "2009-01-01",
+      "lat": 53.7740564029
+    },
+    "pk": 91
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "burton",
+      "name": "Burton",
+      "lon": -1.81422974772,
+      "year": "2009-01-01",
+      "lat": 52.8880127401
+    },
+    "pk": 92
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "bury-north",
+      "name": "Bury North",
+      "lon": -2.31413178058,
+      "year": "2009-01-01",
+      "lat": 53.6104534287
+    },
+    "pk": 93
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "bury-south",
+      "name": "Bury South",
+      "lon": -2.30537859374,
+      "year": "2009-01-01",
+      "lat": 53.5549134604
+    },
+    "pk": 94
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "bury-st-edmunds",
+      "name": "Bury St Edmunds",
+      "lon": 0.880755793649,
+      "year": "2009-01-01",
+      "lat": 52.2458688375
+    },
+    "pk": 95
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "caernarfon",
+      "name": "Caernarfon",
+      "lon": -4.39540520877,
+      "year": "2009-01-01",
+      "lat": 52.9711762383
+    },
+    "pk": 96
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "caerphilly",
+      "name": "Caerphilly",
+      "lon": -3.20242435438,
+      "year": "2009-01-01",
+      "lat": 51.6262919456
+    },
+    "pk": 97
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "calder-valley",
+      "name": "Calder Valley",
+      "lon": -1.9501314807,
+      "year": "2009-01-01",
+      "lat": 53.7204603601
+    },
+    "pk": 98
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "camberwell-peckham",
+      "name": "Camberwell & Peckham",
+      "lon": -0.0752692682679,
+      "year": "2009-01-01",
+      "lat": 51.4712186962
+    },
+    "pk": 99
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "cambridge",
+      "name": "Cambridge",
+      "lon": 0.126598235486,
+      "year": "2009-01-01",
+      "lat": 52.2041054618
+    },
+    "pk": 100
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "cannock-chase",
+      "name": "Cannock Chase",
+      "lon": -1.98743032674,
+      "year": "2009-01-01",
+      "lat": 52.7069134287
+    },
+    "pk": 101
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "canterbury",
+      "name": "Canterbury",
+      "lon": 1.08913186919,
+      "year": "2009-01-01",
+      "lat": 51.2763703069
+    },
+    "pk": 102
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "cardiff-central",
+      "name": "Cardiff Central",
+      "lon": -3.16379450925,
+      "year": "2009-01-01",
+      "lat": 51.5042748075
+    },
+    "pk": 103
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "cardiff-north",
+      "name": "Cardiff North",
+      "lon": -3.17761076258,
+      "year": "2009-01-01",
+      "lat": 51.527638014
+    },
+    "pk": 104
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "cardiff-south-penarth",
+      "name": "Cardiff South & Penarth",
+      "lon": -3.1394797228,
+      "year": "2009-01-01",
+      "lat": 51.4548994838
+    },
+    "pk": 105
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "cardiff-west",
+      "name": "Cardiff West",
+      "lon": -3.24706601234,
+      "year": "2009-01-01",
+      "lat": 51.4987578118
+    },
+    "pk": 106
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "carlisle",
+      "name": "Carlisle",
+      "lon": -2.98660459734,
+      "year": "2009-01-01",
+      "lat": 54.862377274
+    },
+    "pk": 107
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "carmarthen-east-dinefwr",
+      "name": "Carmarthen East & Dinefwr",
+      "lon": -4.09836494538,
+      "year": "2009-01-01",
+      "lat": 51.9339775222
+    },
+    "pk": 108
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "carmarthen-west-south-pembrokeshire",
+      "name": "Carmarthen West & South Pembrokeshire",
+      "lon": -4.70234101697,
+      "year": "2009-01-01",
+      "lat": 51.7791247837
+    },
+    "pk": 109
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "carshalton-wallington",
+      "name": "Carshalton & Wallington",
+      "lon": -0.15892125877,
+      "year": "2009-01-01",
+      "lat": 51.3573571405
+    },
+    "pk": 110
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "castle-point",
+      "name": "Castle Point",
+      "lon": 0.607061850518,
+      "year": "2009-01-01",
+      "lat": 51.5440188142
+    },
+    "pk": 111
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "central-suffolk-north-ipswich",
+      "name": "Central Suffolk & North Ipswich",
+      "lon": 1.21144804854,
+      "year": "2009-01-01",
+      "lat": 52.2244145478
+    },
+    "pk": 112
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "ceredigion",
+      "name": "Ceredigion",
+      "lon": -4.19161939531,
+      "year": "2009-01-01",
+      "lat": 52.2936965236
+    },
+    "pk": 113
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "charnwood",
+      "name": "Charnwood",
+      "lon": -1.11724195135,
+      "year": "2009-01-01",
+      "lat": 52.695036884
+    },
+    "pk": 114
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "chatham-aylesford",
+      "name": "Chatham & Aylesford",
+      "lon": 0.476601773325,
+      "year": "2009-01-01",
+      "lat": 51.3266709973
+    },
+    "pk": 115
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "cheadle",
+      "name": "Cheadle",
+      "lon": -2.17982595308,
+      "year": "2009-01-01",
+      "lat": 53.3672314434
+    },
+    "pk": 116
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "cheltenham",
+      "name": "Cheltenham",
+      "lon": -2.0766201705,
+      "year": "2009-01-01",
+      "lat": 51.8888680895
+    },
+    "pk": 117
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "chesham-amersham",
+      "name": "Chesham & Amersham",
+      "lon": -0.61577659816,
+      "year": "2009-01-01",
+      "lat": 51.6788327534
+    },
+    "pk": 118
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "chester-city-of",
+      "name": "Chester, City of",
+      "lon": -2.91092269096,
+      "year": "2009-01-01",
+      "lat": 53.1907524332
+    },
+    "pk": 119
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "chesterfield",
+      "name": "Chesterfield",
+      "lon": -1.40148860289,
+      "year": "2009-01-01",
+      "lat": 53.2499382347
+    },
+    "pk": 120
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "chichester",
+      "name": "Chichester",
+      "lon": -0.758666300189,
+      "year": "2009-01-01",
+      "lat": 50.9057442283
+    },
+    "pk": 121
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "chingford-woodford-green",
+      "name": "Chingford & Woodford Green",
+      "lon": 0.00270955495452,
+      "year": "2009-01-01",
+      "lat": 51.6169772941
+    },
+    "pk": 122
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "chipping-barnet",
+      "name": "Chipping Barnet",
+      "lon": -0.192235258301,
+      "year": "2009-01-01",
+      "lat": 51.6395929669
+    },
+    "pk": 123
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "chorley",
+      "name": "Chorley",
+      "lon": -2.66797258119,
+      "year": "2009-01-01",
+      "lat": 53.672109131
+    },
+    "pk": 124
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "christchurch",
+      "name": "Christchurch",
+      "lon": -1.79832455658,
+      "year": "2009-01-01",
+      "lat": 50.8092232598
+    },
+    "pk": 125
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "cities-of-london-westminster",
+      "name": "Cities of London & Westminster",
+      "lon": -0.134690823626,
+      "year": "2009-01-01",
+      "lat": 51.5044200919
+    },
+    "pk": 126
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "cleethorpes",
+      "name": "Cleethorpes",
+      "lon": -0.233295995568,
+      "year": "2009-01-01",
+      "lat": 53.5756265826
+    },
+    "pk": 127
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "clwyd-south",
+      "name": "Clwyd South",
+      "lon": -3.10773187938,
+      "year": "2009-01-01",
+      "lat": 52.9389998818
+    },
+    "pk": 128
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "clwyd-west",
+      "name": "Clwyd West",
+      "lon": -3.45856537677,
+      "year": "2009-01-01",
+      "lat": 53.1450880761
+    },
+    "pk": 129
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "colchester",
+      "name": "Colchester",
+      "lon": 0.875784880164,
+      "year": "2009-01-01",
+      "lat": 51.8875986796
+    },
+    "pk": 130
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "colne-valley",
+      "name": "Colne Valley",
+      "lon": -1.85667045441,
+      "year": "2009-01-01",
+      "lat": 53.5963506537
+    },
+    "pk": 131
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "congleton",
+      "name": "Congleton",
+      "lon": -2.3006365034,
+      "year": "2009-01-01",
+      "lat": 53.1658322876
+    },
+    "pk": 132
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "conwy",
+      "name": "Conwy",
+      "lon": -3.97493987176,
+      "year": "2009-01-01",
+      "lat": 53.2213513671
+    },
+    "pk": 133
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "copeland",
+      "name": "Copeland",
+      "lon": -3.37443405186,
+      "year": "2009-01-01",
+      "lat": 54.388390334
+    },
+    "pk": 134
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "corby",
+      "name": "Corby",
+      "lon": -0.575078763945,
+      "year": "2009-01-01",
+      "lat": 52.4742466506
+    },
+    "pk": 135
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "cotswold",
+      "name": "Cotswold",
+      "lon": -2.00920930081,
+      "year": "2009-01-01",
+      "lat": 51.8453350632
+    },
+    "pk": 136
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "coventry-north-east",
+      "name": "Coventry North East",
+      "lon": -1.46826166145,
+      "year": "2009-01-01",
+      "lat": 52.4254394561
+    },
+    "pk": 137
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "coventry-north-west",
+      "name": "Coventry North West",
+      "lon": -1.54888328635,
+      "year": "2009-01-01",
+      "lat": 52.4313391942
+    },
+    "pk": 138
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "coventry-south",
+      "name": "Coventry South",
+      "lon": -1.51764700245,
+      "year": "2009-01-01",
+      "lat": 52.3930613643
+    },
+    "pk": 139
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "crawley",
+      "name": "Crawley",
+      "lon": -0.195259937991,
+      "year": "2009-01-01",
+      "lat": 51.126182953
+    },
+    "pk": 140
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "crewe-nantwich",
+      "name": "Crewe & Nantwich",
+      "lon": -2.42846586763,
+      "year": "2009-01-01",
+      "lat": 53.0560726189
+    },
+    "pk": 141
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "crosby",
+      "name": "Crosby",
+      "lon": -3.07316257593,
+      "year": "2009-01-01",
+      "lat": 53.5251606353
+    },
+    "pk": 142
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "croydon-central",
+      "name": "Croydon Central",
+      "lon": -0.0523695076017,
+      "year": "2009-01-01",
+      "lat": 51.3659213218
+    },
+    "pk": 143
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "croydon-north",
+      "name": "Croydon North",
+      "lon": -0.0994495377324,
+      "year": "2009-01-01",
+      "lat": 51.3965967979
+    },
+    "pk": 144
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "croydon-south",
+      "name": "Croydon South",
+      "lon": -0.0999269420212,
+      "year": "2009-01-01",
+      "lat": 51.3299884155
+    },
+    "pk": 145
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "cynon-valley",
+      "name": "Cynon Valley",
+      "lon": -3.44982638392,
+      "year": "2009-01-01",
+      "lat": 51.7258344722
+    },
+    "pk": 146
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "dagenham",
+      "name": "Dagenham",
+      "lon": 0.156867535434,
+      "year": "2009-01-01",
+      "lat": 51.5540161446
+    },
+    "pk": 147
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "darlington",
+      "name": "Darlington",
+      "lon": -1.55571953237,
+      "year": "2009-01-01",
+      "lat": 54.5321123462
+    },
+    "pk": 148
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "dartford",
+      "name": "Dartford",
+      "lon": 0.247648968597,
+      "year": "2009-01-01",
+      "lat": 51.4184685263
+    },
+    "pk": 149
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "daventry",
+      "name": "Daventry",
+      "lon": -1.07999778145,
+      "year": "2009-01-01",
+      "lat": 52.2005288444
+    },
+    "pk": 150
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "delyn",
+      "name": "Delyn",
+      "lon": -3.22597573222,
+      "year": "2009-01-01",
+      "lat": 53.236666459
+    },
+    "pk": 151
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "denton-reddish",
+      "name": "Denton & Reddish",
+      "lon": -2.12409167043,
+      "year": "2009-01-01",
+      "lat": 53.4474889443
+    },
+    "pk": 152
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "derby-north",
+      "name": "Derby North",
+      "lon": -1.46034905411,
+      "year": "2009-01-01",
+      "lat": 52.9377266814
+    },
+    "pk": 153
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "derby-south",
+      "name": "Derby South",
+      "lon": -1.47267835062,
+      "year": "2009-01-01",
+      "lat": 52.8974533311
+    },
+    "pk": 154
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "devizes",
+      "name": "Devizes",
+      "lon": -1.82883387826,
+      "year": "2009-01-01",
+      "lat": 51.3702032072
+    },
+    "pk": 155
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "dewsbury",
+      "name": "Dewsbury",
+      "lon": -1.66210694784,
+      "year": "2009-01-01",
+      "lat": 53.6822523942
+    },
+    "pk": 156
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "don-valley",
+      "name": "Don Valley",
+      "lon": -1.09681945832,
+      "year": "2009-01-01",
+      "lat": 53.5050908768
+    },
+    "pk": 157
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "doncaster-central",
+      "name": "Doncaster Central",
+      "lon": -1.0838370324,
+      "year": "2009-01-01",
+      "lat": 53.5244603295
+    },
+    "pk": 158
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "doncaster-north",
+      "name": "Doncaster North",
+      "lon": -1.04990056595,
+      "year": "2009-01-01",
+      "lat": 53.5948357769
+    },
+    "pk": 159
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "dover",
+      "name": "Dover",
+      "lon": 1.2749815048,
+      "year": "2009-01-01",
+      "lat": 51.1794617413
+    },
+    "pk": 160
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "dudley-north",
+      "name": "Dudley North",
+      "lon": -2.10470831876,
+      "year": "2009-01-01",
+      "lat": 52.5250228379
+    },
+    "pk": 161
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "dudley-south",
+      "name": "Dudley South",
+      "lon": -2.12808314585,
+      "year": "2009-01-01",
+      "lat": 52.4923983019
+    },
+    "pk": 162
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "dulwich-west-norwood",
+      "name": "Dulwich & West Norwood",
+      "lon": -0.0798723683516,
+      "year": "2009-01-01",
+      "lat": 51.4443845533
+    },
+    "pk": 163
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "durham-city-of",
+      "name": "Durham, City of",
+      "lon": -1.57941803161,
+      "year": "2009-01-01",
+      "lat": 54.7678688539
+    },
+    "pk": 164
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "ealing-north",
+      "name": "Ealing North",
+      "lon": -0.355773105941,
+      "year": "2009-01-01",
+      "lat": 51.5354877926
+    },
+    "pk": 165
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "ealing-acton-shepherd-s-bush",
+      "name": "Ealing, Acton & Shepherd's Bush",
+      "lon": -0.263109679351,
+      "year": "2009-01-01",
+      "lat": 51.5161228358
+    },
+    "pk": 166
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "ealing-southall",
+      "name": "Ealing, Southall",
+      "lon": -0.343356931407,
+      "year": "2009-01-01",
+      "lat": 51.5112439554
+    },
+    "pk": 167
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "easington",
+      "name": "Easington",
+      "lon": -1.35494534717,
+      "year": "2009-01-01",
+      "lat": 54.7904829164
+    },
+    "pk": 168
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "east-devon",
+      "name": "East Devon",
+      "lon": -3.17710264552,
+      "year": "2009-01-01",
+      "lat": 50.7574180777
+    },
+    "pk": 170
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "east-ham",
+      "name": "East Ham",
+      "lon": 0.0654453302731,
+      "year": "2009-01-01",
+      "lat": 51.530170595
+    },
+    "pk": 171
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "east-hampshire",
+      "name": "East Hampshire",
+      "lon": -0.992094721947,
+      "year": "2009-01-01",
+      "lat": 51.0292050451
+    },
+    "pk": 172
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "east-surrey",
+      "name": "East Surrey",
+      "lon": -0.0657178356171,
+      "year": "2009-01-01",
+      "lat": 51.2381049505
+    },
+    "pk": 174
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "east-worthing-shoreham",
+      "name": "East Worthing & Shoreham",
+      "lon": -0.310404976903,
+      "year": "2009-01-01",
+      "lat": 50.8414993101
+    },
+    "pk": 175
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "east-yorkshire",
+      "name": "East Yorkshire",
+      "lon": -0.513935966272,
+      "year": "2009-01-01",
+      "lat": 53.9866084507
+    },
+    "pk": 176
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "eastbourne",
+      "name": "Eastbourne",
+      "lon": 0.24023757205,
+      "year": "2009-01-01",
+      "lat": 50.7757602575
+    },
+    "pk": 177
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "eastleigh",
+      "name": "Eastleigh",
+      "lon": -1.32853294254,
+      "year": "2009-01-01",
+      "lat": 50.9202045325
+    },
+    "pk": 178
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "renfrewshire-east",
+      "name": "Renfrewshire East",
+      "lon": -4.38521243744,
+      "year": "2009-01-01",
+      "lat": 55.7482198721
+    },
+    "pk": 179
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "eccles",
+      "name": "Eccles",
+      "lon": -2.38958467447,
+      "year": "2009-01-01",
+      "lat": 53.4767316559
+    },
+    "pk": 180
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "eddisbury",
+      "name": "Eddisbury",
+      "lon": -2.65922546898,
+      "year": "2009-01-01",
+      "lat": 53.0998380216
+    },
+    "pk": 181
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "edmonton",
+      "name": "Edmonton",
+      "lon": -0.0569142970141,
+      "year": "2009-01-01",
+      "lat": 51.6281656152
+    },
+    "pk": 182
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "ellesmere-port-neston",
+      "name": "Ellesmere Port & Neston",
+      "lon": -2.94985635463,
+      "year": "2009-01-01",
+      "lat": 53.2628551753
+    },
+    "pk": 183
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "elmet",
+      "name": "Elmet",
+      "lon": -1.39000190014,
+      "year": "2009-01-01",
+      "lat": 53.832688094
+    },
+    "pk": 184
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "eltham",
+      "name": "Eltham",
+      "lon": 0.0590074615387,
+      "year": "2009-01-01",
+      "lat": 51.4537404128
+    },
+    "pk": 185
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "enfield-north",
+      "name": "Enfield North",
+      "lon": -0.086618398316,
+      "year": "2009-01-01",
+      "lat": 51.6647444508
+    },
+    "pk": 186
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "enfield-southgate",
+      "name": "Enfield, Southgate",
+      "lon": -0.135889154362,
+      "year": "2009-01-01",
+      "lat": 51.6469875431
+    },
+    "pk": 187
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "epping-forest",
+      "name": "Epping Forest",
+      "lon": 0.083985360679,
+      "year": "2009-01-01",
+      "lat": 51.6871052657
+    },
+    "pk": 188
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "epsom-ewell",
+      "name": "Epsom & Ewell",
+      "lon": -0.265732578208,
+      "year": "2009-01-01",
+      "lat": 51.3338451454
+    },
+    "pk": 189
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "erewash",
+      "name": "Erewash",
+      "lon": -1.32610003067,
+      "year": "2009-01-01",
+      "lat": 52.9380501438
+    },
+    "pk": 190
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "erith-thamesmead",
+      "name": "Erith & Thamesmead",
+      "lon": 0.129187839452,
+      "year": "2009-01-01",
+      "lat": 51.492196562
+    },
+    "pk": 191
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "esher-walton",
+      "name": "Esher & Walton",
+      "lon": -0.376850293768,
+      "year": "2009-01-01",
+      "lat": 51.3533750297
+    },
+    "pk": 192
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "exeter",
+      "name": "Exeter",
+      "lon": -3.51100249132,
+      "year": "2009-01-01",
+      "lat": 50.7170106326
+    },
+    "pk": 193
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "falmouth-camborne",
+      "name": "Falmouth & Camborne",
+      "lon": -5.21317068886,
+      "year": "2009-01-01",
+      "lat": 50.1839734149
+    },
+    "pk": 194
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "fareham",
+      "name": "Fareham",
+      "lon": -1.21231205336,
+      "year": "2009-01-01",
+      "lat": 50.8569239546
+    },
+    "pk": 195
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "faversham-mid-kent",
+      "name": "Faversham & Mid Kent",
+      "lon": 0.751277848009,
+      "year": "2009-01-01",
+      "lat": 51.2517121126
+    },
+    "pk": 196
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "feltham-heston",
+      "name": "Feltham & Heston",
+      "lon": -0.413141714921,
+      "year": "2009-01-01",
+      "lat": 51.4607416016
+    },
+    "pk": 197
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "finchley-golders-green",
+      "name": "Finchley & Golders Green",
+      "lon": -0.185636267274,
+      "year": "2009-01-01",
+      "lat": 51.5879287841
+    },
+    "pk": 199
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "folkestone-hythe",
+      "name": "Folkestone & Hythe",
+      "lon": 0.999924365991,
+      "year": "2009-01-01",
+      "lat": 51.0579880143
+    },
+    "pk": 200
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "forest-of-dean",
+      "name": "Forest of Dean",
+      "lon": -2.4314223784,
+      "year": "2009-01-01",
+      "lat": 51.8096339522
+    },
+    "pk": 201
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "fylde",
+      "name": "Fylde",
+      "lon": -2.87640928078,
+      "year": "2009-01-01",
+      "lat": 53.8059725726
+    },
+    "pk": 203
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "gainsborough",
+      "name": "Gainsborough",
+      "lon": -0.452677320383,
+      "year": "2009-01-01",
+      "lat": 53.3997286117
+    },
+    "pk": 204
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "gateshead-east-washington-west",
+      "name": "Gateshead East & Washington West",
+      "lon": -1.55617408869,
+      "year": "2009-01-01",
+      "lat": 54.9194042328
+    },
+    "pk": 205
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "gedling",
+      "name": "Gedling",
+      "lon": -1.08186144204,
+      "year": "2009-01-01",
+      "lat": 53.0021456498
+    },
+    "pk": 206
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "gillingham",
+      "name": "Gillingham",
+      "lon": 0.585307993625,
+      "year": "2009-01-01",
+      "lat": 51.3737296027
+    },
+    "pk": 207
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "gloucester",
+      "name": "Gloucester",
+      "lon": -2.23935966323,
+      "year": "2009-01-01",
+      "lat": 51.8464153137
+    },
+    "pk": 208
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "gosport",
+      "name": "Gosport",
+      "lon": -1.17762304316,
+      "year": "2009-01-01",
+      "lat": 50.8096498769
+    },
+    "pk": 209
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "gower",
+      "name": "Gower",
+      "lon": -4.08979006827,
+      "year": "2009-01-01",
+      "lat": 51.6548774977
+    },
+    "pk": 210
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "grantham-stamford",
+      "name": "Grantham & Stamford",
+      "lon": -0.519491552417,
+      "year": "2009-01-01",
+      "lat": 52.801884763
+    },
+    "pk": 211
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "gravesham",
+      "name": "Gravesham",
+      "lon": 0.398679241876,
+      "year": "2009-01-01",
+      "lat": 51.3957673247
+    },
+    "pk": 212
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "great-grimsby",
+      "name": "Great Grimsby",
+      "lon": -0.0955697411143,
+      "year": "2009-01-01",
+      "lat": 53.5594962545
+    },
+    "pk": 213
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "great-yarmouth",
+      "name": "Great Yarmouth",
+      "lon": 1.64472517676,
+      "year": "2009-01-01",
+      "lat": 52.6345958445
+    },
+    "pk": 214
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "greenwich-woolwich",
+      "name": "Greenwich & Woolwich",
+      "lon": 0.0262152260056,
+      "year": "2009-01-01",
+      "lat": 51.4815760989
+    },
+    "pk": 215
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "guildford",
+      "name": "Guildford",
+      "lon": -0.58000219408,
+      "year": "2009-01-01",
+      "lat": 51.1893094458
+    },
+    "pk": 216
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "hackney-north-stoke-newington",
+      "name": "Hackney North & Stoke Newington",
+      "lon": -0.0743819578204,
+      "year": "2009-01-01",
+      "lat": 51.5636824602
+    },
+    "pk": 217
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "hackney-south-shoreditch",
+      "name": "Hackney South & Shoreditch",
+      "lon": -0.0566858821132,
+      "year": "2009-01-01",
+      "lat": 51.5407177818
+    },
+    "pk": 218
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "halesowen-rowley-regis",
+      "name": "Halesowen & Rowley Regis",
+      "lon": -2.05583616351,
+      "year": "2009-01-01",
+      "lat": 52.464781708
+    },
+    "pk": 219
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "halifax",
+      "name": "Halifax",
+      "lon": -1.87162908488,
+      "year": "2009-01-01",
+      "lat": 53.7399574823
+    },
+    "pk": 220
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "haltemprice-howden",
+      "name": "Haltemprice & Howden",
+      "lon": -0.680064071729,
+      "year": "2009-01-01",
+      "lat": 53.776719829
+    },
+    "pk": 221
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "halton",
+      "name": "Halton",
+      "lon": -2.76145477187,
+      "year": "2009-01-01",
+      "lat": 53.3540433513
+    },
+    "pk": 222
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "hammersmith-fulham",
+      "name": "Hammersmith & Fulham",
+      "lon": -0.21160001866,
+      "year": "2009-01-01",
+      "lat": 51.4842636938
+    },
+    "pk": 223
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "hampstead-highgate",
+      "name": "Hampstead & Highgate",
+      "lon": -0.17659715006,
+      "year": "2009-01-01",
+      "lat": 51.553729581
+    },
+    "pk": 224
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "harborough",
+      "name": "Harborough",
+      "lon": -0.992297338122,
+      "year": "2009-01-01",
+      "lat": 52.5192278882
+    },
+    "pk": 225
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "harlow",
+      "name": "Harlow",
+      "lon": 0.0912792294559,
+      "year": "2009-01-01",
+      "lat": 51.7679355705
+    },
+    "pk": 226
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "harrogate-knaresborough",
+      "name": "Harrogate & Knaresborough",
+      "lon": -1.50182360441,
+      "year": "2009-01-01",
+      "lat": 53.9931284192
+    },
+    "pk": 227
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "harrow-east",
+      "name": "Harrow East",
+      "lon": -0.317790679277,
+      "year": "2009-01-01",
+      "lat": 51.6071205348
+    },
+    "pk": 228
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "harrow-west",
+      "name": "Harrow West",
+      "lon": -0.363261820322,
+      "year": "2009-01-01",
+      "lat": 51.5867320463
+    },
+    "pk": 229
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "hartlepool",
+      "name": "Hartlepool",
+      "lon": -1.26514733433,
+      "year": "2009-01-01",
+      "lat": 54.6745663021
+    },
+    "pk": 230
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "harwich",
+      "name": "Harwich",
+      "lon": 1.19646243885,
+      "year": "2009-01-01",
+      "lat": 51.8606043346
+    },
+    "pk": 231
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "hastings-rye",
+      "name": "Hastings & Rye",
+      "lon": 0.685874559394,
+      "year": "2009-01-01",
+      "lat": 50.919428581
+    },
+    "pk": 232
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "havant",
+      "name": "Havant",
+      "lon": -0.991377379231,
+      "year": "2009-01-01",
+      "lat": 50.8332004512
+    },
+    "pk": 233
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "hayes-harlington",
+      "name": "Hayes & Harlington",
+      "lon": -0.443155437997,
+      "year": "2009-01-01",
+      "lat": 51.4979784068
+    },
+    "pk": 234
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "hazel-grove",
+      "name": "Hazel Grove",
+      "lon": -2.07108038742,
+      "year": "2009-01-01",
+      "lat": 53.3992406136
+    },
+    "pk": 235
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "hemel-hempstead",
+      "name": "Hemel Hempstead",
+      "lon": -0.49573485087,
+      "year": "2009-01-01",
+      "lat": 51.775986513
+    },
+    "pk": 236
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "hemsworth",
+      "name": "Hemsworth",
+      "lon": -1.37564998883,
+      "year": "2009-01-01",
+      "lat": 53.6453558382
+    },
+    "pk": 237
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "hendon",
+      "name": "Hendon",
+      "lon": -0.252406843829,
+      "year": "2009-01-01",
+      "lat": 51.6065920231
+    },
+    "pk": 238
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "henley",
+      "name": "Henley",
+      "lon": -1.07821638426,
+      "year": "2009-01-01",
+      "lat": 51.6368113779
+    },
+    "pk": 239
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "hereford",
+      "name": "Hereford",
+      "lon": -2.78170549033,
+      "year": "2009-01-01",
+      "lat": 51.9745849928
+    },
+    "pk": 240
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "hertford-stortford",
+      "name": "Hertford & Stortford",
+      "lon": 0.0256153041717,
+      "year": "2009-01-01",
+      "lat": 51.8154456012
+    },
+    "pk": 241
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "hexham",
+      "name": "Hexham",
+      "lon": -2.15482736659,
+      "year": "2009-01-01",
+      "lat": 55.0753732445
+    },
+    "pk": 243
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "heywood-middleton",
+      "name": "Heywood & Middleton",
+      "lon": -2.2168748161,
+      "year": "2009-01-01",
+      "lat": 53.5998785284
+    },
+    "pk": 244
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "high-peak",
+      "name": "High Peak",
+      "lon": -1.81220528188,
+      "year": "2009-01-01",
+      "lat": 53.3675040239
+    },
+    "pk": 245
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "hitchin-harpenden",
+      "name": "Hitchin & Harpenden",
+      "lon": -0.32424897298,
+      "year": "2009-01-01",
+      "lat": 51.8653847148
+    },
+    "pk": 246
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "holborn-st-pancras",
+      "name": "Holborn & St Pancras",
+      "lon": -0.133214253144,
+      "year": "2009-01-01",
+      "lat": 51.5354481738
+    },
+    "pk": 247
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "hornchurch",
+      "name": "Hornchurch",
+      "lon": 0.204757183788,
+      "year": "2009-01-01",
+      "lat": 51.5290824363
+    },
+    "pk": 248
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "hornsey-wood-green",
+      "name": "Hornsey & Wood Green",
+      "lon": -0.131209604697,
+      "year": "2009-01-01",
+      "lat": 51.588543657
+    },
+    "pk": 249
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "horsham",
+      "name": "Horsham",
+      "lon": -0.344132830736,
+      "year": "2009-01-01",
+      "lat": 51.0434717785
+    },
+    "pk": 250
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "houghton-washington-east",
+      "name": "Houghton & Washington East",
+      "lon": -1.44219754961,
+      "year": "2009-01-01",
+      "lat": 54.8658877677
+    },
+    "pk": 251
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "hove",
+      "name": "Hove",
+      "lon": -0.196299879965,
+      "year": "2009-01-01",
+      "lat": 50.8499857079
+    },
+    "pk": 252
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "huddersfield",
+      "name": "Huddersfield",
+      "lon": -1.76297007715,
+      "year": "2009-01-01",
+      "lat": 53.6521474571
+    },
+    "pk": 253
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "huntingdon",
+      "name": "Huntingdon",
+      "lon": -0.252010099445,
+      "year": "2009-01-01",
+      "lat": 52.2878791445
+    },
+    "pk": 254
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "hyndburn",
+      "name": "Hyndburn",
+      "lon": -2.38423792151,
+      "year": "2009-01-01",
+      "lat": 53.7540431677
+    },
+    "pk": 255
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "ilford-north",
+      "name": "Ilford North",
+      "lon": 0.0866897873929,
+      "year": "2009-01-01",
+      "lat": 51.5990222916
+    },
+    "pk": 256
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "ilford-south",
+      "name": "Ilford South",
+      "lon": 0.0860991607253,
+      "year": "2009-01-01",
+      "lat": 51.5631735322
+    },
+    "pk": 257
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "ipswich",
+      "name": "Ipswich",
+      "lon": 1.1666050119,
+      "year": "2009-01-01",
+      "lat": 52.0546606213
+    },
+    "pk": 258
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "isle-of-wight",
+      "name": "Isle of Wight",
+      "lon": -1.32731628036,
+      "year": "2009-01-01",
+      "lat": 50.67124242
+    },
+    "pk": 259
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "islington-north",
+      "name": "Islington North",
+      "lon": -0.109309094156,
+      "year": "2009-01-01",
+      "lat": 51.5608040958
+    },
+    "pk": 260
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "islington-south-finsbury",
+      "name": "Islington South & Finsbury",
+      "lon": -0.106603391249,
+      "year": "2009-01-01",
+      "lat": 51.538081837
+    },
+    "pk": 261
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "islwyn",
+      "name": "Islwyn",
+      "lon": -3.14588300726,
+      "year": "2009-01-01",
+      "lat": 51.6708158961
+    },
+    "pk": 262
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "jarrow",
+      "name": "Jarrow",
+      "lon": -1.45390040543,
+      "year": "2009-01-01",
+      "lat": 54.9575090345
+    },
+    "pk": 263
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "keighley",
+      "name": "Keighley",
+      "lon": -1.91970759845,
+      "year": "2009-01-01",
+      "lat": 53.8737079459
+    },
+    "pk": 264
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "kensington-chelsea",
+      "name": "Kensington & Chelsea",
+      "lon": -0.183881693042,
+      "year": "2009-01-01",
+      "lat": 51.4960485858
+    },
+    "pk": 265
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "kettering",
+      "name": "Kettering",
+      "lon": -0.858431856945,
+      "year": "2009-01-01",
+      "lat": 52.4006427775
+    },
+    "pk": 266
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "kingston-surbiton",
+      "name": "Kingston & Surbiton",
+      "lon": -0.28457525009,
+      "year": "2009-01-01",
+      "lat": 51.3694791921
+    },
+    "pk": 267
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "kingston-upon-hull-east",
+      "name": "Kingston upon Hull East",
+      "lon": -0.288784198667,
+      "year": "2009-01-01",
+      "lat": 53.7602877619
+    },
+    "pk": 268
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "kingston-upon-hull-north",
+      "name": "Kingston upon Hull North",
+      "lon": -0.346477196202,
+      "year": "2009-01-01",
+      "lat": 53.7798577861
+    },
+    "pk": 269
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "kingston-upon-hull-west-hessle",
+      "name": "Kingston upon Hull West & Hessle",
+      "lon": -0.397921867122,
+      "year": "2009-01-01",
+      "lat": 53.7363430348
+    },
+    "pk": 270
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "kingswood",
+      "name": "Kingswood",
+      "lon": -2.49066748454,
+      "year": "2009-01-01",
+      "lat": 51.4702946422
+    },
+    "pk": 271
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "knowsley-north-sefton-east",
+      "name": "Knowsley North & Sefton East",
+      "lon": -2.93228080471,
+      "year": "2009-01-01",
+      "lat": 53.4860989423
+    },
+    "pk": 272
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "knowsley-south",
+      "name": "Knowsley South",
+      "lon": -2.81762885477,
+      "year": "2009-01-01",
+      "lat": 53.3901830279
+    },
+    "pk": 273
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "lancaster-wyre",
+      "name": "Lancaster & Wyre",
+      "lon": -2.79121713903,
+      "year": "2009-01-01",
+      "lat": 53.955637914
+    },
+    "pk": 275
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "leeds-central",
+      "name": "Leeds Central",
+      "lon": -1.52906596511,
+      "year": "2009-01-01",
+      "lat": 53.7855149885
+    },
+    "pk": 276
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "leeds-east",
+      "name": "Leeds East",
+      "lon": -1.46107070114,
+      "year": "2009-01-01",
+      "lat": 53.7992807968
+    },
+    "pk": 277
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "leeds-north-east",
+      "name": "Leeds North East",
+      "lon": -1.52440618279,
+      "year": "2009-01-01",
+      "lat": 53.8627822592
+    },
+    "pk": 278
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "leeds-north-west",
+      "name": "Leeds North West",
+      "lon": -1.64278020185,
+      "year": "2009-01-01",
+      "lat": 53.8628250905
+    },
+    "pk": 279
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "leeds-west",
+      "name": "Leeds West",
+      "lon": -1.61705721712,
+      "year": "2009-01-01",
+      "lat": 53.7995779518
+    },
+    "pk": 280
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "leicester-east",
+      "name": "Leicester East",
+      "lon": -1.09313652504,
+      "year": "2009-01-01",
+      "lat": 52.643270115
+    },
+    "pk": 281
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "leicester-south",
+      "name": "Leicester South",
+      "lon": -1.13112254748,
+      "year": "2009-01-01",
+      "lat": 52.6125948897
+    },
+    "pk": 282
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "leicester-west",
+      "name": "Leicester West",
+      "lon": -1.16869888603,
+      "year": "2009-01-01",
+      "lat": 52.6496936986
+    },
+    "pk": 283
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "leigh",
+      "name": "Leigh",
+      "lon": -2.55186225142,
+      "year": "2009-01-01",
+      "lat": 53.4977181183
+    },
+    "pk": 284
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "leominster",
+      "name": "Leominster",
+      "lon": -2.71956017149,
+      "year": "2009-01-01",
+      "lat": 52.1773266272
+    },
+    "pk": 285
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "lewes",
+      "name": "Lewes",
+      "lon": 0.0702856020002,
+      "year": "2009-01-01",
+      "lat": 50.8781620859
+    },
+    "pk": 286
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "lewisham-east",
+      "name": "Lewisham East",
+      "lon": 0.010560721397,
+      "year": "2009-01-01",
+      "lat": 51.4440760079
+    },
+    "pk": 287
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "lewisham-west",
+      "name": "Lewisham West",
+      "lon": -0.0321036806318,
+      "year": "2009-01-01",
+      "lat": 51.4333752292
+    },
+    "pk": 288
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "lewisham-deptford",
+      "name": "Lewisham, Deptford",
+      "lon": -0.032377276899,
+      "year": "2009-01-01",
+      "lat": 51.4677648385
+    },
+    "pk": 289
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "leyton-wanstead",
+      "name": "Leyton & Wanstead",
+      "lon": 0.011701138986,
+      "year": "2009-01-01",
+      "lat": 51.572086356
+    },
+    "pk": 290
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "lichfield",
+      "name": "Lichfield",
+      "lon": -1.84190061189,
+      "year": "2009-01-01",
+      "lat": 52.7645113175
+    },
+    "pk": 291
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "lincoln",
+      "name": "Lincoln",
+      "lon": -0.556449320261,
+      "year": "2009-01-01",
+      "lat": 53.2172911895
+    },
+    "pk": 292
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "liverpool-garston",
+      "name": "Liverpool, Garston",
+      "lon": -2.88154581995,
+      "year": "2009-01-01",
+      "lat": 53.3591918613
+    },
+    "pk": 293
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "liverpool-riverside",
+      "name": "Liverpool, Riverside",
+      "lon": -2.96541754641,
+      "year": "2009-01-01",
+      "lat": 53.3977269403
+    },
+    "pk": 294
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "liverpool-walton",
+      "name": "Liverpool, Walton",
+      "lon": -2.94810632804,
+      "year": "2009-01-01",
+      "lat": 53.4463481179
+    },
+    "pk": 295
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "liverpool-wavertree",
+      "name": "Liverpool, Wavertree",
+      "lon": -2.91199743942,
+      "year": "2009-01-01",
+      "lat": 53.403542613
+    },
+    "pk": 296
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "liverpool-west-derby",
+      "name": "Liverpool, West Derby",
+      "lon": -2.90860546299,
+      "year": "2009-01-01",
+      "lat": 53.4417095193
+    },
+    "pk": 297
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "llanelli",
+      "name": "Llanelli",
+      "lon": -4.21796153786,
+      "year": "2009-01-01",
+      "lat": 51.7223874188
+    },
+    "pk": 298
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "loughborough",
+      "name": "Loughborough",
+      "lon": -1.18592727454,
+      "year": "2009-01-01",
+      "lat": 52.7730402266
+    },
+    "pk": 299
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "louth-horncastle",
+      "name": "Louth & Horncastle",
+      "lon": 0.0272232674559,
+      "year": "2009-01-01",
+      "lat": 53.2811284634
+    },
+    "pk": 300
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "ludlow",
+      "name": "Ludlow",
+      "lon": -2.74643787142,
+      "year": "2009-01-01",
+      "lat": 52.4866376162
+    },
+    "pk": 301
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "luton-north",
+      "name": "Luton North",
+      "lon": -0.456693352528,
+      "year": "2009-01-01",
+      "lat": 51.9079611398
+    },
+    "pk": 302
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "luton-south",
+      "name": "Luton South",
+      "lon": -0.420638511005,
+      "year": "2009-01-01",
+      "lat": 51.8731031735
+    },
+    "pk": 303
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "macclesfield",
+      "name": "Macclesfield",
+      "lon": -2.14254443454,
+      "year": "2009-01-01",
+      "lat": 53.271150091
+    },
+    "pk": 304
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "maidenhead",
+      "name": "Maidenhead",
+      "lon": -0.810828962321,
+      "year": "2009-01-01",
+      "lat": 51.4960659538
+    },
+    "pk": 305
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "maidstone-the-weald",
+      "name": "Maidstone & The Weald",
+      "lon": 0.51215929601,
+      "year": "2009-01-01",
+      "lat": 51.1505419471
+    },
+    "pk": 306
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "makerfield",
+      "name": "Makerfield",
+      "lon": -2.6513426267,
+      "year": "2009-01-01",
+      "lat": 53.5190765178
+    },
+    "pk": 307
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "maldon-east-chelmsford",
+      "name": "Maldon & East Chelmsford",
+      "lon": 0.718602362773,
+      "year": "2009-01-01",
+      "lat": 51.7252482078
+    },
+    "pk": 308
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "manchester-central",
+      "name": "Manchester Central",
+      "lon": -2.21374928897,
+      "year": "2009-01-01",
+      "lat": 53.4731850017
+    },
+    "pk": 309
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "manchester-blackley",
+      "name": "Manchester, Blackley",
+      "lon": -2.21167884296,
+      "year": "2009-01-01",
+      "lat": 53.5158752072
+    },
+    "pk": 310
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "manchester-gorton",
+      "name": "Manchester, Gorton",
+      "lon": -2.20251059738,
+      "year": "2009-01-01",
+      "lat": 53.4523805404
+    },
+    "pk": 311
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "manchester-withington",
+      "name": "Manchester, Withington",
+      "lon": -2.24571845642,
+      "year": "2009-01-01",
+      "lat": 53.4255971941
+    },
+    "pk": 312
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "mansfield",
+      "name": "Mansfield",
+      "lon": -1.18573254933,
+      "year": "2009-01-01",
+      "lat": 53.1494946236
+    },
+    "pk": 313
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "medway",
+      "name": "Medway",
+      "lon": 0.569315302963,
+      "year": "2009-01-01",
+      "lat": 51.4220787013
+    },
+    "pk": 314
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "meirionnydd-nant-conwy",
+      "name": "Meirionnydd Nant Conwy",
+      "lon": -3.797545277,
+      "year": "2009-01-01",
+      "lat": 52.8902682918
+    },
+    "pk": 315
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "meriden",
+      "name": "Meriden",
+      "lon": -1.73238318432,
+      "year": "2009-01-01",
+      "lat": 52.4310081779
+    },
+    "pk": 316
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "merthyr-tydfil-rhymney",
+      "name": "Merthyr Tydfil & Rhymney",
+      "lon": -3.33417153569,
+      "year": "2009-01-01",
+      "lat": 51.7402796807
+    },
+    "pk": 317
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "mid-bedfordshire",
+      "name": "Mid Bedfordshire",
+      "lon": -0.467169286198,
+      "year": "2009-01-01",
+      "lat": 52.0425358824
+    },
+    "pk": 318
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "mid-dorset-north-poole",
+      "name": "Mid Dorset & North Poole",
+      "lon": -2.08768356706,
+      "year": "2009-01-01",
+      "lat": 50.7392370356
+    },
+    "pk": 319
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "mid-norfolk",
+      "name": "Mid Norfolk",
+      "lon": 1.17534747515,
+      "year": "2009-01-01",
+      "lat": 52.6981897654
+    },
+    "pk": 320
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "mid-sussex",
+      "name": "Mid Sussex",
+      "lon": -0.0781984371455,
+      "year": "2009-01-01",
+      "lat": 51.041322266
+    },
+    "pk": 321
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "mid-worcestershire",
+      "name": "Mid Worcestershire",
+      "lon": -2.01618104203,
+      "year": "2009-01-01",
+      "lat": 52.1841585711
+    },
+    "pk": 323
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "middlesbrough",
+      "name": "Middlesbrough",
+      "lon": -1.22575823183,
+      "year": "2009-01-01",
+      "lat": 54.5588377575
+    },
+    "pk": 324
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "middlesbrough-south-east-cleveland",
+      "name": "Middlesbrough South & East Cleveland",
+      "lon": -1.03659912444,
+      "year": "2009-01-01",
+      "lat": 54.5403857119
+    },
+    "pk": 325
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "milton-keynes-south-west",
+      "name": "Milton Keynes South West",
+      "lon": -0.788279908973,
+      "year": "2009-01-01",
+      "lat": 52.0222688026
+    },
+    "pk": 326
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "mitcham-morden",
+      "name": "Mitcham & Morden",
+      "lon": -0.179867397082,
+      "year": "2009-01-01",
+      "lat": 51.4043068471
+    },
+    "pk": 327
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "mole-valley",
+      "name": "Mole Valley",
+      "lon": -0.363004971003,
+      "year": "2009-01-01",
+      "lat": 51.2171330054
+    },
+    "pk": 328
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "monmouth",
+      "name": "Monmouth",
+      "lon": -2.90266762085,
+      "year": "2009-01-01",
+      "lat": 51.7735896257
+    },
+    "pk": 329
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "montgomeryshire",
+      "name": "Montgomeryshire",
+      "lon": -3.44515970084,
+      "year": "2009-01-01",
+      "lat": 52.6175975315
+    },
+    "pk": 330
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "morecambe-lunesdale",
+      "name": "Morecambe & Lunesdale",
+      "lon": -2.721895302,
+      "year": "2009-01-01",
+      "lat": 54.1063771042
+    },
+    "pk": 331
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "morley-rothwell",
+      "name": "Morley & Rothwell",
+      "lon": -1.54779807875,
+      "year": "2009-01-01",
+      "lat": 53.7345715091
+    },
+    "pk": 332
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "neath",
+      "name": "Neath",
+      "lon": -3.75644010532,
+      "year": "2009-01-01",
+      "lat": 51.7200039965
+    },
+    "pk": 333
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "new-forest-east",
+      "name": "New Forest East",
+      "lon": -1.49871006997,
+      "year": "2009-01-01",
+      "lat": 50.8559895958
+    },
+    "pk": 334
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "new-forest-west",
+      "name": "New Forest West",
+      "lon": -1.7350566382,
+      "year": "2009-01-01",
+      "lat": 50.8577769741
+    },
+    "pk": 335
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "newark",
+      "name": "Newark",
+      "lon": -0.854695011713,
+      "year": "2009-01-01",
+      "lat": 53.1540082717
+    },
+    "pk": 336
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "newbury",
+      "name": "Newbury",
+      "lon": -1.33148541539,
+      "year": "2009-01-01",
+      "lat": 51.445933376
+    },
+    "pk": 337
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "newcastle-upon-tyne-central",
+      "name": "Newcastle upon Tyne Central",
+      "lon": -1.63707251046,
+      "year": "2009-01-01",
+      "lat": 54.9912262875
+    },
+    "pk": 338
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "newcastle-upon-tyne-east-wallsend",
+      "name": "Newcastle upon Tyne East & Wallsend",
+      "lon": -1.55330766497,
+      "year": "2009-01-01",
+      "lat": 54.987279106
+    },
+    "pk": 339
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "newcastle-upon-tyne-north",
+      "name": "Newcastle upon Tyne North",
+      "lon": -1.6814176038,
+      "year": "2009-01-01",
+      "lat": 55.0231583844
+    },
+    "pk": 340
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "newcastle-under-lyme",
+      "name": "Newcastle-under-Lyme",
+      "lon": -2.29434701413,
+      "year": "2009-01-01",
+      "lat": 53.0293465883
+    },
+    "pk": 341
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "newport-east",
+      "name": "Newport East",
+      "lon": -2.85894444923,
+      "year": "2009-01-01",
+      "lat": 51.5799035037
+    },
+    "pk": 342
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "newport-west",
+      "name": "Newport West",
+      "lon": -3.01317012723,
+      "year": "2009-01-01",
+      "lat": 51.5622777055
+    },
+    "pk": 343
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "normanton",
+      "name": "Normanton",
+      "lon": -1.50278204247,
+      "year": "2009-01-01",
+      "lat": 53.688774655
+    },
+    "pk": 345
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "north-cornwall",
+      "name": "North Cornwall",
+      "lon": -4.72706369409,
+      "year": "2009-01-01",
+      "lat": 50.6337217502
+    },
+    "pk": 347
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "north-devon",
+      "name": "North Devon",
+      "lon": -3.92490305652,
+      "year": "2009-01-01",
+      "lat": 51.0217489143
+    },
+    "pk": 348
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "north-dorset",
+      "name": "North Dorset",
+      "lon": -2.14567895057,
+      "year": "2009-01-01",
+      "lat": 50.9188752851
+    },
+    "pk": 349
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "north-durham",
+      "name": "North Durham",
+      "lon": -1.63864664488,
+      "year": "2009-01-01",
+      "lat": 54.8604362831
+    },
+    "pk": 351
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "north-east-bedfordshire",
+      "name": "North East Bedfordshire",
+      "lon": -0.40634171699,
+      "year": "2009-01-01",
+      "lat": 52.1518433906
+    },
+    "pk": 352
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "north-east-cambridgeshire",
+      "name": "North East Cambridgeshire",
+      "lon": 0.0814244920314,
+      "year": "2009-01-01",
+      "lat": 52.5476610169
+    },
+    "pk": 353
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "north-east-derbyshire",
+      "name": "North East Derbyshire",
+      "lon": -1.44164418593,
+      "year": "2009-01-01",
+      "lat": 53.2308652195
+    },
+    "pk": 354
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "north-east-hampshire",
+      "name": "North East Hampshire",
+      "lon": -0.872961301575,
+      "year": "2009-01-01",
+      "lat": 51.2116176629
+    },
+    "pk": 355
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "north-east-hertfordshire",
+      "name": "North East Hertfordshire",
+      "lon": -0.0668118168984,
+      "year": "2009-01-01",
+      "lat": 51.924066068
+    },
+    "pk": 356
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "north-east-milton-keynes",
+      "name": "North East Milton Keynes",
+      "lon": -0.740414487127,
+      "year": "2009-01-01",
+      "lat": 52.0835589145
+    },
+    "pk": 357
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "north-essex",
+      "name": "North Essex",
+      "lon": 0.938631654272,
+      "year": "2009-01-01",
+      "lat": 51.8712880879
+    },
+    "pk": 358
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "north-norfolk",
+      "name": "North Norfolk",
+      "lon": 1.1972184644,
+      "year": "2009-01-01",
+      "lat": 52.8366085793
+    },
+    "pk": 359
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "north-shropshire",
+      "name": "North Shropshire",
+      "lon": -2.76885293993,
+      "year": "2009-01-01",
+      "lat": 52.8656963132
+    },
+    "pk": 360
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "north-southwark-bermondsey",
+      "name": "North Southwark & Bermondsey",
+      "lon": -0.070647778207,
+      "year": "2009-01-01",
+      "lat": 51.4939489491
+    },
+    "pk": 361
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "north-swindon",
+      "name": "North Swindon",
+      "lon": -1.78236566714,
+      "year": "2009-01-01",
+      "lat": 51.6290732008
+    },
+    "pk": 362
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "north-thanet",
+      "name": "North Thanet",
+      "lon": 1.25499396671,
+      "year": "2009-01-01",
+      "lat": 51.3622194048
+    },
+    "pk": 363
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "north-tyneside",
+      "name": "North Tyneside",
+      "lon": -1.54070447283,
+      "year": "2009-01-01",
+      "lat": 55.026611737
+    },
+    "pk": 364
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "north-warwickshire",
+      "name": "North Warwickshire",
+      "lon": -1.62054911763,
+      "year": "2009-01-01",
+      "lat": 52.5613323527
+    },
+    "pk": 365
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "north-west-cambridgeshire",
+      "name": "North West Cambridgeshire",
+      "lon": -0.221178809831,
+      "year": "2009-01-01",
+      "lat": 52.5026948262
+    },
+    "pk": 366
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "north-west-durham",
+      "name": "North West Durham",
+      "lon": -1.9823713925,
+      "year": "2009-01-01",
+      "lat": 54.7942512463
+    },
+    "pk": 367
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "north-west-hampshire",
+      "name": "North West Hampshire",
+      "lon": -1.38206666475,
+      "year": "2009-01-01",
+      "lat": 51.2592679542
+    },
+    "pk": 368
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "north-west-leicestershire",
+      "name": "North West Leicestershire",
+      "lon": -1.42172813341,
+      "year": "2009-01-01",
+      "lat": 52.7707532815
+    },
+    "pk": 369
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "north-west-norfolk",
+      "name": "North West Norfolk",
+      "lon": 0.487812181491,
+      "year": "2009-01-01",
+      "lat": 52.8064581018
+    },
+    "pk": 370
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "north-wiltshire",
+      "name": "North Wiltshire",
+      "lon": -2.07369893947,
+      "year": "2009-01-01",
+      "lat": 51.5348415765
+    },
+    "pk": 371
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "northampton-north",
+      "name": "Northampton North",
+      "lon": -0.878902561754,
+      "year": "2009-01-01",
+      "lat": 52.2611563116
+    },
+    "pk": 372
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "northampton-south",
+      "name": "Northampton South",
+      "lon": -0.860069679795,
+      "year": "2009-01-01",
+      "lat": 52.1945327475
+    },
+    "pk": 373
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "northavon",
+      "name": "Northavon",
+      "lon": -2.48133439731,
+      "year": "2009-01-01",
+      "lat": 51.5522649602
+    },
+    "pk": 374
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "norwich-north",
+      "name": "Norwich North",
+      "lon": 1.26762425268,
+      "year": "2009-01-01",
+      "lat": 52.6632646904
+    },
+    "pk": 375
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "norwich-south",
+      "name": "Norwich South",
+      "lon": 1.37070607845,
+      "year": "2009-01-01",
+      "lat": 52.604760725
+    },
+    "pk": 376
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "nottingham-east",
+      "name": "Nottingham East",
+      "lon": -1.13437057163,
+      "year": "2009-01-01",
+      "lat": 52.9683668018
+    },
+    "pk": 377
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "nottingham-north",
+      "name": "Nottingham North",
+      "lon": -1.19539895716,
+      "year": "2009-01-01",
+      "lat": 52.98434085
+    },
+    "pk": 378
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "nottingham-south",
+      "name": "Nottingham South",
+      "lon": -1.19088589664,
+      "year": "2009-01-01",
+      "lat": 52.935308624
+    },
+    "pk": 379
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "nuneaton",
+      "name": "Nuneaton",
+      "lon": -1.39663686976,
+      "year": "2009-01-01",
+      "lat": 52.4598220806
+    },
+    "pk": 380
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "ogmore",
+      "name": "Ogmore",
+      "lon": -3.54288342079,
+      "year": "2009-01-01",
+      "lat": 51.5754002188
+    },
+    "pk": 381
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "old-bexley-sidcup",
+      "name": "Old Bexley & Sidcup",
+      "lon": 0.123025201502,
+      "year": "2009-01-01",
+      "lat": 51.4424058482
+    },
+    "pk": 382
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "oldham-east-saddleworth",
+      "name": "Oldham East & Saddleworth",
+      "lon": -2.01876243552,
+      "year": "2009-01-01",
+      "lat": 53.5674366646
+    },
+    "pk": 383
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "oldham-west-royton",
+      "name": "Oldham West & Royton",
+      "lon": -2.13852939842,
+      "year": "2009-01-01",
+      "lat": 53.5460499343
+    },
+    "pk": 384
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "orkney-shetland",
+      "name": "Orkney & Shetland",
+      "lon": -2.65607477046,
+      "year": "2009-01-01",
+      "lat": 59.7693140287
+    },
+    "pk": 385
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "orpington",
+      "name": "Orpington",
+      "lon": 0.0788926194099,
+      "year": "2009-01-01",
+      "lat": 51.3524241028
+    },
+    "pk": 386
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "oxford-east",
+      "name": "Oxford East",
+      "lon": -1.22129179731,
+      "year": "2009-01-01",
+      "lat": 51.7484811987
+    },
+    "pk": 387
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "oxford-west-abingdon",
+      "name": "Oxford West & Abingdon",
+      "lon": -1.29660574553,
+      "year": "2009-01-01",
+      "lat": 51.7475748163
+    },
+    "pk": 388
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "pendle",
+      "name": "Pendle",
+      "lon": -2.18953239469,
+      "year": "2009-01-01",
+      "lat": 53.8789188683
+    },
+    "pk": 389
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "penrith-the-border",
+      "name": "Penrith & The Border",
+      "lon": -2.74692982366,
+      "year": "2009-01-01",
+      "lat": 54.770829334
+    },
+    "pk": 390
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "peterborough",
+      "name": "Peterborough",
+      "lon": -0.240548159399,
+      "year": "2009-01-01",
+      "lat": 52.5962282603
+    },
+    "pk": 391
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "plymouth-devonport",
+      "name": "Plymouth, Devonport",
+      "lon": -4.14136441222,
+      "year": "2009-01-01",
+      "lat": 50.4078991091
+    },
+    "pk": 392
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "plymouth-sutton",
+      "name": "Plymouth, Sutton",
+      "lon": -4.13395260388,
+      "year": "2009-01-01",
+      "lat": 50.3681040506
+    },
+    "pk": 393
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "pontefract-castleford",
+      "name": "Pontefract & Castleford",
+      "lon": -1.30758160832,
+      "year": "2009-01-01",
+      "lat": 53.6937340093
+    },
+    "pk": 394
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "pontypridd",
+      "name": "Pontypridd",
+      "lon": -3.34819611957,
+      "year": "2009-01-01",
+      "lat": 51.5679450805
+    },
+    "pk": 395
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "poole",
+      "name": "Poole",
+      "lon": -1.96693715841,
+      "year": "2009-01-01",
+      "lat": 50.7164741403
+    },
+    "pk": 396
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "poplar-canning-town",
+      "name": "Poplar & Canning Town",
+      "lon": 0.00362992561209,
+      "year": "2009-01-01",
+      "lat": 51.5071784188
+    },
+    "pk": 397
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "portsmouth-north",
+      "name": "Portsmouth North",
+      "lon": -1.0967792097,
+      "year": "2009-01-01",
+      "lat": 50.8334216128
+    },
+    "pk": 398
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "portsmouth-south",
+      "name": "Portsmouth South",
+      "lon": -1.07708930529,
+      "year": "2009-01-01",
+      "lat": 50.7812426098
+    },
+    "pk": 399
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "preseli-pembrokeshire",
+      "name": "Preseli Pembrokeshire",
+      "lon": -5.08278404951,
+      "year": "2009-01-01",
+      "lat": 51.895762143
+    },
+    "pk": 400
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "preston",
+      "name": "Preston",
+      "lon": -2.69294883241,
+      "year": "2009-01-01",
+      "lat": 53.7535650297
+    },
+    "pk": 401
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "pudsey",
+      "name": "Pudsey",
+      "lon": -1.70837723237,
+      "year": "2009-01-01",
+      "lat": 53.8380122679
+    },
+    "pk": 402
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "putney",
+      "name": "Putney",
+      "lon": -0.224406745265,
+      "year": "2009-01-01",
+      "lat": 51.4524473416
+    },
+    "pk": 403
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "rayleigh",
+      "name": "Rayleigh",
+      "lon": 0.659312719438,
+      "year": "2009-01-01",
+      "lat": 51.6309813055
+    },
+    "pk": 404
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "reading-east",
+      "name": "Reading East",
+      "lon": -0.942914901798,
+      "year": "2009-01-01",
+      "lat": 51.4560593433
+    },
+    "pk": 405
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "reading-west",
+      "name": "Reading West",
+      "lon": -1.04206196487,
+      "year": "2009-01-01",
+      "lat": 51.4511415012
+    },
+    "pk": 406
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "redcar",
+      "name": "Redcar",
+      "lon": -1.09297141644,
+      "year": "2009-01-01",
+      "lat": 54.5860655363
+    },
+    "pk": 407
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "redditch",
+      "name": "Redditch",
+      "lon": -1.95314220172,
+      "year": "2009-01-01",
+      "lat": 52.2596420787
+    },
+    "pk": 408
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "regent-s-park-kensington-north",
+      "name": "Regent's Park & Kensington North",
+      "lon": -0.188105364749,
+      "year": "2009-01-01",
+      "lat": 51.5237895574
+    },
+    "pk": 409
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "reigate",
+      "name": "Reigate",
+      "lon": -0.199522909105,
+      "year": "2009-01-01",
+      "lat": 51.2578924223
+    },
+    "pk": 410
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "rhondda",
+      "name": "Rhondda",
+      "lon": -3.48336968616,
+      "year": "2009-01-01",
+      "lat": 51.6549316053
+    },
+    "pk": 411
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "ribble-valley",
+      "name": "Ribble Valley",
+      "lon": -2.46854453526,
+      "year": "2009-01-01",
+      "lat": 53.8876159578
+    },
+    "pk": 412
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "richmond-yorks",
+      "name": "Richmond (Yorks)",
+      "lon": -1.67119962069,
+      "year": "2009-01-01",
+      "lat": 54.3571517656
+    },
+    "pk": 413
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "richmond-park",
+      "name": "Richmond Park",
+      "lon": -0.27671169558,
+      "year": "2009-01-01",
+      "lat": 51.4462982735
+    },
+    "pk": 414
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "rochdale",
+      "name": "Rochdale",
+      "lon": -2.1213518111,
+      "year": "2009-01-01",
+      "lat": 53.6340252079
+    },
+    "pk": 415
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "rochford-southend-east",
+      "name": "Rochford & Southend East",
+      "lon": 0.859284757882,
+      "year": "2009-01-01",
+      "lat": 51.5831679261
+    },
+    "pk": 416
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "romford",
+      "name": "Romford",
+      "lon": 0.194529968855,
+      "year": "2009-01-01",
+      "lat": 51.5933564865
+    },
+    "pk": 417
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "romsey",
+      "name": "Romsey",
+      "lon": -1.48702658999,
+      "year": "2009-01-01",
+      "lat": 51.0761443332
+    },
+    "pk": 418
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "rossendale-darwen",
+      "name": "Rossendale & Darwen",
+      "lon": -2.33885696233,
+      "year": "2009-01-01",
+      "lat": 53.6845707309
+    },
+    "pk": 419
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "rother-valley",
+      "name": "Rother Valley",
+      "lon": -1.25369755515,
+      "year": "2009-01-01",
+      "lat": 53.369547001
+    },
+    "pk": 420
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "rotherham",
+      "name": "Rotherham",
+      "lon": -1.37729974269,
+      "year": "2009-01-01",
+      "lat": 53.4353863115
+    },
+    "pk": 421
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "rugby-kenilworth",
+      "name": "Rugby & Kenilworth",
+      "lon": -1.40951590001,
+      "year": "2009-01-01",
+      "lat": 52.3453496642
+    },
+    "pk": 422
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "ruislip-northwood",
+      "name": "Ruislip - Northwood",
+      "lon": -0.439168593445,
+      "year": "2009-01-01",
+      "lat": 51.5856874778
+    },
+    "pk": 423
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "runnymede-weybridge",
+      "name": "Runnymede & Weybridge",
+      "lon": -0.520940432976,
+      "year": "2009-01-01",
+      "lat": 51.3890727628
+    },
+    "pk": 424
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "rushcliffe",
+      "name": "Rushcliffe",
+      "lon": -1.04579988768,
+      "year": "2009-01-01",
+      "lat": 52.9126704476
+    },
+    "pk": 425
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "rutland-melton",
+      "name": "Rutland & Melton",
+      "lon": -0.747523405995,
+      "year": "2009-01-01",
+      "lat": 52.7440393064
+    },
+    "pk": 426
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "ryedale",
+      "name": "Ryedale",
+      "lon": -0.740126215701,
+      "year": "2009-01-01",
+      "lat": 54.1818668642
+    },
+    "pk": 427
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "saffron-walden",
+      "name": "Saffron Walden",
+      "lon": 0.422293335018,
+      "year": "2009-01-01",
+      "lat": 51.9291662161
+    },
+    "pk": 428
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "salford",
+      "name": "Salford",
+      "lon": -2.2880362012,
+      "year": "2009-01-01",
+      "lat": 53.4915846708
+    },
+    "pk": 429
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "salisbury",
+      "name": "Salisbury",
+      "lon": -1.89286117864,
+      "year": "2009-01-01",
+      "lat": 51.0984721401
+    },
+    "pk": 430
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "scarborough-whitby",
+      "name": "Scarborough & Whitby",
+      "lon": -0.68092997148,
+      "year": "2009-01-01",
+      "lat": 54.3775668292
+    },
+    "pk": 431
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "scunthorpe",
+      "name": "Scunthorpe",
+      "lon": -0.571668671066,
+      "year": "2009-01-01",
+      "lat": 53.5380691716
+    },
+    "pk": 432
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "sedgefield",
+      "name": "Sedgefield",
+      "lon": -1.4924870832,
+      "year": "2009-01-01",
+      "lat": 54.6039257383
+    },
+    "pk": 433
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "selby",
+      "name": "Selby",
+      "lon": -1.12742447692,
+      "year": "2009-01-01",
+      "lat": 53.8067566735
+    },
+    "pk": 434
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "sevenoaks",
+      "name": "Sevenoaks",
+      "lon": 0.193562400949,
+      "year": "2009-01-01",
+      "lat": 51.3177017737
+    },
+    "pk": 435
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "sheffield-central",
+      "name": "Sheffield Central",
+      "lon": -1.45841603636,
+      "year": "2009-01-01",
+      "lat": 53.3796903875
+    },
+    "pk": 436
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "sheffield-attercliffe",
+      "name": "Sheffield, Attercliffe",
+      "lon": -1.38290069,
+      "year": "2009-01-01",
+      "lat": 53.3702409709
+    },
+    "pk": 437
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "sheffield-brightside",
+      "name": "Sheffield, Brightside",
+      "lon": -1.46522383006,
+      "year": "2009-01-01",
+      "lat": 53.4196995238
+    },
+    "pk": 438
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "sheffield-hallam",
+      "name": "Sheffield, Hallam",
+      "lon": -1.57266472907,
+      "year": "2009-01-01",
+      "lat": 53.3480021232
+    },
+    "pk": 439
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "sheffield-heeley",
+      "name": "Sheffield, Heeley",
+      "lon": -1.45558769139,
+      "year": "2009-01-01",
+      "lat": 53.3456569816
+    },
+    "pk": 440
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "sheffield-hillsborough",
+      "name": "Sheffield, Hillsborough",
+      "lon": -1.61753238495,
+      "year": "2009-01-01",
+      "lat": 53.4348104634
+    },
+    "pk": 441
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "sherwood",
+      "name": "Sherwood",
+      "lon": -1.09039561168,
+      "year": "2009-01-01",
+      "lat": 53.1238074546
+    },
+    "pk": 442
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "shipley",
+      "name": "Shipley",
+      "lon": -1.82735812672,
+      "year": "2009-01-01",
+      "lat": 53.8528030334
+    },
+    "pk": 443
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "shrewsbury-atcham",
+      "name": "Shrewsbury & Atcham",
+      "lon": -2.77376018939,
+      "year": "2009-01-01",
+      "lat": 52.6631439411
+    },
+    "pk": 444
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "sittingbourne-sheppey",
+      "name": "Sittingbourne & Sheppey",
+      "lon": 0.783293986283,
+      "year": "2009-01-01",
+      "lat": 51.3626490512
+    },
+    "pk": 445
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "skipton-ripon",
+      "name": "Skipton & Ripon",
+      "lon": -1.9959805239,
+      "year": "2009-01-01",
+      "lat": 54.0560748653
+    },
+    "pk": 446
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "sleaford-north-hykeham",
+      "name": "Sleaford & North Hykeham",
+      "lon": -0.494693436677,
+      "year": "2009-01-01",
+      "lat": 53.0721413371
+    },
+    "pk": 447
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "slough",
+      "name": "Slough",
+      "lon": -0.593189524079,
+      "year": "2009-01-01",
+      "lat": 51.5150978634
+    },
+    "pk": 448
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "solihull",
+      "name": "Solihull",
+      "lon": -1.80140704694,
+      "year": "2009-01-01",
+      "lat": 52.4190110959
+    },
+    "pk": 449
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "somerton-frome",
+      "name": "Somerton & Frome",
+      "lon": -2.61602069842,
+      "year": "2009-01-01",
+      "lat": 51.1328191985
+    },
+    "pk": 450
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "south-cambridgeshire",
+      "name": "South Cambridgeshire",
+      "lon": -0.0100042631425,
+      "year": "2009-01-01",
+      "lat": 52.1644769314
+    },
+    "pk": 452
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "south-derbyshire",
+      "name": "South Derbyshire",
+      "lon": -1.53497174661,
+      "year": "2009-01-01",
+      "lat": 52.8220189889
+    },
+    "pk": 453
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "south-dorset",
+      "name": "South Dorset",
+      "lon": -2.21342202927,
+      "year": "2009-01-01",
+      "lat": 50.6374322444
+    },
+    "pk": 454
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "south-east-cambridgeshire",
+      "name": "South East Cambridgeshire",
+      "lon": 0.253418694894,
+      "year": "2009-01-01",
+      "lat": 52.240734091
+    },
+    "pk": 456
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "south-east-cornwall",
+      "name": "South East Cornwall",
+      "lon": -4.48790790079,
+      "year": "2009-01-01",
+      "lat": 50.4534541789
+    },
+    "pk": 457
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "south-holland-the-deepings",
+      "name": "South Holland & The Deepings",
+      "lon": -0.04352668788,
+      "year": "2009-01-01",
+      "lat": 52.81239314
+    },
+    "pk": 458
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "south-norfolk",
+      "name": "South Norfolk",
+      "lon": 1.31355741554,
+      "year": "2009-01-01",
+      "lat": 52.5138483786
+    },
+    "pk": 459
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "south-ribble",
+      "name": "South Ribble",
+      "lon": -2.87012755709,
+      "year": "2009-01-01",
+      "lat": 53.6890458241
+    },
+    "pk": 460
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "south-shields",
+      "name": "South Shields",
+      "lon": -1.42240796011,
+      "year": "2009-01-01",
+      "lat": 54.982210435
+    },
+    "pk": 461
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "south-staffordshire",
+      "name": "South Staffordshire",
+      "lon": -2.1544917622,
+      "year": "2009-01-01",
+      "lat": 52.5649852678
+    },
+    "pk": 462
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "south-suffolk",
+      "name": "South Suffolk",
+      "lon": 0.917654004635,
+      "year": "2009-01-01",
+      "lat": 52.0624724047
+    },
+    "pk": 463
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "south-swindon",
+      "name": "South Swindon",
+      "lon": -1.73389171969,
+      "year": "2009-01-01",
+      "lat": 51.5442137752
+    },
+    "pk": 464
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "south-thanet",
+      "name": "South Thanet",
+      "lon": 1.32139835505,
+      "year": "2009-01-01",
+      "lat": 51.3078157637
+    },
+    "pk": 465
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "south-west-bedfordshire",
+      "name": "South West Bedfordshire",
+      "lon": -0.586324320421,
+      "year": "2009-01-01",
+      "lat": 51.8867133208
+    },
+    "pk": 466
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "south-west-devon",
+      "name": "South West Devon",
+      "lon": -4.001400889,
+      "year": "2009-01-01",
+      "lat": 50.3987223877
+    },
+    "pk": 467
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "south-west-hertfordshire",
+      "name": "South West Hertfordshire",
+      "lon": -0.561755044557,
+      "year": "2009-01-01",
+      "lat": 51.7284173934
+    },
+    "pk": 468
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "south-west-norfolk",
+      "name": "South West Norfolk",
+      "lon": 0.633544464071,
+      "year": "2009-01-01",
+      "lat": 52.5491233329
+    },
+    "pk": 469
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "south-west-surrey",
+      "name": "South West Surrey",
+      "lon": -0.670663119814,
+      "year": "2009-01-01",
+      "lat": 51.1574108027
+    },
+    "pk": 470
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "southampton-itchen",
+      "name": "Southampton, Itchen",
+      "lon": -1.38272488927,
+      "year": "2009-01-01",
+      "lat": 50.9092768089
+    },
+    "pk": 471
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "southampton-test",
+      "name": "Southampton, Test",
+      "lon": -1.42798721956,
+      "year": "2009-01-01",
+      "lat": 50.9262403896
+    },
+    "pk": 472
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "southend-west",
+      "name": "Southend West",
+      "lon": 0.665538230323,
+      "year": "2009-01-01",
+      "lat": 51.5505178715
+    },
+    "pk": 473
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "southport",
+      "name": "Southport",
+      "lon": -3.01911103169,
+      "year": "2009-01-01",
+      "lat": 53.644538415
+    },
+    "pk": 474
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "spelthorne",
+      "name": "Spelthorne",
+      "lon": -0.462248262142,
+      "year": "2009-01-01",
+      "lat": 51.4245968291
+    },
+    "pk": 475
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "st-albans",
+      "name": "St Albans",
+      "lon": -0.345912276981,
+      "year": "2009-01-01",
+      "lat": 51.7337138641
+    },
+    "pk": 476
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "st-helens-north",
+      "name": "St Helens North",
+      "lon": -2.70106223915,
+      "year": "2009-01-01",
+      "lat": 53.4829275447
+    },
+    "pk": 477
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "st-helens-south",
+      "name": "St Helens South",
+      "lon": -2.73493546404,
+      "year": "2009-01-01",
+      "lat": 53.4283590367
+    },
+    "pk": 478
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "st-ives",
+      "name": "St Ives",
+      "lon": -5.74575836403,
+      "year": "2009-01-01",
+      "lat": 50.0602630929
+    },
+    "pk": 479
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "stafford",
+      "name": "Stafford",
+      "lon": -2.13462500803,
+      "year": "2009-01-01",
+      "lat": 52.7637368608
+    },
+    "pk": 480
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "staffordshire-moorlands",
+      "name": "Staffordshire Moorlands",
+      "lon": -2.02906215481,
+      "year": "2009-01-01",
+      "lat": 53.0987114797
+    },
+    "pk": 481
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "stalybridge-hyde",
+      "name": "Stalybridge & Hyde",
+      "lon": -2.0314314168,
+      "year": "2009-01-01",
+      "lat": 53.4786450436
+    },
+    "pk": 482
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "stevenage",
+      "name": "Stevenage",
+      "lon": -0.170232217579,
+      "year": "2009-01-01",
+      "lat": 51.8827077764
+    },
+    "pk": 483
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "stockport",
+      "name": "Stockport",
+      "lon": -2.16902277092,
+      "year": "2009-01-01",
+      "lat": 53.4086972243
+    },
+    "pk": 484
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "stockton-north",
+      "name": "Stockton North",
+      "lon": -1.30324471558,
+      "year": "2009-01-01",
+      "lat": 54.6045608111
+    },
+    "pk": 485
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "stockton-south",
+      "name": "Stockton South",
+      "lon": -1.34185309483,
+      "year": "2009-01-01",
+      "lat": 54.5264492479
+    },
+    "pk": 486
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "stoke-on-trent-central",
+      "name": "Stoke-on-Trent Central",
+      "lon": -2.16031218451,
+      "year": "2009-01-01",
+      "lat": 53.0252424052
+    },
+    "pk": 487
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "stoke-on-trent-north",
+      "name": "Stoke-on-Trent North",
+      "lon": -2.15738532889,
+      "year": "2009-01-01",
+      "lat": 53.0636181221
+    },
+    "pk": 488
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "stoke-on-trent-south",
+      "name": "Stoke-on-Trent South",
+      "lon": -2.14587070772,
+      "year": "2009-01-01",
+      "lat": 52.9769851265
+    },
+    "pk": 489
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "stone",
+      "name": "Stone",
+      "lon": -2.16541980929,
+      "year": "2009-01-01",
+      "lat": 52.8873107602
+    },
+    "pk": 490
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "stourbridge",
+      "name": "Stourbridge",
+      "lon": -2.12340967708,
+      "year": "2009-01-01",
+      "lat": 52.4534663482
+    },
+    "pk": 491
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "stratford-on-avon",
+      "name": "Stratford-on-Avon",
+      "lon": -1.59786667362,
+      "year": "2009-01-01",
+      "lat": 52.1372587755
+    },
+    "pk": 493
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "streatham",
+      "name": "Streatham",
+      "lon": -0.125490932819,
+      "year": "2009-01-01",
+      "lat": 51.4364882088
+    },
+    "pk": 494
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "stretford-urmston",
+      "name": "Stretford & Urmston",
+      "lon": -2.35374956251,
+      "year": "2009-01-01",
+      "lat": 53.4450638328
+    },
+    "pk": 495
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "stroud",
+      "name": "Stroud",
+      "lon": -2.3051299492,
+      "year": "2009-01-01",
+      "lat": 51.7434252392
+    },
+    "pk": 496
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "suffolk-coastal",
+      "name": "Suffolk Coastal",
+      "lon": 1.44543922637,
+      "year": "2009-01-01",
+      "lat": 52.1760219965
+    },
+    "pk": 497
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "sunderland-north",
+      "name": "Sunderland North",
+      "lon": -1.40838585333,
+      "year": "2009-01-01",
+      "lat": 54.9177407202
+    },
+    "pk": 498
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "sunderland-south",
+      "name": "Sunderland South",
+      "lon": -1.40519670593,
+      "year": "2009-01-01",
+      "lat": 54.8862248934
+    },
+    "pk": 499
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "surrey-heath",
+      "name": "Surrey Heath",
+      "lon": -0.663004869473,
+      "year": "2009-01-01",
+      "lat": 51.3066738809
+    },
+    "pk": 500
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "sutton-cheam",
+      "name": "Sutton & Cheam",
+      "lon": -0.211931801557,
+      "year": "2009-01-01",
+      "lat": 51.3599448883
+    },
+    "pk": 501
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "sutton-coldfield",
+      "name": "Sutton Coldfield",
+      "lon": -1.81015363473,
+      "year": "2009-01-01",
+      "lat": 52.5590921294
+    },
+    "pk": 502
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "swansea-east",
+      "name": "Swansea East",
+      "lon": -3.92228023,
+      "year": "2009-01-01",
+      "lat": 51.6502925566
+    },
+    "pk": 503
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "swansea-west",
+      "name": "Swansea West",
+      "lon": -3.98918581377,
+      "year": "2009-01-01",
+      "lat": 51.619991343
+    },
+    "pk": 504
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "tamworth",
+      "name": "Tamworth",
+      "lon": -1.75128961799,
+      "year": "2009-01-01",
+      "lat": 52.6584336346
+    },
+    "pk": 505
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "tatton",
+      "name": "Tatton",
+      "lon": -2.38758377002,
+      "year": "2009-01-01",
+      "lat": 53.279766282
+    },
+    "pk": 506
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "taunton",
+      "name": "Taunton",
+      "lon": -3.35892398672,
+      "year": "2009-01-01",
+      "lat": 51.0402523718
+    },
+    "pk": 507
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "teignbridge",
+      "name": "Teignbridge",
+      "lon": -3.65322042674,
+      "year": "2009-01-01",
+      "lat": 50.612640133
+    },
+    "pk": 508
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "telford",
+      "name": "Telford",
+      "lon": -2.45937252348,
+      "year": "2009-01-01",
+      "lat": 52.6672864953
+    },
+    "pk": 509
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "tewkesbury",
+      "name": "Tewkesbury",
+      "lon": -2.0367670417,
+      "year": "2009-01-01",
+      "lat": 51.9350157337
+    },
+    "pk": 510
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "thurrock",
+      "name": "Thurrock",
+      "lon": 0.337116492707,
+      "year": "2009-01-01",
+      "lat": 51.4944715778
+    },
+    "pk": 511
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "tiverton-honiton",
+      "name": "Tiverton & Honiton",
+      "lon": -3.47008898157,
+      "year": "2009-01-01",
+      "lat": 50.8554965937
+    },
+    "pk": 512
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "tonbridge-malling",
+      "name": "Tonbridge & Malling",
+      "lon": 0.243732455896,
+      "year": "2009-01-01",
+      "lat": 51.2417447136
+    },
+    "pk": 513
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "tooting",
+      "name": "Tooting",
+      "lon": -0.16434038603,
+      "year": "2009-01-01",
+      "lat": 51.4386205484
+    },
+    "pk": 514
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "torbay",
+      "name": "Torbay",
+      "lon": -3.52470124116,
+      "year": "2009-01-01",
+      "lat": 50.4497334118
+    },
+    "pk": 515
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "torfaen",
+      "name": "Torfaen",
+      "lon": -3.05552785542,
+      "year": "2009-01-01",
+      "lat": 51.7016626505
+    },
+    "pk": 516
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "torridge-west-devon",
+      "name": "Torridge & West Devon",
+      "lon": -4.1985868157,
+      "year": "2009-01-01",
+      "lat": 50.8209008036
+    },
+    "pk": 517
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "totnes",
+      "name": "Totnes",
+      "lon": -3.69032780241,
+      "year": "2009-01-01",
+      "lat": 50.3854620182
+    },
+    "pk": 518
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "tottenham",
+      "name": "Tottenham",
+      "lon": -0.0774802182298,
+      "year": "2009-01-01",
+      "lat": 51.5867207842
+    },
+    "pk": 519
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "truro-st-austell",
+      "name": "Truro & St Austell",
+      "lon": -4.98541315864,
+      "year": "2009-01-01",
+      "lat": 50.2890713217
+    },
+    "pk": 520
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "tunbridge-wells",
+      "name": "Tunbridge Wells",
+      "lon": 0.332189371407,
+      "year": "2009-01-01",
+      "lat": 51.1305928683
+    },
+    "pk": 521
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "twickenham",
+      "name": "Twickenham",
+      "lon": -0.348417734565,
+      "year": "2009-01-01",
+      "lat": 51.4287754951
+    },
+    "pk": 522
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "tyne-bridge",
+      "name": "Tyne Bridge",
+      "lon": -1.63621631012,
+      "year": "2009-01-01",
+      "lat": 54.9532320625
+    },
+    "pk": 523
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "tynemouth",
+      "name": "Tynemouth",
+      "lon": -1.45683371734,
+      "year": "2009-01-01",
+      "lat": 55.038157135
+    },
+    "pk": 524
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "upminster",
+      "name": "Upminster",
+      "lon": 0.263806079558,
+      "year": "2009-01-01",
+      "lat": 51.5742434529
+    },
+    "pk": 525
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "uxbridge",
+      "name": "Uxbridge",
+      "lon": -0.455694330872,
+      "year": "2009-01-01",
+      "lat": 51.5356509711
+    },
+    "pk": 527
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "vale-of-clwyd",
+      "name": "Vale of Clwyd",
+      "lon": -3.40696631992,
+      "year": "2009-01-01",
+      "lat": 53.2573682758
+    },
+    "pk": 528
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "vale-of-glamorgan",
+      "name": "Vale of Glamorgan",
+      "lon": -3.37616257439,
+      "year": "2009-01-01",
+      "lat": 51.4478235326
+    },
+    "pk": 529
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "vale-of-york",
+      "name": "Vale of York",
+      "lon": -1.35751397417,
+      "year": "2009-01-01",
+      "lat": 54.1208109455
+    },
+    "pk": 530
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "vauxhall",
+      "name": "Vauxhall",
+      "lon": -0.12045632985,
+      "year": "2009-01-01",
+      "lat": 51.4845868086
+    },
+    "pk": 531
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "wakefield",
+      "name": "Wakefield",
+      "lon": -1.62267753125,
+      "year": "2009-01-01",
+      "lat": 53.6244878359
+    },
+    "pk": 532
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "wallasey",
+      "name": "Wallasey",
+      "lon": -3.07711581221,
+      "year": "2009-01-01",
+      "lat": 53.4215836356
+    },
+    "pk": 533
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "walsall-north",
+      "name": "Walsall North",
+      "lon": -2.02242782815,
+      "year": "2009-01-01",
+      "lat": 52.6052326597
+    },
+    "pk": 534
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "walsall-south",
+      "name": "Walsall South",
+      "lon": -1.97759862924,
+      "year": "2009-01-01",
+      "lat": 52.5748292921
+    },
+    "pk": 535
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "walthamstow",
+      "name": "Walthamstow",
+      "lon": -0.0235477903296,
+      "year": "2009-01-01",
+      "lat": 51.5849768618
+    },
+    "pk": 536
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "wansbeck",
+      "name": "Wansbeck",
+      "lon": -1.62950949754,
+      "year": "2009-01-01",
+      "lat": 55.1656840548
+    },
+    "pk": 537
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "wansdyke",
+      "name": "Wansdyke",
+      "lon": -2.49787526341,
+      "year": "2009-01-01",
+      "lat": 51.3636572292
+    },
+    "pk": 538
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "wantage",
+      "name": "Wantage",
+      "lon": -1.40709664695,
+      "year": "2009-01-01",
+      "lat": 51.6320205336
+    },
+    "pk": 539
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "warley",
+      "name": "Warley",
+      "lon": -1.98845201863,
+      "year": "2009-01-01",
+      "lat": 52.4867434724
+    },
+    "pk": 540
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "warrington-north",
+      "name": "Warrington North",
+      "lon": -2.56555055899,
+      "year": "2009-01-01",
+      "lat": 53.4321785468
+    },
+    "pk": 541
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "warrington-south",
+      "name": "Warrington South",
+      "lon": -2.56135981927,
+      "year": "2009-01-01",
+      "lat": 53.3674380117
+    },
+    "pk": 542
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "warwick-leamington",
+      "name": "Warwick & Leamington",
+      "lon": -1.64778131549,
+      "year": "2009-01-01",
+      "lat": 52.2930763895
+    },
+    "pk": 543
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "watford",
+      "name": "Watford",
+      "lon": -0.414369307327,
+      "year": "2009-01-01",
+      "lat": 51.6687608823
+    },
+    "pk": 544
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "waveney",
+      "name": "Waveney",
+      "lon": 1.55809197517,
+      "year": "2009-01-01",
+      "lat": 52.4563248074
+    },
+    "pk": 545
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "wealden",
+      "name": "Wealden",
+      "lon": 0.176359665059,
+      "year": "2009-01-01",
+      "lat": 50.9920592305
+    },
+    "pk": 546
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "weaver-vale",
+      "name": "Weaver Vale",
+      "lon": -2.63264184345,
+      "year": "2009-01-01",
+      "lat": 53.2974076791
+    },
+    "pk": 547
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "wellingborough",
+      "name": "Wellingborough",
+      "lon": -0.667065247109,
+      "year": "2009-01-01",
+      "lat": 52.2775576714
+    },
+    "pk": 548
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "wells",
+      "name": "Wells",
+      "lon": -2.78319029035,
+      "year": "2009-01-01",
+      "lat": 51.2031855252
+    },
+    "pk": 549
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "welwyn-hatfield",
+      "name": "Welwyn Hatfield",
+      "lon": -0.184333997651,
+      "year": "2009-01-01",
+      "lat": 51.7816024114
+    },
+    "pk": 550
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "wentworth",
+      "name": "Wentworth",
+      "lon": -1.34361709563,
+      "year": "2009-01-01",
+      "lat": 53.4585199354
+    },
+    "pk": 551
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "west-bromwich-east",
+      "name": "West Bromwich East",
+      "lon": -1.97028246741,
+      "year": "2009-01-01",
+      "lat": 52.5355002765
+    },
+    "pk": 552
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "west-bromwich-west",
+      "name": "West Bromwich West",
+      "lon": -2.03361672927,
+      "year": "2009-01-01",
+      "lat": 52.5285449707
+    },
+    "pk": 553
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "west-chelmsford",
+      "name": "West Chelmsford",
+      "lon": 0.451464364081,
+      "year": "2009-01-01",
+      "lat": 51.749512876
+    },
+    "pk": 554
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "west-derbyshire",
+      "name": "West Derbyshire",
+      "lon": -1.68055947717,
+      "year": "2009-01-01",
+      "lat": 53.0914995496
+    },
+    "pk": 555
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "west-dorset",
+      "name": "West Dorset",
+      "lon": -2.61141089013,
+      "year": "2009-01-01",
+      "lat": 50.7946536331
+    },
+    "pk": 556
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "west-ham",
+      "name": "West Ham",
+      "lon": 0.0104028604124,
+      "year": "2009-01-01",
+      "lat": 51.5371591946
+    },
+    "pk": 557
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "west-lancashire",
+      "name": "West Lancashire",
+      "lon": -2.86798368244,
+      "year": "2009-01-01",
+      "lat": 53.5661964231
+    },
+    "pk": 558
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "west-suffolk",
+      "name": "West Suffolk",
+      "lon": 0.64965794306,
+      "year": "2009-01-01",
+      "lat": 52.2567073632
+    },
+    "pk": 559
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "west-worcestershire",
+      "name": "West Worcestershire",
+      "lon": -2.17952522501,
+      "year": "2009-01-01",
+      "lat": 52.15375056
+    },
+    "pk": 561
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "westbury",
+      "name": "Westbury",
+      "lon": -2.16111122697,
+      "year": "2009-01-01",
+      "lat": 51.2129281942
+    },
+    "pk": 562
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "na-h-eileanan-an-iar",
+      "name": "Na h-Eileanan an Iar",
+      "lon": -7.17749892197,
+      "year": "2009-01-01",
+      "lat": 57.9428149953
+    },
+    "pk": 563
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "westmorland-lonsdale",
+      "name": "Westmorland & Lonsdale",
+      "lon": -2.79283062178,
+      "year": "2009-01-01",
+      "lat": 54.2741638295
+    },
+    "pk": 564
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "weston-super-mare",
+      "name": "Weston-Super-Mare",
+      "lon": -2.90144406997,
+      "year": "2009-01-01",
+      "lat": 51.3458615947
+    },
+    "pk": 565
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "wigan",
+      "name": "Wigan",
+      "lon": -2.63940625226,
+      "year": "2009-01-01",
+      "lat": 53.5693512047
+    },
+    "pk": 566
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "wimbledon",
+      "name": "Wimbledon",
+      "lon": -0.216602975829,
+      "year": "2009-01-01",
+      "lat": 51.4154122924
+    },
+    "pk": 567
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "winchester",
+      "name": "Winchester",
+      "lon": -1.24400744642,
+      "year": "2009-01-01",
+      "lat": 51.0265794033
+    },
+    "pk": 568
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "windsor",
+      "name": "Windsor",
+      "lon": -0.622703513576,
+      "year": "2009-01-01",
+      "lat": 51.436995766
+    },
+    "pk": 569
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "wirral-south",
+      "name": "Wirral South",
+      "lon": -3.04129893083,
+      "year": "2009-01-01",
+      "lat": 53.3273197685
+    },
+    "pk": 570
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "wirral-west",
+      "name": "Wirral West",
+      "lon": -3.14776346356,
+      "year": "2009-01-01",
+      "lat": 53.3844630284
+    },
+    "pk": 571
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "witney",
+      "name": "Witney",
+      "lon": -1.50292754722,
+      "year": "2009-01-01",
+      "lat": 51.8400534244
+    },
+    "pk": 572
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "woking",
+      "name": "Woking",
+      "lon": -0.587122920756,
+      "year": "2009-01-01",
+      "lat": 51.2924702906
+    },
+    "pk": 573
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "wokingham",
+      "name": "Wokingham",
+      "lon": -0.966090557213,
+      "year": "2009-01-01",
+      "lat": 51.4019913032
+    },
+    "pk": 574
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "wolverhampton-north-east",
+      "name": "Wolverhampton North East",
+      "lon": -2.10371383171,
+      "year": "2009-01-01",
+      "lat": 52.6115962057
+    },
+    "pk": 575
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "wolverhampton-south-east",
+      "name": "Wolverhampton South East",
+      "lon": -2.09685089224,
+      "year": "2009-01-01",
+      "lat": 52.5684582112
+    },
+    "pk": 576
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "wolverhampton-south-west",
+      "name": "Wolverhampton South West",
+      "lon": -2.15957243699,
+      "year": "2009-01-01",
+      "lat": 52.5878827835
+    },
+    "pk": 577
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "woodspring",
+      "name": "Woodspring",
+      "lon": -2.75133857824,
+      "year": "2009-01-01",
+      "lat": 51.4198489447
+    },
+    "pk": 578
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "worcester",
+      "name": "Worcester",
+      "lon": -2.21025967939,
+      "year": "2009-01-01",
+      "lat": 52.1965288244
+    },
+    "pk": 579
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "workington",
+      "name": "Workington",
+      "lon": -3.29545241277,
+      "year": "2009-01-01",
+      "lat": 54.6829654059
+    },
+    "pk": 580
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "worsley",
+      "name": "Worsley",
+      "lon": -2.42776794827,
+      "year": "2009-01-01",
+      "lat": 53.5012595923
+    },
+    "pk": 581
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "worthing-west",
+      "name": "Worthing West",
+      "lon": -0.440320561949,
+      "year": "2009-01-01",
+      "lat": 50.8303259787
+    },
+    "pk": 582
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "wrekin-the",
+      "name": "Wrekin, The",
+      "lon": -2.45005989141,
+      "year": "2009-01-01",
+      "lat": 52.7167804715
+    },
+    "pk": 583
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "wrexham",
+      "name": "Wrexham",
+      "lon": -2.95168594562,
+      "year": "2009-01-01",
+      "lat": 53.0758923751
+    },
+    "pk": 584
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "wycombe",
+      "name": "Wycombe",
+      "lon": -0.825921831864,
+      "year": "2009-01-01",
+      "lat": 51.620446911
+    },
+    "pk": 585
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "wyre-forest",
+      "name": "Wyre Forest",
+      "lon": -2.24605428551,
+      "year": "2009-01-01",
+      "lat": 52.3859519288
+    },
+    "pk": 586
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "wythenshawe-sale-east",
+      "name": "Wythenshawe & Sale East",
+      "lon": -2.29125465443,
+      "year": "2009-01-01",
+      "lat": 53.3892824463
+    },
+    "pk": 587
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "yeovil",
+      "name": "Yeovil",
+      "lon": -2.79820337295,
+      "year": "2009-01-01",
+      "lat": 50.919080761
+    },
+    "pk": 588
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "ynys-mon",
+      "name": "Ynys M\u00f4n",
+      "lon": -4.35799159182,
+      "year": "2009-01-01",
+      "lat": 53.2815539381
+    },
+    "pk": 589
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "york-city-of",
+      "name": "York, City of",
+      "lon": -1.08940580551,
+      "year": "2009-01-01",
+      "lat": 53.9525998877
+    },
+    "pk": 590
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "aberdeen-north",
+      "name": "Aberdeen North",
+      "lon": -2.15637782271,
+      "year": "2009-01-01",
+      "lat": 57.1710368809
+    },
+    "pk": 591
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "aberdeen-south",
+      "name": "Aberdeen South",
+      "lon": -2.188553587,
+      "year": "2009-01-01",
+      "lat": 57.1142090238
+    },
+    "pk": 592
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "aberdeenshire-west-kincardine",
+      "name": "Aberdeenshire West & Kincardine",
+      "lon": -2.94536592349,
+      "year": "2009-01-01",
+      "lat": 57.0211655612
+    },
+    "pk": 593
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "airdrie-shotts",
+      "name": "Airdrie & Shotts",
+      "lon": -3.86513532316,
+      "year": "2009-01-01",
+      "lat": 55.8505464698
+    },
+    "pk": 594
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "angus",
+      "name": "Angus",
+      "lon": -2.91177963689,
+      "year": "2009-01-01",
+      "lat": 56.7448881494
+    },
+    "pk": 595
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "argyll-bute",
+      "name": "Argyll & Bute",
+      "lon": -5.73413127007,
+      "year": "2009-01-01",
+      "lat": 55.9992159157
+    },
+    "pk": 596
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "ayr-carrick-cumnock",
+      "name": "Ayr, Carrick & Cumnock",
+      "lon": -4.55895927232,
+      "year": "2009-01-01",
+      "lat": 55.255897702
+    },
+    "pk": 597
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "ayrshire-central",
+      "name": "Ayrshire Central",
+      "lon": -4.57125705034,
+      "year": "2009-01-01",
+      "lat": 55.5595377305
+    },
+    "pk": 598
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "ayrshire-north-arran",
+      "name": "Ayrshire North & Arran",
+      "lon": -4.96284638377,
+      "year": "2009-01-01",
+      "lat": 55.6581152144
+    },
+    "pk": 599
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "banff-buchan",
+      "name": "Banff & Buchan",
+      "lon": -2.28656783714,
+      "year": "2009-01-01",
+      "lat": 57.5345041469
+    },
+    "pk": 600
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "berwickshire-roxburgh-selkirk",
+      "name": "Berwickshire, Roxburgh & Selkirk",
+      "lon": -2.69481271832,
+      "year": "2009-01-01",
+      "lat": 55.5273062062
+    },
+    "pk": 601
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "caithness-sutherland-easter-ross",
+      "name": "Caithness, Sutherland & Easter Ross",
+      "lon": -4.20266503595,
+      "year": "2009-01-01",
+      "lat": 58.142765912
+    },
+    "pk": 602
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "coatbridge-chryston-bellshill",
+      "name": "Coatbridge, Chryston & Bellshill",
+      "lon": -4.093482701,
+      "year": "2009-01-01",
+      "lat": 55.8792821855
+    },
+    "pk": 603
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "cumbernauld-kilsyth-kirkintilloch-east",
+      "name": "Cumbernauld, Kilsyth & Kirkintilloch East",
+      "lon": -4.07906834186,
+      "year": "2009-01-01",
+      "lat": 55.9750722005
+    },
+    "pk": 604
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "dumfries-galloway",
+      "name": "Dumfries & Galloway",
+      "lon": -4.34937943886,
+      "year": "2009-01-01",
+      "lat": 54.9825788472
+    },
+    "pk": 605
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "dumfriesshire-clydesdale-tweeddale",
+      "name": "Dumfriesshire, Clydesdale & Tweeddale",
+      "lon": -3.49392025534,
+      "year": "2009-01-01",
+      "lat": 55.3623925919
+    },
+    "pk": 606
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "east-dunbartonshire",
+      "name": "East Dunbartonshire",
+      "lon": -4.25837296378,
+      "year": "2009-01-01",
+      "lat": 55.9393832717
+    },
+    "pk": 607
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "west-dunbartonshire",
+      "name": "West Dunbartonshire",
+      "lon": -4.51977212051,
+      "year": "2009-01-01",
+      "lat": 55.9862428352
+    },
+    "pk": 608
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "dundee-east",
+      "name": "Dundee East",
+      "lon": -2.83286838329,
+      "year": "2009-01-01",
+      "lat": 56.5198070715
+    },
+    "pk": 609
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "dundee-west",
+      "name": "Dundee West",
+      "lon": -3.08385656994,
+      "year": "2009-01-01",
+      "lat": 56.5021549204
+    },
+    "pk": 610
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "dunfermline-fife-west",
+      "name": "Dunfermline & Fife West",
+      "lon": -3.52962481308,
+      "year": "2009-01-01",
+      "lat": 56.082250424
+    },
+    "pk": 611
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "east-kilbride-strathaven-lesmahagow",
+      "name": "East Kilbride, Strathaven & Lesmahagow",
+      "lon": -4.01715524653,
+      "year": "2009-01-01",
+      "lat": 55.6810701794
+    },
+    "pk": 612
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "east-lothian",
+      "name": "East Lothian",
+      "lon": -2.72651687951,
+      "year": "2009-01-01",
+      "lat": 55.9484507252
+    },
+    "pk": 613
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "edinburgh-east",
+      "name": "Edinburgh East",
+      "lon": -3.14097719213,
+      "year": "2009-01-01",
+      "lat": 55.942705762
+    },
+    "pk": 614
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "edinburgh-north-leith",
+      "name": "Edinburgh North & Leith",
+      "lon": -3.20019410019,
+      "year": "2009-01-01",
+      "lat": 55.9693636654
+    },
+    "pk": 615
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "edinburgh-south",
+      "name": "Edinburgh South",
+      "lon": -3.15854827037,
+      "year": "2009-01-01",
+      "lat": 55.9145466325
+    },
+    "pk": 616
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "edinburgh-south-west",
+      "name": "Edinburgh South West",
+      "lon": -3.31159921002,
+      "year": "2009-01-01",
+      "lat": 55.8844144994
+    },
+    "pk": 617
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "edinburgh-west",
+      "name": "Edinburgh West",
+      "lon": -3.33246747198,
+      "year": "2009-01-01",
+      "lat": 55.9530819502
+    },
+    "pk": 618
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "falkirk",
+      "name": "Falkirk",
+      "lon": -3.84423535329,
+      "year": "2009-01-01",
+      "lat": 56.0337647213
+    },
+    "pk": 619
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "fife-north-east",
+      "name": "Fife North East",
+      "lon": -2.96571742432,
+      "year": "2009-01-01",
+      "lat": 56.3149064507
+    },
+    "pk": 620
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "glasgow-central",
+      "name": "Glasgow Central",
+      "lon": -4.25751343709,
+      "year": "2009-01-01",
+      "lat": 55.8477937961
+    },
+    "pk": 621
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "glasgow-east",
+      "name": "Glasgow East",
+      "lon": -4.14743392571,
+      "year": "2009-01-01",
+      "lat": 55.8556849132
+    },
+    "pk": 622
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "glasgow-north",
+      "name": "Glasgow North",
+      "lon": -4.29214182045,
+      "year": "2009-01-01",
+      "lat": 55.8981885428
+    },
+    "pk": 623
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "glasgow-north-east",
+      "name": "Glasgow North East",
+      "lon": -4.21536424977,
+      "year": "2009-01-01",
+      "lat": 55.8879500395
+    },
+    "pk": 624
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "glasgow-north-west",
+      "name": "Glasgow North West",
+      "lon": -4.34871559188,
+      "year": "2009-01-01",
+      "lat": 55.8928383746
+    },
+    "pk": 625
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "glasgow-south",
+      "name": "Glasgow South",
+      "lon": -4.27139318578,
+      "year": "2009-01-01",
+      "lat": 55.8125713328
+    },
+    "pk": 626
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "glasgow-south-west",
+      "name": "Glasgow South West",
+      "lon": -4.33887471679,
+      "year": "2009-01-01",
+      "lat": 55.8335913498
+    },
+    "pk": 627
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "glenrothes",
+      "name": "Glenrothes",
+      "lon": -3.15413230418,
+      "year": "2009-01-01",
+      "lat": 56.177386086
+    },
+    "pk": 628
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "gordon",
+      "name": "Gordon",
+      "lon": -2.44871626989,
+      "year": "2009-01-01",
+      "lat": 57.3560421952
+    },
+    "pk": 629
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "inverclyde",
+      "name": "Inverclyde",
+      "lon": -4.74998673152,
+      "year": "2009-01-01",
+      "lat": 55.9047965091
+    },
+    "pk": 630
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "inverness-nairn-badenoch-strathspey",
+      "name": "Inverness, Nairn, Badenoch & Strathspey",
+      "lon": -5.03534971497,
+      "year": "2009-01-01",
+      "lat": 57.0639001671
+    },
+    "pk": 631
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "kilmarnock-loudoun",
+      "name": "Kilmarnock & Loudoun",
+      "lon": -4.29628584689,
+      "year": "2009-01-01",
+      "lat": 55.5945571968
+    },
+    "pk": 632
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "kirkcaldy-cowdenbeath",
+      "name": "Kirkcaldy & Cowdenbeath",
+      "lon": -3.27539639973,
+      "year": "2009-01-01",
+      "lat": 56.0982910667
+    },
+    "pk": 633
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "lanark-hamilton-east",
+      "name": "Lanark & Hamilton East",
+      "lon": -3.81608229503,
+      "year": "2009-01-01",
+      "lat": 55.7374416868
+    },
+    "pk": 634
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "linlithgow-falkirk-east",
+      "name": "Linlithgow & Falkirk East",
+      "lon": -3.65957028933,
+      "year": "2009-01-01",
+      "lat": 55.9394379887
+    },
+    "pk": 635
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "livingston",
+      "name": "Livingston",
+      "lon": -3.56689255376,
+      "year": "2009-01-01",
+      "lat": 55.8709756386
+    },
+    "pk": 636
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "midlothian",
+      "name": "Midlothian",
+      "lon": -3.10760851257,
+      "year": "2009-01-01",
+      "lat": 55.8212121723
+    },
+    "pk": 637
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "moray",
+      "name": "Moray",
+      "lon": -3.20059423405,
+      "year": "2009-01-01",
+      "lat": 57.4029624552
+    },
+    "pk": 638
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "motherwell-wishaw",
+      "name": "Motherwell & Wishaw",
+      "lon": -3.96076636218,
+      "year": "2009-01-01",
+      "lat": 55.7820894014
+    },
+    "pk": 639
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "ochil-perthshire-south",
+      "name": "Ochil & Perthshire South",
+      "lon": -3.73078080071,
+      "year": "2009-01-01",
+      "lat": 56.3055269762
+    },
+    "pk": 640
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "paisley-renfrewshire-north",
+      "name": "Paisley & Renfrewshire North",
+      "lon": -4.49467739815,
+      "year": "2009-01-01",
+      "lat": 55.8874663159
+    },
+    "pk": 641
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "paisley-renfrewshire-south",
+      "name": "Paisley & Renfrewshire South",
+      "lon": -4.57473978512,
+      "year": "2009-01-01",
+      "lat": 55.8089754523
+    },
+    "pk": 642
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "perth-perthshire-north",
+      "name": "Perth & Perthshire North",
+      "lon": -3.87965066752,
+      "year": "2009-01-01",
+      "lat": 56.6484628366
+    },
+    "pk": 643
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "ross-skye-lochaber",
+      "name": "Ross, Skye & Lochaber",
+      "lon": -5.37419568383,
+      "year": "2009-01-01",
+      "lat": 57.3141050265
+    },
+    "pk": 644
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "rutherglen-hamilton-west",
+      "name": "Rutherglen & Hamilton West",
+      "lon": -4.14318669742,
+      "year": "2009-01-01",
+      "lat": 55.7947301225
+    },
+    "pk": 645
+  },
+  {
+    "model": "signup.constituency",
+    "fields": {
+      "slug": "stirling",
+      "name": "Stirling",
+      "lon": -4.32614287192,
+      "year": "2009-01-01",
+      "lat": 56.252327652
+    },
+    "pk": 646
+  }
+]

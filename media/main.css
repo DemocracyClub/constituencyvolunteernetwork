@@ -32,10 +32,20 @@ a {
 
 p {
     text-align: justify;
+    margin-bottom:0.5em;
 }
 
 p.small {
     font-size:0.9em;
+}
+
+.instructions-box {
+/* background: #F5FcFF; */
+ padding: 10px;
+}
+
+.instructions-box h2, .instructions-box h3 {
+ margin: 0;
 }
 
 #header {
@@ -43,6 +53,20 @@ p.small {
     padding: 10px;
     padding-top:0;
     padding-bottom:0;
+}
+
+#constituency-header {
+  font-size: 1em;
+  border-bottom:1px solid #CCC;
+}
+
+#constituency-header h2 {
+  font-size:1em;
+}
+
+#constituency-header > a {
+  font-size:0.9em;
+  color:#666;
 }
 
 #logo
@@ -181,7 +205,7 @@ ul#links li a:hover {
     vertical-align:top;
 }
 
-#signup input {
+#signup input[type="text"] {
     margin: 0;
     width:75%;
 }
@@ -250,6 +274,42 @@ ul li {
  margin-bottom: 0.3em;
 }
 
+.activity-bar {
+  font-size:0.9em;
+}
+
+.gradient-box {
+  margin-left:-10px;
+  padding-left:10px;
+  margin-right:-10px;
+  padding-right:10px;
+  padding-bottom:0.5em;
+  background:url('/media/gradient.png') repeat-x #f6fbff;
+  background-position:top;
+}
+
+a.help_button {
+  font-size:0.8em;
+  padding:0.3em;
+  border:1px solid white;
+  outline:none;
+  color:#666;
+  border-radius:0.4em;
+  -moz-border-radius:0.4em;
+  -webkit-border-radius:0.4em;
+  margin-right:10px;
+}
+
+a.help_button:hover {
+  border: solid #bbd1f9 1px;
+  border-top: solid #ecf1f9 1px;
+  border-left: solid #ecf1f9 1px;
+}
+
+a.help_button:active {
+
+}
+
 /* Task page styles */
 #section-task .project
 {
@@ -273,12 +333,6 @@ ul li {
     margin-top:0;
 }
 
-#section-task .actions a
-{
-    padding:0.5em;
-    border-bottom:1px solid #CCC;
-    background-color:#EEF;
-}
 
 /* Homepage2 styles */
 div.topboxwrap

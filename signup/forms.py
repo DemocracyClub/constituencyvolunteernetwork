@@ -38,11 +38,15 @@ class UserForm(TemplatedForm):
         code = self.cleaned_data['postcode']
         if not POSTCODE_RE.match(code):
             raise forms.ValidationError("Please enter a valid postcode")
-        constituency = Constituency.objects.all()\
-                       .filter(name=twfy.getConstituency(code))\
-                       .filter(year=CONSTITUENCY_YEAR)
-        if constituency:
-            self.cleaned_data['constituency'] = constituency[0]
+        constituency_name = twfy.getConstituency(code)
+        if constituency_name:
+            constituency = Constituency.objects.all()\
+                           .filter(name=constituency_name)\
+                           .filter(year=CONSTITUENCY_YEAR)
+            if constituency:
+                self.cleaned_data['constituency'] = constituency[0]
+            else:
+                raise forms.ValidationError("Internal error: Constituency not found")
         else:
             raise forms.ValidationError("Unknown postcode")
         return code
@@ -70,6 +74,6 @@ class UserForm(TemplatedForm):
                                          is_active=False)
         user.constituencies.add(constituency)
         user.save()
-        signals.user_join.send(self, user=user)
         profile = RegistrationProfile.objects.create_profile(user)
+        signals.user_join.send(self, user=user)
         return profile

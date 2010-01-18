@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block title %}Add issue{% endblock %}
+
+{% block content %}
+
+
+<h2>Thank you for adding an issue!</h2>
+<p>You can <a href="{% url add_issue %}">add another issue</a>
+for more badges.
+</p>
+<p>
+    Otherwise, see <a href="{% url welcome %}">other tasks</a>.
+</p>
+{% endblock %}
+
