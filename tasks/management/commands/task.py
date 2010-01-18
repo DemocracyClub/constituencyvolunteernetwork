@@ -30,8 +30,10 @@ class Command(BaseCommand):
             to pre-existing users (in addition to new users, as handled
             by user_signup)
             """
-        if not args or (args and args[0] not in ('touch','email')):
-            raise CommandError()
+        if not args:
+            raise CommandError("Please specify a command, e.g. 'touch' or 'email'")
+        if args[0] not in ('touch','email'):
+            raise CommandError("Unknown command '%s'" % args[0])
         users = CustomUser.objects.all()
         emailfilter = options.get('emailfilter', '')
         if emailfilter:
