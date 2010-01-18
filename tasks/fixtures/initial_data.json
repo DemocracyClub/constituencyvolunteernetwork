@@ -47,7 +47,7 @@
     "model": "tasks.task",
     "fields": {
       "decorator_class": "tasks.models.ConstituencyCompletenessTask",
-      "name": "Add Issue",
+      "name": "Add Local Issue",
       "slug": "add-issue",
       "project": 1,
       "description": "Add a local issue to your constituency page.  Eventually we'll use local issues as a basis to ask your candidates questions and hold them to their answers.",
