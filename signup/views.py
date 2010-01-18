@@ -292,6 +292,7 @@ def user(request, id):
                                context)
 
 def constituency(request, slug, year=None):
+    from tasks.models import TaskUser
     if year:
         year = "%s-01-01" % year
     else:
@@ -342,6 +343,7 @@ def constituency(request, slug, year=None):
                 lonspan = abs(furthest.lon - constituency.lon) * 2
         context['latspan'] = latspan
         context['lonspan'] = lonspan
+        context['activity'] = TaskUser.objects.filter(constituency=constituency)
         return render_with_context(request,
                                    'constituency.html',
                                    context)

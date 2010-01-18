@@ -3,18 +3,25 @@
 
 {% block content %}
 
-<h1>{{constituency.name}}</h1>
+<div class="span-4">
+    <h2>{{constituency.name}}</h2>
+    <p>
+     {% ifequal constituency.customuser_set.count 1 %}
+      You're the only volunteer here so far.
+     {% else %}
+       There are {{constituency.customuser_set.count}} volunteers here.
+     {% endifequal %}
+    </p>
 
-<p>
- {% ifequal constituency.customuser_set.count 1 %}
-  You're the only volunteer here so far.
- {% else %}
-   There are {{constituency.customuser_set.count}} volunteers here.
- {% endifequal %}
-</p>
+    <h3>Recent activity in {{ constituency.name }}</h3>
+    {% if activity %}
+        {% include "tasks/activity_list.html" %}
+    {% else %}
+        There has been no activity near you - be the first, do a task! Maybe you need to <a href='{% url inviteindex %}'>invite some friends</a>.
+    {% endif %}
 
-{% ifnotequal constituency.issue_set.count 0 %}
-    <h2>Local issues</h2>
+    {% ifnotequal constituency.issue_set.count 0 %}
+    <h3>Local issues</h3>
     <ul>
     {% for issue in constituency.issue_set.all %}
         <li>
@@ -24,26 +31,26 @@
             {% endif %}
         </li>
     {% endfor %}
-</ul>
-{% endifnotequal %}
-
-<div class="span-4">
-<h2>Help us get better coverage</h2>
-<p>The markers on this map mark the centres of nearby constituencies where we don't currently have any volunteers. If you know anyone who might live there, please <a href="/invite/">invite them</a> and help us get volunteers in the whole country!</p>  
-<iframe width="425" height="350" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="http://maps.google.co.uk/maps?f=q&amp;source=s_q&amp;hl=en&amp;geocode=&amp;q=http:%2F%2Fwww.democracyclub.org.uk%2Fstatistics%2Ffewerthan%2F1%2Fgeo.rss&amp;sll=&amp;sspn={{latspan}},{{lonspan}}&amp;ie=UTF8&amp;ll={{constituency.lat}},{{constituency.lon}}&amp;spn={{latspan}},{{lonspan}}&amp;z=&amp;output=embed"></iframe><br /><small><a href="http://maps.google.co.uk/maps?f=q&amp;source=embed&amp;hl=en&amp;geocode=&amp;q=http:%2F%2Fwww.democracyclub.org.uk%2Fstatistics%2Ffewerthan%2F1%2Fgeo.rss&amp;sll=53.800651,-4.064941&amp;sspn=16.261859,33.618164&amp;ie=UTF8&amp;ll={{constituency.lat}},{{constituency.lon}}&amp;spn={{latspan}},{{lonspan}}&amp;z=10" style="color:#0000FF;text-align:left">View Larger Map</a></small>
+    </ul>
+    {% endifnotequal %}
 </div>
-<div class="span-4 last">
-{% if request.user.is_superuser %}
-<h2>Send message to users in this constituency (admin only)</h2>
-<form method="post">
-Subject: <input type="text" name="subject" /><br />
-<textarea name="message" cols="79" rows="12"></textarea><br />
 
-Send message to people in all constituencies within
-<input name="within_km" size="3" value="50" />km of here<br />
-<input type="submit" />
-</form>
-{% endif %}
+<div class="span-4 last">
+    <h3>Help us get better coverage</h3>
+    <p>The markers on this map mark the centres of nearby constituencies where we don't currently have any volunteers. If you know anyone who might live there, please <a href="/invite/">invite them</a> and help us get volunteers in the whole country!</p>  
+    <iframe width="425" height="350" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="http://maps.google.co.uk/maps?f=q&amp;source=s_q&amp;hl=en&amp;geocode=&amp;q=http:%2F%2Fwww.democracyclub.org.uk%2Fstatistics%2Ffewerthan%2F1%2Fgeo.rss&amp;sll=&amp;sspn={{latspan}},{{lonspan}}&amp;ie=UTF8&amp;ll={{constituency.lat}},{{constituency.lon}}&amp;spn={{latspan}},{{lonspan}}&amp;z=&amp;output=embed"></iframe><br /><small><a href="http://maps.google.co.uk/maps?f=q&amp;source=embed&amp;hl=en&amp;geocode=&amp;q=http:%2F%2Fwww.democracyclub.org.uk%2Fstatistics%2Ffewerthan%2F1%2Fgeo.rss&amp;sll=53.800651,-4.064941&amp;sspn=16.261859,33.618164&amp;ie=UTF8&amp;ll={{constituency.lat}},{{constituency.lon}}&amp;spn={{latspan}},{{lonspan}}&amp;z=10" style="color:#0000FF;text-align:left">View Larger Map</a></small>
+
+    {% if request.user.is_superuser %}
+    <h3>Send message to users in this constituency (admin only)</h3>
+    <form method="post">
+        Subject: <input type="text" name="subject" /><br />
+        <textarea name="message" cols="79" rows="12"></textarea><br />
+
+        Send message to people in all constituencies within
+        <input name="within_km" size="3" value="50" />km of here<br />
+        <input type="submit" />
+    </form>
+    {% endif %}
 </div>
 
 {% endblock %}
