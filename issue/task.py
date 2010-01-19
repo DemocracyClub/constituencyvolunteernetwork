@@ -76,9 +76,9 @@ def callback_assign(sender, **kwargs):
     return "; ".join(assigned)
 
 # Assignment signals
-#user_activated.connect(callback_assign)
+# user_activated.connect(callback_assign)
 user_touch.connect(callback_assign)
-user_join_constituency.connect(callback_assign)
+# user_join_constituency.connect(callback_assign)
 
 # Completion signals
 issue_added.connect(callback_issue_added)

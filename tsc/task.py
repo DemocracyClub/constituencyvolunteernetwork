@@ -57,7 +57,7 @@ def callback_assign(sender, **kwargs):
         return "%s already assigned to %s" % (task, user)
 
 # Assignment signals
-user_activated.connect(callback_assign)
+# user_activated.connect(callback_assign)
 user_touch.connect(callback_assign)
 
 # Completion signals
