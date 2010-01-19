@@ -1,5 +1,5 @@
 from django.core.urlresolvers import reverse
-from signup.views import do_login
+from signup.views.user import do_login
 
 def login_key(func):
     """

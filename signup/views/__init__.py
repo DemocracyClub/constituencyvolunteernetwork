@@ -1,13 +1,11 @@
 import types
-from itertools import takewhile
 import re
 
 from django.shortcuts import render_to_response, get_object_or_404
-from django.http import HttpResponseRedirect, Http404
-from django.http import HttpResponse
+from django.contrib.auth import authenticate, login, logout
+from django.http import HttpResponseRedirect, Http404, HttpResponse
 from django.core.urlresolvers import reverse
 from django.template import RequestContext
-from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.utils.html import escape
 from django.utils.safestring import SafeUnicode
@@ -15,16 +13,14 @@ from django.contrib.sites.models import Site
 from django.template.loader import render_to_string
 from django.core.mail import send_mail
 
-import models
-from models import CustomUser, Constituency, RegistrationProfile
-from forms import UserForm
-import signals
 import utils
-
-from utils import addToQueryString
 import settings
-import geo
 
+import signup.models as models
+from signup.models import CustomUser, Constituency, RegistrationProfile
+from signup.forms import UserForm
+import signup.signals as signals
+import signup.geo as geo
 
 def render_with_context(request,
                         template,
@@ -218,42 +214,6 @@ def add_constituency(request):
                                'add_constituency.html',
                                context)
 
-def do_login(request, key):
-    profile = RegistrationProfile.objects.get_user(key)
-    if profile:
-        user = authenticate(username=profile.user.email)
-        login(request, user)
-        signals.user_login.send(None, user=user)
-    return HttpResponseRedirect("/")
-    
-def activate_user(request, key):
-    profile = RegistrationProfile.objects.activate_user(key)
-    error = notice = ""
-    if not profile:
-        error = "Sorry, that key was invalid"
-    else:
-        notice = "Thanks, you've successfully confirmed your email"
-        user = authenticate(username=profile.user.email)
-        login(request, user)
-    context = {'error': error,
-               'notice': notice}
-    return HttpResponseRedirect(addToQueryString("/", context))
-
-def user(request, id):
-    from tasks.models import TaskUser
-    context = {}
-    user = get_object_or_404(CustomUser, pk=id)
-    context['profile_user'] = user
-    context['activity'] = TaskUser.objects.\
-        filter(user=user).\
-        filter(user__can_cc=True).\
-        filter(state__in=[TaskUser.States.started,TaskUser.States.completed]).\
-        order_by('-date_modified').distinct()
-    context['badges'] = user.badge_set.order_by('-date_awarded')
-    return render_with_context(request,
-                               'user.html',
-                               context)
-
 def constituency(request, slug, year=None):
     from tasks.models import TaskUser
 
@@ -311,7 +271,7 @@ def constituency(request, slug, year=None):
         context['lonspan'] = lonspan
         context['activity'] = TaskUser.objects.filter(constituency=constituency)
   
-        if request.user:
+        if request.user.is_authenticated():
             context['volunteer_here'] = bool(request.user.constituencies.filter(id=constituency.id))
         else:
             context['volunteer_here'] = False
@@ -320,80 +280,4 @@ def constituency(request, slug, year=None):
                                    'constituency.html',
                                    context)
 
-def constituencies_with_fewer_than_rss(request,
-                                       volunteers=1):
-    current_site = Site.objects.get_current()
-    constituencies = models.filter_where_customuser_fewer_than(volunteers)
-    context = {'constituencies': constituencies}
-    context['site'] = current_site
-    return render_to_response('geo.rss',
-                              context,
-                              context_instance=RequestContext(request),
-                              mimetype="application/atom+xml")
-    
-def constituencies_with_more_than_rss(request,
-                                       volunteers=1):
-    current_site = Site.objects.get_current()
-    constituencies = models.filter_where_customuser_more_than(volunteers)
-    context = {'constituencies': constituencies}
-    context['site'] = current_site
-    return render_to_response('geo.rss',
-                              context,
-                              context_instance=RequestContext(request),
-                              mimetype="application/atom+xml")
-
-def statistics(request):
-    context = {}
-    context['histogram'] = models.date_joined_histogram()
-    num_rows = context['histogram'].rowcount
-    context['categorystep'] = int(num_rows / 40.0 * 4) + 1
-    context['const_volunteers'] = \
-      models.constituency_volunteers_histogram(Constituency.objects.all())
-    
-    return render_with_context(request,
-                               'statistics.html',
-                               context)
-
-def generate_map(request, date=None):
-    source_map = render_to_string('constituency-map.svg',{})
-    year = settings.CONSTITUENCY_YEAR
-    levels = {0:'level1',
-              0.1:'level2',
-              0.2:'level3',
-              0.3:'level4',
-              0.4:'level5',
-              0.5:'level6',
-              0.6:'level7',
-              0.7:'level8',
-              0.8:'level9',
-              0.9:'level10'}
-    level_keys = levels.keys()
-    level_keys.sort()
-    lines = []
-    mapping = utils.map_id_to_const_name
-    for line in source_map.splitlines():
-        the_id = re.search('id="(seat-\d+)"', line)
-        if the_id:
-            level = 'none'
-            the_name = mapping[the_id.group(1)]
-            the_place = Constituency.objects\
-                        .filter(year=year)\
-                        .filter(name=the_name)
-            if the_place:
-                the_count = the_place[0]\
-                            .customuser_set\
-                            .filter(is_active=True)
-                if date:
-                    the_count = the_count.filter(date_joined__lt=date)
-                the_count = the_count.count()
-                score = min(float(the_count)/10, 1)
-                for l in takewhile(lambda x: score > x, level_keys):
-                    level = levels[l]
-            line = line.replace('class="', 'class="%s ' % level)
-        lines.append(line)
-    return HttpResponse("\n".join(lines), mimetype="image/svg+xml")
-
-def logout_view(request):
-    logout(request)
-    return HttpResponseRedirect("/")
 
