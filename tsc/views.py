@@ -21,7 +21,7 @@ def add(request):
     context = {}
     leaflet_urls = request.GET.getlist('leaflet_url') \
                    or request.POST.getlist('leaflet_url')
-    
+
     for url in leaflet_urls:
         UploadedLeaflet.objects.create(url=url,
                                        user=request.user)

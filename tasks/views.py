@@ -16,33 +16,32 @@ from tasks.util import login_key
 def home(request):
     context = _get_statistics_context()        
 
-    if request.user.is_authenticated():
-        tasks = TaskUser.objects.filter(
-                user=request.user).order_by('state', 'date_assigned')
-        open_tasks = tasks.filter(state__in=[TaskUser.States.started,
-                                             TaskUser.States.assigned,
-                                             TaskUser.States.ignored])
-        completed_tasks = tasks.filter(state=TaskUser.States.completed)
-        ignored_tasks = tasks.filter(state=TaskUser.States.ignored)
-        context['open_tasks'] = open_tasks
-        context['completed_tasks'] = completed_tasks
-        context['ignored_tasks'] = ignored_tasks
-        context['badges'] = Badge.objects.filter(user=request.user)
-        context['new_signups'] = CustomUser.objects\
-                                 .order_by('-date_joined')[:5]
-        context['first_time'] = request.user.login_count < 3
-        constituencies = request.user.constituencies.all()
-        if constituencies:
-            # the strange way we construct the query with "__id__in"
-            # operators is necessary because otherwise we get
-            # subquery-related complaints from postgres
-            ids = [x.id for x in constituencies]
-            context['activity'] = TaskUser.objects\
-              .filter(user__constituencies__id__in=ids)\
-              .filter(state__in=[TaskUser.States.started,
-                                TaskUser.States.completed])\
-              .order_by('-date_modified').distinct().all()
-        return render_with_context(request, 'tasks/tasks.html', context)
+    tasks = TaskUser.objects.filter(
+            user=request.user).order_by('state', 'date_assigned')
+    open_tasks = tasks.filter(state__in=[TaskUser.States.started,
+                                         TaskUser.States.assigned,
+                                         TaskUser.States.ignored])
+    completed_tasks = tasks.filter(state=TaskUser.States.completed)
+    ignored_tasks = tasks.filter(state=TaskUser.States.ignored)
+    context['open_tasks'] = open_tasks
+    context['completed_tasks'] = completed_tasks
+    context['ignored_tasks'] = ignored_tasks
+    context['badges'] = Badge.objects.filter(user=request.user)
+    context['new_signups'] = CustomUser.objects\
+                             .order_by('-date_joined')[:5]
+    context['first_time'] = request.user.login_count < 3
+    constituencies = request.user.constituencies.all()
+    if constituencies:
+        # the strange way we construct the query with "__id__in"
+        # operators is necessary because otherwise we get
+        # subquery-related complaints from postgres
+        ids = [x.id for x in constituencies]
+        context['activity'] = TaskUser.objects\
+          .filter(user__constituencies__id__in=ids)\
+          .filter(state__in=[TaskUser.States.started,
+                            TaskUser.States.completed])\
+          .order_by('-date_modified').distinct().all()
+    return render_with_context(request, 'tasks/tasks.html', context)
 
 @login_key
 def task(request, slug, constituency=None):

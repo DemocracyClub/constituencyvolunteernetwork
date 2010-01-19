@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block title %}Resend login email{% endblock %}
+
+{% block content %}
+<h2>Send login email reminder</h2>
+{% for message in messages %}
+<p class="notice">{{ message }}</p>
+{% endfor %}
+
+If you need us to send your login details again, just give the email address you signed up with and click "send"
+<form method="POST" action="{% url email_reminder %}">
+<input type="text" name="email"/>
+<input type="submit" value="send"/>
+</form>
+{% endblock %}

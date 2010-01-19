@@ -1,5 +1,5 @@
 from django.conf.urls.defaults import *
-import views
+import views, views_user
 from tasks.views import home
 
 ################################################################################
@@ -7,7 +7,7 @@ urlpatterns = patterns('casestudies',
     url(r'^$', views.home, name="home"),
     url(r'^home2$', views.home2, name="home2"),
     url(r'^welcome$', home, name="welcome"),
-    url(r'^user/(?P<id>[\w-]+)/$',
+    url(r'^users/(?P<id>[\w-]+)/$',
         views.user,
         name="user"),
     url(r'^login/(?P<key>\w+)/$',
@@ -19,6 +19,9 @@ urlpatterns = patterns('casestudies',
     url(r'^activate/(?P<key>\w+)/$',
         views.activate_user,
         name="activate"),
+    url(r'^reminder$',
+        views_user.email_reminder,
+        name="email_reminder"),
     url(r'^constituencies/(?P<slug>[\w-]+)/$',
         views.constituency,
         name="constituency"),

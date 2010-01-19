@@ -99,43 +99,6 @@ def home2(request):
         return HttpResponseRedirect(reverse('welcome'))
 
 @login_required
-def welcome(request):
-     # XXX why can't we import these at module level?
-    from tasks.models import Task, TaskUser
-    context = _get_statistics_context()        
-    user_constituencies = []
-    if not request.user.is_superuser:
-        for constituency in request.user.constituencies.all():
-            user_constituencies.append(constituency.id)
-    context['activity'] = TaskUser.objects.\
-        filter(user__can_cc=True).\
-        filter(user__constituencies__id__in=user_constituencies).\
-        filter(state__in=[TaskUser.States.started,TaskUser.States.completed]).\
-        order_by('-date_modified').distinct()
-    tasks = TaskUser.objects\
-            .order_by('date_assigned')\
-            .filter(state__in=[TaskUser.States.started,
-                               TaskUser.States.assigned])
-    my_tasks = tasks.filter(user=request.user)
-    open_tasks = Task.objects\
-                 .order_by('-date_created')\
-                 .filter(taskuser__state__in=[TaskUser.States.started,
-                                              TaskUser.States.assigned])
-    completed_tasks = tasks.filter(state=TaskUser.States.completed)
-    my_taskuser = my_tasks.count() and my_tasks[0] or None
-    my_taskuser_task = my_taskuser and my_taskuser.task or None
-    context['my_current_task'] = my_taskuser
-    context['current_task'] = my_taskuser_task \
-                              or open_tasks.count() and open_tasks[0] or None
-    context['completed_tasks'] = completed_tasks
-    if not request.user.is_superuser and not request.user.seen_invite:
-        return HttpResponseRedirect(reverse('inviteindex'))
-    else:
-        return render_with_context(request,
-                                   'welcome.html',
-                                   context)
-
-@login_required
 def delete_constituency(request, slug):
     c = Constituency.objects.get(slug=slug)
     request.user.constituencies.remove(c)

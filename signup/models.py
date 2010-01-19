@@ -200,18 +200,9 @@ class RegistrationManager(models.Manager):
 
         user.is_active = False
         user.save()
-        current_site = Site.objects.get_current()
-        subject = "Please confirm your registration"
-        email_context = {'activation_key': profile.activation_key,
-                         'site': current_site,
-                         'user': user}
-        message = render_to_string('activation_email.txt',
-                                   email_context)
+
+        profile.send_activation_email()        
         
-        send_mail(subject,
-                  message,
-                  settings.DEFAULT_FROM_EMAIL,
-                  [user.email,])
         return profile
     
 
@@ -264,6 +255,20 @@ class RegistrationProfile(Model):
                   settings.DEFAULT_FROM_EMAIL,
                   [self.user.email,])
         return self.user.email
+
+    def send_activation_email(self):
+        current_site = Site.objects.get_current()
+        subject = "Please confirm your registration"
+        email_context = {'activation_key': self.activation_key,
+                         'site': current_site,
+                         'user': self.user}
+        message = render_to_string('activation_email.txt',
+                                   email_context)
+        
+        send_mail(subject,
+                  message,
+                  settings.DEFAULT_FROM_EMAIL,
+                  [self.user.email,])
 
     # XXX This is used in the admin interface, but not yet in the template.
     @permalink
