@@ -1,5 +1,6 @@
 from django.contrib.auth import authenticate, login, logout
 
+from django.shortcuts import render_to_response, get_object_or_404
 from django.http import HttpResponseRedirect, Http404, HttpResponse
 from signup.models import CustomUser, RegistrationProfile
 from signup.views import render_with_context
