@@ -24,6 +24,9 @@
      {% with open_tasks as usertasks %}
        {% include "tasks/task_list.html" %}
      {% endwith %}
+     {% ifequal open_tasks.count ignored_tasks.count %}
+        <p id="ignored_tasks_notice">You have ignored tasks, <a onclick="$('#ignored_tasks_notice').hide();$('.task-ignored').show();">click here to show them</a>.</p>
+     {% endifequal %}
    {% endif %}
   {% else %}
     <p>There are no tasks currently assigned to you.</p>
