@@ -1,4 +1,4 @@
-Hi {{ user.display_name }},
+Hi {{ user.private_name }},
 
 Thanks for signing up to help out in your constituency.
 

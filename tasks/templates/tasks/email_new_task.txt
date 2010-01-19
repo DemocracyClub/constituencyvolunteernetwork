@@ -1,4 +1,4 @@
-{% autoescape off %}Hi {{ user.display_name }},
+{% autoescape off %}Hi {{ user.private_name }},
 
 There is a new task available for you on Democracy Club:
 

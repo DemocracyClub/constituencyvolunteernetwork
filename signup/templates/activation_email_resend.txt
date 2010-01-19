@@ -1,4 +1,4 @@
-Dear {{ user.display_name }},
+Dear {{ user.private_name }},
 
 A while ago you signed up to help us improve democratic accountability in your local area -- thankyou!
 

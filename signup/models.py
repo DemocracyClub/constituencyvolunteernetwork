@@ -122,6 +122,7 @@ class CustomUser(User):
         
     @property
     def display_name(self):
+        """ Name appropriate for public display """
         if self.can_cc:
             if self.first_name:
                 name = self.first_name
@@ -129,6 +130,15 @@ class CustomUser(User):
                 name = "Someone"
         else:
             name = "Someone"
+        return name
+
+    @property
+    def private_name(self):
+        """ Name appropriate for private viewing, e.g. emails """
+        if self.first_name:
+            name = self.first_name
+        else:
+            name = self.email
         return name
     
     def __unicode__(self):
