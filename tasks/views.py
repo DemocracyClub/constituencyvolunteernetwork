@@ -1,6 +1,6 @@
 from django.http import HttpResponseRedirect, Http404
 from django.core.urlresolvers import reverse
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, permission_required
 from django.utils.http import urlquote
 from django.db.models import Count
 
@@ -12,6 +12,7 @@ from signup.views import _get_statistics_context
 
 from tasks.util import login_key
 
+@login_required
 def home(request):
     context = _get_statistics_context()        
 
@@ -146,6 +147,8 @@ def complete_task(request, slug, constituency=None):
     else:
         return HttpResponseRedirect(reverse("tasks"))
 
+@login_required
+@permission_required('tasks.add_taskuser')
 def admin_assign_all(request):
     from forms import AssignForm
     from signup.models import CustomUser
