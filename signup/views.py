@@ -293,15 +293,18 @@ def user(request, id):
 
 def constituency(request, slug, year=None):
     from tasks.models import TaskUser
+
     if year:
         year = "%s-01-01" % year
     else:
         year = settings.CONSTITUENCY_YEAR
+
     try:
         constituency = Constituency.objects.all()\
                        .filter(slug=slug, year=year).get()
     except Constituency.DoesNotExist:
         raise Http404
+
     if request.method == "POST":
         context = {'constituency': constituency}
         within_km = int(request.POST['within_km'])
@@ -344,6 +347,12 @@ def constituency(request, slug, year=None):
         context['latspan'] = latspan
         context['lonspan'] = lonspan
         context['activity'] = TaskUser.objects.filter(constituency=constituency)
+  
+        if request.user:
+            context['volunteer_here'] = bool(request.user.constituencies.filter(id=constituency.id))
+        else:
+            context['volunteer_here'] = False
+        
         return render_with_context(request,
                                    'constituency.html',
                                    context)

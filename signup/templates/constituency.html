@@ -7,7 +7,11 @@
     <h2>{{constituency.name}}</h2>
     <p>
      {% ifequal constituency.customuser_set.count 1 %}
-      You're the only volunteer here so far.
+       {% if volunteer_here %}
+         You're the only volunteer here so far.
+       {% else %}
+         There's only one volunteer here.
+       {% endif %}
      {% else %}
        There are {{constituency.customuser_set.count}} volunteers here.
      {% endifequal %}
