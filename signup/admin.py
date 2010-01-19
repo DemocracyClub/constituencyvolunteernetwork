@@ -1,11 +1,54 @@
-from django.contrib import admin
+import re
 
-import models    
+from django.contrib import admin
+from django import forms
+from django.contrib.auth.models import User
+from django.contrib.auth.admin import UserAdmin
+from django.contrib.auth.forms import UserCreationForm, UserChangeForm
+
+import models
+
+REGEX = re.compile(r'^.*$', re.U)
+
+class MyUserChangeForm(UserChangeForm):
+    username = forms.RegexField(
+        label='Username', 
+        max_length=30, 
+        regex=REGEX,
+        help_text = 'Required. 30 characters or fewer. Alphanumeric characters only (letters, digits, hyphens and underscores).',
+        error_message = 'This value must contain only letters, numbers, hyphens and underscores.')
+  
+    password = forms.CharField(required=False)
+
+    class Meta:
+        model = User
+        exclude = ('password',)
+
+class MyCustomUserChangeForm(UserChangeForm):
+    username = forms.RegexField(
+        label='Username', 
+        max_length=30, 
+        regex=REGEX,
+        help_text = 'Required. 30 characters or fewer. Alphanumeric characters only (letters, digits, hyphens and underscores).',
+        error_message = 'This value must contain only letters, numbers, hyphens and underscores.')
+  
+    password = forms.CharField(required=False)
+
+    class Meta:
+        model = models.CustomUser
+        exclude = ('password',)
+
+class MyUserAdmin(UserAdmin):
+    form = MyUserChangeForm
+
+admin.site.unregister(User)
+admin.site.register(User, MyUserAdmin)
 
 class ConstituencyAdmin(admin.ModelAdmin):
     prepopulated_fields = {'slug':('name',),}
 
 class CustomUserAdmin(admin.ModelAdmin):
+    form = MyCustomUserChangeForm
     list_display = ('email', 'first_name', 'last_name', 'is_active', 'last_login')
     list_filter = ('constituencies','is_active')
     search_fields = ('first_name', 'last_name', 'email')
