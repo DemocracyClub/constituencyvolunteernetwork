@@ -10,8 +10,8 @@ from tasks.util import reverse_login_key
 from tasks.decorators import task_assign, task_completion
 
 task_slug = "upload-leaflet"
-#tsc_url = "http://www.thestraightchoice.org/addupload.php"
-tsc_url = "/tsc/test"
+tsc_url = "http://www.thestraightchoice.org/addupload.php"
+#tsc_url = "/tsc/test"
 
 @task_completion(task_slug)
 def callback_leaflet_added(sender, **kwargs):
