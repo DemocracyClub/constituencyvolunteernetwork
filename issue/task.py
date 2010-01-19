@@ -54,9 +54,15 @@ def callback_assign(sender, **kwargs):
     user = kwargs['user']
     task = kwargs['task']
 
+    constituencies = None
+    if "constituencies" in kwargs and kwargs['constituencies'] is not None:
+        constituencies = kwargs['constituencies']
+    else:
+        constituencies = user.current_constituencies
+
     current_site = Site.objects.get_current()
     assigned = []
-    for constituency in user.current_constituencies:
+    for constituency in constituencies:
         kwargs = {'constituency': constituency.slug}
         add_issue_url = reverse("add_issue", kwargs=kwargs)
         try:                

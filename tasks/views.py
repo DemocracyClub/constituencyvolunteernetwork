@@ -171,3 +171,31 @@ def admin_assign_all(request):
     
     return render_with_context(request, 'tasks/task_admin.html', context)
 
+@login_required
+@permission_required('tasks.add_taskuser')
+def admin_assign_constituency(request):
+    from forms import AssignConstituency
+    from signup.models import CustomUser
+    
+    context = {}
+
+    if request.method == "POST":
+        form = AssignConstituency(request.POST, request.FILES)
+        if form.is_valid():
+            constituencies = form.cleaned_data['constituencies']
+            all_users = CustomUser.objects.filter(constituencies__in=constituencies)
+            
+            context['message'] = []
+            for task in form.cleaned_data['tasks']:
+                (assigned, already_assigned) = TaskUser.objects.trigger_assign(task, all_users, constituencies)
+                task_string = "%s in %s" % (task, constituencies)
+                context['message'].append((task_string, assigned, already_assigned))
+            
+            context['form'] = form
+        else:
+            context['form'] = form
+    else:
+        context['form'] = AssignConstituency()
+    
+    return render_with_context(request, 'tasks/task_admin.html', context)
+

@@ -11,4 +11,5 @@ user_leave_constituency = django.dispatch.Signal(providing_args=["user", "consti
 
 # For a management command to go through checking a task on all existing users
 user_touch = django.dispatch.Signal(providing_args = ["user",
-                                                      "task_slug"])
+                                                      "task_slug",
+                                                      "constituencies"])

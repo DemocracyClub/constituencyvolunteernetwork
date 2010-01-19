@@ -1,7 +1,8 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h2>Assign tasks to everyone</h2>
+<h2>Assign tasks</h2>
+<a href='{% url admin_assign_all %}'>To everyone</a> | <a href='{% url admin_assign_constituency %}'>By constituency</a>
 
 {% for task, assigned, already_assigned in message %}
 {% if assigned %}
