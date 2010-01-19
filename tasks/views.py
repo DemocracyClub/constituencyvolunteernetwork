@@ -104,7 +104,7 @@ def start_task(request, slug, constituency=None):
             url += "?callback=" + urlquote(task_user.post_url)
         return HttpResponseRedirect(url)
     except TaskUser.DoesNotExist:
-        raise Http404("Task user does not exist")
+        raise Http404("Task user does not exist for task '%s', user '%s', constituency '%s'" % (task, request.user, constituency))
 
 @login_required
 def ignore_task(request, slug, constituency=None):
