@@ -14,12 +14,12 @@
 
 {% else %}
  <h3>
-  Task &mdash; Find local issues candidates at the next
-  election are likely to have differing opinions on
+  Research local issues
  </h3>
 {% endif %}
 
 {% if form %}
+<p>Please help research local issues that might help distinguish between candidates.  If you can't think of anything controversial, something is better than nothing! For more information on how to do this task, and a chance to discuss it with other people, <a href="http://democracyclub.activeboard.com/index.spark?aBID=134686&subForumID=498468&p=2">visit the forum</a> we've set up for this purpose. </p>
     <form action="" method="post" id="signup">
          <div class="fieldWrapper">
             {{ form.constituency.errors }}
@@ -42,7 +42,7 @@
         <div class="fieldWrapper">
             {{ form.reference_url.errors }}
             <label for="id_question">
-                2. Provide a link explaining the issue.
+                2. If possible, please provide a link that shows that this is a real local issue
         </label>
             {{ form.reference_url }}
             <p class="helptext">

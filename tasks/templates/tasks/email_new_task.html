@@ -4,7 +4,13 @@
 <tr>
 <td style="font-family:sans-serif;font-size:1.0em;">
 
-{% autoescape off %}{{ description_text|urlize|linebreaks }}{% endautoescape %}
+<p>
+  <a style="padding:0.5em; border-bottom:1px solid #CCC; background-color:#EEF;" href='{{ task_url }}'>Start this task</a>
+  <a style="padding:0.5em; border-bottom:1px solid #CCC; background-color:#EEF;" href='http://{{ site.domain}}{{ user_profile.get_login_url }}'>Review all my tasks online</a>
+
+</p>
+
+{% autoescape off %}{{ description_text|urlize }}{% endautoescape %}
 
 <p>
   <a style="padding:0.5em; border-bottom:1px solid #CCC; background-color:#EEF;" href='{{ task_url }}'>Start this task</a>

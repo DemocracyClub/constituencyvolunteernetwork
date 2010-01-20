@@ -6,7 +6,9 @@ from signup.models import Constituency, CustomUser
 
 class Issue(models.Model):
     question = models.TextField()
-    reference_url = models.URLField(max_length=2048) # reasonable maximum: http://www.boutell.com/newfaq/misc/urllength.html
+    reference_url = models.URLField(max_length=2048,
+                                    blank=True,
+                                    null=True) # reasonable maximum: http://www.boutell.com/newfaq/misc/urllength.html
     constituency = models.ForeignKey(Constituency)
     created_by = models.ForeignKey(CustomUser)
 

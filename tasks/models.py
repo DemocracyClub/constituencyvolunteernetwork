@@ -33,6 +33,7 @@ class Task(Model):
         list of users doing the task
     """
     name = models.CharField(max_length=80)
+    email_subject = models.CharField(max_length=80)
     slug = models.SlugField(max_length=80)
     project = models.ForeignKey(Project)
     description = models.TextField()
@@ -285,7 +286,6 @@ class TaskUser(Model):
         task = self.task
         user_profile = user.registrationprofile_set.get()
         current_site = Site.objects.get_current()
-        subject = "%s - from Democracy Club" % self.task.name
 
         task_url = "http://%s%s" % (current_site.domain,
                                     reverse_login_key('start_task',
@@ -315,7 +315,7 @@ class TaskUser(Model):
                                    email_context)
 
         # Now using EmailMultiAlternatives to send HTML version
-        msg = EmailMultiAlternatives(subject,
+        msg = EmailMultiAlternatives(task.email_subject,
                                      message,
                                      settings.DEFAULT_FROM_EMAIL,
                                      [user.email, ])
