@@ -7,6 +7,7 @@ from django.core.management.base import CommandError
 from signup.models import CustomUser
 from signup.signals import user_touch
 from tasks.models import TaskUser
+from tasks.models import Task
 
 class Command(BaseCommand):
     option_list =  BaseCommand.option_list + (
@@ -44,9 +45,23 @@ class Command(BaseCommand):
             msg = "user %s" % user
             if args[0] == "touch":
                 msg += "\n  touching:"
-                if not dry_run:
-                    responses = user_touch.send(self, user=user,
-                                                task_slug=task_slug)
+                responses = []
+                if task_slug:
+                    if dry_run:
+                        print task_slug
+                    else:
+                        responses = user_touch.send(self,
+                                                    user=user,
+                                                    task_slug=task_slug)
+                else:
+                    for task in Task.objects.all():
+                        if dry_run:
+                            print  task.slug
+                        else:
+                            result = user_touch.send(self,
+                                                     user=user,
+                                                     task_slug=task.slug)
+                            responses.extend(result)
                     msg += "\n  ".join([x[1] for x in responses\
                                         if x[1]])
             elif args[0] == "email":
