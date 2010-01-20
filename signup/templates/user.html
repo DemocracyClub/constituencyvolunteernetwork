@@ -10,7 +10,7 @@
 <h2>{{ profile_user.display_name }}</h2>
 
 {{ profile_user.display_name }} is in 
-{% for c in profile_user.constituencies.all %}
+{% for c in profile_user.current_constituencies.all %}
 {% if forloop.last and not forloop.first %}and {% endif %}
 <a href="{% url constituency c.slug %}">{{ c.name }}</a>{% if not forloop.last %}, 
 {% endif %}
