@@ -13,7 +13,7 @@ from tasks.util import reverse_login_key
 from tasks.decorators import task_assign, task_completion
 from signup.models import Constituency
 
-task_slug = "add-issue"
+task_slug = "research-local-issues"
 
 @task_completion(task_slug)
 def callback_issue_added(sender, **kwargs):

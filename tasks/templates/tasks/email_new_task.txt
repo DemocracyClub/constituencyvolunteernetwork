@@ -6,7 +6,7 @@ There is a new task available for you on Democracy Club:
 
 {{ description_text }}
 
-Start the task by clicking here: http://{{ site.domain }}{% url start_task slug=task.slug,login_key=user_profile.activation_key %}
+Start the task by clicking here: {{ task_url  }}
 
 Thanks,
 Democracy Club

@@ -71,7 +71,7 @@ def task(request, slug, constituency=None):
             context['usertasks'] = items.filter(task=context['task'],
                                                 user=request.user)
     else:
-        context['usertask'] = None
+        context['usertasks'] = None
 
     started_tu = TaskUser.objects.filter(task=context['task'],\
                                          state=TaskUser.States.started)
@@ -104,7 +104,7 @@ def start_task(request, slug, constituency=None):
             url += "?callback=" + urlquote(task_user.post_url)
         return HttpResponseRedirect(url)
     except TaskUser.DoesNotExist:
-        raise Http404()
+        raise Http404("Task user does not exist for task '%s', user '%s', constituency '%s'" % (task, request.user, constituency))
 
 @login_required
 def ignore_task(request, slug, constituency=None):

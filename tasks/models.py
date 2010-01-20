@@ -192,59 +192,56 @@ class TaskUser(Model):
     
     task_state_string = dict(States.strings)
 
-    def description_link(self):
-        href = '<a class="usertask" href="%s">%s</a>'
+    # internal helper, returns dictionary of URL construction arguments
+    def _get_kwargs(self):
         kwargs = {'slug': self.task.slug}
-        name = self.task.name
         if self.constituency:
             kwargs['constituency'] = self.constituency.slug
+        return kwargs
+
+    def description_link(self):
+        href = '<a class="usertask" href="%s">%s</a>'
+        name = self.task.name
+        if self.constituency:
             name += " in %s" % self.constituency.name
-        return href % (reverse("task", kwargs=kwargs),
-                       name)
+        return href % (reverse("task", kwargs=self._get_kwargs()), name)
 
     def get_absolute_url(self):
-        if self.constituency:
-            return reverse("task", kwargs={'slug': self.task.slug,
-                                    'constituency': self.constituency.slug})
-        else:
-            return reverse("task", kwargs={'slug': self.task.slug})
+        return reverse("task", kwargs=self._get_kwargs())
 
     def transition_links(self):
         links = []
         href = '<a href="%s" class="action %s">%s</a>'
-        kwargs = {'slug': self.task.slug}
-        if self.constituency:
-            kwargs['constituency'] = self.constituency.slug
         if self.state == self.States.assigned:
-            url = reverse("start_task", kwargs=kwargs)
+            url = reverse("start_task", kwargs=self._get_kwargs())
             links.append(href % (url,
                                 "start-task",
                                  "Begin task"))
         elif self.state == self.States.started:
-            url = reverse("start_task", kwargs=kwargs)
+            url = reverse("start_task", kwargs=self._get_kwargs())
             links.append(href % (url,
                                 "start-task",
                                  "Resume"))
-            url = reverse("complete_task", kwargs=kwargs)
+            url = reverse("complete_task", kwargs=self._get_kwargs())
             links.append(href % (url,
                                  "complete-task",
                                  "Done"))
         elif self.state == self.States.ignored:
-            url = reverse("unignore_task", kwargs=kwargs)
+            url = reverse("unignore_task", kwargs=self._get_kwargs())
             links.append(href % (url,
                                  "unignore-task",
                                  "unignore"))
         elif self.state == self.States.completed:
             links.append('<span class="completed">' \
                          + 'You have completed this task!</span>') 
-            url = reverse("start_task", kwargs=kwargs)
+            url = reverse("start_task", kwargs=self._get_kwargs())
             links.append(href % (url,
                                 "start-task",
                                  "Start it again"))
 
         if self.state in [self.States.assigned, self.States.started]:
             url = reverse("ignore_task",
-                          kwargs=kwargs)
+                          kwargs=self._get_kwargs())
             links.append(href % (url,
                                  "ignore-task",
                                  "Ignore"))
@@ -293,11 +290,11 @@ class TaskUser(Model):
         task_url = "http://%s%s" % (current_site.domain,
                                     reverse_login_key('start_task',
                                                       user,
-                                                      kwargs={'slug': task.slug}))
+                                                      kwargs=self._get_kwargs()))
         post_url = "http://%s%s" % (current_site.domain,
                                     reverse_login_key('complete_task',
                                                       user,
-                                                      kwargs={'slug': task.slug}))
+                                                      kwargs=self._get_kwargs()))
 
         description_text = task.email % \
             {'task_url': task_url,
