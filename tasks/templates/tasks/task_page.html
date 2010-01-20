@@ -17,10 +17,10 @@
       {% autoescape off %}
         {{ task.description|urlize|linebreaks }}
       {% endautoescape %}
-      {% if not constituency %}{% ifequal usertasks.count 1 %}{% else %}You are doing this task in more than one constituency{% endifequal %}{% endif %}
     </div>
 
     {% if usertasks %}
+        {% if not constituency %}{% ifequal usertasks.count 1 %}{% else %}You are doing this task in more than one constituency{% endifequal %}{% endif %}
         {% for usertask in usertasks %}
         {% if usertask.constituency %}{% if not constituency %}<h4>In <a href='{% url task slug=task.slug,constituency=usertask.constituency.slug %}'>{{ usertask.constituency.name }}</a></h4>{% endif %}{% endif %}
         <div class="actions">
@@ -35,10 +35,13 @@
     {% if started_users %}
     <ul class="taskusers">
     {% with started_users as users %}
+    {% with usertasks as show_email %}
         {% include "user_list.html" %}
     {% endwith %}
-    {% endif %}
+    {% endwith %}
     </ul>
+    <p class="quiet">Email addresses are only shown if you are doing this task</p>
+    {% endif %}
 
     <div class="quiet"><h3>How do tasks work?</h3>
     <p>When we or other organisations suggest a task that you can do we will send you an email. This email will contain links to either start the task, say you've completed the task, or to ignore the task. You can also do this by logging in and looking at the list of tasks on the tasks page, or the task currently displayed on the home page.</p>

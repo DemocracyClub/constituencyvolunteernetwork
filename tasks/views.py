@@ -71,7 +71,7 @@ def task(request, slug, constituency=None):
             context['usertasks'] = items.filter(task=context['task'],
                                                 user=request.user)
     else:
-        context['usertask'] = None
+        context['usertasks'] = None
 
     started_tu = TaskUser.objects.filter(task=context['task'],\
                                          state=TaskUser.States.started)

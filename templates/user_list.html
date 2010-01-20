@@ -3,7 +3,7 @@
 <ul class="users">
 {% for user in users %}
     {% if user.can_cc %}
-        <li>{{ user.display_name }}</li>
+        <li>{{ user.display_name }}{% if show_email %}{% if user.can_cc %} (<a href='mailto:{{ user.email }}'>{{ user.email }}</a>){% endif %}{% endif %}</li>
     {% else %}
         <li>Hidden user</li>
     {% endif %}

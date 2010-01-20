@@ -140,6 +140,10 @@ class CustomUser(User):
         else:
             name = self.email
         return name
+
+    @property
+    def safe_email(self):
+        return self.email.replace("@", " at ")
     
     def __unicode__(self):
         return self.email
