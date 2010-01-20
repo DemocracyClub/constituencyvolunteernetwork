@@ -10,12 +10,15 @@ from task import task_slug
 from tasks.util import login_key
 from forms import AddIssueForm
 import signals
+import settings
 
 @login_key
 @login_required
 def add_issue(request, constituency=None, submitted=False):
     if constituency:
-        c = Constituency.objects.get(slug=constituency)
+        year = settings.CONSTITUENCY_YEAR
+        c = Constituency.objects.get(slug=constituency,
+                                     year=year)
     else:
         c = None
     issues = Issue.objects.filter(constituency=c)\
