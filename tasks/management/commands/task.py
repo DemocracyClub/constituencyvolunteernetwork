@@ -50,11 +50,16 @@ class Command(BaseCommand):
                     msg += "\n  ".join([x[1] for x in responses\
                                         if x[1]])
             elif args[0] == "email":
+                emailed_on_this_round = []
                 for task in TaskUser.objects.filter(emails_sent=0,
                                                     user=user):
-                    msg += "\n  emailing about %s" % task.task.slug
-                    if not dry_run:
-                        task.send_email()
+                    if user.email not in emailed_on_this_round:
+                        msg += "\n  emailing about %s" % task.task.slug
+                        if not dry_run:
+                            task.send_email()
+                        emailed_on_this_round.append(user.email)
+                    else:
+                        msg += "\n   already emailed today"
                     
             print msg
 
