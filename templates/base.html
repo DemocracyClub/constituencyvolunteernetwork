@@ -56,7 +56,7 @@
         <div id="main" class="container">
           {% if constituency %}
           <div id="constituency-header">
-            <a href='http://www.theyworkforyou.com/mp/?c={{constituency.name|urlencode}}' style="float:right;" target="_blank">{{constituency.name}} at TheyWorkForYou.com</a>
+            <!-- Not current working due to new constituencies: <a href='http://www.theyworkforyou.com/mp/?c={{constituency.name|urlencode}}' style="float:right;" target="_blank">{{constituency.name}} at TheyWorkForYou.com</a>-->
             <h2><a href='{{ constituency.get_absolute_url }}'>{{ constituency.name }}</a></h2>
           </div>
           {% endif %}
