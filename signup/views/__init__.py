@@ -154,8 +154,10 @@ def place_search(place):
     return results
 
 
-@login_required
-def add_constituency(request):
+def _get_nearby_context(request):
+    """Returns a context suitable for displaying and searching lists of
+    nearby constituencies
+    """
     my_constituencies = []
     if request.user.ordered_constituencies:
         my_constituencies = request.user.ordered_constituencies.all()
@@ -195,21 +197,27 @@ def add_constituency(request):
                     "Please enter a postcode or place name", [])
             else:
                 context["search_results"] = place_search(place)
-
+    return context
+    
+@login_required
+def add_constituency(request):
+    context = _get_nearby_context(request)
     # adding another constituency
     if request.method == "POST":
         if request.POST.has_key('add') and request.POST.has_key('add_c'):
             add_c = request.POST.getlist('add_c')
             if type(add_c) != types.ListType:
                 add_c = [add_c]
-            constituencies = Constituency.objects.all().filter(slug__in=add_c)
-            constituencies = constituencies.exclude(pk__in=my_constituencies)
+            constituencies = Constituency.objects.all()\
+                             .filter(slug__in=add_c)
+            mine = context['my_constituencies']
+            constituencies = constituencies.exclude(pk__in=mine)
             request.user.constituencies.add(*constituencies.all())
             request.user.save()
-            signals.user_join_constituency.send(None,
-                                                user=request.user,
-                                                constituencies=constituencies.all())
-
+            sig = signals.user_join_constituency
+            sig.send(None,
+                     user=request.user,
+                     constituencies=constituencies.all())
             return HttpResponseRedirect("/add_constituency/")
 
     return render_with_context(request,
@@ -217,6 +225,7 @@ def add_constituency(request):
                                context)
 
 def constituency(request, slug, year=None):
+    context = _get_nearby_context(request)
     from tasks.models import TaskUser
 
     if year:
@@ -227,11 +236,10 @@ def constituency(request, slug, year=None):
     try:
         constituency = Constituency.objects.all()\
                        .filter(slug=slug, year=year).get()
+        context['constituency'] = constituency
     except Constituency.DoesNotExist:
         raise Http404
-
     if request.method == "POST":
-        context = {'constituency': constituency}
         within_km = int(request.POST['within_km'])
         nearest = constituency.neighbors(limit=100,
                                          within_km=within_km)
@@ -255,7 +263,6 @@ def constituency(request, slug, year=None):
                                    'constituency_email.html',
                                    context)
     else:
-        context = {'constituency': constituency}
         latspan = lonspan = 1
         missing = models.filter_where_customuser_fewer_than(1)
         missing_neighbours = constituency.neighbors(

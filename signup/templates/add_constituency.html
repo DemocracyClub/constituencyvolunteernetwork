@@ -22,36 +22,8 @@
 {% endif %}
 </div>
 <div class="span-4 last">
-  <div id="search-constituency">
-    <h2>Help in another constituency</h2>
-    <form method="get" action="#search">
-      <div id="place-search">
-	<label for="q">Search for a constituency by place name or postcode:</label>
-	<input type="text" value="{{request.GET.q}}" name="q" id="q" size="15" />
-	<input type="submit" name="search" value="search" />
-      </div>
-    </form>
-    <form method="post" action="">
-      <p>Tick constituencies that you want to join, then scroll to the bottom of the page and click the "add" button.</p>
-      {% for feedback, constituencies in search_results %}
-      <div>{{ feedback }}</div>
-      <ul id="constituency-list">
-      {% for c in constituencies %}
-	<li><input name="add_c" type="checkbox" value="{{ c.slug }}" />{{ c.name }}</li>
-      {% endfor %}
-      </ul>
-      {% endfor %}
-      {% for feedback, constituencies in missing_search_results %}
-      <div>{{ feedback }}</div>
-      <ul id="constituency-list">
-      {% for c in constituencies %}
-	<li><input name="add_c" type="checkbox" value="{{ c.slug }}" />{{ c.name }}</li>
-      {% endfor %}
-      </ul>
-      {% endfor %}
-      <input type="submit" name="add" value="add ticked constituencies" />
-</form>
-  </div> 
+
+{% include "more_constituencies_form.html" %}
 
 </div>
 
