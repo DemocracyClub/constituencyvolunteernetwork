@@ -9,8 +9,8 @@ from models import Badge
 from signup.models import CustomUser, Constituency
 from signup.views import render_with_context
 from signup.views import _get_statistics_context
-
 from tasks.util import login_key
+import settings
 
 @login_required
 def home(request):
@@ -53,7 +53,12 @@ def task(request, slug, constituency=None):
     context['task'] = Task.objects.get(slug=slug)
 
     if constituency is not None:
-        context['constituency'] = Constituency.objects.get(slug=constituency)
+        year = settings.CONSTITUENCY_YEAR
+        c = Constituency.objects.get(slug=constituency,
+                                     year=year)
+        context['constituency'] = Constituency.objects\
+                                  .get(slug=constituency,
+                                       year=year)
     else:
         context['constituency'] = None;
     

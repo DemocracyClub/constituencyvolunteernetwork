@@ -96,7 +96,9 @@ def home2(request):
 
 @login_required
 def delete_constituency(request, slug):
-    c = Constituency.objects.get(slug=slug)
+    year = settings.CONSTITUENCY_YEAR
+    c = Constituency.objects.get(slug=slug,
+                                 year=year)
     request.user.constituencies.remove(c)
     request.user.save()
     return HttpResponseRedirect(reverse('add_constituency'))
