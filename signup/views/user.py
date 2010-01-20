@@ -63,5 +63,7 @@ def email_reminder(request):
             profile = user.registrationprofile_set.get()
             profile.send_activation_email()
             messages.append("Activation email re-sent. Please check your %s inbox. If it isn't there, check your spam folders" % email)
-        
-    return render_with_context(request, "email_reminder.html", {})
+    context = {'messages':messages}
+    return render_with_context(request,
+                               "email_reminder.html",
+                               context) 
