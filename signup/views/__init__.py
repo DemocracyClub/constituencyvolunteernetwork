@@ -167,8 +167,9 @@ def _get_nearby_context(request):
     if len(my_constituencies) > 0:
         try:
             const = my_constituencies[0]
-            all_const = Constituency.objects.exclude(
-                pk__in=my_constituencies)
+            year = settings.CONSTITUENCY_YEAR
+            all_const = Constituency.objects.filter(year=year)
+            all_const = all_const.exclude(pk__in=my_constituencies)
             neighbours = const.neighbors(limit=5,
                                          constituency_set=all_const)
             missing = models.filter_where_customuser_fewer_than(1)
