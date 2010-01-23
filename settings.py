@@ -107,7 +107,7 @@ MIGRATIONS_ROOT = os.path.join(PROJECT_PATH, 'migrations')
 LOGIN_URL = "/"                           
 
 import datetime
-CONSTITUENCY_YEAR = datetime.datetime(2009, 1, 1)
+CONSTITUENCY_YEAR = datetime.datetime(2010, 1, 1)
 
 ACCOUNT_ACTIVATION_DAYS = 40
 

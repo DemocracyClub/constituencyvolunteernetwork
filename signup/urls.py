@@ -42,10 +42,10 @@ urlpatterns = patterns('casestudies',
         views.statistics.statistics,
         name="statistics"),
     url(r'^statistics/heatmap.svg$',
-        views.statistics.generate_map,
+        views.statistics.generate_map_2010,
         name="map"),
     url(r'^statistics/(?P<date>[\w-]+)/heatmap.svg$',
-        views.statistics.generate_map,
+        views.statistics.generate_map_2010,
         name="map_on_date"),
                       
 )
