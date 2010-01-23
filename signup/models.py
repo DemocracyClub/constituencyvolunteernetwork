@@ -161,7 +161,7 @@ class RegistrationManager(models.Manager):
     keys), and for cleaning out expired inactive accounts.
     
     """
-    def activate_user(self, activation_key):
+    def activate_user(self, profile):
         """
         Validate an activation key and activate the corresponding
         ``User`` if valid.
@@ -169,8 +169,8 @@ class RegistrationManager(models.Manager):
         # Make sure the key we're trying conforms to the pattern of a
         # SHA1 hash; if it doesn't, no point trying to look it up in
         # the database.
-        profile = self.get_user(activation_key,
-                                only_activated=False)
+        #profile = self.get_user(activation_key,
+        #                        only_activated=False)
         if profile and not profile.activated and \
                not profile.activation_key_expired():
             user = profile.user
@@ -179,7 +179,7 @@ class RegistrationManager(models.Manager):
             profile.activated = True
             profile.save()
             signals.user_activated.send(self, user=user)
-            return profile
+            return True
         else:
             return False
 

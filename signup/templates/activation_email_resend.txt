@@ -8,7 +8,7 @@ We're assuming most people who didn't confirm their accounts forgot, or that the
 
 Please confirm your interest by following this link:
 
-http://{{ site.domain }}{% url activate key=activation_key %}
+http://{{ site.domain }}{% url login key=activation_key %}
 
 Thanks,
 

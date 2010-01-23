@@ -8,30 +8,35 @@ import signup.signals as signals
 
 from utils import addToQueryString
 
+def _login(request, profile):
+    user = authenticate(username=profile.user.email)
+    login(request, user)
+    signals.user_login.send(None, user=user)
+
 def do_login(request, key):
-    profile = RegistrationProfile.objects.get_user(key)
-    if profile:
-        user = authenticate(username=profile.user.email)
-        login(request, user)
-        signals.user_login.send(None, user=user)
-    return HttpResponseRedirect("/")
+    profile = RegistrationProfile.objects.get_user(key, only_activated=False)
+
+    error = notice = ""
+
+    if not profile:
+        error = "Sorry, that key was invalid"
+    elif not profile.activated:
+        if not RegistrationProfile.objects.activate_user(profile):
+            error = "Sorry, that key was invalid"
+        else:
+            notice = "Thank you for confirming your email address"
+            _login(request, profile)
+    else:
+        _login(request, profile)
+    
+    context = {'error': error,
+               'notice': notice}
+    
+    return HttpResponseRedirect(addToQueryString("/", context))
 
 def do_logout(request):
     logout(request)
     return HttpResponseRedirect("/")
-
-def activate_user(request, key):
-    profile = RegistrationProfile.objects.activate_user(key)
-    error = notice = ""
-    if not profile:
-        error = "Sorry, that key was invalid"
-    else:
-        notice = "Thanks, you've successfully confirmed your email"
-        user = authenticate(username=profile.user.email)
-        login(request, user)
-    context = {'error': error,
-               'notice': notice}
-    return HttpResponseRedirect(addToQueryString("/", context))
 
 def user(request, id):
     from tasks.models import TaskUser # Import here to avoid circular dependency
