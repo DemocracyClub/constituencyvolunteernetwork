@@ -43,6 +43,8 @@ def do_logout(request):
 def unsubscribe(request, key):
     profile = RegistrationProfile.objects.get_user(key, only_activated=False)
     
+    error = notice = ""
+
     if RegistrationProfile.objects.deactivate_user(profile):
         notice = "Your user account has been deactivated and will no longer receive emails"
     else:
