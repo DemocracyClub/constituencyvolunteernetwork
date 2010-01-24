@@ -1,7 +1,9 @@
 from django.contrib.auth import authenticate, login, logout
-
 from django.shortcuts import render_to_response, get_object_or_404
 from django.http import HttpResponseRedirect, Http404, HttpResponse
+from django.contrib.auth.decorators import login_required
+
+from signup.forms import EditUserForm
 from signup.models import CustomUser, RegistrationProfile
 from signup.views import render_with_context
 import signup.signals as signals
@@ -38,6 +40,19 @@ def do_logout(request):
     logout(request)
     return HttpResponseRedirect("/")
 
+def unsubscribe(request, key):
+    profile = RegistrationProfile.objects.get_user(key, only_activated=False)
+    
+    if RegistrationProfile.objects.deactivate_user(profile):
+        notice = "Your user account has been deactivated and will no longer receive emails"
+    else:
+        error = "Invalid key"
+
+    context = {'error': error,
+               'notice': notice}
+    
+    return HttpResponseRedirect(addToQueryString("/", context))
+
 def user(request, id):
     from tasks.models import TaskUser # Import here to avoid circular dependency
     
@@ -53,6 +68,32 @@ def user(request, id):
     return render_with_context(request,
                                'user.html',
                                context)
+
+@login_required
+def edit_user(request, id):
+    if request.user.id != id and not request.user.has_perm("signup.edit_customuser"):
+        return HttpResponse(status=403)
+    else:
+        data = None
+        user = CustomUser.objects.get(pk=id)
+        
+        if request.method == "POST":
+            data = request.POST
+        else:
+            data = user.__dict__
+
+        form = EditUserForm(user, data)
+
+        notice = ""
+
+        if request.method == "POST":
+            if form.is_valid():
+                user = form.save()
+                notice = "User profile saved"
+        
+        context = {'form': form, 'edit_user': user, 'notice': notice,}
+
+        return render_with_context(request, "user_edit.html", context)
 
 def email_reminder(request):
     messages = []

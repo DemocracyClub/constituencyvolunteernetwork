@@ -7,6 +7,9 @@
 
 {% block content %}
 
+{% ifequal user profile_user %}
+<a style="float:right" href="{% url edit_user id=profile_user.id %}">Edit profile</a>
+{% endifequal %}
 <h2>{{ profile_user.display_name }}</h2>
 
 {{ profile_user.display_name }} is in 

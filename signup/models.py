@@ -183,6 +183,18 @@ class RegistrationManager(models.Manager):
         else:
             return False
 
+    def deactivate_user(self, profile):
+        if profile:
+            user = profile.user
+            user.is_active = False
+            user.save()
+            profile.activated = False
+            profile.save()
+            signals.user_deactivated.send(self, user=user)
+            return True
+        else:
+            return False
+
     def get_user(self, activation_key, only_activated=True):
         profile = None
         if SHA1_RE.search(activation_key):

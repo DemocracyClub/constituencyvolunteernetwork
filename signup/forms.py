@@ -77,3 +77,31 @@ class UserForm(TemplatedForm):
         profile = RegistrationProfile.objects.create_profile(user)
         signals.user_join.send(self, user=user)
         return profile
+
+class EditUserForm(UserForm):
+    def __init__(self, user, data):
+        self.user = user
+        UserForm.__init__(self, data)
+
+    def clean_email(self):
+        if self.user and self.cleaned_data['email'] != self.user.email:
+            return UserForm.clean_email(self)
+        else:
+            return self.cleaned_data['email']
+
+    def save(self, domain_override=""):
+        """
+        Create the new ``User`` and ``RegistrationProfile``, and
+        returns the ``User`` (by calling
+        ``RegistrationProfile.objects.create_inactive_user()``).
+        
+        """
+        self.user.email = self.cleaned_data['email']
+        self.user.postcode = self.cleaned_data['postcode']
+        self.user.can_cc = self.cleaned_data['can_cc']
+        self.user.first_name = self.cleaned_data['first_name']
+        self.user.last_name = self.cleaned_data['last_name']
+        self.user.constituencies.add(self.cleaned_data['constituency'])
+        self.user.save()
+        
+        return self.user

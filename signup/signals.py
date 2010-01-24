@@ -4,6 +4,7 @@ import django.dispatch
 user_join = django.dispatch.Signal(providing_args=["user"])
 user_activated = django.dispatch.Signal(providing_args=["user"])
 user_login = django.dispatch.Signal(providing_args=["user"])
+user_deactivated = django.dispatch.Signal(providing_args=["user"])
 
 # Constituency Signals
 user_join_constituency = django.dispatch.Signal(providing_args=["user", "constituencies"])
