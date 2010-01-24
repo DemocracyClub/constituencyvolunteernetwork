@@ -120,7 +120,10 @@ def generate_map_2010(request, date=None):
                     constituency = Constituency.objects.get(slug=slug,year=year)
                 except Constituency.DoesNotExist:
                     slug = slug.replace("-and", "")
-                    constituency = Constituency.objects.get(slug=slug,year=year)
+                    try:
+                        constituency = Constituency.objects.get(slug=slug,year=year)
+                    except Constituency.DoesNotExist:
+                        pass
                 
             if constituency:
                 level = 'none'

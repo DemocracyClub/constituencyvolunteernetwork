@@ -144,7 +144,7 @@ class TestSignup(TestCase):
     def test_validate_fields(self):
         """ Various field validations """
         crewe = Constituency.objects.create(
-            name="Crewe & Nantwich",
+            name="Crewe and Nantwich",
             year = this_year)
         tests = [{'form':{},
                   'expect':'This field is required'},
@@ -158,7 +158,7 @@ class TestSignup(TestCase):
                   'expect':'Unknown postcode'},
                  {'form':{'email':'321@mailinator.com',
                           'postcode':'cw16ar'},
-                  'expect':'thanks for joining'},]
+                  'expect':'thanks for joining Democracy Club!'},]
         for test in tests:
             response = self.client.post("/", test['form'],
                                         follow=True)
@@ -421,6 +421,9 @@ class TestFlatPages(TestCase):
         
 class TestConstituencyMap(TestCase):
     def setUp(self):
+        durham = Constituency.objects.create(
+            name="City of Durham",
+            year=this_year)
         crewe = Constituency.objects.create(
             name="Crewe & Nantwich",
             year=this_year)
@@ -436,5 +439,5 @@ class TestConstituencyMap(TestCase):
     def test_map(self):
         """ Checks that flatpages work """
         response = self.client.get("/statistics/heatmap.svg")
-        self.assertContains(response, '<path id="seat-166" class="none')
-        self.assertContains(response, '<path id="seat-167" class="level1')
+        self.assertContains(response, 'id="City_of_Durham" class="none')
+        self.assertContains(response, 'id="Crewe_and_Nantwich" class="level1')
