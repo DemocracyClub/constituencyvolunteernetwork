@@ -159,7 +159,7 @@ def _get_nearby_context(request):
     nearby constituencies
     """
     my_constituencies = []
-    if request.user.ordered_constituencies:
+    if hasattr(request.user, 'ordered_constituencies'):
         my_constituencies = request.user.ordered_constituencies.all()
     context = {'my_constituencies': my_constituencies}
     context['constituencies'] = []
