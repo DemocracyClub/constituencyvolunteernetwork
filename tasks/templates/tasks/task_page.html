@@ -29,6 +29,8 @@
           {% endfor %}
         </div>
         {% endfor %}
+    {% else %}
+        <p><em>Sorry, you can't do this task yet. We'll email when you it's available; we're not quite ready!</em></p>
     {% endif %}
 </div>
     <h3>{{ started_users.count }} {% ifequal started_users.count 1 %}person{% else %}people{% endifequal %} currently doing this task{% if constituency %} in {{ constituency.name }}{% endif %}</h3>
