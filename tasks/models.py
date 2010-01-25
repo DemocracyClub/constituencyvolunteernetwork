@@ -7,6 +7,7 @@ from django.core.urlresolvers import reverse
 
 from signup.models import Model, CustomUser
 from signup.models import Constituency
+from signup.signals import user_leave_constituency
 
 from tasks.util import reverse_login_key
 import signals
@@ -332,6 +333,14 @@ class TaskUser(Model):
             assignment/suggestion of a task which a user already has
         """
         pass
+
+def callback_user_left_constituency(sender, **kwargs):
+    constituencies = kwargs['constituencies']
+    user = kwargs['user']
+
+    TaskUser.objects.filter(user=user, constituency__in=constituencies).delete()
+
+user_leave_constituency.connect(callback_user_left_constituency)
 
 class Badge(Model):
     name = models.CharField(max_length=80)

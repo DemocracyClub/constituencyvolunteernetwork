@@ -101,6 +101,11 @@ def delete_constituency(request, slug):
                                  year=year)
     request.user.constituencies.remove(c)
     request.user.save()
+
+    signals.user_leave_constituency.send(None,
+                                         user=request.user,
+                                         constituencies=[c])
+    
     return HttpResponseRedirect(reverse('add_constituency'))
 
 

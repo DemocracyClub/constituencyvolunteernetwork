@@ -118,7 +118,10 @@ class CustomUser(User):
     @property
     def home_constituency(self):
         "Return the first constituency the user subscribed to"
-        return self.ordered_constituencies[0]
+        if len(self.ordered_constituencies) > 0:
+            return self.ordered_constituencies[0]
+        else:
+            return {"name": "no constituency",} # hack
         
     @property
     def display_name(self):
