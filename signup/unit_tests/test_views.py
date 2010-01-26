@@ -34,13 +34,13 @@ users = [{'email':'f@mailinator.com',
          ]
 
 this_year = settings.CONSTITUENCY_YEAR
-last_year = settings.CONSTITUENCY_YEAR - datetime.timedelta(365)
+last_year = datetime.datetime(2009, 1, 1)
 constituencies = [{'name':'Glasgow North',
                    'year':this_year,
                    'lat':53.2797662137,
                    'lon':-2.38760476605,
                    },
-                  {'name':'Holborn & St Pancras',
+                  {'name':'Holborn and St Pancras',
                    'year':this_year,
                    'lat':53.2797662137,
                    'lon':-2.38760476605,
@@ -107,7 +107,7 @@ class ViewsTestCase(TestCase):
         response = self.client.get("/logout/", follow=True)
         response = self.client.post("/", users[1], follow=True)
         response = self.client.get("/", follow=True) # twice to skip
-                                                     # invite step 
+                                                     # invite step
         self._hack_confirm(users[1])
         response = self.client.get("/", follow=True) 
         self.assertTrue(users[1]['first_name'] in page_content(response.content))
@@ -134,9 +134,10 @@ class ViewsTestCase(TestCase):
         
         response = self.client.get("/add_constituency/")
         self.assertTrue(u"Join" in page_title(response.content))
-        self.assertTrue(cgi.escape(self.constituencies[2].name) in page_content(response.content))
+        # constituencies[1] is the name in the current year
+        self.assertTrue(cgi.escape(self.constituencies[1].name) in page_content(response.content))
         
-        response = self.client.get(self.constituencies[2].get_absolute_url())
+        response = self.client.get(self.constituencies[1].get_absolute_url())
         self.assertTrue(u"2 vol" in page_content(response.content))
         
 
