@@ -22,10 +22,10 @@ class TestTSCAssignment(TestCase):
         """
             Test that the invite task is assigned to all users on activation
         """
-        response = self.client.post("/", users[0]) # Gives "Can't find Glasgow North" error?
-        self.assertRedirects(response, '/welcome', 200)
+        response = self.client.post("/", users[0], follow=True) # Gives "Can't find Glasgow North" error?
+        self.assertRedirects(response, '/welcome', status_code=302, target_status_code=200)
 
-        user = CustomUser.objects.get(username="f")
+        user = CustomUser.objects.get(username="f@mailinator.com")
         user.seen_invite = True
         user.save()
         user_profile = user.registrationprofile_set.get()

@@ -14,7 +14,7 @@ users = [{'email':'f@mailinator.com',
           'can_cc':True,
           'first_name':'f',
           'last_name':'f',
-          'username':'f'},
+          'username':'f@mailinator.com'},
          {'email':'g@mailinator.com',
           'postcode':'WC2H8DN', # Holborn & St Pancras
           'can_cc':True,
