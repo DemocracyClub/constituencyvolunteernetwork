@@ -10,13 +10,13 @@ from tasks.models import Project, Task, TaskUser
 import tasks.views
 
 users = [{'email':'f@mailinator.com',
-          'postcode':'G206BT',
+          'postcode':'G206BT', # Glasgow North
           'can_cc':True,
           'first_name':'f',
           'last_name':'f',
           'username':'f'},
          {'email':'g@mailinator.com',
-          'postcode':'WC2H8DN',
+          'postcode':'WC2H8DN', # Holborn & St Pancras
           'can_cc':True,
           'first_name':'g',
           'last_name':'g',
