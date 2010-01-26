@@ -11,7 +11,7 @@ class TestTSCAssignment(TestCase):
     """
         Makes sure the invite task is assigned to users on sign up
     """
-    fixtures = ['test_tasks.json', 'example_data.json']
+    fixtures = ['test_tasks.json', 'test_constituencies.json']
 
     def setUp(self):
         """
