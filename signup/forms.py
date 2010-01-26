@@ -46,7 +46,7 @@ class UserForm(TemplatedForm):
             if constituency:
                 self.cleaned_data['constituency'] = constituency[0]
             else:
-                raise forms.ValidationError("Internal error: Constituency '%s' not found in DemocracyClub database" % constituency_name)
+                raise forms.ValidationError("Internal error: Constituency '%s', year '%s' not found in DemocracyClub database" % (constituency_name, CONSTITUENCY_YEAR))
         else:
             raise forms.ValidationError("Unknown postcode")
         return code
