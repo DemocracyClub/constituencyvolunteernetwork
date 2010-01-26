@@ -23,7 +23,7 @@ class TestTSCAssignment(TestCase):
             Test that the invite task is assigned to all users on activation
         """
         response = self.client.post("/", users[0]) # Gives "Can't find Glasgow North" error?
-        self.assertEqual(response.status_code, 302)
+        self.assertRedirects(response, '/welcome', 200)
 
         user = CustomUser.objects.get(username="f")
         user.seen_invite = True
