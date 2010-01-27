@@ -323,6 +323,7 @@ class TaskUser(Model):
         msg.attach_alternative(message_html, "text/html")
         msg.send()
         self.emails_sent += 1
+        self.save()
     
     def __unicode__(self):
         return "%s doing %s (%s)" % (self.user, self.task, self.state_string())
