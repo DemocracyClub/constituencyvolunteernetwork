@@ -166,6 +166,8 @@ class Command(BaseCommand):
                 emailed_on_this_round = []
                 for task in TaskUser.objects.filter(emails_sent=0,
                                                     user=user):
+                    if task_slug and task_slug != task.task.slug:
+                        continue
                     if user.email not in emailed_on_this_round:
                         msg += "\n  emailing about %s" % task.task.slug
                         if not dry_run:
