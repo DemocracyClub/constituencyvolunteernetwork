@@ -8,6 +8,8 @@ There is a new task available for you on Democracy Club:
 
 Start the task by clicking here: {{ task_url  }}
 
+Ignore the task by clicking here: {{ ignore_url  }}
+
 Thanks,
 Democracy Club
 

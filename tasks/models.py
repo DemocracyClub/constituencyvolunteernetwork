@@ -292,6 +292,10 @@ class TaskUser(Model):
                                     reverse_login_key('start_task',
                                                       user,
                                                       kwargs=self._get_kwargs()))
+        ignore_url = "http://%s%s" % (current_site.domain,
+                                      reverse_login_key('ignore_task',
+                                                        user,
+                                                        kwargs=self._get_kwargs()))
         post_url = "http://%s%s" % (current_site.domain,
                                     reverse_login_key('complete_task',
                                                       user,
@@ -305,6 +309,7 @@ class TaskUser(Model):
                          'user': user,
                          'task_user': self,
                          'task_url': task_url,
+                         'ignore_url': ignore_url,
                          'post_url': post_url,
                          'description_text': description_text,
                          'site': current_site,
