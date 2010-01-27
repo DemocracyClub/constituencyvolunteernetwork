@@ -80,9 +80,9 @@ class Constituency(Model):
         neighbours = []
         count = 0
         for place, distance in nearest[1:]:
-            if count >= limit:
+            if limit and count >= limit:
                 break
-            if distance > within_km:
+            if within_km and distance > within_km:
                 break
             neighbours.append(place)
             count += 1
@@ -95,7 +95,6 @@ class Constituency(Model):
     class Meta:
         verbose_name_plural = "Constituencies"
         
-    
 class CustomUser(User):
     postcode = models.CharField(max_length=9)
     constituencies = models.ManyToManyField(Constituency)
