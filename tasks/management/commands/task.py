@@ -60,6 +60,10 @@ class Command(BaseCommand):
         make_option('--max-number', '-m', dest='max_number',
                     action="store",
                     help="Maximum number of constituencies to consider"),
+        make_option('--random', '-r', dest='random',
+                    action="store_true",
+                    help=("Pick users at random from those not already "
+                          "assigned a task")),
         make_option('--max-distance', '-d', dest='max_distance',
                     action="store",
                     help="Maximum distance of constituencies to consider"),
@@ -90,16 +94,18 @@ class Command(BaseCommand):
             has_number = options['max_number']
             
             if has_distance and not has_number:
-                raise CommandError("'max-distance' option requires a "
+                raise CommandError("'--max-distance' option requires a "
                                    "postcode")
-            if has_number and not has_distance:
-                raise CommandError("'max-number' option requires a "
-                                   "postcode")
+            if has_number and (not has_distance and not options['random']):
+                raise CommandError("'--max-number' option requires a "
+                                   "postcode or --random flag")
             
         if hasattr(options, 'max_distance') and not near_postcode:
             raise CommandError("'max-distance' option requires a postcode")
-        max_distance = int(options['max_distance'] or 500)
-        max_number = int(options['max_number'] or 100)
+        max_distance = options['max_distance'] \
+                       and int(options['max_distance']) or None
+        max_number = options['max_number'] \
+                     and int(options['max_number']) or None
         if near_postcode:
             constituencies = []
             constituency_name = twfy.getConstituency(near_postcode)
@@ -112,12 +118,17 @@ class Command(BaseCommand):
 
         else:
             users = CustomUser.objects.all()
+        if options['random']:
+            users = users.order_by('?')
         emailfilter = options.get('emailfilter', '')
         if emailfilter:
             users = users.filter(email__icontains=emailfilter)
         task_slug = options.get('task_slug', None)
         dry_run = options.get('dry_run', False)
+        count = 0
         for user in users:
+            if max_number and count == max_number:
+                break
             msg = "user %s" % user
             if args[0] == "touch":
                 msg += "\n  touching:"
@@ -125,19 +136,30 @@ class Command(BaseCommand):
                 if task_slug:
                     if dry_run:
                         print task_slug
+                        count += 1
                     else:
-                        responses = user_touch.send(self,
-                                                    user=user,
-                                                    task_slug=task_slug)
+                        if TaskUser.objects.filter(user=user,
+                                                   task__slug=task_slug):
+                            continue
+                        else:
+                            responses = user_touch.send(self,
+                                                        user=user,
+                                                        task_slug=task_slug)
+                            count += 1
                 else:
                     for task in Task.objects.all():
                         if dry_run:
-                            print  task.slug
+                            print task.slug
+                            count += 1
                         else:
+                            if TaskUser.objects.filter(user=user,
+                                                       task__slug=task_slug):
+                                continue                            
                             result = user_touch.send(self,
                                                      user=user,
                                                      task_slug=task.slug)
                             responses.extend(result)
+                            count += 1
                     msg += "\n  ".join([x[1] for x in responses\
                                         if x[1]])
             elif args[0] == "email":
