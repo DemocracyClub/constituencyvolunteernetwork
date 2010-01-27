@@ -111,6 +111,7 @@ def start_task(request, slug, constituency=None):
     except TaskUser.DoesNotExist:
         raise Http404("Task user does not exist for task '%s', user '%s', constituency '%s'" % (task, request.user, constituency))
 
+@login_key
 @login_required
 def ignore_task(request, slug, constituency=None):
     """
