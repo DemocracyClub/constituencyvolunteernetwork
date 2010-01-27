@@ -38,7 +38,11 @@ class UserForm(TemplatedForm):
         code = self.cleaned_data['postcode']
         if not POSTCODE_RE.match(code):
             raise forms.ValidationError("Please enter a valid postcode")
-        constituency_name = twfy.getConstituency(code)
+        try:
+            constituency_name = twfy.getConstituency(code)
+        except IOError:
+            raise forms.ValidationError("Sorry, there was a problem connecting to TheyWorkForYou to look up your constituency. Please try again in a few minutes.")
+
         if constituency_name:
             constituency = Constituency.objects.all()\
                            .filter(name=constituency_name)\
