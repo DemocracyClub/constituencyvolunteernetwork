@@ -1,0 +1,45 @@
+#add_issue {
+    background:#FFE;
+    padding:0.5em;
+    border:1px solid #EEE;
+    margin:0;
+    margin-top:1em;
+    margin-bottom:1em;
+}
+
+#add_issue label {
+    margin-bottom:1.0em;
+}
+
+#add_issue input {
+    font-size:1.2em;
+    line-height:2.0em;
+    padding:0.1em;
+    border:2px solid #CCC;
+}
+
+#add_issue input[type="text"] {
+    margin: 0;
+    margin-top:0.5em;
+    width:75%;
+}
+
+#add_issue input[type=submit]
+{
+    width:150px;
+}
+
+#add_issue input[type=checkbox]
+{
+    width:auto;
+}
+
+#add_issue h3, #signup form
+{
+    margin-top:0;
+}
+
+#add_issue .fieldWrapper
+{
+    margin-bottom:1.0em;
+}

@@ -2,11 +2,16 @@
 
 {% block title %}Local issue gathering{% endblock %}
 
+{% block extra-head %}
+<link rel="stylesheet" type="text/css"  media="screen" href="{{ MEDIA_URL }}issues/issues.css" />
+{% endblock %}
+
 {% block content %}
+<script type="text/javascript">
+window.onload = function () { document.getElementById('id_question').focus(); }
+</script>
 
 <div class="span-5 task">
-
-
 {% if submitted %}
  <h3>Thank you for adding an issue!</h3>
  <p>Please carry on adding more issues for as long as you have the energy. <a href="{% url tasks %}">No thanks, I've finished</a></p>
@@ -19,22 +24,20 @@
 {% endif %}
 
 {% if form %}
-<p>Please help research local issues that might help distinguish between candidates.  If you can't think of anything controversial, something is better than nothing! For more information on how to do this task, and a chance to discuss it with other people, <a href="http://democracyclub.activeboard.com/index.spark?aBID=134686&subForumID=498468&p=2">visit the forum</a> we've set up for this purpose. </p>
-    <form action="" method="post" id="signup">
+<p><a href="http://democracyclub.activeboard.com/index.spark?aBID=134686&p=3&topicID=33537484">Read for more information</a> and a video from Tom Steinberg explaining the task in our forum, help us hold your new MPs to account before and after the election.</p>
+    <form action="" method="post" id="add_issue">
          <div class="fieldWrapper">
             {{ form.constituency.errors }}
             {{ form.question.errors }}
             <label for="id_question">
-                1. Enter a controversial local question 
-                to ask candidates 
-                about.
+                1. Enter a simple, clear statement on a local issue which you believe some local candidates would agree with, and which others would disagree with.
             </label>
             {{ form.question }}
             <p class="helptext">
-                e.g. Should the bypass round Lancaster be built?
+                e.g. "The bypass around Lancaster should be built"
                 <br>
-                Keep it <strong>genuinely local</strong>
-                    to {{ constituency.name }} constituency.
+                No questions! Just statements.
+                Keep it <strong>genuinely local</strong> to {{ constituency.name }} constituency.
                 We'll ask candidates national questions anyway, separately.
                 Make sure it <strong>divides the candidates</strong>. 
             </p>
@@ -63,6 +66,12 @@
  {% endfor %}
  </ul>
 {% endif %}
+<p>If you can't think of anything controversial, something is better than nothing!</p>
+<h3>Resources</h3>
+<a href='http://democracyclub.activeboard.com/index.spark?aBID=134686&p=3&topicID=33537484'>Read more about the task, including video</a>
+<a href='http://www.google.com/'>Google!</a><br/>
+<a href='http://openlylocal.com/hyperlocal_sites'>Find local blogs</a><br/>
+<a href='http://en.wikipedia.org/'>Wikipedia - find your candidates</a>
 </div>
 
 {% endblock %}
