@@ -1,3 +1,5 @@
+import re
+
 from django.db import models
 from django.core.mail import EmailMultiAlternatives
 from django.template.loader import render_to_string
@@ -305,6 +307,9 @@ class TaskUser(Model):
             {'task_url': task_url,
             'post_url': post_url,}
 
+        def strip_html(text):
+            return re.sub(r'<[^>]*?>', '', text) 
+
         email_context = {'task': task,
                          'user': user,
                          'task_user': self,
@@ -315,9 +320,13 @@ class TaskUser(Model):
                          'site': current_site,
                          'user_profile': user_profile,}
 
-        message = render_to_string('tasks/email_new_task.txt',
-                                   email_context)
         message_html = render_to_string('tasks/email_new_task.html',
+                                   email_context)
+        
+        # XXX Hack to cope with HTML in the task's description text
+        # probably needs separation into html_description and plain_description
+        email_context['description_text'] = strip_html(email_context['description_text'])
+        message = render_to_string('tasks/email_new_task.txt',
                                    email_context)
 
         # Now using EmailMultiAlternatives to send HTML version
