@@ -6,32 +6,21 @@
 
 {% block title %}Transparency through volunteering{% endblock %}
 
-{% block section %}home2{% endblock %}
-
-{#{% block sneakytitle %}<h3>Join Democracy Club to help make this the <em>most accountable</em> general election ever!</h3>{% endblock %}#}
-
 {% block content %}
+<div class="span-5">
+
+<h2>
+Want to help fix democracy?
+</h2>
 <script type="text/javascript">
 window.onload = function () { document.getElementById('id_first_name').focus(); }
 </script>
-
-<div class="span-5">
-<h2>We need volunteers to help make this the <em>most accountable</em> election ever!</h2>
-<p>
-Best of all, anyone can help. For instance you could be <strong>finding out who your local candidates are</strong> or perhaps <strong>getting their positions on key issues</strong> and then helping us make this information public online. Interested? Great! Join Democracy Club!
+<p>Join us in making this the most accountable election ever!</p>
+<p><em><a href="/aboutus/">Democracy Club</a></em> is a non-partisan hub for for armchair activists. We suggest small ways in which volunteers can hold our representatives to account.</p>
+<p>Interested? Read <a href='/faq/'>our FAQ</a> or jump right in below.</p>
 </p>
-</div>
-
-<div class="span-3 last" style="float:right;">
-    <div id="visualization"></div>
-    <p class="small">We're trying to get volunteers in every part of the UK.  So far, we've recruited {{ volunteers }} volunteers in {{ count }} constituencies (out of a total {{ total }}). <em><a href="/statistics/">Read more about how we're doing.</a></em></p>
-    <p class="quiet">Right now we're signing people up to the current constituencies; things will automatically work with new constituencies as and when they're available.</p>
-</div>
-
-<div class="span-5">
 {% if form %}
   <form action="" method="post" id="signup">
-  <h3>Sign up</h3>
   <table>
   {{ form.as_table }}
   <tr>
@@ -44,12 +33,25 @@ Best of all, anyone can help. For instance you could be <strong>finding out who 
   </tr>
   </table>
   </form>
-  You can also <a href='/aboutus/'>read more about us</a>.
-{% endif %}
-    <p class="small">We will occasionally suggest tasks on behalf of other transparency related groups such as <a href="http://www.mysociety.org/">mySociety</a> and <a href="http://www.thestraightchoice.org/">The Straight Choice</a>, but we'll never share your private details with anyone, and we'll never send you more than two emails a week, no matter what.  Read our <a href="/aboutus/#privacy">terms and conditions</a> for more.</p>
+ {% endif %}
+<p>
+When you sign up, we will occasionally suggest tasks by email, <a href="/aboutus/#what">such as</a> gathering information on general election candidates for <a href='http://www.mysociety.org/'>mySociety</a> or finding and sharing election leaflets for <a href='http://www.thestraightchoice.org/'>The Straight Choice</a>, to help them build awesome sites that will make the next election the most transparent ever. We'll also help you to collaborate with other volunteers in your area.
+</p>
+<!--<p>
+We already know that mySociety wants to gather information on general election candidates, and TheStraightChoice wants you to help them find and share election leaflets. As the election approaches there'll be even more things to do, and you can be part of it.
+</p>-->
+
+<p class="small">We will occasionally suggest tasks on behalf of other transparency related groups, but we'll never share your private details with anyone, and we'll never send you more than two emails a week, no matter what.  Read our <a href="/aboutus/#privacy">terms and conditions</a> for more.</p>
+
 </div>
 
-{% endblock %}
+<div class="span-3 last">
+<div id="visualization"></div>
+<p>We're trying to get volunteers in every part of the UK.  So far, we've recruited {{ volunteers }} volunteers in {{ count }} constituencies (out of a total {{ total }}). <a href="/statistics/">Read more about how we're doing</a>. You can also <a href='http://twitter.com/democlub'>follow us on Twitter</a>.</p></p>
+<p>
+<h3>Recent signups</h3>
+{% include "new_signup_list.html" %}
+</p>
 
 {% block js %}
 <script type="text/javascript" src="http://www.google.com/jsapi"></script>
@@ -79,4 +81,7 @@ function drawVisualization() {
 }
 google.setOnLoadCallback(drawVisualization);
 </script>
+{% endblock %}
+
+
 {% endblock %}
