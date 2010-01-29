@@ -23,4 +23,5 @@ urlpatterns = patterns('',
     ('^tasks/', include('tasks.urls')),
     ('^', include('signup.urls')),
     ('^issues/', include('issue.urls')),
+    ('^s/', include('shorten.urls')),
 )

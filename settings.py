@@ -98,6 +98,7 @@ INSTALLED_APPS = (
     'invite',
     'issue',
     'tsc',
+    'shorten',
 )
 
 AUTHENTICATION_BACKENDS = ('backends.NoAuthBackend',

@@ -11,7 +11,9 @@ from signup.models import Model, CustomUser
 from signup.models import Constituency
 from signup.signals import user_leave_constituency
 
-from tasks.util import reverse_login_key
+from shorten.models import Shortened
+
+from tasks.util import reverse_login_key, reverse_login_key_short
 import signals
 
 class Project(Model):
@@ -290,19 +292,22 @@ class TaskUser(Model):
         user_profile = user.registrationprofile_set.get()
         current_site = Site.objects.get_current()
 
-        task_url = "http://%s%s" % (current_site.domain,
-                                    reverse_login_key('start_task',
-                                                      user,
-                                                      kwargs=self._get_kwargs()))
-        ignore_url = "http://%s%s" % (current_site.domain,
-                                      reverse_login_key('ignore_task',
-                                                        user,
-                                                        kwargs=self._get_kwargs()))
-        post_url = "http://%s%s" % (current_site.domain,
-                                    reverse_login_key('complete_task',
-                                                      user,
-                                                      kwargs=self._get_kwargs()))
+        # Get shortened urls for login
+        task_url = reverse_login_key_short('start_task',
+                                           user,
+                                           "%s-task" % task.slug,
+                                           kwargs=self._get_kwargs())
 
+        ignore_url = reverse_login_key_short('ignore_task',
+                                             user,
+                                             "%s-ignore" % task.slug,
+                                             kwargs=self._get_kwargs())
+    
+        post_url = reverse_login_key_short('complete_task',
+                                           user,
+                                           "%s-post" % task.slug,
+                                           kwargs=self._get_kwargs())
+        
         description_text = task.email % \
             {'task_url': task_url,
             'post_url': post_url,}
