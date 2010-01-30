@@ -311,30 +311,6 @@ a.help_button:active {
 
 }
 
-/* Task page styles */
-#section-task .project
-{
-    color:#666;
-    margin-left:1em;
-    font-size:0.9em;
-}
-
-#section-task .description
-{
-    font-size:1.1em;
-    padding:0.5em;
-    margin:0.5em;
-    margin-bottom:0;
-}
-
-#section-task .actions
-{
-    margin:0.5em;
-    margin-bottom:1.5em;
-    margin-top:0;
-}
-
-
 /* Homepage2 styles */
 div.topboxwrap
 {

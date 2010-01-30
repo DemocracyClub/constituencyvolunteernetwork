@@ -1,48 +1,6 @@
 /* icons from http://www.visualpharm.com/must_have_icon_set/ */
 
-div.tasks hr {
- margin: 0;
-}
-
-div.tasks {
-  padding-bottom:1em;
-}
-
-div.tasks h3 {
- font-size: 1em;
- margin: 0;
-}
-
-div.tasks p {
- font-size: 0.9em;
-}
-
-div.tasks h3 {
-  border-bottom:1px solid #CCC;
-  margin-bottom:0.5em;
-}
-
-div.task {
- margin-top:0.5em;
-}
-
-div.task p {
- margin-bottom: 0;
-}
-
-.task-ignored {
-  display:none;
-}
-
-div.task-description {
-  display: none;
-  clear:left;
-  background:white;
-  padding:0.25em;
-  border-radius:0.4em;
-  -moz-border-radius:0.4em;
-  -webkit-border-radius:0.4em;
-}
+/* Shared CSS */
 
 a.action {
  font-size: 0.9em;
@@ -91,7 +49,84 @@ a.action:active {
   background-color:#E8F0FF;
 }
 
-span.completed {
+/* Task page CSS */
+
+#section-task .project
+{
+    color:#666;
+    margin-left:1em;
+    font-size:0.9em;
+}
+
+#section-task .buttons
+{
+    margin-left:0.5em;
+    margin-right:0.5em;
+    padding:0.5em;
+}
+
+#section-task .actions
+{
+    margin:0.5em;
+    margin-bottom:0;
+}
+
+#section-task .description
+{
+    font-size:1.1em;
+    padding:0.5em;
+    padding-top:0;
+    margin:0;
+    margin-left:0.5em;
+    margin-right:0.5em;
+}
+
+/* Task list CSS */
+#section-tasks div.tasks hr {
+ margin: 0;
+}
+
+#section-tasks div.tasks {
+  padding-bottom:1em;
+}
+
+#section-tasks div.tasks h3 {
+ font-size: 1em;
+ margin: 0;
+}
+
+#section-tasks div.tasks p {
+ font-size: 0.9em;
+}
+
+#section-tasks div.tasks h3 {
+  border-bottom:1px solid #CCC;
+  margin-bottom:0.5em;
+}
+
+#section-tasks div.task {
+ margin-top:0.5em;
+}
+
+#section-tasks div.task p {
+ margin-bottom: 0;
+}
+
+#section-tasks .task-ignored {
+  display:none;
+}
+
+#section-tasks div.task-description {
+  display: none;
+  clear:left;
+  background:white;
+  padding:0.25em;
+  border-radius:0.4em;
+  -moz-border-radius:0.4em;
+  -webkit-border-radius:0.4em;
+}
+
+#section-tasks span.completed {
  background-color: #ECFFEB;
  padding: 0.25em;
 }
@@ -106,6 +141,7 @@ ul.activity {
 ul.activity li {
   list-style: none;
 }
+
 #about_tasks, #about_activity {
   display:none;
   clear:both;
