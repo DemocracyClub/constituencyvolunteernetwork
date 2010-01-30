@@ -113,14 +113,16 @@ def search_place(place):
     "Search for place, return constituencies with that name"
     foundplace = geo.constituency(place)
     if foundplace:
-        return Constituency.objects.filter(name__in=foundplace)
+        return Constituency.objects.filter(name__in=foundplace,
+                                           year=settings.CONSTITUENCY_YEAR)
     else:
         return []
 
 def search_name(place):
     "constituencies that have place in their name"
     return Constituency.objects\
-        .filter(name__icontains=place)\
+        .filter(name__icontains=place,
+                year=settings.CONSTITUENCY_YEAR)\
         .order_by('name')
 
 def feedback(msg, place):
