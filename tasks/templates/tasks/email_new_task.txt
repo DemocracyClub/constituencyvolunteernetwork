@@ -2,20 +2,12 @@
 
 There is a new task available for you on Democracy Club:
 
-= {{ task.name }} =
+= *{{ task.name }}* =
 
-{{ description_text }}
-
-Start the task by clicking here: {{ task_url }}
-
-Ignore the task by clicking here: {{ ignore_url }}
-
-Thanks,
-Democracy Club
+{{ text }}
 
 http://{{ site.domain }}
-http://www.twitter.com/democlub/
 
-If you want to stop receiving these emails from us you can unsubscribe at http://{{ site.domain }}{% url unsubscribe key=user_profile.activation_key %}. Note this will disable your account, and it will be re-enabled if you log in again.
+http://www.twitter.com/democlub
 {% endautoescape %}
 

@@ -283,64 +283,114 @@ class TaskUser(Model):
             Build the email text with optional url insertion points
         """
         current_site = Site.objects.get_current()
-        
-    def send_email(self):
-        """Send an email to the user telling them about this task.
+
+    # Email preparation functions
+    def _prepare_email_context(self):
         """
-        user = self.user
-        task = self.task
-        user_profile = user.registrationprofile_set.get()
-        current_site = Site.objects.get_current()
+            Get the generic email context ready
+        """
+        
+        context = {}
+        
+        context['user'] = self.user
+        context['task'] = self.task
+        context['task_user'] = self
+        context['user_profile'] = self.user.registrationprofile_set.get()
+        context['site'] = Site.objects.get_current()
 
         # Get shortened urls for login
-        task_url = reverse_login_key_short('start_task',
-                                           user,
-                                           "%s-task" % task.slug,
+        context['task_url'] = reverse_login_key_short('start_task',
+                                           context['user'],
+                                           "%s-task" % context['task'].slug,
                                            kwargs=self._get_kwargs())
 
-        ignore_url = reverse_login_key_short('ignore_task',
-                                             user,
-                                             "%s-ignore" % task.slug,
+        context['ignore_url'] = reverse_login_key_short('ignore_task',
+                                             context['user'],
+                                             "%s-ignore" % context['task'].slug,
                                              kwargs=self._get_kwargs())
     
-        post_url = reverse_login_key_short('complete_task',
-                                           user,
-                                           "%s-post" % task.slug,
+        context['post_url'] = reverse_login_key_short('complete_task',
+                                           context['user'],
+                                           "%s-post" % context['task'].slug,
                                            kwargs=self._get_kwargs())
-        
-        description_text = task.email % \
-            {'task_url': task_url,
-            'post_url': post_url,}
 
+        context['review_url'] = "http://%s%s" % (context['site'].domain, reverse("welcome"))
+
+        return context
+
+    def _prepare_html_email_context(self, context):
+        """
+            Make HTML email specific context, including HTML buttons
+        """
+        
+        html_context = dict(context)
+    
+        def email_html_button(href, text):
+            return "<a style=\"padding:0.5em; border-bottom:1px solid #CCC; background-color:#EEF;\" href='%s'>%s</a>\n" % (href, text)
+
+        sub_vars_html = {}
+        sub_vars_html['task_url'] = html_context['task_url']
+        sub_vars_html['post_url'] = html_context['post_url']
+        sub_vars_html['name'] = html_context['user'].private_name
+        sub_vars_html['buttons'] = email_html_button(html_context['task_url'], "Start this task") +\
+                                   email_html_button(html_context['review_url'], "Review all my tasks online") +\
+                                   email_html_button(html_context['ignore_url'], "Ignore this task")
+
+        html_context['text'] = html_context['task'].email % sub_vars_html
+
+        return html_context
+    
+    def _prepare_plain_email_context(self, context):
+        """
+            Make the plain text email specific context, including plain links
+        """
+        
+        plain_context = dict(context)
+    
+        def email_plain_button(href, text):
+            return "*%s* by clicking here: %s\n\n" % (text, href)
+
+        sub_vars_plain = {}
+        sub_vars_plain['task_url'] = plain_context['task_url']
+        sub_vars_plain['post_url'] = plain_context['post_url']
+        sub_vars_plain['name'] = plain_context['user'].private_name
+        sub_vars_plain['buttons'] = email_plain_button(plain_context['task_url'], "Start this task") +\
+                                    email_plain_button(plain_context['review_url'], "Review all my tasks online") +\
+                                    email_plain_button(plain_context['ignore_url'], "Ignore this task")
+
+        plain_context['text'] = plain_context['task'].email % sub_vars_plain
+        
         def strip_html(text):
             return re.sub(r'<[^>]*?>', '', text) 
-
-        email_context = {'task': task,
-                         'user': user,
-                         'task_user': self,
-                         'task_url': task_url,
-                         'ignore_url': ignore_url,
-                         'post_url': post_url,
-                         'description_text': description_text,
-                         'site': current_site,
-                         'user_profile': user_profile,}
-
-        message_html = render_to_string('tasks/email_new_task.html',
-                                   email_context)
         
         # XXX Hack to cope with HTML in the task's description text
         # probably needs separation into html_description and plain_description
-        email_context['description_text'] = strip_html(email_context['description_text'])
-        message = render_to_string('tasks/email_new_task.txt',
-                                   email_context)
+        plain_context['text'] = strip_html(plain_context['text'])
 
-        # Now using EmailMultiAlternatives to send HTML version
-        msg = EmailMultiAlternatives(task.email_subject,
-                                     message,
+        return plain_context
+
+    def send_email(self):
+        """
+            Send an email to the user telling them about this task.
+        """
+        context = self._prepare_email_context()
+        context_html = self._prepare_html_email_context(context)
+        context_plain = self._prepare_plain_email_context(context)
+        
+        message_html = render_to_string('tasks/email_new_task.html',
+                                        context_html)
+        
+        message_plain = render_to_string('tasks/email_new_task.txt',
+                                         context_plain)
+        
+        msg = EmailMultiAlternatives(context['task'].email_subject,
+                                     message_plain,
                                      settings.DEFAULT_FROM_EMAIL,
-                                     [user.email, ])
+                                     [context['user'].email, ])
         msg.attach_alternative(message_html, "text/html")
+        
         msg.send()
+        
         self.emails_sent += 1
         self.save()
     
