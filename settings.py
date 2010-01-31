@@ -83,6 +83,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     "django.core.context_processors.request",
     "context_processors.navigation",
     "context_processors.current_site",
+    "context_processors.google_analytics",
 )
 
 INSTALLED_APPS = (
@@ -112,6 +113,8 @@ import datetime
 CONSTITUENCY_YEAR = datetime.datetime(2010, 1, 1)
 
 ACCOUNT_ACTIVATION_DAYS = 40
+
+GOOGLE_ANALYTICS_ID = "UA-10926972-1"
 
 try:
     from local_settings import *

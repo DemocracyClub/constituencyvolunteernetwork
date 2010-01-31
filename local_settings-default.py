@@ -25,3 +25,5 @@ EMAIL_HOST = "localhost"
 #EMAIL_USE_TLS = True
 #EMAIL_PORT = 587
 
+# Setting this to blank disables GA tracking
+GOOGLE_ANALYTICS_ID = ""
