@@ -11,4 +11,4 @@ http://{{ site.domain }}
 http://www.twitter.com/democlub
 {% endautoescape %}
 
-If you want to stop receiving these emails from us you can unsubscribe at http://{{ site.domain }}{% url unsubscribe key=activation_key %}. This will disable your account, but it will be re-enabled if you log in again.
+If you want to stop receiving these emails from us you can unsubscribe at http://{{ site.domain }}{% url unsubscribe key=user_profile.activation_key %}. This will disable your account, but it will be re-enabled if you log in again.
