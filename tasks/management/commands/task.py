@@ -72,7 +72,10 @@ class Command(BaseCommand):
                     help="Assign constituency-wise in order of distance from postcode"),
         make_option('--emailfilter', '-e', dest='emailfilter',
                     action="store",
-                    help="Only assign to users with emails containing")
+                    help="Only assign to users with emails containing"),
+        make_option('--queryfilter', '-q', dest='queryfilter',
+                    action="store",
+                    help="Only assign to users matching queryset")
         )
     help = "Assign tasks to users"
                         
@@ -120,11 +123,15 @@ class Command(BaseCommand):
             users = CustomUser.objects.all()
         if options['random']:
             users = users.order_by('?')
+        queryfilter = options.get('queryfilter', '')
+        if queryfilter:
+            users = eval(queryfilter)
         emailfilter = options.get('emailfilter', '')
         if emailfilter:
             users = users.filter(email__icontains=emailfilter)
         task_slug = options.get('task_slug', None)
         dry_run = options.get('dry_run', False)
+
         count = 0
         for user in users:
             if max_number and count == max_number:
