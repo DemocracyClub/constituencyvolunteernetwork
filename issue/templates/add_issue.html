@@ -59,20 +59,26 @@ window.onload = function () { document.getElementById('id_question').focus(); }
 </div>
 
 <div class="span-3 last">
-{% if issues %}
  <h3>Existing issues in {{ constituency.name }}</h3>
+{% if issues %}
  <ul>
  {% for issue in issues %}
   <li><a href="{{ issue.reference_url }}" target="_blank">{{ issue.question }}</a></li>
  {% endfor %}
  </ul>
+{% else %}
+<ul>
+    <li>Nobody has added any issues here yet</li>
+</ul>
 {% endif %}
 <p>If you can't think of anything controversial, something is better than nothing!</p>
 <h3>Resources</h3>
-<a href='http://democracyclub.activeboard.com/index.spark?aBID=134686&p=3&topicID=33537484'>Read more about the task, including video</a>
-<a href='http://www.google.com/'>Google!</a><br/>
-<a href='http://openlylocal.com/hyperlocal_sites'>Find local blogs</a><br/>
-<a href='http://en.wikipedia.org/'>Wikipedia - find your candidates</a>
+<ul>
+    <li><a href='{{ constituency.wikipedia_url }}' target="_blank">Your constituency on wikipedia</a></li>
+    <li><a href='http://democracyclub.activeboard.com/index.spark?aBID=134686&p=3&topicID=33537484' target="_blank">Read more about the task, including video</a></li>
+    <li><a href='http://www.google.com/search?q={{ constituency.name }}%20issues%20UK' target="_blank">Google!</a></li>
+    <li><a href='http://openlylocal.com/hyperlocal_sites?location={{ constituency.name }},%20UK&commit=Search' target="_blank">Local blogs near {{ constituency.name }}</a></li>
+</ul>
 </div>
 
 {% endblock %}

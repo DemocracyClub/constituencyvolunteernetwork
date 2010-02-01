@@ -20,6 +20,7 @@ import geo
 from slugify import smart_slugify
 from settings import CONSTITUENCY_YEAR
 import signals
+import wiki_constituencies
 
 SHA1_RE = re.compile('^[a-f0-9]{40}$')
 
@@ -87,6 +88,13 @@ class Constituency(Model):
             neighbours.append(place)
             count += 1
         return neighbours
+
+    @property
+    def wikipedia_url(self):
+        try:
+            return wiki_constituencies.constituency_wikipedia[self.slug]
+        except KeyError:
+            return "http://en.wikipedia.org/wiki/Special:Search/%s_(UK_Parliament_constituency)" % self.slug
 
     @permalink
     def get_absolute_url(self):
