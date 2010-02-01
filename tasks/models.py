@@ -31,7 +31,6 @@ class Project(Model):
     def __unicode__(self):
         return self.name
 
-
 class Task(Model):
     """
         A description of a task, attached to a project (optionally), with a
@@ -291,11 +290,11 @@ class TaskUser(Model):
         """
         
         context = {}
-        
+        profile = self.user.registrationprofile_set.get()
         context['user'] = self.user
         context['task'] = self.task
         context['task_user'] = self
-        context['user_profile'] = self.user.registrationprofile_set.get()
+        context['user_profile'] = profile
         context['site'] = Site.objects.get_current()
 
         # Get shortened urls for login
@@ -314,8 +313,8 @@ class TaskUser(Model):
                                            "%s-post" % context['task'].slug,
                                            kwargs=self._get_kwargs())
 
-        context['review_url'] = "http://%s%s" % (context['site'].domain, reverse("welcome"))
-
+        context['review_url'] = "http://%s%s" % (context['site'].domain,
+                                                 profile.get_login_url())
         return context
 
     def _prepare_html_email_context(self, context):
