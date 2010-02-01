@@ -30,16 +30,16 @@ window.onload = function () { document.getElementById('id_question').focus(); }
             {{ form.constituency.errors }}
             {{ form.question.errors }}
             <label for="id_question">
-                1. Enter a simple, clear statement on a local issue which you believe some local candidates would agree with, and which others would disagree with.
+                1.  Enter a simple statement about a key local issue.
             </label>
             {{ form.question }}
             <p class="helptext">
                 e.g. "The bypass around Lancaster should be built"
                 <br>
-                No questions! Just statements.
+                Write a <strong>statement not a question</strong>.
                 Keep it <strong>genuinely local</strong> to {{ constituency.name }} constituency.
                 We'll ask candidates national questions anyway, separately.
-                Make sure it <strong>divides the candidates</strong>. 
+                Make sure <strong>some candidates will agree, some disagree</strong> with the statement. 
             </p>
         </div>
         <div class="fieldWrapper">
