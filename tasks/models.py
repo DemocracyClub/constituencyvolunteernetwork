@@ -121,7 +121,7 @@ class ConstituencyCompletenessTask(Task):
     def percent_complete(self):
         year = settings.CONSTITUENCY_YEAR
         total = Constituency.objects.filter(year=year).count()
-        count = Constituency.objects.filter(issue__isnull=False).count()
+        count = Constituency.objects.filter(year=year).filter(issue__isnull=False).distinct().count()
         return int(float(count)/total * 100)
 
 
