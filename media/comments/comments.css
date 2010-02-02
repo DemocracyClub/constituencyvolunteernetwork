@@ -1,0 +1,61 @@
+div.comments
+{
+    list-style: none !important;
+    list-style-image: none !important;
+    list-style-position: outside;
+}
+
+div.comment
+{
+    list-style-type: none;
+    list-style: none;
+    margin:0;
+    padding:0;
+}
+
+div.comment .poster {
+    font-size:0.9em;
+    color:#666;
+    margin-right:0.5em;
+}
+
+div.comment .text 
+{
+    margin-right:0.25em;
+}
+
+div.comment .time {
+    font-size:0.8em;
+    color:#CCC;
+}
+
+div.comment .comment_action
+{
+    float:right;
+    font-size:0.9em;
+}
+
+form#post-comment
+{
+    margin:0;
+}
+
+input#id_comment
+{
+    width:400px;
+    border:1px solid #CCC;
+    font-size:1.1em;
+    line-height:2em;
+    color:#333;
+}
+
+input#id_comment:focus
+{
+    color:#333;
+}
+
+input.submit-post
+{
+    font-size:1.1em;
+    line-height:2em;
+}

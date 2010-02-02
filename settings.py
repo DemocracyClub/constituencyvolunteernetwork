@@ -95,6 +95,8 @@ INSTALLED_APPS = (
     'django.contrib.flatpages',
     'django.contrib.admin',
     'tasks', # note: 'tasks' must be first app (due to Proxy models)
+    'django.contrib.comments',
+    'comments_custom',
     'signup',
     'invite',
     'issue',
@@ -107,7 +109,9 @@ AUTHENTICATION_BACKENDS = ('backends.NoAuthBackend',
                            )
 MIGRATIONS_ROOT = os.path.join(PROJECT_PATH, 'migrations')
 
-LOGIN_URL = "/"                           
+LOGIN_URL = "/"
+
+COMMENTS_APP = "comments_custom"                           
 
 import datetime
 CONSTITUENCY_YEAR = datetime.datetime(2010, 1, 1)

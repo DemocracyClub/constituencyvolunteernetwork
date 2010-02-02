@@ -1,6 +1,8 @@
 from django import template
 from datetime import datetime, timedelta
- 
+
+from signup.models import CustomUser
+
 register = template.Library()
  
 MOMENT = 120    # duration in seconds within which the time difference 
@@ -36,3 +38,11 @@ def naturalTimeDifference(value):
             return 'a moment ago' 
     else:
         return str(value)
+
+@register.filter
+def user_get_name(user):
+    try:
+        return CustomUser.objects.get(id=user.id).display_name
+    except CustomUser.DoesNotExist:
+        return "Admin"
+       

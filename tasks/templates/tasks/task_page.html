@@ -1,10 +1,13 @@
 {% extends 'base.html' %}
+{% load comments %}
+{% load signup_extras %}
 
 {% block title %}{{ task.name }}{% endblock %}
 {% block section %}task{% endblock %}
 
 {% block extra-head %}
 <link rel="stylesheet" type="text/css"  media="screen" href="{{ MEDIA_URL }}tasks/tasks.css" />
+<link rel="stylesheet" type="text/css"  media="screen" href="{{ MEDIA_URL }}comments/comments.css" />
 {% endblock %}
 
 {% block content %}
@@ -36,6 +39,38 @@
       {% endautoescape %}
     </div>
 </div>
+
+    {% if usertasks %}
+    <h3>Talk about this task. What are you doing?</h3>
+    <p class="quiet">Discuss with other people doing this task what you are doing and how you're going to do it</p>
+    {% get_comment_form for task as form %}
+    <form action="{% comment_form_target %}" method="post" id="post-comment">
+      {{ form.content_type }}
+      {{ form.object_pk }}
+      {{ form.timestamp }}
+      {{ form.security_hash }}
+      <input type="hidden" name="next" value="{{ request.path }}" />
+      <input id="id_comment" name="comment" value="write here" onfocus="if(this.value=='write here') { this.value='' }" onblur="if(this.value==''){ this.value='write here'; }" maxlength="3000" type="text"> <input name="post" class="submit-post" value="post" type="submit">
+    
+      <p style="display: none; margin:0;">
+        <label for="id_honeypot">If you enter anything in this field your comment will be treated as spam</label> {{ form.honeypot }}
+      </p>
+    </form>
+    {% endif %}
+    
+    {% get_comment_list for task as comment_list %}
+    <div class="comments">
+    {% for comment in comment_list %}
+        <div class="comment">
+            {#{% ifequal comment.user user %}<a href='#' style="float:right;">delete</a>{% endifequal %}#}
+            {% if perms.delete_comment %}<a href='{% url custom_comment_delete comment.id,request.path %}' class="comment_action">delete</a>{% endif %}
+            <span class="poster">{{ comment.user.display_name }}</span>
+            <span class="text">{{ comment.comment }}</span>
+            <span class="time">{{ comment.submit_date|naturalTimeDifference }}</span>
+        </div>
+    {% endfor %}
+    </div>
+
     <h3>{{ started_users.count }} {% ifequal started_users.count 1 %}person{% else %}people{% endifequal %} currently doing this task{% if constituency %} in {{ constituency.name }}{% endif %}</h3>
     {% if started_users %}
     <ul class="taskusers">
