@@ -14,5 +14,3 @@ Democracy Club
 
 http://{{ site.domain }}
 http://www.twitter.com/democlub/
-
-If you want to stop receiving these emails from us you can unsubscribe at http://{{ site.domain }}{% url unsubscribe key=activation_key %}. Note this will disable your account, and it will be re-enabled if you log in again.
