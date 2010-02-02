@@ -41,7 +41,7 @@
 </div>
 
     {% if usertasks %}
-    <h3>Talk about this task. What are you doing?</h3>
+    <a id="comments"></a><h3>Talk about this task. What are you doing?</h3>
     <p class="quiet">Discuss with other people doing this task what you are doing and how you're going to do it</p>
     {% get_comment_form for task as form %}
     <form action="{% comment_form_target %}" method="post" id="post-comment">
@@ -49,7 +49,7 @@
       {{ form.object_pk }}
       {{ form.timestamp }}
       {{ form.security_hash }}
-      <input type="hidden" name="next" value="{{ request.path }}" />
+      <input type="hidden" name="next" value="{{ request.path }}#comments" />
       <input id="id_comment" name="comment" value="write here" onfocus="if(this.value=='write here') { this.value='' }" onblur="if(this.value==''){ this.value='write here'; }" maxlength="3000" type="text"> <input name="post" class="submit-post" value="post" type="submit">
     
       <p style="display: none; margin:0;">
