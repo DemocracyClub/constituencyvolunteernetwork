@@ -40,7 +40,8 @@ class UserForm(TemplatedForm):
             raise forms.ValidationError("Please enter a valid postcode")
         try:
             constituency_name = twfy.getConstituency(code)
-        except IOError:
+        except (IOError, ValueError): # ValueError may be thrown by
+                                      # JSON decoding                                      
             raise forms.ValidationError("Sorry, there was a problem connecting to TheyWorkForYou to look up your constituency. Please try again in a few minutes.")
 
         if constituency_name:
