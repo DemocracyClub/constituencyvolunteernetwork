@@ -1,7 +1,7 @@
 from django import template
 from datetime import datetime, timedelta
-
 from signup.models import CustomUser
+from shorten.models import Shortened
 
 register = template.Library()
  
@@ -38,6 +38,13 @@ def naturalTimeDifference(value):
             return 'a moment ago' 
     else:
         return str(value)
+
+@register.filter
+def shorten(url):
+    #api_url = "http://api.bit.ly/shorten?version=2.0.1&longUrl=%s&login=democlub&apiKey=R_d97512b89021d2c7503f87630821f5dd " % url
+    #resp = urllib.urlopen(api_url)
+    #return resp.read()
+    return Shortened.objects.make(url, "constituency link")
 
 @register.filter
 def user_get_name(user):

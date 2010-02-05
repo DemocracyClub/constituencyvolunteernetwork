@@ -43,3 +43,21 @@
 {
     margin-bottom:1.0em;
 }
+
+input[type=text]#id_question
+{
+    font-size:1.5em;
+    width:90%;
+}
+
+input[type=text]#id_question.sample
+{
+    background:#FCFCFC;
+    color:#DDD;
+}
+
+input[type=text]#id_question.issue
+{
+    background:white;
+    color:#333;
+}
