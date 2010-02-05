@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Manage tasks</h2>
+<table>
+ <tr>
+  <th>Task</th>
+  <th>% complete</th>
+  <th>Tasks sent</th>
+  <th>Emails opened</th>
+  <th>Tasks started</th>
+  <th>Tasks completed</th>
+  <th>Tasks ignored</th>
+  <td></td>
+ </tr>
+ {% for task in tasks %}
+ <tr>
+   <td>
+     <a href="{{ task.absolute_url }}">{{ task.name }}</a>
+   </td>
+   <td>
+     {{ task.percent_complete }}%
+   </td>
+   <td>
+     {{ task.taskuser_set.count }}
+   </td>
+   <td>
+     {{ task.emails_opened }}%
+   </td>
+   <td>
+     {{ task.started }}%
+   </td>
+   <td>
+     {{ task.completed }}%
+   </td>
+   <td>
+     {{ task.ignored }}%
+   </td>
+   <td><a href="{% url manage_assign_tasks task_pk=task.pk %}">assign</a></td>
+ </tr>
+ {% endfor %}
+</table>
+
+{% endblock %}

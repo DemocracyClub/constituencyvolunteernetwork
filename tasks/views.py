@@ -1,16 +1,26 @@
-from django.http import HttpResponseRedirect, Http404
+import os
+
+from django.http import HttpResponseRedirect
+from django.http import Http404
+from django.http import HttpResponse
 from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required, permission_required
 from django.utils.http import urlquote
-from django.db.models import Count
+from django.db.models import Sum
+from django.shortcuts import get_object_or_404
 
 from models import Task, TaskUser
 from models import Badge
 from signup.models import CustomUser, Constituency
 from signup.views import render_with_context
 from signup.views import _get_statistics_context
+from signup.signals import user_touch
 from tasks.util import login_key
 import settings
+
+SPACER_GIF = open(
+    os.path.join(settings.MEDIA_ROOT, "spacer.gif"), "rb"
+    ).read()
 
 @login_required
 def home(request):
@@ -163,7 +173,8 @@ def admin_assign_all(request):
     if request.method == "POST":
         form = AssignForm(request.POST, request.FILES)
         if form.is_valid():
-            all_users = CustomUser.objects.all()
+            all_users = CustomUser.objects.filter(
+                is_active=True)
             context['message'] = []
             for task in form.cleaned_data['tasks']:
                 (assigned, already_assigned) = TaskUser.objects.trigger_assign(task, all_users)
@@ -189,7 +200,9 @@ def admin_assign_constituency(request):
         form = AssignConstituency(request.POST, request.FILES)
         if form.is_valid():
             constituencies = form.cleaned_data['constituencies']
-            all_users = CustomUser.objects.filter(constituencies__in=constituencies)
+            all_users = CustomUser.objects.filter(
+                is_active=True,
+                constituencies__in=constituencies)
             
             context['message'] = []
             for task in form.cleaned_data['tasks']:
@@ -205,3 +218,98 @@ def admin_assign_constituency(request):
     
     return render_with_context(request, 'tasks/task_admin.html', context)
 
+
+@login_required
+@permission_required('tasks.add_taskuser')
+def manage_tasks(request):
+    tasks = []
+    for task in Task.objects.all():
+        taskusers = TaskUser.objects.filter(task=task)
+        total = float(taskusers.count())
+        total_recipients = CustomUser.objects\
+                           .filter(is_active=True)\
+                           .filter(taskuser__task=task)\
+                           .distinct()\
+                           .count()
+        if total:
+            emails_opened = float(TaskUser.objects\
+                                     .filter(task=task)\
+                                     .aggregate(Sum('emails_opened'))\
+                                     ['emails_opened__sum'])
+            if not emails_opened:
+                emails_opened = 0.25 * total_recipients # for the
+                                        # first mailouts when we
+                                        # weren't tracking
+            task.emails_opened = int(emails_opened / total_recipients * 100)
+            task.ignored = int(TaskUser.objects\
+                               .filter(task=task,
+                                       state=TaskUser.States.ignored)\
+                               .count() / emails_opened * 100)
+            started = float(TaskUser.objects\
+                               .filter(task=task,
+                                       state=TaskUser.States.started)\
+                               .count())
+            task.started =  int(started / emails_opened * 100)
+            task.completed = int(TaskUser.objects\
+                                 .filter(task=task,
+                                         state=TaskUser.States.completed)\
+                                 .count() / started * 100)
+        tasks.append(task)
+                                        
+    context= {}
+    context['tasks'] = tasks
+    return render_with_context(request,
+                               'tasks/manage_tasks.html',
+                               context) 
+
+def manage_assign_tasks(request, task_pk):
+    context = {}
+    task = get_object_or_404(Task, pk=task_pk)
+    context['task'] = task
+    dry_run = False
+    count = 0
+    skip = 0
+    matched_users = []
+    if request.method == "POST":
+        context['posted'] = True
+        dry_run = request.POST.get('dry_run', False)
+        queryfilter = request.POST['queryfilter'].strip()
+        context['queryfilter'] = queryfilter
+        users = CustomUser.objects.filter(is_active=True)
+        if queryfilter:
+            users = eval(queryfilter.strip())
+        for user in users:
+            matched_users.append(user.email)
+            if TaskUser.objects.filter(user=user,
+                                       task__pk=task_pk):
+                skip += 1
+                continue
+            else:
+                if not dry_run:
+                    responses = user_touch.send(None,
+                                                user=user,
+                                                task_slug=task.slug)
+                    print responses
+                count += 1
+        context['matched_users'] = matched_users
+    context['dry_run'] = dry_run
+    context['count'] = count
+    context['skip'] = skip
+    return render_with_context(request,
+                               'tasks/manage_assign_tasks.html',
+                               context)
+
+
+def open_email(request, taskuser_id):
+    """
+    Mark a TaskUser as having had an email opened and return a gif 
+    """
+    try:
+        task_user = TaskUser.objects.get(pk=taskuser_id)
+        task_user.emails_opened += 1
+        task_user.save()
+        return HttpResponse(content=SPACER_GIF,
+                            mimetype="image/gif")
+    except TaskUser.DoesNotExist:
+        raise Http404()
+    

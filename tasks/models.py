@@ -44,7 +44,9 @@ class Task(Model):
     email = models.TextField(verbose_name="Description for email")
     date_created = models.DateTimeField(auto_now_add=True)
     users = models.ManyToManyField(CustomUser, through="TaskUser")
-    decorator_class = models.CharField(max_length=180)
+    decorator_class = models.CharField(max_length=180,
+                                       null=True,
+                                       blank=True)
     
     def __unicode__(self):
         return self.name
@@ -120,8 +122,14 @@ class ConstituencyCompletenessTask(Task):
         
     def percent_complete(self):
         year = settings.CONSTITUENCY_YEAR
-        total = Constituency.objects.filter(year=year).count()
-        count = Constituency.objects.filter(year=year).filter(issue__isnull=False).distinct().count()
+        total = Constituency.objects\
+                .filter(year=year)\
+                .count()
+        count = Constituency.objects\
+                .filter(year=year)\
+                .filter(issue__isnull=False)\
+                .distinct()\
+                .count()
         return int(float(count)/total * 100)
 
 
@@ -135,7 +143,10 @@ class TaskUserManager(models.Manager):
         assigned = []
         already_assigned = []
         for user in user_set:
-            user_touch.send(self, user=user, task_slug=task.slug, constituencies=constituencies)
+            user_touch.send(self,
+                            user=user,
+                            task_slug=task.slug,
+                            constituencies=constituencies)
             assigned.append(user)
 
         return (assigned, already_assigned)
@@ -193,6 +204,7 @@ class TaskUser(Model):
     url = models.CharField(max_length=2048)
     post_url = models.CharField(max_length=2048, null=True, blank=True)
     emails_sent = models.IntegerField(default=0)
+    emails_opened = models.IntegerField(default=0)
     objects = TaskUserManager()
     
     task_state_string = dict(States.strings)
@@ -336,7 +348,8 @@ class TaskUser(Model):
                                    email_html_button(html_context['ignore_url'], "Ignore this task")
 
         html_context['text'] = html_context['task'].email % sub_vars_html
-
+        kwargs = {'taskuser_id': self.pk}
+        html_context['spacer_url'] = reverse('open_email', kwargs=kwargs)
         return html_context
     
     def _prepare_plain_email_context(self, context):

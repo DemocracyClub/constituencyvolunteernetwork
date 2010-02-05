@@ -5,8 +5,17 @@ import views
 ###############################################################################
 urlpatterns = patterns('tasks',
     url(r'^$', views.home, name="tasks"),
-    url(r'^admin/assign$', views.admin_assign_all, name="admin_assign_all"),
-    url(r'^admin/assign_constituencies$', views.admin_assign_constituency, name="admin_assign_constituency"),
+    url(r'^admin$', views.manage_tasks, name="manage_tasks"),
+    url(r'^admin/(?P<task_pk>\d+)/assign$',
+        views.manage_assign_tasks,
+        name="manage_assign_tasks"),
+    url(r'^admin/assign_constituencies$',
+        views.admin_assign_constituency,
+        name="admin_assign_constituency"),
+
+    url(r'^(?P<taskuser_id>\d+)/spacer.gif$',
+        views.open_email,
+        name="open_email"),
 
     url(r'^(?P<slug>[\w-]+)/start/(?P<login_key>[\w-]+)$',
         views.start_task,
