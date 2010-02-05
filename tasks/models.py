@@ -41,6 +41,7 @@ class Task(Model):
     slug = models.SlugField(max_length=80)
     project = models.ForeignKey(Project)
     description = models.TextField()
+    short_description = models.TextField(default="")
     email = models.TextField(verbose_name="Description for email")
     date_created = models.DateTimeField(auto_now_add=True)
     users = models.ManyToManyField(CustomUser, through="TaskUser")

@@ -10,7 +10,7 @@
    {% endfor %}
    </div>
    <div class="task-description">
-      <p>{{ usertask.task.description|safe }} <a class="" href="{{ usertask.get_absolute_url|safe }}">See overall progress for this task</a> {% if usertask.task.project %}<span class="quiet">Suggested by <a href='{{ usertask.task.project.url }}'>{{ usertask.task.project.name }}</a></span>{% endif %}</p>
+      <p>{{ usertask.task.short_description|safe }} <a class="" href="{{ usertask.get_absolute_url|safe }}">See overall progress for this task</a> {% if usertask.task.project %}<span class="quiet">Suggested by <a href='{{ usertask.task.project.url }}'>{{ usertask.task.project.name }}</a></span>{% endif %}</p>
     </div>
   </div>
  {% endfor %}
