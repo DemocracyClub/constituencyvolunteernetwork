@@ -19,11 +19,11 @@
     rotate = rand(5)-1;
     samples = new Array();
     int_id = 0;
-    samples[0] = "the bypass should be built";
+    samples[0] = "the bypass should be built around the town";
     samples[1] = "there should be restrictions on night flights";
-    samples[2] = "graffiti should be a policing priority";
+    samples[2] = "graffiti along the high street should be a policing priority";
     samples[3] = "more needs to be done about broadband internet provision";
-    samples[4] = "we shouldn't build on greenbelt land";
+    samples[4] = "we shouldn't build on greenbelt land to the west of the city";
 
     function rotate_sample() {
         sample = samples[rotate];
@@ -70,7 +70,7 @@
  </div>
 {% else %}
  <h3>
-  Research local ideas
+  Describe local issues
  </h3>
 {% endif %}
 
@@ -80,7 +80,7 @@
             {{ form.constituency.errors }}
             {{ form.question.errors }}
             <label for="id_question">
-                Jo Bloggs, a normal local constituent of {{ constituency.name }}, thinks that...
+                Some voters in {{ constituency.name }}, think that...
             </label>
             <input id="id_question" name="question" maxlength="200" type="text" class="sample">
         </div>
