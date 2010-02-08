@@ -13,7 +13,7 @@ urlpatterns = patterns('tasks',
         views.admin_assign_constituency,
         name="admin_assign_constituency"),
 
-    url(r'^(?P<taskuser_id>\d+)/spacer.gif$',
+    url(r'^(?P<taskuser_id>\d+)/(?P<taskemail_id>\d+)/spacer.gif$',
         views.open_email,
         name="open_email"),
 

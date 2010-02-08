@@ -1,6 +1,8 @@
 import re
+from datetime import datetime
 
 from django.db import models
+from django.db.models import Sum
 from django.core.mail import EmailMultiAlternatives
 from django.template.loader import render_to_string
 from django.contrib.sites.models import Site
@@ -10,10 +12,7 @@ from django.core.urlresolvers import reverse
 from signup.models import Model, CustomUser
 from signup.models import Constituency
 from signup.signals import user_leave_constituency
-
-from shorten.models import Shortened
-
-from tasks.util import reverse_login_key, reverse_login_key_short
+from tasks.util import reverse_login_key_short
 import signals
 
 class Project(Model):
@@ -26,7 +25,7 @@ class Project(Model):
     name = models.CharField(max_length=80)
     slug = models.SlugField(max_length=80)
     description = models.TextField()
-    url = models.URLField(verify_exists = False) # verify_exists is a pain when coding offline
+    url = models.URLField(verify_exists=False) # verify_exists is a pain when coding offline
 
     def __unicode__(self):
         return self.name
@@ -37,12 +36,9 @@ class Task(Model):
         list of users doing the task
     """
     name = models.CharField(max_length=80)
-    email_subject = models.CharField(max_length=80)
     slug = models.SlugField(max_length=80)
     project = models.ForeignKey(Project)
     description = models.TextField()
-    short_description = models.TextField(default="")
-    email = models.TextField(verbose_name="Description for email")
     date_created = models.DateTimeField(auto_now_add=True)
     users = models.ManyToManyField(CustomUser, through="TaskUser")
     decorator_class = models.CharField(max_length=180,
@@ -201,13 +197,16 @@ class TaskUser(Model):
     constituency = models.ForeignKey(Constituency, null=True, blank=True)
     state = models.SmallIntegerField(choices=States.strings)
     date_assigned = models.DateTimeField(auto_now_add=True)
-    date_modified = models.DateTimeField(auto_now=True, auto_now_add=True)
+    date_modified = models.DateTimeField(auto_now=True,
+                                         auto_now_add=True)
     url = models.CharField(max_length=2048)
-    post_url = models.CharField(max_length=2048, null=True, blank=True)
-    emails_sent = models.IntegerField(default=0)
-    emails_opened = models.IntegerField(default=0)
+    post_url = models.CharField(max_length=2048,
+                                null=True,
+                                blank=True)
     objects = TaskUserManager()
-    
+    source_email = models.ForeignKey('TaskEmail',
+                                     null=True,
+                                     blank=True)    
     task_state_string = dict(States.strings)
 
     # internal helper, returns dictionary of URL construction arguments
@@ -216,6 +215,13 @@ class TaskUser(Model):
         if self.constituency:
             kwargs['constituency'] = self.constituency.slug
         return kwargs
+
+    def emails_opened(self):
+        opened = self.taskemail_set.aggregate(count=Sum('opened'))
+        return opened['count']
+    
+    def emails_sent(self):
+        return self.taskemail_set.count()
 
     def description_link(self):
         href = '<a class="usertask" href="%s">%s</a>'
@@ -275,38 +281,58 @@ class TaskUser(Model):
     def start(self):
         self.state = TaskUser.States.started
         self.save()
-
         signals.task_started.send(self, task_user=self)
     
     def complete(self):
         self.state = TaskUser.States.completed
         self.save()
-
         signals.task_completed.send(self, task_user=self)
     
     def ignore(self):
         self.state = TaskUser.States.ignored
         self.save()
-        
         signals.task_ignored.send(self, task_user=self)
 
-    def email(self):
+    def send_email(self):
+        """Send the most recent email for this campaign
         """
-            Build the email text with optional url insertion points
+        latest = self.taskemail_set.order_by('-date_created')[0]
+        return latest.send(recipient_taskusers=[self,])
+
+    def __unicode__(self):
+        return "%s doing %s (%s)" % (self.user, self.task, self.state_string())
+    
+    class AlreadyAssigned(Exception):
         """
-        current_site = Site.objects.get_current()
+            Thrown by the UserTaskManager on attempted
+            assignment/suggestion of a task which a user already has
+        """
+        pass
+
+class TaskEmail(Model):
+    """An email sent out to users to remind them about a task
+    """
+    subject = models.CharField(max_length=80)
+    body = models.TextField(verbose_name="Description for email")
+    date_created = models.DateTimeField(auto_now_add=True)
+    date_last_sent = models.DateTimeField(null=True,
+                                          blank=True)
+    taskusers = models.ManyToManyField(TaskUser, null=True, blank=True)
+    opened = models.IntegerField(default=0)
 
     # Email preparation functions
-    def _prepare_email_context(self):
+    def _prepare_email_context(self, taskuser):
         """
             Get the generic email context ready
         """
         
         context = {}
-        profile = self.user.registrationprofile_set.get()
-        context['user'] = self.user
-        context['task'] = self.task
-        context['task_user'] = self
+        user = taskuser.user
+        profile = user.registrationprofile_set.get()
+        context['user'] = user
+        context['email'] = self
+        context['task'] = taskuser.task
+        context['task_user'] = taskuser
         context['user_profile'] = profile
         context['site'] = Site.objects.get_current()
 
@@ -314,17 +340,17 @@ class TaskUser(Model):
         context['task_url'] = reverse_login_key_short('start_task',
                                            context['user'],
                                            "%s-task" % context['task'].slug,
-                                           kwargs=self._get_kwargs())
+                                           kwargs=taskuser._get_kwargs())
 
         context['ignore_url'] = reverse_login_key_short('ignore_task',
                                              context['user'],
                                              "%s-ignore" % context['task'].slug,
-                                             kwargs=self._get_kwargs())
+                                             kwargs=taskuser._get_kwargs())
     
         context['post_url'] = reverse_login_key_short('complete_task',
                                            context['user'],
                                            "%s-post" % context['task'].slug,
-                                           kwargs=self._get_kwargs())
+                                           kwargs=taskuser._get_kwargs())
 
         context['review_url'] = "http://%s%s" % (context['site'].domain,
                                                  profile.get_login_url())
@@ -336,21 +362,25 @@ class TaskUser(Model):
         """
         
         html_context = dict(context)
-    
-        def email_html_button(href, text):
-            return "<a style=\"padding:0.5em; border-bottom:1px solid #CCC; background-color:#EEF;\" href='%s'>%s</a>\n" % (href, text)
-
+        def button(href, text):
+            return ("<a style=\"padding:0.5em; border-bottom:1px "
+                    "solid #CCC; background-color:#EEF;\" "
+                    "href='%s'>%s</a>\n") % (href, text)
         sub_vars_html = {}
         sub_vars_html['task_url'] = html_context['task_url']
         sub_vars_html['post_url'] = html_context['post_url']
         sub_vars_html['name'] = html_context['user'].private_name
-        sub_vars_html['buttons'] = email_html_button(html_context['task_url'], "Start this task") +\
-                                   email_html_button(html_context['review_url'], "Review all my tasks online") +\
-                                   email_html_button(html_context['ignore_url'], "Ignore this task")
-
-        html_context['text'] = html_context['task'].email % sub_vars_html
-        kwargs = {'taskuser_id': self.pk}
-        html_context['spacer_url'] = reverse('open_email', kwargs=kwargs)
+        sub_vars_html['buttons'] = button(html_context['task_url'],
+                                          "Start this task") +\
+                                   button(html_context['review_url'],
+                                          "Review all my tasks online") +\
+                                   button(html_context['ignore_url'],
+                                          "Ignore this task")
+        html_context['text'] = html_context['email'].body % sub_vars_html
+        kwargs = {'taskemail_id': self.pk,
+                  'taskuser_id': html_context['task_user'].pk}
+        html_context['spacer_url'] = reverse('open_email',
+                                             kwargs=kwargs) 
         return html_context
     
     def _prepare_plain_email_context(self, context):
@@ -360,65 +390,58 @@ class TaskUser(Model):
         
         plain_context = dict(context)
     
-        def email_plain_button(href, text):
+        def button(href, text):
             return "*%s* by clicking here: %s\n\n" % (text, href)
 
         sub_vars_plain = {}
         sub_vars_plain['task_url'] = plain_context['task_url']
         sub_vars_plain['post_url'] = plain_context['post_url']
         sub_vars_plain['name'] = plain_context['user'].private_name
-        sub_vars_plain['buttons'] = email_plain_button(plain_context['task_url'], "Start this task") +\
-                                    email_plain_button(plain_context['review_url'], "Review all my tasks online") +\
-                                    email_plain_button(plain_context['ignore_url'], "Ignore this task")
-
-        plain_context['text'] = plain_context['task'].email % sub_vars_plain
-        
+        sub_vars_plain['buttons'] = button(plain_context['task_url'],
+                                           "Start this task") +\
+                                    button(plain_context['review_url'],
+                                           "Review all my tasks online") +\
+                                    button(plain_context['ignore_url'],
+                                           "Ignore this task")
+        plain_context['text'] = plain_context['email'].body \
+                                % sub_vars_plain 
         def strip_html(text):
             return re.sub(r'<[^>]*?>', '', text) 
-        
         # XXX Hack to cope with HTML in the task's description text
         # probably needs separation into html_description and plain_description
         plain_context['text'] = strip_html(plain_context['text'])
-
         return plain_context
 
-    def send_email(self):
+    def send(self, recipient_taskusers=None):
+        """Send an email to the all users we've been assigned to, or a
+        subset if passed in as an argument
         """
-            Send an email to the user telling them about this task.
-        """
-        context = self._prepare_email_context()
-        context_html = self._prepare_html_email_context(context)
-        context_plain = self._prepare_plain_email_context(context)
-        
-        message_html = render_to_string('tasks/email_new_task.html',
-                                        context_html)
-        
-        message_plain = render_to_string('tasks/email_new_task.txt',
-                                         context_plain)
-
-        subject_context = {'constituency': context['task_user'].constituency.name }
-        subject = context['task'].email_subject % subject_context
-        
-        msg = EmailMultiAlternatives(subject,
-                                     message_plain,
-                                     settings.DEFAULT_FROM_EMAIL,
-                                     [context['user'].email, ])
-        msg.attach_alternative(message_html, "text/html")
-        
-        msg.send()
-        
-        self.emails_sent += 1
+        count = 0
+        if not recipient_taskusers:
+            recipient_taskusers = self.taskusers.all()
+        for taskuser in recipient_taskusers:
+            context = self._prepare_email_context(taskuser)
+            context_html = self._prepare_html_email_context(context)
+            context_plain = self._prepare_plain_email_context(context)
+            message_html = render_to_string('tasks/email_new_task.html',
+                                            context_html)
+            message_plain = render_to_string('tasks/email_new_task.txt',
+                                             context_plain)
+            subject_context = {'constituency':context['task_user'].constituency.name}
+            subject = self.subject % subject_context
+            msg = EmailMultiAlternatives(subject,
+                                         message_plain,
+                                         settings.DEFAULT_FROM_EMAIL,
+                                         [context['user'].email, ])
+            msg.attach_alternative(message_html, "text/html")
+            msg.send()
+            count += 1
+        self.date_last_sent = datetime.now()
         self.save()
-    
+        return count
+
     def __unicode__(self):
-        return "%s doing %s (%s)" % (self.user, self.task, self.state_string())
-    
-    class AlreadyAssigned(Exception):
-        """
-            Thrown by the UserTaskManager on attempted
-            assignment/suggestion of a task which a user already has
-        """
-        pass
+        return "%s sent %s" % (self.subject, self.date_last_sent)
 
 def callback_user_left_constituency(sender, **kwargs):
     constituencies = kwargs['constituencies']

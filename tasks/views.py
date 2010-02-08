@@ -10,6 +10,7 @@ from django.db.models import Sum
 from django.shortcuts import get_object_or_404
 
 from models import Task, TaskUser
+from models import TaskEmail
 from models import Badge
 from signup.models import CustomUser, Constituency
 from signup.views import render_with_context
@@ -106,14 +107,11 @@ def start_task(request, slug, constituency=None):
         the task url
     """
     task = Task.objects.get(slug=slug)
-
     try:
         task_user = TaskUser.objects.get(task=task,
                                          user=request.user,
                                          constituency__slug=constituency)
-        
-        task_user.state = TaskUser.States.started
-        task_user.save()
+        task_user.start()
         url = task_user.url
         if task_user.post_url:
             url += "?callback=" + urlquote(task_user.post_url)
@@ -300,14 +298,17 @@ def manage_assign_tasks(request, task_pk):
                                context)
 
 
-def open_email(request, taskuser_id):
+def open_email(request, taskuser_id, taskemail_id):
     """
     Mark a TaskUser as having had an email opened and return a gif 
     """
     try:
         task_user = TaskUser.objects.get(pk=taskuser_id)
-        task_user.emails_opened += 1
+        task_email = TaskEmail.objects.get(pk=taskemail_id)
+        task_user.source_email = task_email
         task_user.save()
+        task_email.opened += 1
+        task_email.save()
         return HttpResponse(content=SPACER_GIF,
                             mimetype="image/gif")
     except TaskUser.DoesNotExist:
