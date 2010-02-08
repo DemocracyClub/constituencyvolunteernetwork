@@ -16,10 +16,10 @@ from tasks.util import reverse_login_key_short
 import signals
 
 class Project(Model):
-    """
-        Represents a grouping of tasks belonging to a particular project/group,
-        along with a description and a url for the main project website
-        e.g. TheyWorkForYou, TheStraightChoice, DemocracyClub
+    """Represents a grouping of tasks belonging to a particular project/group,
+    along with a description and a url for the main project website
+    e.g. TheyWorkForYou, TheStraightChoice, DemocracyClub
+
     """
 
     name = models.CharField(max_length=80)
@@ -31,9 +31,9 @@ class Project(Model):
         return self.name
 
 class Task(Model):
-    """
-        A description of a task, attached to a project (optionally), with a
-        list of users doing the task
+    """A description of a task, attached to a project (optionally), with a
+    list of users doing the task.
+
     """
     name = models.CharField(max_length=80)
     slug = models.SlugField(max_length=80)
@@ -44,12 +44,44 @@ class Task(Model):
     decorator_class = models.CharField(max_length=180,
                                        null=True,
                                        blank=True)
+
+    def taskemails(self):
+        return TaskEmail.objects.filter(taskuser__task=self).distinct()
+        
+    def getStatistics(self):
+        """Return a dictionary of interesting stats regarding this task
+        """
+        # XXX would prefer to use Count() aggregation here but it
+        # wasn't work
+        tasks_assigned = TaskUser.objects.filter(task=self).count()
+        taskemails = self.taskemails()
+        emails_sent = sum([x.count for x in taskemails])
+        emails_opened = sum([x.opened for x in taskemails])
+        tasks_ignored = TaskUser.objects\
+                        .filter(task=self,
+                                state=TaskUser.States.ignored)\
+                        .count()
+        tasks_completed = TaskUser.objects\
+                          .filter(task=self,
+                                  state=TaskUser.States.completed)\
+                          .count()
+        tasks_started = TaskUser.objects\
+                        .filter(task=self,
+                                state=TaskUser.States.started)\
+                        .count() + tasks_completed
+        return {'assigned':tasks_assigned,
+                'sent': emails_sent,
+                'opened': emails_opened,
+                'started': tasks_started,
+                'completed': tasks_completed,
+                'ignored': tasks_ignored}
     
     def __unicode__(self):
         return self.name
 
     def get_started_users(self):
-        return CustomUser.objects.filter(taskuser__task=self, taskuser__state=1)
+        return CustomUser.objects.filter(taskuser__task=self,
+                                         taskuser__state=1)
 
     @models.permalink
     def get_absolute_url(self):
@@ -319,7 +351,32 @@ class TaskEmail(Model):
                                           blank=True)
     taskusers = models.ManyToManyField(TaskUser, null=True, blank=True)
     opened = models.IntegerField(default=0)
+    count = models.IntegerField(default=0)
 
+    def getStatistics(self):
+        """Return a dictionary of interesting stats regarding this email
+        """
+        tasks_assigned = TaskUser.objects.filter(taskemail=self)\
+                         .count()
+        tasks_completed = TaskUser.objects\
+                        .filter(taskemail=self)\
+                        .filter(state=TaskUser.States.completed)\
+                        .count()
+        tasks_started = TaskUser.objects\
+                        .filter(taskemail=self)\
+                        .filter(state=TaskUser.States.started)\
+                        .count() + tasks_completed
+        tasks_ignored = TaskUser.objects\
+                        .filter(taskemail=self)\
+                        .filter(state=TaskUser.States.ignored)\
+                        .count()
+        return {'assigned': tasks_assigned,
+                'sent': self.count,
+                'opened': self.opened,
+                'started': tasks_started,
+                'completed': tasks_completed,
+                'ignored': tasks_ignored}
+            
     # Email preparation functions
     def _prepare_email_context(self, taskuser):
         """
@@ -437,6 +494,7 @@ class TaskEmail(Model):
             msg.send()
             count += 1
         self.date_last_sent = datetime.now()
+        self.count += count
         self.save()
         return count
 

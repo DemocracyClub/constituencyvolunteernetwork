@@ -5,7 +5,7 @@
 
 {% if posted %}
  <p>This filter {% if dry_run %}would have{% endif %} assigned 
- <em>{{ task.name }}</em> to {{ count }} users.</p>
+ <em>{{ task.name }}</em> to {{ count }} users{% if selected_email %} with email '<em>{{ selected_email.subject }}</em>'{% endif %}.</p>
  {% if skip %}
   <p>A further {{ skip }} users who matched the query were already 
   assigned it.</p>
@@ -24,6 +24,16 @@
 {% if queryfilter %}{{ queryfilter }}
 {% else %}users.filter(email="seb.bacon@gmail.com"){% endif %}
 </textarea><br />
+Pick an email campaign (optional -- we won't send the emails straight away)
+<select name="email">
+ {% for email in emails %}
+  {% if forloop.first %}
+  <option value="">select one</option>
+  {% endif %}
+  <option value="{{ email.pk }}"{% ifequal selected_email email %} selected="selected"{% endifequal %}>{{ email.subject }}</option>
+ {% endfor %}
+</select>
+<br />
 <input type="checkbox" {% if posted and not dry_run %}{% else %}checked="checked"{% endif %} name="dry_run" /> Dry run?
 <input type="submit">
 </form>

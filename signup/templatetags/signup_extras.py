@@ -7,7 +7,14 @@ register = template.Library()
  
 MOMENT = 120    # duration in seconds within which the time difference 
                 # will be rendered as 'a moment ago'
- 
+
+@register.filter
+def percentage(fraction, population):
+    try:  
+        return "%.0f%%" % ((float(fraction) / float(population)) * 100)  
+    except (ValueError, ZeroDivisionError):  
+        return ""
+
 @register.filter
 def naturalTimeDifference(value):
     """Finds the difference between the datetime value given and now()
