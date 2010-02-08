@@ -395,8 +395,11 @@ class TaskUser(Model):
         
         message_plain = render_to_string('tasks/email_new_task.txt',
                                          context_plain)
+
+        subject_context = {'constituency': context['task_user'].constituency.name }
+        subject = context['task'].email_subject % subject_context
         
-        msg = EmailMultiAlternatives(context['task'].email_subject,
+        msg = EmailMultiAlternatives(subject,
                                      message_plain,
                                      settings.DEFAULT_FROM_EMAIL,
                                      [context['user'].email, ])
