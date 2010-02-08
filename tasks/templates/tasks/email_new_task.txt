@@ -1,9 +1,5 @@
 {% autoescape off %}Hi {{ user.private_name }},
 
-There is a new task available for you on Democracy Club:
-
-= *{{ task.name }}* =
-
 {{ text }}
 
 http://{{ site.domain }}
