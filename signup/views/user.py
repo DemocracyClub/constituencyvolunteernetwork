@@ -73,9 +73,12 @@ def user(request, id):
 
 @login_required
 def edit_user(request, id):
-    if request.user.id != id and not request.user.has_perm("signup.edit_customuser"):
+    id = int(id)
+    if request.user.id != id:# and not request.user.has_perm("signup.edit_customuser"):
         return HttpResponse(status=403)
     else:
+        print "Rendering form"
+    
         data = None
         user = CustomUser.objects.get(pk=id)
         

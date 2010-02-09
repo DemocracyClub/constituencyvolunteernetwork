@@ -76,6 +76,7 @@ class UserForm(TemplatedForm):
                                          can_cc=can_cc,
                                          first_name=first_name,
                                          last_name=last_name,
+                                         display_name=first_name,
                                          is_active=False)
         user.constituencies.add(constituency)
         user.save()
@@ -84,6 +85,8 @@ class UserForm(TemplatedForm):
         return profile
 
 class EditUserForm(UserForm):
+    display_name = forms.CharField(required=False)
+    
     def __init__(self, user, data):
         self.user = user
         UserForm.__init__(self, data)
@@ -106,6 +109,7 @@ class EditUserForm(UserForm):
         self.user.can_cc = self.cleaned_data['can_cc']
         self.user.first_name = self.cleaned_data['first_name']
         self.user.last_name = self.cleaned_data['last_name']
+        self.user.display_name = self.cleaned_data['display_name']
         self.user.constituencies.add(self.cleaned_data['constituency'])
         self.user.save()
         

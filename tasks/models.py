@@ -39,6 +39,7 @@ class Task(Model):
     slug = models.SlugField(max_length=80)
     project = models.ForeignKey(Project)
     description = models.TextField()
+    short_description = models.TextField()
     date_created = models.DateTimeField(auto_now_add=True)
     users = models.ManyToManyField(CustomUser, through="TaskUser")
     decorator_class = models.CharField(max_length=180,

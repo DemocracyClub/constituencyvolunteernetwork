@@ -114,6 +114,7 @@ class CustomUser(User):
     login_count = models.IntegerField(default=0)
     seen_invite = models.BooleanField(default=False)
     objects = UserManager()
+    display_name = models.CharField(max_length=30, default="Someone")
 
     @property
     def current_constituencies(self):
@@ -134,17 +135,17 @@ class CustomUser(User):
         else:
             return {"name": "no constituency",} # hack
         
-    @property
-    def display_name(self):
-        """ Name appropriate for public display """
-        if self.can_cc:
-            if self.first_name:
-                name = self.first_name
-            else:
-                name = "Someone"
-        else:
-            name = "Someone"
-        return name
+    #@property
+    #def display_name(self):
+    #    """ Name appropriate for public display """
+    #    if self.can_cc:
+    #        if self.first_name:
+    #            name = self.first_name
+    #        else:
+    #            name = "Someone"
+    #    else:
+    #        name = "Someone"
+    #    return name
 
     @property
     def private_name(self):

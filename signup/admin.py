@@ -49,9 +49,9 @@ class ConstituencyAdmin(admin.ModelAdmin):
 
 class CustomUserAdmin(admin.ModelAdmin):
     form = MyCustomUserChangeForm
-    list_display = ('email', 'first_name', 'last_name', 'is_active', 'last_login')
+    list_display = ('email', 'display_name', 'first_name', 'last_name', 'is_active', 'last_login')
     list_filter = ('constituencies','is_active')
-    search_fields = ('first_name', 'last_name', 'email')
+    search_fields = ('display_name', 'first_name', 'last_name', 'email')
 
     def show_activation_url(self, request, queryset):
         message = ""

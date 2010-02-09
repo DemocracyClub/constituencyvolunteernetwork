@@ -11,6 +11,7 @@ div.comment
     list-style: none;
     margin:0;
     padding:0;
+    margin-bottom:1em;
 }
 
 div.comment .poster {
@@ -42,7 +43,7 @@ form#post-comment
 
 input#id_comment
 {
-    width:400px;
+    width:80%;
     border:1px solid #CCC;
     font-size:1.1em;
     line-height:2em;
@@ -56,6 +57,7 @@ input#id_comment:focus
 
 input.submit-post
 {
+    width:15%;
     font-size:1.1em;
     line-height:2em;
 }
