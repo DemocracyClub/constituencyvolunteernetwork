@@ -232,6 +232,16 @@ def add_constituency(request):
                                'add_constituency.html',
                                context)
 
+def constituencies(request):
+    year = settings.CONSTITUENCY_YEAR
+    context = {}
+    context['constituencies'] = Constituency.objects.all()\
+                                .filter(year=year)\
+                                .order_by('name')
+    return render_with_context(request,
+                               'constituencies.html',
+                               context)
+
 def constituency(request, slug, year=None):
     context = _get_nearby_context(request)
     from tasks.models import TaskUser
