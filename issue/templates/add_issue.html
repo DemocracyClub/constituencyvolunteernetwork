@@ -124,7 +124,7 @@
 {% if issues %}
  <ul>
  {% for issue in issues %}
-  <li><a href="{{ issue.reference_url }}" target="_blank">{{ issue.question }}</a></li>
+  <li>{{ issue.question }}{% if issue.reference_url %} (<a href="{{ issue.reference_url }}" target="_blank">source</a>){% endif %}</li>
  {% endfor %}
  </ul>
 {% else %}
