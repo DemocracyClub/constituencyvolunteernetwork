@@ -20,6 +20,7 @@ import geo
 from slugify import smart_slugify
 from settings import CONSTITUENCY_YEAR
 import signals
+import twfy
 import wiki_constituencies
 
 SHA1_RE = re.compile('^[a-f0-9]{40}$')
@@ -88,6 +89,9 @@ class Constituency(Model):
             neighbours.append(place)
             count += 1
         return neighbours
+
+    def current_mp(self):
+        return twfy.getCurrentMP(self.name)
 
     @property
     def wikipedia_url(self):

@@ -120,3 +120,11 @@ def getGeometry(name=None):
         data = json.loads(result, encoding=charset(headers))["data"]
     return data
 
+def getCurrentMP(name):
+    """Return the current MP data structure for the named constituency
+    
+    """
+    params = dict(constituency=name)
+    headers, result = fetch(svcurl("getMP", params))
+    data = json.loads(result, encoding=charset(headers))
+    return data
