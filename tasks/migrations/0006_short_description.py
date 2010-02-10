@@ -8,7 +8,7 @@ class Migration:
     def forwards(self, orm):
         
         # Adding field 'Task.short_description'
-        db.add_column('tasks_task', 'short_description', orm['tasks.task:short_description'])
+        db.add_column('tasks_task', 'short_description', orm['tasks.task:short_description'], keep_default=False)
         
     
     
@@ -93,7 +93,7 @@ class Migration:
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '80'}),
             'project': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['tasks.Project']"}),
-            'short_description': ('django.db.models.fields.TextField', [], {}),
+            'short_description': ('django.db.models.fields.TextField', [], {'default': "'*** no short description ***'"}),
             'slug': ('django.db.models.fields.SlugField', [], {'max_length': '80', 'db_index': 'True'}),
             'users': ('django.db.models.fields.related.ManyToManyField', [], {'to': "orm['signup.CustomUser']"})
         },
