@@ -227,6 +227,8 @@ def manage_tasks(request):
                                'tasks/manage_tasks.html',
                                context) 
 
+@login_required
+@permission_required('tasks.add_taskuser')
 def manage_assign_tasks(request, task_pk):
     context = {}
     task = get_object_or_404(Task, pk=task_pk)
