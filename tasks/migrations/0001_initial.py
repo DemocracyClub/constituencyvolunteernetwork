@@ -58,9 +58,10 @@ class Migration:
         db.send_create_signal('tasks', ['Project'])
         
         # Adding model 'ConstituencyCompletenessTask'
-        db.create_table('tasks_task', (
-            
-        ))
+        # XXX is a proxy model so has no db entry
+        #db.create_table('tasks_task', (
+        #    
+        #))
         db.send_create_signal('tasks', ['ConstituencyCompletenessTask'])
         
     
@@ -80,7 +81,8 @@ class Migration:
         db.delete_table('tasks_project')
         
         # Deleting model 'ConstituencyCompletenessTask'
-        db.delete_table('tasks_task')
+        # XXX is a proxy model so has no db entry
+        # db.delete_table('tasks_task')
         
     
     
