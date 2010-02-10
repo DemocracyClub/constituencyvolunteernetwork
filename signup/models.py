@@ -303,9 +303,6 @@ class RegistrationProfile(Model):
 
     # XXX This is used in the admin interface, but not yet in the template.
     @permalink
-    def get_activation_url(self):
-        return ( "activate", (), { "key" : self.activation_key } )
-    @permalink
     def get_login_url(self):
         return ( "login", (), { "key" : self.activation_key } )
 

@@ -21,7 +21,7 @@ class Issue(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
-    status = models.TextField(max_length=1, choices=STATUS_CHOICES)
+    status = models.TextField(max_length=1, choices=STATUS_CHOICES, default='new')
 
 
     def __unicode__(self):
