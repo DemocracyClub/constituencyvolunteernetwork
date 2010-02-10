@@ -120,6 +120,8 @@ ACCOUNT_ACTIVATION_DAYS = 40
 
 GOOGLE_ANALYTICS_ID = "UA-10926972-1"
 
+SOUTH_AUTO_FREEZE_APP = True
+
 try:
     from local_settings import *
 except ImportError:

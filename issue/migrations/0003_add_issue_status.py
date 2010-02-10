@@ -61,7 +61,7 @@ class Migration:
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'question': ('django.db.models.fields.TextField', [], {}),
             'reference_url': ('django.db.models.fields.URLField', [], {'max_length': '2048', 'null': 'True', 'blank': 'True'}),
-            'status': ('django.db.models.fields.TextField', [], {'max_length': '1'}),
+            'status': ('django.db.models.fields.CharField', [], {'default': "'new'", 'max_length': '20'}),
             'updated_at': ('django.db.models.fields.DateTimeField', [], {'auto_now': 'True', 'blank': 'True'})
         },
         'signup.constituency': {
@@ -75,6 +75,7 @@ class Migration:
         'signup.customuser': {
             'can_cc': ('django.db.models.fields.BooleanField', [], {'default': 'False', 'blank': 'True'}),
             'constituencies': ('django.db.models.fields.related.ManyToManyField', [], {'to': "orm['signup.Constituency']"}),
+            'display_name': ('django.db.models.fields.CharField', [], {'default': "'Someone'", 'max_length': '30'}),
             'login_count': ('django.db.models.fields.IntegerField', [], {'default': '0'}),
             'postcode': ('django.db.models.fields.CharField', [], {'max_length': '9'}),
             'seen_invite': ('django.db.models.fields.BooleanField', [], {'default': 'False', 'blank': 'True'}),
