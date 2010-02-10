@@ -17,6 +17,7 @@ USERS = [{'email': m8r_addr['frank'],
           'can_cc': True,
           'first_name': 'Frank',
           'last_name': 'Fandango',
+          'display_name': 'Frank',
           'username': 'Frank',
           'password': ''},
          ]
