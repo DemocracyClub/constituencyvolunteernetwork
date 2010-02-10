@@ -1,0 +1,7 @@
+#!/bin/bash
+
+# Run the tests for our own apps (and not for other apps, some of whose tests
+# break due to bugs in their tests)
+
+./manage.py test tasks signup invite issue tsc shorten
+
