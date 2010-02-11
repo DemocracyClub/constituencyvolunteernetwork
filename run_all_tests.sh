@@ -1,6 +1,6 @@
 #!/bin/bash
 
-APPS="signup issue invite tasks"
+APPS="signup issue invite tasks tsc shorten"
 
 for APP in "$APPS"
  do 
