@@ -4,4 +4,4 @@
 """
 import django.dispatch
 
-leaflet_added = django.dispatch.Signal(providing_args=["user"])
+leaflet_added = django.dispatch.Signal(providing_args=["user", "constituency"])

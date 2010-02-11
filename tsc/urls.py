@@ -4,11 +4,11 @@ import views
 
 ###############################################################################
 urlpatterns = patterns('tsc',
-        url(r'^add/(?P<login_key>[\w-]+)$',
+        url(r'^add/(?P<constituency_slug>[\w-]+)/(?P<login_key>[\w-]+)$',
         views.add,
         name="tsc_add"),
 
-        url(r'^add/$',
+        url(r'^add/(?P<constituency_slug>[\w-]+)/$',
         views.add,
         name="tsc_add"),
 

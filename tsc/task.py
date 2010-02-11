@@ -1,6 +1,7 @@
 import re
 
 from django.contrib.sites.models import Site
+from django.core.urlresolvers import reverse
 
 from tasks.models import TaskUser, Badge
 from signup.signals import *
@@ -11,7 +12,8 @@ from tasks.decorators import task_assign, task_completion
 
 task_slug = "upload-leaflet"
 #tsc_url = "http://www.thestraightchoice.org/addupload.php"
-tsc_url = "/tsc/test"
+#tsc_url = "/tsc/test"
+tsc_url = "http://staging.thestraightchoice.org/addupload.php"
 
 @task_completion(task_slug)
 def callback_leaflet_added(sender, **kwargs):
@@ -39,22 +41,33 @@ def callback_leaflet_added(sender, **kwargs):
 @task_assign(task_slug)
 def callback_assign(sender, **kwargs):
     """
-        Assign this task to everyone who activates the signals and
-        isn't already doing the task.
+        Assign this task to everyone who activates the signals and isn't
+        already doing the task.
     """
     user = kwargs['user']
     task = kwargs['task']
+
+    constituencies = None
+    if "constituencies" in kwargs and kwargs['constituencies'] is not None:
+        constituencies = kwargs['constituencies']
+    else:
+        constituencies = user.current_constituencies
+
     current_site = Site.objects.get_current()
-    post_url = "http://%s%s" % \
-        (current_site.domain, reverse_login_key("tsc_add", user)) 
-    try:
-        TaskUser.objects.assign_task(task,
-                                     user,
-                                     tsc_url,
-                                     post_url=post_url,
-                                     email=True)
-    except TaskUser.AlreadyAssigned:
-        return "%s already assigned to %s" % (task, user)
+    assigned = []
+    for constituency in constituencies:
+        kwargs = {'constituency': constituency.slug}
+        callback_url = "http://%s%s" % (current_site.domain, reverse("tsc_add"))
+        add_issue_url = "%s?callback=%s" % (tsc_url, callback_url)
+        try:                
+            TaskUser.objects.assign_task(task,
+                                         user,
+                                         add_issue_url,
+                                         constituency=constituency)
+        except TaskUser.AlreadyAssigned:
+            msg = "%s already assigned to %s in %s"
+            assigned.append(msg % (task, user, constituency))
+    return "; ".join(assigned)
 
 # Assignment signals
 # user_activated.connect(callback_assign)
