@@ -1,7 +1,7 @@
 {% load comments %}
 {% load signup_extras %}
 
-<a id="comments"></a><h3>Constituency discussion</h3>
+<a id="comments"></a><h3>{{ constituency.name }} discussion</h3>
 <p class="quiet">Discuss with other people what you're doing in this constituency</p>
 {% get_comment_form for constituency as form %}
 <form action="{% comment_form_target %}" method="post" id="post-comment">
