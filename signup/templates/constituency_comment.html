@@ -2,6 +2,7 @@
 {% load signup_extras %}
 
 <a id="comments"></a><h3>{{ constituency.name }} discussion</h3>
+{% if not user.is_anonymous %}{% if not user.is_active %}
 <p class="quiet">Discuss with other people what you're doing in this constituency</p>
 {% get_comment_form for constituency as form %}
 <form action="{% comment_form_target %}" method="post" id="post-comment">
@@ -16,6 +17,7 @@
     <label for="id_honeypot">If you enter anything in this field your comment will be treated as spam</label> {{ form.honeypot }}
   </p>
 </form>
+{% endif %}{% endif %}
 
 {% get_comment_list for constituency as comment_list %}
 <div class="comments">
