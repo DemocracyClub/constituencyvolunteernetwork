@@ -1,3 +1,5 @@
+import datetime
+
 from django.db import models
 from django.contrib.comments.models import BaseCommentAbstractModel, Comment
 from django.contrib.comments.managers import CommentManager
@@ -40,7 +42,8 @@ class CommentSimple(BaseCommentAbstractModel):
         verbose_name_plural = _('comments')
 
     def __unicode__(self):
-        return "%s: %s..." % (self.name, self.comment[:50])
+        return "%s: %s..." % (self.user,
+                              self.comment[:50])
 
     def save(self, force_insert=False, force_update=False):
         if self.submit_date is None:
