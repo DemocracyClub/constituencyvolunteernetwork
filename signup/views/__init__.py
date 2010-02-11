@@ -261,6 +261,7 @@ def constituency(request, slug, year=None):
         within_km = int(request.POST['within_km'])
         nearest = constituency.neighbors(limit=100,
                                          within_km=within_km)
+        nearest = nearest + [constituency]
         context['nearest'] = nearest
         context['subject'] = request.POST['subject']
         context['message'] = request.POST['message']
