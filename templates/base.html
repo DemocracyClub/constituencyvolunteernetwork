@@ -55,11 +55,13 @@
           </div> 
       </div>
         <div id="main" class="container">
-          {% if constituency %}
-          <div id="constituency-header">
-            <!-- Not current working due to new constituencies: <a href='http://www.theyworkforyou.com/mp/?c={{constituency.name|urlencode}}' style="float:right;" target="_blank">{{constituency.name}} at TheyWorkForYou.com</a>-->
-            <h2><a href='{{ constituency.get_absolute_url }}'>{{ constituency.name }}</a></h2>
-          </div>
+          {% if not is_constituency_page %}
+              {% if constituency  %}
+              <div id="constituency-header">
+                <!-- Not current working due to new constituencies: <a href='http://www.theyworkforyou.com/mp/?c={{constituency.name|urlencode}}' style="float:right;" target="_blank">{{constituency.name}} at TheyWorkForYou.com</a>-->
+                <h2><a href='{{ constituency.get_absolute_url }}'>{{ constituency.name }}</a></h2>
+              </div>
+              {% endif %}
           {% endif %}
           {% if not user.is_anonymous %}{% if not user.is_active %}
             <div class="prepend-2 span-4 append-2 last"><p class="notice">You've not confirmed your email address yet. You need to do this to receive tasks. Please check your inbox (and your spam folder) for a confirmation email.</p></div>

@@ -122,9 +122,15 @@
 <div class="span-4 last">
  <h3>Existing issues in {{ constituency.name }}</h3>
 {% if issues %}
- <ul>
+ <ul class="issues">
  {% for issue in issues %}
-  <li>{{ issue.question }}{% if issue.reference_url %} (<a href="{{ issue.reference_url }}" target="_blank">source</a>){% endif %}</li>
+    <li class="issue">
+        {{ issue.question }}
+        {% if issue.reference_url %}
+            (<a href="{{ issue.reference_url }}">source</a>)
+        {% endif %}
+        <span class="abuse-button"><a href='mailto:developers@democracyclub.org.uk?subject=Issue abuse report for id={{ issue.id }}&body=Issue text:%0A "{{ issue.question }}"'>report abuse</a></span>
+    </li>
  {% endfor %}
  </ul>
 {% else %}

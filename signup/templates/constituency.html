@@ -1,10 +1,22 @@
 {% extends 'base.html' %}
+{% load comments %}
+{% load signup_extras %}
+
 {% block title %}{{constituency.name}}{% endblock %}
+{% block section %}constituency{% endblock %}
+
+{% block extra-head %}
+<link rel="stylesheet" type="text/css"  media="screen" href="{{ MEDIA_URL }}comments/comments.css" />
+<link rel="stylesheet" type="text/css"  media="screen" href="{{ MEDIA_URL }}issues/issues.css" />
+<link rel="stylesheet" type="text/css"  media="screen" href="{{ MEDIA_URL }}tasks/tasks.css" />
+<link rel="stylesheet" type="text/css"  media="screen" href="{{ MEDIA_URL }}constituency/constituency.css" />
+{% endblock %}
 
 {% block content %}
 
 <div class="span-4">
     <h2>{{constituency.name}}</h2>
+    
     <p>
      {% ifequal constituency.customuser_set.count 1 %}
        {% if volunteer_here %}
@@ -17,9 +29,10 @@
      {% endifequal %}
     </p>
 
-    <ul><li>Current MP: <a href="http://www.theyworkforyou.com/mp/?p={{ constituency.current_mp.person_id }}">{{ constituency.current_mp.full_name }}</a> ({{ constituency.current_mp.party }})</li>
-        <li>{{ constituency.name }} <a href='{{ constituency.wikipedia_url }}' target="_blank">on Wikipedia</a></li>
-        <li><a href='http://openlylocal.com/hyperlocal_sites?location={{ constituency.name }},%20UK&commit=Search' target="_blank">Local blogs</a> near {{ constituency.name }}</li>
+    <ul class="info">
+        <li><label>Current MP</label> <a href="http://www.theyworkforyou.com/mp/?p={{ constituency.current_mp.person_id }}">{{ constituency.current_mp.full_name }}</a> ({{ constituency.current_mp.party }})</li>
+        <li><label>On the web</label> <a href='{{ constituency.wikipedia_url }}' target="_blank">{{ constituency.name }} on Wikipedia</a></li>
+        <li><label>&nbsp;</label> <a href='http://openlylocal.com/hyperlocal_sites?location={{ constituency.name }},%20UK&commit=Search' target="_blank">Local blogs</a> near {{ constituency.name }}</li>
     </ul>
 
 
@@ -28,6 +41,10 @@
         {% include "tasks/activity_list.html" %}
     {% else %}
         There has been no activity near you - be the first, do a task! Maybe you need to <a href='{% url inviteindex %}'>invite some friends</a>.
+    {% endif %}
+
+    {% if 1 %}
+    {% include "constituency_comment.html" %}
     {% endif %}
     
     {% if request.user.is_superuser %}
@@ -44,26 +61,29 @@
 </div>
 <div class="span-4 last">
 
-    {% ifnotequal constituency.issue_set.count 0 %}
-    <h3>Local issues</h3>
-    <ul>
-    {% for issue in constituency.issue_set.all %}
-        <li>
-            {{ issue.question }}
-            {% if issue.reference_url %}
-                (<a href="{{ issue.reference_url }}">source</a>)
-            {% endif %}
-        </li>
-    {% endfor %}
-        <li><a href='{% url add_issue constituency=constituency.slug %}'>Add issue for {{ constituency.name }}</a></li>
-    </ul>
-    {% endifnotequal %}
+    <div class="issue-box">
+        <h3>Local issues</h3>
+        <ul class="issues" style="list-style:none">
+        {% for issue in constituency.issue_set.all %}
+            <li class="issue">
+                {{ issue.question }}
+                {% if issue.reference_url %}
+                    (<a href="{{ issue.reference_url }}">source</a>)
+                {% endif %}
+                <span class="abuse-button"><a href='mailto:developers@democracyclub.org.uk?subject=Issue abuse report for id={{ issue.id }}&body=Issue text:%0A "{{ issue.question }}"'>report abuse</a></span>
+            </li>
+        {% empty %}
+            <li>No issues yet, add one!</li>
+        {% endfor %}
+            <li class="add-issue-button"><a href='{% url add_issue constituency=constituency.slug %}'>Add issue for {{ constituency.name }}</a></li>
+        </ul>
+    </div>
 
-    <h3>Help us get better coverage</h3>
+    <!--<h3>Help us get better coverage</h3>
     <p>Any markers on this map mark the centres of nearby constituencies where we don't currently have any volunteers. If you know anyone who might live there, please {% if not request.user.is_anonymous %}<a href="/invite/">invite them</a>{% else %}invite them{% endif %} and help us get volunteers in the whole country!</p>  
     <iframe width="425" height="350" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="http://maps.google.co.uk/maps?f=q&amp;source=s_q&amp;hl=en&amp;geocode=&amp;q=http:%2F%2Fwww.democracyclub.org.uk%2Fstatistics%2Ffewerthan%2F1%2Fgeo.rss&amp;sll=&amp;sspn={{latspan}},{{lonspan}}&amp;ie=UTF8&amp;ll={{constituency.lat}},{{constituency.lon}}&amp;spn={{latspan}},{{lonspan}}&amp;z=&amp;output=embed"></iframe><br /><small><a href="http://maps.google.co.uk/maps?f=q&amp;source=embed&amp;hl=en&amp;geocode=&amp;q=http:%2F%2Fwww.democracyclub.org.uk%2Fstatistics%2Ffewerthan%2F1%2Fgeo.rss&amp;sll=53.800651,-4.064941&amp;sspn=16.261859,33.618164&amp;ie=UTF8&amp;ll={{constituency.lat}},{{constituency.lon}}&amp;spn={{latspan}},{{lonspan}}&amp;z=10" style="color:#0000FF;text-align:left">View Larger Map</a></small>
 {% if not request.user.is_anonymous %}
  {% include "more_constituencies_form.html" %}
-{% endif %}
+{% endif %}-->
 </div>
 {% endblock %}

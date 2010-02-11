@@ -307,6 +307,8 @@ def constituency(request, slug, year=None):
             context['volunteer_here'] = bool(request.user.constituencies.filter(id=constituency.id))
         else:
             context['volunteer_here'] = False
+
+        context['is_constituency_page'] = True
         
         return render_with_context(request,
                                    'constituency.html',

@@ -61,3 +61,57 @@ input[type=text]#id_question.issue
     background:white;
     color:#333;
 }
+
+div.issue-box
+{
+    background:url("/media/gradient.png") repeat-x;
+    background-position:bottom;
+    padding:0.25em;
+    margin-top:0.5em;
+}
+
+ul.issues
+{
+    list-style-type: none;
+    margin:0;
+    padding:0;
+}
+
+ul.issues li, li.issue
+{
+    list-style: none outside;
+    margin:0;
+    padding:0.25em;
+    border-bottom:1px solid #EEE;
+}
+
+li.issue .abuse-button
+{
+    float:right;
+    font-size:small;
+}
+
+ul.issues li.add-issue-button
+{
+    padding:0;
+}
+
+ul.issues li.add-issue-button a
+{
+    padding:0.25em;
+    width:100%;
+    display:block;
+    outline:none;
+}
+
+ul.issues li.add-issue-button a:link
+{
+    background:white;
+}
+
+ul.issues li.add-issue-button a:hover
+{
+    padding:0.25em;
+    background:url("/media/gradient.png") repeat-x;
+}
+

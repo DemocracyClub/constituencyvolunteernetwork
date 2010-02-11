@@ -1,0 +1,16 @@
+ul.info
+{
+    margin:0;
+}
+
+ul.info li
+{
+    list-style:none outside;
+}
+
+ul.info li label
+{
+    width:100px;
+    display:block;
+    float:left;
+}
