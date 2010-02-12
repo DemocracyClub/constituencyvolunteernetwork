@@ -5,3 +5,5 @@
 import django.dispatch
 
 issue_added = django.dispatch.Signal(providing_args=["user"])
+issue_moderated = django.dispatch.Signal(providing_args=["user"])
+

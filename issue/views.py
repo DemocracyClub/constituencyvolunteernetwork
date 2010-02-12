@@ -2,13 +2,15 @@ from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, permission_required
 
 from signup.models import Constituency
 from models import Issue
 from task import task_slug
 from tasks.util import login_key
-from forms import AddIssueForm
+from forms import AddIssueForm, ModerateIssueForm
+from utils import addToQueryString
+
 import signals
 import settings
 
@@ -23,7 +25,6 @@ def add_issue(request, constituency=None, submitted=False):
         c = None
     issues = Issue.objects.filter(constituency=c)\
              .order_by('-created_at')
-    
                                      
     vars = {'constituency': c,
             'submitted': submitted,
@@ -46,8 +47,43 @@ def add_issue(request, constituency=None, submitted=False):
             vars['form'] = add_issue_form
     else:
         vars['form'] = AddIssueForm(user=request.user)
-    return render_to_response("add_issue.html",
-                              vars,
+    return render_to_response("add_issue.html", vars,
+                              context_instance=RequestContext(request))
+
+@login_required
+@permission_required('issue.change_issue')
+def moderate_issue(request):
+    if request.method == "POST":
+        issue = Issue.objects.get(pk=request.POST['id'])
+
+        if 'Junk' in request.POST:
+            issue.status = 'junk'
+            issue.save()
+            return HttpResponseRedirect(addToQueryString(reverse('moderate_issue'), { 'notice' : 'Issue junked. Here is another.' }))
+        elif 'Approve' in request.POST:
+            raise Exception("doesn't work yet")
+            moderate_issue_form = ModerateIssueForm(request.POST, request.FILES)
+            if moderate_issue_form.is_valid():
+                issue = moderate_issue_form.save()
+                issue.status = 'approved'
+                signals.issue_moderated.send(None, user=request.user, issue=issue)
+                return HttpResponseRedirect(addToQueryString(reverse('moderate_issue'), { 'notice' : 'Issue moderated, thank you.' }))
+        else:
+            raise Exception("No known button submitted in form data")
+    else:
+        issue_list = Issue.objects.filter(status='new').order_by('?')[:1]
+        if len(issue_list) == 0:
+            return HttpResponseRedirect(addToQueryString("/", { 'notice' : "Every issue has now been moderated! Thank you for helping." }))
+
+        issue = issue_list[0]
+
+
+    vars = { }
+    vars['issue'] = issue
+    vars['form'] = ModerateIssueForm(instance = issue)
+    vars['issues'] = Issue.objects.filter(constituency=issue.constituency).order_by('-created_at')
+
+    return render_to_response("moderate_issue.html", vars,
                               context_instance=RequestContext(request))
 
 

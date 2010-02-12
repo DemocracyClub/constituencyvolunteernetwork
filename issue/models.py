@@ -23,7 +23,6 @@ class Issue(models.Model):
 
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='new')
 
-
     def __unicode__(self):
         return self.question
 

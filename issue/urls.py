@@ -17,6 +17,10 @@ urlpatterns = patterns('issue.views',
         views.add_issue,
         name="add_issue"), 
 
+    url(r'^moderate$',
+        views.moderate_issue,
+        name="moderate_issue"),
+
     url(r'^add/thanks$',
         views.add_issue,
         kwargs={'submitted':True},

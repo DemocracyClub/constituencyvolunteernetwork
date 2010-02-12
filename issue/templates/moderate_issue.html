@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+
+{% load signup_extras %}
+
+{% block title %}Moderate local issues{% endblock %}
+
+{% block extra-head %}
+<link rel="stylesheet" type="text/css"  media="screen" href="{{ MEDIA_URL }}issues/issues.css" />
+{% endblock %}
+
+{% block content %}
+<div class="span-8 last task">
+{% if submitted %}
+ <div style="padding:0.5em;border:1px solid #EEE;margin-top:1em;margin-bottom:1em;">
+    <h3 style="margin-top:0">Thank you for moderating an issue!</h3>
+    Please carry on :)
+ </div>
+{% else %}
+ <h3>
+  Moderate local issues
+ </h3>
+{% endif %}
+
+{% if form %}
+    <form action="" method="post" id="moderate_issue">
+         <div class="fieldWrapper">
+            {{ form.constituency.errors }}
+            {{ form.question.errors }}
+            {{ issue.status }}
+            <label for="id_question">
+                Some voters in {{ form.issue.constituency.name }} think that...
+            </label>
+            {{ form.question }}
+        </div>
+        <div class="fieldWrapper">
+            {{ form.reference_url.errors }}
+            <label for="id_reference_url">
+                Reference URL
+            </label>
+            {{ form.reference_url }}
+            <a href="{{ issue.reference_url }}">follow link</a>
+        </div>
+        <input type="hidden" name="id" value="{{ issue.id }}" />
+        <input type="submit" value="Approve" id="id_approve" name="Approve" /> 
+        <input type="submit" value="Junk" id="id_save" name="Junk" /> 
+    </form>
+{% endif %}
+ <p></p>
+</div>
+
+<hr/>
+
+<div class="span-4 last">
+ <h3>Existing issues in {{ constituency.name }}</h3>
+{% if issues %}
+ <ul>
+ {% for issue in issues %}
+  <li>{{ issue.question }}{% if issue.reference_url %} (<a href="{{ issue.reference_url }}" target="_blank">source</a>){% endif %}</li>
+ {% endfor %}
+ </ul>
+{% else %}
+<ul>
+    <li>Nobody has added any issues here yet</li>
+</ul>
+{% endif %}
+</div>
+
+{% endblock %}
