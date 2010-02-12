@@ -23,19 +23,39 @@
 
 {% if form %}
     <form action="" method="post" id="moderate_issue">
-         <div class="fieldWrapper">
+        <p>If necessary, rewrite the issue such that it is:
+            <ul>
+                <li>A statement for which it is possible for somebody to
+                record agreement/disagreement/no opinion.</li>
+                <li>It should be a proper sentence, with a leading capital and 
+                a full stop.</li>
+                <li>If forward looking, the statement should argue for a
+                specific change to current or planned policy (e.g. "increase funding to provide a service",
+                not simply "provide a service")
+                </li>
+                <li>If backward looking, the statement should not aportion blame, but simply describe
+                   an alternative decision.</li>
+                <li>It should be a local issue.</li>
+                <li>If the issue mentions a public body, check it is the right one (e.g. has the powers
+                ascribed to it).</li>
+                </li>
+            </li>
+            Use the source link! It will often explain what the issue is.
+        </p>
+        <div class="fieldWrapper">
             {{ form.constituency.errors }}
             {{ form.question.errors }}
-            {{ issue.status }}
             <label for="id_question">
-                Some voters in {{ form.issue.constituency.name }} think that...
+                {{ issue.constituency.name }} 
             </label>
-            {{ form.question }}
+            <br>{{ form.question }}
         </div>
         <div class="fieldWrapper">
             {{ form.reference_url.errors }}
+            You may have a good issue and a bad source. We encourage
+            you to change the source.
             <label for="id_reference_url">
-                Reference URL
+                Source
             </label>
             {{ form.reference_url }}
             <a href="{{ issue.reference_url }}">follow link</a>
@@ -43,6 +63,7 @@
         <input type="hidden" name="id" value="{{ issue.id }}" />
         <input type="submit" value="Approve" id="id_approve" name="Approve" /> 
         <input type="submit" value="Junk" id="id_save" name="Junk" /> 
+        <p>If you don't like this issue, refresh the page for a new one.</p>
     </form>
 {% endif %}
  <p></p>

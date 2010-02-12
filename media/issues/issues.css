@@ -115,3 +115,12 @@ ul.issues li.add-issue-button a:hover
     background:url("/media/gradient.png") repeat-x;
 }
 
+#id_approve, #id_save
+{
+    font-size: 150%;
+}
+
+#id_question {
+    font-size: 125%;
+}
+

@@ -30,7 +30,7 @@ class ModerateIssueForm(forms.ModelForm):
     class Meta:
         model = Issue
 
-    question = forms.CharField(required=True, max_length = 200)
+    question = forms.CharField(widget=forms.Textarea(attrs={'rows':3, 'cols':60}))
     reference_url = forms.URLField(required=False)
 
     #def save(self, domain_override="", constituency=None):
