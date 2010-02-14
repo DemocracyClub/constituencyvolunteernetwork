@@ -40,7 +40,9 @@
 </div>
 
     {% if constituency %}
-        {% include "constituency_comment.html" %}
+        {% with True as can_post %}
+            {% include "constituency_comment.html" %}
+        {% endwith %}
     {% endif %}
 
     <h3>{{ started_users.count }} {% ifequal started_users.count 1 %}person{% else %}people{% endifequal %} currently doing this task{% if constituency %} in {{ constituency.name }}{% endif %}</h3>

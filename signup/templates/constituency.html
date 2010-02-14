@@ -12,42 +12,103 @@
 <link rel="stylesheet" type="text/css"  media="screen" href="{{ MEDIA_URL }}constituency/constituency.css" />
 {% endblock %}
 
+{% block js %}
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+
+    <script>
+        function show_tab(tab_id, switcher_id)
+        {
+            $('.tab').hide();
+            $('#'+tab_id).show();
+            $('.tabswitcher li').removeClass('active');
+            $('#'+switcher_id).addClass('active');
+        }
+    </script>
+{% endblock %}
+
 {% block content %}
+<ul class="tabswitcher">
+    <li id="switcher1" class="first active"><a onclick="show_tab('tab-1', 'switcher1')">{{ constituency.name }} information</a></li>
+    <li id="switcher2" class="inactive"><a onclick="show_tab('tab-2', 'switcher2')">Local issues</a></li>
+{% if request.user.is_superuser %}
+    <li id="switcher3" class="inactive"><a onclick="show_tab('tab-3', 'switcher3')">Email nearby users</a></li>
+{% endif %}
+<div class="clear"></div>
+</ul>
+<div class="clear"></div>
+<div id="tab-1" class="tab">
+    <div class="span-4">
+        
+        <div class="gradient-box">
+            <h2>{{constituency.name}}</h2>
+            <p>
+             {% ifequal constituency.customuser_set.count 1 %}
+               {% if volunteer_here %}
+                 You're the only volunteer here so far.
+               {% else %}
+                 There's only one volunteer here.
+               {% endif %}
+             {% else %}
+               There are {{constituency.customuser_set.count}} volunteers here.
+             {% endifequal %}
+            </p>
 
-<div class="span-4">
-    <h2>{{constituency.name}}</h2>
-    
-    <p>
-     {% ifequal constituency.customuser_set.count 1 %}
-       {% if volunteer_here %}
-         You're the only volunteer here so far.
-       {% else %}
-         There's only one volunteer here.
-       {% endif %}
-     {% else %}
-       There are {{constituency.customuser_set.count}} volunteers here.
-     {% endifequal %}
-    </p>
+            <ul class="info">
+                <li><label>Current MP</label> <a href="http://www.theyworkforyou.com/mp/?p={{ constituency.current_mp.person_id }}">{{ constituency.current_mp.full_name }}</a> ({{ constituency.current_mp.party }})</li>
+                <li><label>On the web</label> <a href='{{ constituency.wikipedia_url }}' target="_blank">{{ constituency.name }} on Wikipedia</a></li>
+                <li><label>&nbsp;</label> <a href='http://openlylocal.com/hyperlocal_sites?location={{ constituency.name }},%20UK&commit=Search' target="_blank">Local blogs</a> near {{ constituency.name }}</li>
+            {% with constituency.issue_set.latest as latest_issue %}
+                <li><label>Latest issue</label> {% if latest_issue %}<a href='#' onclick="show_tab('tab-2', 'switcher2')">"{{ latest_issue.question }}" from {{ latest_issue.created_by.display_name }}</a>{% else %}<a href='{% url add_issue constituency=constituency.slug %}'>no issues yet, add one!</a>{% endif %}
+            {% endwith %}
+            </ul>
+        </div>
+        
+        <h4>Recent activity in {{ constituency.name }}</h4>
+        {% if activity %}
+            {% include "tasks/activity_list.html" %}
+        {% else %}
+            There has been no activity near you - be the first, do a task! Maybe you need to <a href='{% url inviteindex %}'>invite some friends</a>.
+        {% endif %}
+    </div>
+    <div class="span-4 last">
+        {% with volunteer_here as can_Post %}
+        {% include "constituency_comment.html" %}
+        {% endwith %}
 
-    <ul class="info">
-        <li><label>Current MP</label> <a href="http://www.theyworkforyou.com/mp/?p={{ constituency.current_mp.person_id }}">{{ constituency.current_mp.full_name }}</a> ({{ constituency.current_mp.party }})</li>
-        <li><label>On the web</label> <a href='{{ constituency.wikipedia_url }}' target="_blank">{{ constituency.name }} on Wikipedia</a></li>
-        <li><label>&nbsp;</label> <a href='http://openlylocal.com/hyperlocal_sites?location={{ constituency.name }},%20UK&commit=Search' target="_blank">Local blogs</a> near {{ constituency.name }}</li>
+        <h3>Volunteers here</h3>
+        {% with volunteer_here as show_email %}
+        {% with constituency.customuser_set.all as users %}
+            {% include "user_list.html" %}
+        {% endwith %}
+        {% endwith %}
+        <!--<h3>Help us get better coverage</h3>
+        <p>Any markers on this map mark the centres of nearby constituencies where we don't currently have any volunteers. If you know anyone who might live there, please {% if not request.user.is_anonymous %}<a href="/invite/">invite them</a>{% else %}invite them{% endif %} and help us get volunteers in the whole country!</p>  
+        <iframe width="425" height="350" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="http://maps.google.co.uk/maps?f=q&amp;source=s_q&amp;hl=en&amp;geocode=&amp;q=http:%2F%2Fwww.democracyclub.org.uk%2Fstatistics%2Ffewerthan%2F1%2Fgeo.rss&amp;sll=&amp;sspn={{latspan}},{{lonspan}}&amp;ie=UTF8&amp;ll={{constituency.lat}},{{constituency.lon}}&amp;spn={{latspan}},{{lonspan}}&amp;z=&amp;output=embed"></iframe><br /><small><a href="http://maps.google.co.uk/maps?f=q&amp;source=embed&amp;hl=en&amp;geocode=&amp;q=http:%2F%2Fwww.democracyclub.org.uk%2Fstatistics%2Ffewerthan%2F1%2Fgeo.rss&amp;sll=53.800651,-4.064941&amp;sspn=16.261859,33.618164&amp;ie=UTF8&amp;ll={{constituency.lat}},{{constituency.lon}}&amp;spn={{latspan}},{{lonspan}}&amp;z=10" style="color:#0000FF;text-align:left">View Larger Map</a></small>
+    {% if not request.user.is_anonymous %}
+     {% include "more_constituencies_form.html" %}
+    {% endif %}-->
+    </div>
+</div>
+<div id="tab-2" class="tab">
+    <h3>Local issues in {{ constituency.name }}</h3>
+    <p>We're collecting local issues in {{ constituency.name }} to put to the candidates standing at the 2010 general election in the form of a questionnaire. A good local issue will be about a problem of local relevance, possibly suggesting how something should have been/be done, and be something someone can either agree or disagree with.</p>
+    <ul class="issues" style="list-style:none">
+        <li class="add-issue-button"><a href='{% url add_issue constituency=constituency.slug %}'>Add issue for {{ constituency.name }}</a></li>
+    {% for issue in constituency.issue_set.all %}
+        <li class="issue">
+            {{ issue.question }}
+            {% if issue.reference_url %}
+                (<a href="{{ issue.reference_url }}">source</a>)
+            {% endif %}
+            <span class="abuse-button"><a href='mailto:developers@democracyclub.org.uk?subject=Issue abuse report for id={{ issue.id }}&body=Issue text:%0A "{{ issue.question }}"'>report abuse</a></span>
+        </li>
+    {% empty %}
+        <li>No issues yet, add one!</li>
+    {% endfor %}
     </ul>
-
-
-    <h3>Recent activity in {{ constituency.name }}</h3>
-    {% if activity %}
-        {% include "tasks/activity_list.html" %}
-    {% else %}
-        There has been no activity near you - be the first, do a task! Maybe you need to <a href='{% url inviteindex %}'>invite some friends</a>.
-    {% endif %}
-
-    {% if 1 %}
-    {% include "constituency_comment.html" %}
-    {% endif %}
-    
-    {% if request.user.is_superuser %}
+</div>
+{% if request.user.is_superuser %}
+<div id="tab-3" class="tab">
     <h3>Send message to users in this constituency (admin only)</h3>
     <form method="post">
         Subject: <input type="text" name="subject" /><br />
@@ -56,34 +117,7 @@
         Send message to people in all constituencies within
         <input name="within_km" size="3" value="50" />km of here<br />
         <input type="submit" name="value" />
-    </form>
-    {% endif %}
+    </form>    
 </div>
-<div class="span-4 last">
-
-    <div class="issue-box">
-        <h3>Local issues</h3>
-        <ul class="issues" style="list-style:none">
-        {% for issue in constituency.issue_set.all %}
-            <li class="issue">
-                {{ issue.question }}
-                {% if issue.reference_url %}
-                    (<a href="{{ issue.reference_url }}">source</a>)
-                {% endif %}
-                <span class="abuse-button"><a href='mailto:developers@democracyclub.org.uk?subject=Issue abuse report for id={{ issue.id }}&body=Issue text:%0A "{{ issue.question }}"'>report abuse</a></span>
-            </li>
-        {% empty %}
-            <li>No issues yet, add one!</li>
-        {% endfor %}
-            <li class="add-issue-button"><a href='{% url add_issue constituency=constituency.slug %}'>Add issue for {{ constituency.name }}</a></li>
-        </ul>
-    </div>
-
-    <!--<h3>Help us get better coverage</h3>
-    <p>Any markers on this map mark the centres of nearby constituencies where we don't currently have any volunteers. If you know anyone who might live there, please {% if not request.user.is_anonymous %}<a href="/invite/">invite them</a>{% else %}invite them{% endif %} and help us get volunteers in the whole country!</p>  
-    <iframe width="425" height="350" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="http://maps.google.co.uk/maps?f=q&amp;source=s_q&amp;hl=en&amp;geocode=&amp;q=http:%2F%2Fwww.democracyclub.org.uk%2Fstatistics%2Ffewerthan%2F1%2Fgeo.rss&amp;sll=&amp;sspn={{latspan}},{{lonspan}}&amp;ie=UTF8&amp;ll={{constituency.lat}},{{constituency.lon}}&amp;spn={{latspan}},{{lonspan}}&amp;z=&amp;output=embed"></iframe><br /><small><a href="http://maps.google.co.uk/maps?f=q&amp;source=embed&amp;hl=en&amp;geocode=&amp;q=http:%2F%2Fwww.democracyclub.org.uk%2Fstatistics%2Ffewerthan%2F1%2Fgeo.rss&amp;sll=53.800651,-4.064941&amp;sspn=16.261859,33.618164&amp;ie=UTF8&amp;ll={{constituency.lat}},{{constituency.lon}}&amp;spn={{latspan}},{{lonspan}}&amp;z=10" style="color:#0000FF;text-align:left">View Larger Map</a></small>
-{% if not request.user.is_anonymous %}
- {% include "more_constituencies_form.html" %}
-{% endif %}-->
-</div>
+{% endif %}
 {% endblock %}

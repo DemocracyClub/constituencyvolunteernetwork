@@ -62,8 +62,14 @@
     {% endif %}
     <p class="clear quiet">Badges don't have any effect on the site; they're simply a sign of accomplishment and bragging rights.</p>
 
-    <p>
-         You can <a href='{% url user id=user.id %}'>view your profile</a> and <a href='{% url edit_user id=user.id %}'>edit it</a>. <a href="http://{{ current_site.domain }}{{ user.registrationprofile_set.get.get_login_url }}">Bookmark this link for you login url</a>.
+    <p>You can <a href='{% url user id=user.id %}'>view your profile</a> and <a href='{% url edit_user id=user.id %}'>edit it</a>. <a href="http://{{ current_site.domain }}{{ user.registrationprofile_set.get.get_login_url }}">Bookmark this link for you login url</a>.</p>
+
+    <p>You're volunteering in
+        {% for c in user.current_constituencies.all %}
+            {% if forloop.last and not forloop.first %}and {% endif %}
+            <a href="{% url constituency c.slug %}">{{ c.name }}</a>{% if not forloop.last %}, 
+            {% endif %}
+        {% endfor %}
     </p>
     <br/>
     <script src="http://widgets.twimg.com/j/2/widget.js"></script>

@@ -26,3 +26,7 @@ class Issue(models.Model):
     def __unicode__(self):
         return self.question
 
+    class Meta:
+        get_latest_by = 'created_at'
+        
+

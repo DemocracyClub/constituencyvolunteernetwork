@@ -14,3 +14,77 @@ ul.info li label
     display:block;
     float:left;
 }
+
+.tab
+{
+    display:none;
+}
+
+#tab-1
+{
+    display:block;
+}
+
+ul.tabswitcher
+{
+    list-style-type: none;
+    margin:0;
+    padding:0;
+    display:block;
+    border-bottom:1px solid #FFF;
+}
+
+ul.tabswitcher li
+{
+    list-style:none;
+    display: inline;
+    margin:0;
+    padding:0;
+}
+
+ul.tabswitcher li a
+{
+    display: block;
+    padding:0.25em;
+    float:left;
+    margin:0;
+    margin-left:0.5em;
+    background:white;
+    text-decoration:none;
+    border:1px solid #FFF;
+    border-bottom:0;
+}
+
+ul.tabswitcher li a:link
+{
+    outline:none;
+    border:1px solid #FFF;
+    border-bottom:0;
+    background:white;
+    text-decoration:none;
+}
+
+ul.tabswitcher li a:visited
+{
+
+}
+
+
+ul.tabswitcher li a:hover
+{
+    background:white;
+    border:1px solid #CCC;
+    border-bottom:0;
+}
+
+ul.tabswitcher li.first a
+{
+    margin-left:0;
+}
+
+ul.tabswitcher li.active a
+{
+    background:white;
+    border:1px solid #CCC;
+    border-bottom:0;
+}

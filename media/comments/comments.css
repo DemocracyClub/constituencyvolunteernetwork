@@ -46,7 +46,6 @@ input#id_comment
     width:80%;
     border:1px solid #CCC;
     font-size:1.1em;
-    line-height:2em;
     color:#333;
 }
 
@@ -59,5 +58,4 @@ input.submit-post
 {
     width:15%;
     font-size:1.1em;
-    line-height:2em;
 }
