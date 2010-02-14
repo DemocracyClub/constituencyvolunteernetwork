@@ -17,6 +17,8 @@ from signup.views import render_with_context
 from signup.views import _get_statistics_context
 from signup.signals import user_touch
 from tasks.util import login_key
+from tasks.activity import generate_activity
+
 import settings
 
 SPACER_GIF = open(
@@ -42,16 +44,8 @@ def home(request):
                              .order_by('-date_joined')[:5]
     context['first_time'] = request.user.login_count < 3
     constituencies = request.user.constituencies.all()
-    if constituencies:
-        # the strange way we construct the query with "__id__in"
-        # operators is necessary because otherwise we get
-        # subquery-related complaints from postgres
-        ids = [x.id for x in constituencies]
-        context['activity'] = TaskUser.objects\
-          .filter(user__constituencies__id__in=ids)\
-          .filter(state__in=[TaskUser.States.started,
-                            TaskUser.States.completed])\
-          .order_by('-date_modified').distinct().all()
+    context['activity'] = generate_activity(constituencies)
+    
     return render_with_context(request, 'tasks/tasks.html', context)
 
 @login_key

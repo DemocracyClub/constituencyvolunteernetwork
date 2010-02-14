@@ -50,3 +50,4 @@ def reverse_login_key_short(name, user, description, args=None, kwargs=None):
     url = "%s/%s" % (Shortened.objects.make(target_url, description), key)
     
     return url
+

@@ -62,6 +62,9 @@
     {% endif %}
     <p class="clear quiet">Badges don't have any effect on the site; they're simply a sign of accomplishment and bragging rights.</p>
 
+    <p>
+         You can <a href='{% url user id=user.id %}'>view your profile</a> and <a href='{% url edit_user id=user.id %}'>edit it</a>. <a href="http://{{ current_site.domain }}{{ user.registrationprofile_set.get.get_login_url }}">Bookmark this link for you login url</a>.
+    </p>
     <br/>
     <script src="http://widgets.twimg.com/j/2/widget.js"></script>
     <script>

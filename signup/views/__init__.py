@@ -22,6 +22,8 @@ from signup.forms import UserForm
 import signup.signals as signals
 import signup.geo as geo
 
+from tasks.activity import generate_activity
+
 def render_with_context(request,
                         template,
                         context,
@@ -297,11 +299,7 @@ def constituency(request, slug, year=None):
                 lonspan = abs(furthest.lon - constituency.lon) * 2
         context['latspan'] = latspan
         context['lonspan'] = lonspan
-        context['activity'] = TaskUser.objects\
-                              .filter(constituency=constituency)\
-                              .filter(state__in=[TaskUser.States.started,
-                                                TaskUser.States.completed])\
-                              .order_by('-date_modified').distinct().all()
+        context['activity'] = generate_activity([constituency], show_constituency=False)
   
         if request.user.is_authenticated():
             context['volunteer_here'] = bool(request.user.constituencies.filter(id=constituency.id))

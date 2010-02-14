@@ -293,7 +293,7 @@ ul li {
   background-position:top;
 }
 
-a.help_button {
+a.help_button, a.action_button {
   font-size:0.8em;
   padding:0.3em;
   border:1px solid white;
@@ -305,13 +305,17 @@ a.help_button {
   margin-right:10px;
 }
 
-a.help_button:hover {
+a.action_button {
+  color: #009;
+}
+
+a.help_button:hover, a.action_button:hover {
   border: solid #bbd1f9 1px;
   border-top: solid #ecf1f9 1px;
   border-left: solid #ecf1f9 1px;
 }
 
-a.help_button:active {
+a.help_button:active, a.action_button:active {
 
 }
 
