@@ -12,7 +12,7 @@
 <div class="span-5">
  <div class="gradient-box">
  {% if first_time %}
-   <p>Hi {{ user.private_name}}, and thanks for joining Democracy Club! You've joined thousands of people across the country to create a powerful team of volunteers who want to hold our representatives to account.</p>
+   <p>Hi {{ user.private_name}}, and thanks for joining Democracy Club! You've joined thousands of people across the country to create a powerful team of volunteers who want to hold our representatives to account. You might want to <a href="http://{{ current_site.domain }}{{ user.registrationprofile_set.get.get_login_url }}">bookmark this link so you can log in</a> (right click it, then click either 'add to bookmarks' or 'add to favourites')</p>
  {% endif %}
  <h2>Your Democracy Club tasks</h2>
  {% if not user.is_active %}
