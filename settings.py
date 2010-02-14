@@ -109,7 +109,7 @@ AUTHENTICATION_BACKENDS = ('backends.NoAuthBackend',
                            )
 MIGRATIONS_ROOT = os.path.join(PROJECT_PATH, 'migrations')
 
-LOGIN_URL = "/"
+LOGIN_URL = "/?notice=You%20need%20be%20logged%20in%20to%20view%20that%20page.%20If%20you%20did%20log%20in,%20check%20your%20cookie%20settings.&"
 
 COMMENTS_APP = "comments_custom"                           
 
