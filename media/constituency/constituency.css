@@ -30,8 +30,15 @@ ul.tabswitcher
     list-style-type: none;
     margin:0;
     padding:0;
+    border:0;
     display:block;
-    border-bottom:1px solid #FFF;
+    margin-left:-10px;
+    margin-right:-10px;
+    margin-top:-10px;
+    margin-bottom:0.5em;
+    background:#3a7ad2;
+    padding-left:10px;
+    font-size:0.9em;
 }
 
 ul.tabswitcher li
@@ -44,23 +51,21 @@ ul.tabswitcher li
 
 ul.tabswitcher li a
 {
+    color:#b3cdf1;
     display: block;
     padding:0.25em;
     float:left;
     margin:0;
-    margin-left:0.5em;
-    background:white;
+    padding-left:1.0em;
+    padding-right:1.0em;
+    height:1.8em;
     text-decoration:none;
-    border:1px solid #FFF;
-    border-bottom:0;
+    padding-top: 0.65em;
 }
 
 ul.tabswitcher li a:link
 {
     outline:none;
-    border:1px solid #FFF;
-    border-bottom:0;
-    background:white;
     text-decoration:none;
 }
 
@@ -72,19 +77,15 @@ ul.tabswitcher li a:visited
 
 ul.tabswitcher li a:hover
 {
-    background:white;
-    border:1px solid #CCC;
-    border-bottom:0;
+    color:white;
 }
 
 ul.tabswitcher li.first a
 {
-    margin-left:0;
+
 }
 
 ul.tabswitcher li.active a
 {
-    background:white;
-    border:1px solid #CCC;
-    border-bottom:0;
+    color:white;
 }
