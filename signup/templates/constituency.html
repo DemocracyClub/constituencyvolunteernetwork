@@ -58,7 +58,7 @@
                 <li><label>On the web</label> <a href='{{ constituency.wikipedia_url }}' target="_blank">{{ constituency.name }} on Wikipedia</a></li>
                 <li><label>&nbsp;</label> <a href='http://openlylocal.com/hyperlocal_sites?location={{ constituency.name }},%20UK&commit=Search' target="_blank">Local blogs</a> near {{ constituency.name }}</li>
             {% with constituency.issue_set.latest as latest_issue %}
-                <li><label>Latest issue</label> {% if latest_issue %}<a href='#' onclick="show_tab('tab-2', 'switcher2')">"{{ latest_issue.question }}" from {{ latest_issue.created_by.display_name }}</a>{% else %}<a href='{% url add_issue constituency=constituency.slug %}'>no issues yet, add one!</a>{% endif %}
+                <li><label>Latest issue</label> {% if latest_issue %}<a href='#' onclick="show_tab('tab-2', 'switcher2')">"{{ latest_issue.question }}" from {{ latest_issue.created_by.display_name }}</a> (<a href='{% url add_issue constituency=constituency.slug %}'>add issue</a>){% else %}<a href='{% url add_issue constituency=constituency.slug %}'>no issues yet, add one!</a>{% endif %}
             {% endwith %}
             </ul>
         </div>
@@ -92,20 +92,7 @@
 <div id="tab-2" class="tab">
     <h3>Local issues in {{ constituency.name }}</h3>
     <p>We're collecting local issues in {{ constituency.name }} to put to the candidates standing at the 2010 general election in the form of a questionnaire. A good local issue will be about a problem of local relevance, possibly suggesting how something should have been/be done, and be something someone can either agree or disagree with.</p>
-    <ul class="issues" style="list-style:none">
-        <li class="add-issue-button"><a href='{% url add_issue constituency=constituency.slug %}'>Add issue for {{ constituency.name }}</a></li>
-    {% for issue in constituency.issue_set.all %}
-        <li class="issue">
-            {{ issue.question }}
-            {% if issue.reference_url %}
-                (<a href="{{ issue.reference_url }}">source</a>)
-            {% endif %}
-            <span class="abuse-button"><a href='mailto:developers@democracyclub.org.uk?subject=Issue abuse report for id={{ issue.id }}&body=Issue text:%0A "{{ issue.question }}"'>report abuse</a></span>
-        </li>
-    {% empty %}
-        <li>No issues yet, add one!</li>
-    {% endfor %}
-    </ul>
+    {% include 'issues/issue_list.html' %}
 </div>
 {% if request.user.is_superuser %}
 <div id="tab-3" class="tab">

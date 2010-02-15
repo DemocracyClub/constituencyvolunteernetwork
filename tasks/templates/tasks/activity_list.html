@@ -1,5 +1,5 @@
 <ul class="activity">
 {% for item in activity %}
-    <li>{{ item }}</li>
+    <li class="{% cycle 'row1' 'row2' %}">{{ item }}</li>
 {% endfor %}
 </ul>

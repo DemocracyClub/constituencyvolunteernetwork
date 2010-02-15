@@ -85,6 +85,16 @@ ul.issues li, li.issue
     border-bottom:1px solid #EEE;
 }
 
+ul.issues li.row1
+{
+    background:#fafcff;
+}
+
+ul.issues li.row2
+{
+
+}
+
 li.issue .abuse-button
 {
     float:right;

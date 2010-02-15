@@ -1,11 +1,13 @@
 ul.info
 {
+    list-style-type:none;
     margin:0;
 }
 
 ul.info li
 {
-    list-style:none outside;
+    list-style:none;
+    margin-bottom:1em;
 }
 
 ul.info li label

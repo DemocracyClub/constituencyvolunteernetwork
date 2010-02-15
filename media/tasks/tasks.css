@@ -140,7 +140,28 @@ ul.activity {
 }
 
 ul.activity li {
+  margin:0;
   list-style: none;
+  padding:0.25em;
+  border-radius:0.4em;
+  -moz-border-radius:0.4em;
+  -webkit-border-radius:0.4em;
+}
+
+ul.activity li.row1 {
+  background:#fafcff;
+}
+
+ul.activity li.row2 {
+  background:#FFF;
+}
+
+ul.activity li div.activity-comment {
+
+}
+
+ul.activity li div.activity-task_user {
+
 }
 
 #about_tasks, #about_activity {

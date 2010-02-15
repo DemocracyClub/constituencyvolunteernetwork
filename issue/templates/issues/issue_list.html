@@ -1,0 +1,14 @@
+<ul class="issues" style="list-style:none">
+    <li class="add-issue-button"><a href='{% url add_issue constituency=constituency.slug %}'>Add issue for {{ constituency.name }}</a></li>
+{% for issue in constituency.issue_set.all %}
+    <li class="issue {% cycle 'row1' 'row2' %}">
+        {{ issue.question }}
+        {% if issue.reference_url %}
+            (<a href="{{ issue.reference_url }}">source</a>)
+        {% endif %}
+        <span class="abuse-button"><a href='mailto:developers@democracyclub.org.uk?subject=Issue abuse report for id={{ issue.id }}&body=Issue text:%0A "{{ issue.question }}"'>report abuse</a></span>
+    </li>
+{% empty %}
+    <li>No issues yet, add one!</li>
+{% endfor %}
+</ul>
