@@ -14,6 +14,10 @@ class VisibleIssuesManager(models.Manager):
     def get_query_set(self):
         return super(VisibleIssuesManager, self).get_query_set().exclude(status='hide')
 
+class HiddenIssuesManager(models.Manager):
+    def get_query_set(self):
+        return super(HiddenIssuesManager, self).get_query_set().filter(status='hide')
+
 class Issue(models.Model):
     question = models.TextField()
     reference_url = models.URLField(max_length=2048, # reasonable maximum: http://www.boutell.com/newfaq/misc/urllength.html
@@ -37,5 +41,6 @@ class Issue(models.Model):
 
     # override default manager so results don't show hidden objects by default
     objects = VisibleIssuesManager() 
-    all_objects = models.Manager() # even hidden ones
+    hidden_objects = HiddenIssuesManager()
+    all_objects = models.Manager() # visible and hidden ones
         

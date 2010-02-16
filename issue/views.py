@@ -86,6 +86,7 @@ def moderate_issue(request):
     vars['issue'] = issue
     vars['form'] = moderate_issue_form
     vars['issues'] = Issue.objects.filter(constituency=issue.constituency).order_by('-created_at')
+    vars['hidden_issues'] = Issue.hidden_objects.filter(constituency=issue.constituency).order_by('-created_at')
     vars['constituency'] = issue.constituency
 
     return render_to_response("moderate_issue.html", vars,

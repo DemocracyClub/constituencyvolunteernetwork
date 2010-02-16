@@ -65,7 +65,7 @@
 </div>
 
 <div class="span-2 last">
- <h3>Existing issues in {{ constituency.name }}</h3>
+ <h3>Other issues in {{ constituency.name }}</h3>
 {% if issues %}
  <ul>
  {% for issue in issues %}
@@ -76,6 +76,16 @@
 <ul>
     <li>Nobody has added any issues here yet</li>
 </ul>
+{% endif %}
+
+{% if hidden_issues %}
+ <h3>Hidden issues</h3>
+ <p><em>These have been rejected by other moderators.</em>
+ <ul>
+ {% for issue in hidden_issues %}
+  <li>{{ issue.question }}{% if issue.reference_url %} (<a href="{{ issue.reference_url }}" target="_blank">source</a>){% endif %}</li>
+ {% endfor %}
+ </ul>
 {% endif %}
 </div>
 
