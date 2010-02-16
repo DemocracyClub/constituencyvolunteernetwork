@@ -61,10 +61,10 @@ def moderate_issue(request):
 
         if 'Hide' in request.POST:
             issue.status = 'hide'
-            notice = "Issue hidden. Here is the next one to moderate"
+            notice = "Issue hidden, thank you! Here's another issue to moderate."
         elif 'Approve' in request.POST:
             issue.status = 'approved'
-            notice = 'Issue moderated, thank you.'
+            notice = "Issue moderated, thank you! Here's another issue to moderate."
         else:
             raise Exception("No known button submitted in form data")
 
@@ -88,6 +88,11 @@ def moderate_issue(request):
     vars['issues'] = Issue.objects.filter(constituency=issue.constituency).order_by('-created_at')
     vars['hidden_issues'] = Issue.hidden_objects.filter(constituency=issue.constituency).order_by('-created_at')
     vars['constituency'] = issue.constituency
+
+    vars['done'] = Issue.all_objects.exclude(status='new').count()
+    vars['total'] = Issue.all_objects.count()
+    vars['missing'] = vars['total'] - vars['done']
+    vars['percentage'] = float(vars['done']) / float(vars['total']) * 100
 
     return render_to_response("moderate_issue.html", vars,
                               context_instance=RequestContext(request))

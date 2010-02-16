@@ -65,6 +65,11 @@
 </div>
 
 <div class="span-2 last">
+<p style="text-align: center">
+    <img width=250 height=125 src="http://chart.apis.google.com/chart?chs=250x125&cht=gom&chd=t:{{ percentage }}" alt="{{ percentage }} of issues have been moderated">
+    <br>{{ missing }} issue{{ missing|pluralize }} left to moderate / {{ total }} total
+</p>
+
  <h3>Other issues in {{ constituency.name }}</h3>
 {% if issues %}
  <ul>
