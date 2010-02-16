@@ -53,34 +53,41 @@ def add_issue(request, constituency=None, submitted=False):
 @login_required
 @permission_required('issue.change_issue')
 def moderate_issue(request):
+    moderate_issue_form = None
     if request.method == "POST":
         issue = Issue.objects.get(pk=request.POST['id'])
 
         if 'Hide' in request.POST:
             issue.status = 'hide'
+            issues.last_updated_by = request.user
             issue.save()
-            return HttpResponseRedirect(addToQueryString(reverse('moderate_issue'), { 'notice' : 'Issue hidden. Here is another.' }))
+            notice = "Issue hidden. Here is the next one to moderate"
+            signals.issue_moderated.send(None, user=request.user, issue=issue)
+            return HttpResponseRedirect(addToQueryString(reverse('moderate_issue'), { 'notice' : notice}))
         elif 'Approve' in request.POST:
-            raise Exception("doesn't work yet")
-            moderate_issue_form = ModerateIssueForm(request.POST, request.FILES)
+            moderate_issue_form = ModerateIssueForm(instance = issue)
             if moderate_issue_form.is_valid():
                 issue = moderate_issue_form.save()
                 issue.status = 'approved'
+                issues.last_updated_by = request.user
+                notice = 'Issue moderated, thank you.'
                 signals.issue_moderated.send(None, user=request.user, issue=issue)
-                return HttpResponseRedirect(addToQueryString(reverse('moderate_issue'), { 'notice' : 'Issue moderated, thank you.' }))
+                return HttpResponseRedirect(addToQueryString(reverse('moderate_issue'), { 'notice' : notice}))
         else:
             raise Exception("No known button submitted in form data")
+
     else:
         issue_list = Issue.objects.filter(status='new').order_by('?')[:1]
         if len(issue_list) == 0:
             return HttpResponseRedirect(addToQueryString("/", { 'notice' : "Every issue has now been moderated! Thank you for helping." }))
-
         issue = issue_list[0]
 
+    if moderate_issue_form == None:
+        moderate_issue_form = ModerateIssueForm(instance = issue)
 
     vars = { }
     vars['issue'] = issue
-    vars['form'] = ModerateIssueForm(instance = issue)
+    vars['form'] = moderate_issue_form
     vars['issues'] = Issue.objects.filter(constituency=issue.constituency).order_by('-created_at')
     vars['constituency'] = issue.constituency
 

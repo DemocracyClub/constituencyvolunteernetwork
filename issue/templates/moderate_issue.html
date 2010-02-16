@@ -31,6 +31,8 @@
  </h3>
 {% endif %}
 
+{{ form.errors }}
+
 {% if form %}
     <form action="" method="post" id="moderate_issue" >
         <div class="fieldWrapper">
@@ -46,7 +48,6 @@
         </div>
         <p></p>
         <div class="fieldWrapper">
-            {{ form.constituency.errors }}
             {{ form.question.errors }}
             <label for="id_question">
                 2. Tidy statement of the local issue
