@@ -4,7 +4,7 @@ from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required, permission_required
 
-from signup.models import Constituency
+from signup.models import Constituency, CustomUser
 from models import Issue
 from task import task_slug
 from tasks.util import login_key
@@ -56,26 +56,23 @@ def moderate_issue(request):
     moderate_issue_form = None
     if request.method == "POST":
         issue = Issue.objects.get(pk=request.POST['id'])
+        issue.question = request.POST['question']
+        issue.reference_Url = request.POST['reference_url']
 
         if 'Hide' in request.POST:
             issue.status = 'hide'
-            issues.last_updated_by = request.user
-            issue.save()
             notice = "Issue hidden. Here is the next one to moderate"
-            signals.issue_moderated.send(None, user=request.user, issue=issue)
-            return HttpResponseRedirect(addToQueryString(reverse('moderate_issue'), { 'notice' : notice}))
         elif 'Approve' in request.POST:
-            moderate_issue_form = ModerateIssueForm(instance = issue)
-            if moderate_issue_form.is_valid():
-                issue = moderate_issue_form.save()
-                issue.status = 'approved'
-                issues.last_updated_by = request.user
-                notice = 'Issue moderated, thank you.'
-                signals.issue_moderated.send(None, user=request.user, issue=issue)
-                return HttpResponseRedirect(addToQueryString(reverse('moderate_issue'), { 'notice' : notice}))
+            issue.status = 'approved'
+            notice = 'Issue moderated, thank you.'
         else:
             raise Exception("No known button submitted in form data")
 
+        issue.last_updated_by = CustomUser.objects.get(user_ptr=request.user) # XXX how should this be done?
+        issue.save()
+
+        signals.issue_moderated.send(None, user=request.user, issue=issue)
+        return HttpResponseRedirect(addToQueryString(reverse('moderate_issue'), { 'notice' : notice}))
     else:
         issue_list = Issue.objects.filter(status='new').order_by('?')[:1]
         if len(issue_list) == 0:

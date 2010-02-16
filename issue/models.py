@@ -31,4 +31,3 @@ class Issue(models.Model):
     class Meta:
         get_latest_by = 'created_at'
         
-
