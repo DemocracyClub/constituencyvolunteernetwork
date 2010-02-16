@@ -8,8 +8,18 @@
 <link rel="stylesheet" type="text/css"  media="screen" href="{{ MEDIA_URL }}issues/issues.css" />
 {% endblock %}
 
+{% block js %}
+ <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script> 
+ <script type="text/javascript">
+    $(document).ready(function () {        
+        $('#id_guide').hide();
+    });
+ </script>
+{% endblock %}
+
 {% block content %}
-<div class="span-8 last task">
+
+<div class="span-6 task">
 {% if submitted %}
  <div style="padding:0.5em;border:1px solid #EEE;margin-top:1em;margin-bottom:1em;">
     <h3 style="margin-top:0">Thank you for moderating an issue!</h3>
@@ -22,56 +32,38 @@
 {% endif %}
 
 {% if form %}
-    <form action="" method="post" id="moderate_issue">
-        <p>If necessary, rewrite the issue such that it is:
-            <ul>
-                <li>A statement for which it is possible for somebody to
-                record agreement/disagreement/no opinion.</li>
-                <li>It should be a proper sentence, with a leading capital and 
-                a full stop.</li>
-                <li>If forward looking, the statement should argue for a
-                specific change to current or planned policy (e.g. "increase funding to provide a service",
-                not simply "provide a service")
-                </li>
-                <li>If backward looking, the statement should not aportion blame, but simply describe
-                   an alternative decision.</li>
-                <li>It should be a local issue.</li>
-                <li>If the issue mentions a public body, check it is the right one (e.g. has the powers
-                ascribed to it).</li>
-                </li>
-            </li>
-            Use the source link! It will often explain what the issue is.
-        </p>
+    <form action="" method="post" id="moderate_issue" >
+        <div class="fieldWrapper">
+            {{ form.reference_url.errors }}
+            <label for="id_reference_url">
+                1. Check the source link (if there is one).
+            </label>
+            <br>
+            <a href="{{ issue.reference_url }}" target="_blank">Open source link (in new window)</a>
+            {{ form.reference_url }}
+            <br>If you can find a more detailed, or less partisan, article about the issue,
+            change the link to that.
+        </div>
+        <p></p>
         <div class="fieldWrapper">
             {{ form.constituency.errors }}
             {{ form.question.errors }}
             <label for="id_question">
-                {{ issue.constituency.name }} 
+                2. Tidy statement of the local issue
             </label>
+            <br>See guidelines below.
             <br>{{ form.question }}
-        </div>
-        <div class="fieldWrapper">
-            {{ form.reference_url.errors }}
-            You may have a good issue and a bad source. We encourage
-            you to change the source.
-            <label for="id_reference_url">
-                Source
-            </label>
-            {{ form.reference_url }}
-            <a href="{{ issue.reference_url }}">follow link</a>
         </div>
         <input type="hidden" name="id" value="{{ issue.id }}" />
         <input type="submit" value="Approve" id="id_approve" name="Approve" /> 
-        <input type="submit" value="Junk" id="id_save" name="Junk" /> 
-        <p>If you don't like this issue, refresh the page for a new one.</p>
+        <input type="submit" value="Hide" id="id_hide" name="Hide" /> 
     </form>
 {% endif %}
  <p></p>
+ <p>If you don't want to do this issue, <a href="?">refresh the page</a> for a new one.</p>
 </div>
 
-<hr/>
-
-<div class="span-4 last">
+<div class="span-2 last">
  <h3>Existing issues in {{ constituency.name }}</h3>
 {% if issues %}
  <ul>
@@ -85,5 +77,27 @@
 </ul>
 {% endif %}
 </div>
+
+<div class="span-8 last">
+<h3>Guidelines for tidying local issue statements</h3>
+<p>Rewrite the statement so that it is:</p>
+    <ul>
+        <li>A local issue (we'll cover national ones separately).</li>
+        <li>Possible for somebody to record agreement/disagreement/no
+        opinion.</li>
+        <li>If forward looking, the statement should argue for a
+        specific change to current or planned policy (e.g. "increase funding to provide a service",
+        not simply "provide a service")
+        </li>
+        <li>If backward looking, the statement should not aportion blame, but simply describe
+           an alternative decision.</li>
+        <li>A proper sentence, with a leading capital and 
+        a full stop.</li>
+        <li>If the issue mentions a public body, check it is the right one (e.g. has the powers
+        ascribed to it).</li>
+    </li>
+</p>
+</div>
+
 
 {% endblock %}

@@ -7,7 +7,7 @@ from signup.models import Constituency, CustomUser
 STATUS_CHOICES = (
     ('new', 'New'),
     ('approved', 'Approved'),
-    ('junk', 'Junk'),
+    ('hide', 'Hide'),
 )
 
 class Issue(models.Model):

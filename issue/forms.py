@@ -7,7 +7,7 @@ class ConstituencyModelChoiceField(forms.ModelChoiceField):
         return obj.name
 
 class AddIssueForm(forms.Form):
-    question = forms.CharField(required=True, max_length = 200)
+    question = forms.CharField(required=True, max_length=200)
     reference_url = forms.URLField(required=False)
 
     # Store user, so can be used to fill in default constituency
@@ -30,8 +30,8 @@ class ModerateIssueForm(forms.ModelForm):
     class Meta:
         model = Issue
 
-    question = forms.CharField(widget=forms.Textarea(attrs={'rows':3, 'cols':60}))
-    reference_url = forms.URLField(required=False)
+    question = forms.CharField(widget=forms.Textarea(attrs={'rows':3, 'cols':50}))
+    reference_url = forms.URLField(required=False, max_length=50)
 
     #def save(self, domain_override="", constituency=None):
     #    question = self.cleaned_data['question']

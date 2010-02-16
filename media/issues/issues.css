@@ -125,7 +125,7 @@ ul.issues li.add-issue-button a:hover
     background:url("/media/gradient.png") repeat-x;
 }
 
-#id_approve, #id_save
+#id_approve, #id_hide
 {
     font-size: 150%;
 }

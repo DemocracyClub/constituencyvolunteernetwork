@@ -56,10 +56,10 @@ def moderate_issue(request):
     if request.method == "POST":
         issue = Issue.objects.get(pk=request.POST['id'])
 
-        if 'Junk' in request.POST:
-            issue.status = 'junk'
+        if 'Hide' in request.POST:
+            issue.status = 'hide'
             issue.save()
-            return HttpResponseRedirect(addToQueryString(reverse('moderate_issue'), { 'notice' : 'Issue junked. Here is another.' }))
+            return HttpResponseRedirect(addToQueryString(reverse('moderate_issue'), { 'notice' : 'Issue hidden. Here is another.' }))
         elif 'Approve' in request.POST:
             raise Exception("doesn't work yet")
             moderate_issue_form = ModerateIssueForm(request.POST, request.FILES)
@@ -82,6 +82,7 @@ def moderate_issue(request):
     vars['issue'] = issue
     vars['form'] = ModerateIssueForm(instance = issue)
     vars['issues'] = Issue.objects.filter(constituency=issue.constituency).order_by('-created_at')
+    vars['constituency'] = issue.constituency
 
     return render_to_response("moderate_issue.html", vars,
                               context_instance=RequestContext(request))
