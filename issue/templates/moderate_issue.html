@@ -62,58 +62,77 @@
 {% endif %}
  <p></p>
  <p>If you don't want to do this issue, <a href="?">refresh the page</a> for a new one.</p>
+
+    <h3>Guidelines for tidying local issue statements</h3>
+    <p>Rewrite the statement so that it is:</p>
+        <ul>
+            <li>A local issue (we'll cover national ones separately).</li>
+            <li>Possible for somebody to record agreement/disagreement/no
+            opinion.</li>
+            <li>If forward looking, the statement should argue for a
+            specific change to current or planned policy (e.g. "increase funding to provide a service",
+            not simply "provide a service")
+            </li>
+            <li>If backward looking, the statement should not aportion blame, but simply describe
+               an alternative decision.</li>
+            <li>A proper sentence, with a leading capital and 
+            a full stop.</li>
+            <li>If the issue mentions a public body, check it is the right one (e.g. has the powers
+            ascribed to it).</li>
+        </ul>
+
+    <h3>Top recent players</h3>
+    <table>
+    {% for user, count in league_table_this_week %}
+        <tr>
+            <td> {{ forloop.counter }} <td>
+            <td> {{ user.display_name }} </td>
+            <td> {{ count }} issue{{ count|pluralize }} </td>
+        </tr>
+    {% endfor %}
+    </table>
+
+    <h3>All time best players</h3>
+    <table>
+    {% for user, count in league_table_all_time %}
+        <tr>
+            <td> {{ forloop.counter }} <td>
+            <td> {{ user.display_name }} </td>
+            <td> {{ count }} issue{{ count|pluralize }} </td>
+        </tr>
+    {% endfor %}
+    </table>
+
 </div>
 
 <div class="span-2 last">
-<p style="text-align: center">
-    <img width=250 height=125 src="http://chart.apis.google.com/chart?chs=250x125&cht=gom&chd=t:{{ percentage }}" alt="{{ percentage }} of issues have been moderated">
-    <br>{{ missing }} issue{{ missing|pluralize }} left to moderate / {{ total }} total
-</p>
+    <p style="text-align: center">
+        <img width=250 height=125 src="http://chart.apis.google.com/chart?chs=250x125&cht=gom&chd=t:{{ percentage }}" alt="{{ percentage }} of issues have been moderated">
+        <br>{{ missing }} issue{{ missing|pluralize }} left to moderate / {{ total }} total
+    </p>
 
- <h3>Other issues in {{ constituency.name }}</h3>
-{% if issues %}
- <ul>
- {% for issue in issues %}
-  <li>{{ issue.question }}{% if issue.reference_url %} (<a href="{{ issue.reference_url }}" target="_blank">source</a>){% endif %}</li>
- {% endfor %}
- </ul>
-{% else %}
-<ul>
-    <li>Nobody has added any issues here yet</li>
-</ul>
-{% endif %}
-
-{% if hidden_issues %}
- <h3>Hidden issues</h3>
- <p><em>These have been rejected by other moderators.</em>
- <ul>
- {% for issue in hidden_issues %}
-  <li>{{ issue.question }}{% if issue.reference_url %} (<a href="{{ issue.reference_url }}" target="_blank">source</a>){% endif %}</li>
- {% endfor %}
- </ul>
-{% endif %}
-</div>
-
-<div class="span-8 last">
-<h3>Guidelines for tidying local issue statements</h3>
-<p>Rewrite the statement so that it is:</p>
+     <h3>Other issues in {{ constituency.name }}</h3>
+    {% if issues %}
+     <ul>
+     {% for issue in issues %}
+      <li>{{ issue.question }}{% if issue.reference_url %} (<a href="{{ issue.reference_url }}" target="_blank">source</a>){% endif %}</li>
+     {% endfor %}
+     </ul>
+    {% else %}
     <ul>
-        <li>A local issue (we'll cover national ones separately).</li>
-        <li>Possible for somebody to record agreement/disagreement/no
-        opinion.</li>
-        <li>If forward looking, the statement should argue for a
-        specific change to current or planned policy (e.g. "increase funding to provide a service",
-        not simply "provide a service")
-        </li>
-        <li>If backward looking, the statement should not aportion blame, but simply describe
-           an alternative decision.</li>
-        <li>A proper sentence, with a leading capital and 
-        a full stop.</li>
-        <li>If the issue mentions a public body, check it is the right one (e.g. has the powers
-        ascribed to it).</li>
-    </li>
-</p>
-</div>
+        <li>Nobody has added any issues here yet</li>
+    </ul>
+    {% endif %}
 
+    {% if hidden_issues %}
+     <h3>Hidden issues</h3>
+     <p><em>These have been rejected by other moderators.</em>
+     <ul>
+     {% for issue in hidden_issues %}
+      <li>{{ issue.question }}{% if issue.reference_url %} (<a href="{{ issue.reference_url }}" target="_blank">source</a>){% endif %}</li>
+     {% endfor %}
+     </ul>
+    {% endif %}
+</div>
 
 {% endblock %}

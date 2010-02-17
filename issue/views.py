@@ -5,14 +5,16 @@ from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required, permission_required
 
 from signup.models import Constituency, CustomUser
-from models import Issue
+from models import Issue, make_league_table
 from task import task_slug
 from tasks.util import login_key
 from forms import AddIssueForm, ModerateIssueForm
 from utils import addToQueryString
 
-import signals
 import settings
+
+import signals
+import datetime
 
 @login_key
 @login_required
@@ -93,6 +95,10 @@ def moderate_issue(request):
     vars['total'] = Issue.all_objects.count()
     vars['missing'] = vars['total'] - vars['done']
     vars['percentage'] = float(vars['done']) / float(vars['total']) * 100
+
+    vars['league_table_all_time'] = make_league_table()
+    one_week_ago = datetime.datetime.now() - datetime.timedelta(7)
+    vars['league_table_this_week'] = make_league_table(Issue.all_objects.filter(updated_at__gt=one_week_ago).all())
 
     return render_to_response("moderate_issue.html", vars,
                               context_instance=RequestContext(request))

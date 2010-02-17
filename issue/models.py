@@ -4,6 +4,8 @@ from django.conf import settings
 from tasks.models import Task
 from signup.models import Constituency, CustomUser
 
+import collections
+
 STATUS_CHOICES = (
     ('new', 'New'),
     ('approved', 'Approved'),
@@ -43,4 +45,22 @@ class Issue(models.Model):
     objects = VisibleIssuesManager() 
     hidden_objects = HiddenIssuesManager()
     all_objects = models.Manager() # visible and hidden ones
-        
+
+def make_league_table(issues = None):
+    if not issues:
+        issues = Issue.all_objects.all()
+
+    table = collections.defaultdict(lambda: 0)
+    for issue in issues:
+        user = issue.last_updated_by
+        if user:
+            table[user] += 1
+
+    league_table = []
+    for user, count in table.iteritems():
+        league_table.append((user, count))
+    league_table.sort(lambda a,b: cmp(b[1],a[1]))
+
+    return league_table
+
+    
