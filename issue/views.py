@@ -74,11 +74,21 @@ def moderate_issue(request):
         issue.save()
 
         signals.issue_moderated.send(None, user=request.user, issue=issue)
-        return HttpResponseRedirect(addToQueryString(reverse('moderate_issue'), { 'notice' : notice}))
+        return HttpResponseRedirect(addToQueryString(reverse('moderate_issue'), 
+                { 'notice' : notice, 'prefer_constituency' : str(issue.constituency.id) }))
     else:
-        issue_list = Issue.objects.filter(status='new').order_by('?')[:1]
+        if 'prefer_constituency' in request.GET:
+            prefer_constituency = Constituency.objects.get(pk=request.GET['prefer_constituency'])
+
+        # find random one from preferred constituency (the one they were last on)
+        issue_list = Issue.objects.filter(status='new').filter(constituency=prefer_constituency).order_by('?')[:1]
+        # if not found, get a totally random one
         if len(issue_list) == 0:
-            return HttpResponseRedirect(addToQueryString("/", { 'notice' : "Every issue has now been moderated! Thank you for helping." }))
+            issue_list = Issue.objects.filter(status='new').order_by('?')[:1]
+
+        if len(issue_list) == 0:
+            return HttpResponseRedirect(addToQueryString("/", 
+                { 'notice' : "Every issue has now been moderated! Thank you for helping." }))
         issue = issue_list[0]
 
     if moderate_issue_form == None:
