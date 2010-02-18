@@ -57,7 +57,9 @@ def callback_assign(sender, **kwargs):
     assigned = []
     for constituency in constituencies:
         kwargs = {'constituency': constituency.slug}
-        callback_url = "http://%s%s" % (current_site.domain, reverse("tsc_add"))
+        callback_url = "http://%s%s" % (current_site.domain,
+                                        reverse("tsc_add",
+                                                kwargs={'constituency_slug': constituency.slug}))
         add_issue_url = "%s?callback=%s" % (tsc_url, callback_url)
         try:                
             TaskUser.objects.assign_task(task,
