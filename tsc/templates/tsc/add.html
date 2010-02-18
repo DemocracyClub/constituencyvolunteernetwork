@@ -5,7 +5,7 @@
 <p>{% autoescape off %}{{ message }}{% endautoescape %}</p>
 <p>Go to <a href='http://www.thestraightchoice.org/addupload.php'>The Straight Choice</a> to upload political leaflets, then paste your leaflet's url below to complete the task</p>
 <form method="post" action="{% url tsc_add %}">
-<input name="leaflet_url" value=""/> <input type="submit" value="claim badge"/> or you can <a href='{% url task slug='upload-leaflet' %}'>go back to the task</a></br>
+<input name="v1" value=""/> <input type="submit" value="claim badge"/> or you can <a href='{% url task slug='upload-leaflet' %}'>go back to the task</a></br>
 <div class="quiet">the leaflet url looks like http://www.thestraightchoice.org/leaflet.php?q=XXX</div>
 </form>
 {% endblock %}

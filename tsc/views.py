@@ -26,15 +26,21 @@ def add(request, constituency_slug=None):
     c = None
     if constituency_slug:
         c = Constituency.objects.get(slug=constituency_slug)
-
+    else:
+        c = request.user.home_constituency
+    
+    leaflet = None
     for url in leaflet_urls:
-        UploadedLeaflet.objects.create(url=url,
+        leaflet = UploadedLeaflet.objects.create(url=url,
                                        user=request.user,
                                        constituency=c)
 
         signals.leaflet_added.send(None, user=request.user, constituency=c)
-    if leaflet_urls:
-        return HttpResponseRedirect(reverse('tasks'))
+    if leaflet:
+        # return HttpResponseRedirect(reverse('tasks'))
+        context['constituency'] = c
+        context['leaflet'] = leaflet
+        return render_with_context(request, 'tsc/thanks.html', context)
     else:
         return render_with_context(request, 'tsc/add.html', context)
 

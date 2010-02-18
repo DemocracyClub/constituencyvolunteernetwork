@@ -12,6 +12,10 @@ urlpatterns = patterns('tsc',
         views.add,
         name="tsc_add"),
 
+        url(r'^add/$',
+        views.add,
+        name="tsc_add"),
+
         url(r'^test$',
             direct_to_template,
             {'template':'tsc_test.html'},

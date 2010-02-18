@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% load signup_extras %}
+
+{% block title %}Thanks for uploading a leaflet!{% endblock %}
+
+{% block content %}
+    <h2>Thanks!</h2>
+    <p>Thanks for uploading a leaflet in <a href='{{ constituency.get_absolute_url }}'>{{ constituency.name }}</a>. You can view your leaflet on TheStraightChoice at <a href='{{ leaflet.url }}'>this page</a>.</p>
+    <p>Tell others and help get more leaflets and issues by <a href="http://twitter.com/home?status=Just%20uploaded a leaflet in {{ constituency.name }} to @TheSC from @democlub {{leaflet.url|shorten}}" target="_blank">tweeting about the leaflet you added</a> or <script type="text/javascript" src="http://w.sharethis.com/button/sharethis.js#publisher=b709ae1d-96fa-4a11-b622-2e53080cec42&amp;type=website&amp;style=rotate;"></script>, or just go <a href='{% url tasks %}'>back to the front page</a></p>
+    <p>It's really important that we can track what candidates are saying in leaflets, so we can keep track of claims and get an impression of what sort of issues they're campaigning on (maybe you could <a href='{% url add_issue constituency=constituency.slug %}'>add a local issue</a> from the leaflet?).</p>
+{% endblock %}
