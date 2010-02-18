@@ -77,11 +77,14 @@ def moderate_issue(request):
         return HttpResponseRedirect(addToQueryString(reverse('moderate_issue'), 
                 { 'notice' : notice, 'prefer_constituency' : str(issue.constituency.id) }))
     else:
+        issue_list = Issue.objects.filter(status='new')
         if 'prefer_constituency' in request.GET:
             prefer_constituency = Constituency.objects.get(pk=request.GET['prefer_constituency'])
-
+            issue_list = issue_list.filter(constituency=prefer_constituency)
+        
         # find random one from preferred constituency (the one they were last on)
-        issue_list = Issue.objects.filter(status='new').filter(constituency=prefer_constituency).order_by('?')[:1]
+        issue_list = issue_list.order_by('?')[:1]
+        
         # if not found, get a totally random one
         if len(issue_list) == 0:
             issue_list = Issue.objects.filter(status='new').order_by('?')[:1]

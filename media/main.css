@@ -170,6 +170,15 @@ ul#links li a:hover {
     background: #3a7bd3;
 }
 
+span.login-status {
+    float:right;
+    padding-top:0.65em;
+}
+
+span.login-status a {
+    color:white;
+}
+
 #search-constituency input {
  font-size: 1.1em;
  border: solid lightgray 0.2em;
@@ -319,6 +328,31 @@ a.help_button:hover, a.action_button:hover {
 
 a.help_button:active, a.action_button:active {
 
+}
+
+ul#account-actions {
+    list-style-type:none;
+    margin:0;
+    padding:0;
+    
+    margin-bottom:0.5em;
+}
+
+ul#account-actions li {
+    list-style:none;
+}
+
+ul#account-constituencies {
+    list-style-type:none;
+    margin:0;
+    padding:0;
+    font-size:1.2em;
+    
+    margin-bottom:0.5em;
+}
+
+ul#account-constituencies li {
+    list-style:none;
 }
 
 /* Homepage2 styles */

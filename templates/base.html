@@ -33,6 +33,11 @@
               {% endfor %}
               {% block navigation %}{% endblock %}
             </ul>
+            <span style="float:right;clear:right;">
+                {% if not user.is_anonymous %}
+                
+                {% endif %}
+            </span>
         </div>
       </div>
       {% endblock %}
@@ -41,19 +46,17 @@
           <div id="navigation" class="container">
             {% block sneakytitle %}
             <ul>
-                <li style="float:right;"><a href='http://democracyclub.activeboard.com/index.spark?aBID=134686&p=1'>Discussion forum</a></li>
+                <span class="login-status">Signed in as <a href='{{ user.get_absolute_url|safe }}'>{{ user.private_name }}</a> (<a href='{% url logout %}'>logout</a>)</span>
               {% if not user.is_anonymous %}
                 <li><a href="{% url welcome %}">Home</a></li>
-                <li><a href="{% url add_constituency %}">Your constituencies</a></li>
+              {#<li><a href="{% url add_constituency %}">Your constituencies</a></li>#}
                 <li><a href="{% url user id=user.id %}">Your profile</a></li>
               {% else %}
                 <li><a href="{% url home %}">Home</a></li>
                 <li><a href="/aboutus/">About us</a></li>
               {% endif %}
                 <li><a href="/constituencies/">Constituency list</a></li>
-              {% if not user.is_anonymous %}
-                <li><a href="{% url logout %}">Logout</a></li>
-              {% endif %}
+                <li><a href='http://democracyclub.activeboard.com/index.spark?aBID=134686&p=1'>Discussion forum</a></li>
             </ul>
             {% endblock %}
           </div> 
@@ -67,19 +70,20 @@
               </div>
               {% endif %}
           {% endif %}
-          {% if not user.is_anonymous %}{% if not user.is_active %}
-            <div class="prepend-2 span-4 append-2 last"><p class="notice">You've not confirmed your email address yet. You need to do this to receive tasks. Please check your inbox (and your spam folder) for a confirmation email.</p></div>
-          {% endif %}{% endif %}
-          {% if request.GET.notice %}
-            <div class="prepend-2 span-4"><p class="notice">{{ request.GET.notice }}</p></div>
-          {% endif %}
-          {% if request.GET.error %}
-            <div class="prepend-2 span-4"><p class="error">{{ request.GET.error }}</p></div>
-          {% endif %}
-            <div class="clear"></div>
-          {% block content %}
+          {% if needs_activation %}
+            <div class="prepend-2 span-4 append-2 last"><p class="notice">You have not confirmed your email address yet. You need to do this to continue.<br/><br/>Please check your email inbox (and your spam folder) at <em>{{ user.email }}</em> for the confirmation email with the subject 'Please confirm your registration'.</p></div>
+          {% else %}
+              {% if request.GET.notice %}
+                <div class="prepend-2 span-4"><p class="notice">{{ request.GET.notice }}</p></div>
+              {% endif %}
+              {% if request.GET.error %}
+                <div class="prepend-2 span-4"><p class="error">{{ request.GET.error }}</p></div>
+              {% endif %}
+                <div class="clear"></div>
+              {% block content %}
 
-          {% endblock %}
+              {% endblock %}
+          {% endif %}
         </div>
 	<div id="footer" class="quiet">
 	  <hr />

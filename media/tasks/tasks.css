@@ -107,6 +107,7 @@ a.action:active {
 
 #section-tasks div.task {
  margin-top:0.5em;
+ padding-bottom:0.5em;
 }
 
 #section-tasks div.task p {
@@ -122,6 +123,7 @@ a.action:active {
   clear:left;
   background:white;
   padding:0.25em;
+  margin-bottom:0.25em;
   border-radius:0.4em;
   -moz-border-radius:0.4em;
   -webkit-border-radius:0.4em;

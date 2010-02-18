@@ -12,19 +12,20 @@
 <div class="span-5">
  <div class="gradient-box">
  {% if first_time %}
-   <p>Hi {{ user.private_name}}, and thanks for joining Democracy Club! You've joined thousands of people across the country to create a powerful team of volunteers who want to hold our representatives to account. You might want to <a href="http://{{ current_site.domain }}{{ user.registrationprofile_set.get.get_login_url }}">bookmark this link so you can log in</a> (right click it, then click either 'add to bookmarks' or 'add to favourites')</p>
+   <p><strong>Hi {{ user.private_name}}</strong>, and thanks for joining Democracy Club! You've joined thousands of people across the country to create a powerful team of volunteers who want to hold our representatives to account.</p>
+   <p>You might want to <a href="http://{{ current_site.domain }}{{ user.registrationprofile_set.get.get_login_url }}">bookmark this link so you can log in</a> (right click it, then click either 'Bookmark this link' or 'Add to favourites')</p>
  {% endif %}
  <h2>Your Democracy Club tasks</h2>
  {% if not user.is_active %}
     <p>You need to activate your account to participate in the website. Please check your inbox (and your spam folder) for a confirmation email.</p>
  {% else %} 
-  {% if open_tasks or ignored_tasks %}
+  {% if all_tasks or ignored_tasks %}
    <span class="quiet">Click on a task title to see more information. {% if ignored_tasks %}<a onclick="$('.task-ignored').toggle();">Show ignored tasks</a>{% endif %}</span>
-   {% if open_tasks %}
-     {% with open_tasks as usertasks %}
+   {% if all_tasks %}
+     {% with all_tasks as usertasks %}
        {% include "tasks/task_list.html" %}
      {% endwith %}
-     {% ifequal open_tasks.count ignored_tasks.count %}
+     {% ifequal all_tasks.count ignored_tasks.count %}
         <p id="ignored_tasks_notice">You have ignored tasks, <a onclick="$('#ignored_tasks_notice').hide();$('.task-ignored').show();">click here to show them</a>.</p>
      {% endifequal %}
    {% endif %}
@@ -50,7 +51,24 @@
 </div>
 
 <div class="span-3 activity-bar last">
-<h3>Your achievements</h3>
+    <h3>Your account</h3>
+    <ul id="account-actions">
+        <li><a href='{% url user id=user.id %}'>View your profile</a> (<a href='{% url edit_user id=user.id %}'>edit profile</a>)</li>
+        <li><a href="http://{{ current_site.domain }}{{ user.registrationprofile_set.get.get_login_url }}">Bookmark this link for you login url</a></li>
+    </ul>
+    
+    <h3>Your constituencies</h3>
+    <ul id="account-constituencies">
+        {% for c in user.current_constituencies.all %}
+            <li><a href="{% url constituency c.slug %}">{{ c.name }}</a></li>
+        {% endfor %}
+    </ul>
+    <p>
+        <a href="{% url add_constituency %}">Volunteer in another constituency</a>.
+        Know some people who might be interested? <a href='{% url inviteindex %}'>Invite some friends</a>
+    </p>
+    
+    <h3>Your achievements</h3>
     {% if badges %}
         <ul class="badges">
         {% for badge in badges %}
@@ -60,17 +78,8 @@
     {% else %}
         <p>You've not carried out any tasks yet.  When you do so, you are awarded "badges" for your work.</p>
     {% endif %}
-    <p class="clear quiet">Badges don't have any effect on the site; they're simply a sign of accomplishment and bragging rights.</p>
-
-    <p>You can <a href='{% url user id=user.id %}'>view your profile</a> and <a href='{% url edit_user id=user.id %}'>edit it</a>. <a href="http://{{ current_site.domain }}{{ user.registrationprofile_set.get.get_login_url }}">Bookmark this link for you login url</a>.</p>
-
-    <p>You're volunteering in
-        {% for c in user.current_constituencies.all %}
-            {% if forloop.last and not forloop.first %}and {% endif %}
-            <a href="{% url constituency c.slug %}">{{ c.name }}</a>{% if not forloop.last %}, 
-            {% endif %}
-        {% endfor %}
-    </p>
+    {#<p class="clear quiet">Badges don't have any effect on the site; they're simply a sign of accomplishment and bragging rights.</p>#}
+    <div class="clear"></div>
     <br/>
     <script src="http://widgets.twimg.com/j/2/widget.js"></script>
     <script>

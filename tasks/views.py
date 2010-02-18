@@ -36,6 +36,7 @@ def home(request):
                                          TaskUser.States.ignored])
     completed_tasks = tasks.filter(state=TaskUser.States.completed)
     ignored_tasks = tasks.filter(state=TaskUser.States.ignored)
+    context['all_tasks'] = tasks
     context['open_tasks'] = open_tasks
     context['completed_tasks'] = completed_tasks
     context['ignored_tasks'] = ignored_tasks
