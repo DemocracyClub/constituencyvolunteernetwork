@@ -64,17 +64,25 @@ class Task(Model):
                         .count()
         tasks_completed = TaskUser.objects\
                           .filter(task=self,
-                                  state=TaskUser.States.completed)\
-                          .count()
+                                  state=TaskUser.States.completed)
         tasks_started = TaskUser.objects\
                         .filter(task=self,
-                                state=TaskUser.States.started)\
-                        .count() + tasks_completed
+                                state=TaskUser.States.started)
+        email_tasks_completed = tasks_completed\
+                                .filter(source_email__isnull=False)\
+                                .count()
+        email_tasks_started = tasks_started\
+                              .filter(source_email__isnull=False)\
+                              .count()
+        tasks_completed = tasks_completed.count()
+        tasks_started = tasks_started.count() + tasks_completed
         return {'assigned':tasks_assigned,
                 'sent': emails_sent,
                 'opened': emails_opened,
                 'started': tasks_started,
                 'completed': tasks_completed,
+                'email_started': email_tasks_started,
+                'email_completed': email_tasks_completed,
                 'ignored': tasks_ignored}
     
     def __unicode__(self):
@@ -326,11 +334,17 @@ class TaskUser(Model):
         self.save()
         signals.task_ignored.send(self, task_user=self)
 
-    def send_email(self):
-        """Send the most recent email for this campaign
+    def send_email(self, force=False):
+        """Send the most recent unsent email for this campaign
         """
-        latest = self.taskemail_set.order_by('-date_created')[0]
-        return latest.send(recipient_taskusers=[self,])
+        latest = self.taskemail_set\
+                 .order_by('-date_created')
+        if not force:
+                 latest = latest.filter(date_last_sent__isnull=True)
+        if latest:            
+            return latest[0].send(recipient_taskusers=[self,])
+        else:
+            return False
 
     def __unicode__(self):
         return "%s doing %s (%s)" % (self.user, self.task, self.state_string())
@@ -361,12 +375,18 @@ class TaskEmail(Model):
                          .count()
         tasks_completed = TaskUser.objects\
                         .filter(taskemail=self)\
-                        .filter(state=TaskUser.States.completed)\
-                        .count()
+                        .filter(state=TaskUser.States.completed)
         tasks_started = TaskUser.objects\
                         .filter(taskemail=self)\
-                        .filter(state=TaskUser.States.started)\
-                        .count() + tasks_completed
+                        .filter(state=TaskUser.States.started)
+        email_tasks_completed = tasks_completed\
+                                .filter(source_email=self)\
+                                .count()
+        email_tasks_started = tasks_started\
+                              .filter(source_email=self)\
+                              .count()
+        tasks_completed = tasks_completed.count()
+        tasks_started = tasks_completed + tasks_started.count()
         tasks_ignored = TaskUser.objects\
                         .filter(taskemail=self)\
                         .filter(state=TaskUser.States.ignored)\
@@ -376,6 +396,8 @@ class TaskEmail(Model):
                 'opened': self.opened,
                 'started': tasks_started,
                 'completed': tasks_completed,
+                'email_started': email_tasks_started,
+                'email_completed': email_tasks_completed,
                 'ignored': tasks_ignored}
             
     # Email preparation functions
@@ -485,8 +507,12 @@ class TaskEmail(Model):
                                             context_html)
             message_plain = render_to_string('tasks/email_new_task.txt',
                                              context_plain)
-            subject_context = {'constituency':context['task_user'].constituency.name}
-            subject = self.subject % subject_context
+            constituency = context['task_user'].constituency
+            if constituency:            
+                subject_context = {'constituency':constituency.name}
+                subject = self.subject % subject_context
+            else:
+                subject = self.subject                
             msg = EmailMultiAlternatives(subject,
                                          message_plain,
                                          settings.DEFAULT_FROM_EMAIL,

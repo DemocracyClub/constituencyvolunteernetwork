@@ -33,10 +33,10 @@
      {{ stats.opened|percentage:stats.sent }} ({{ stats.opened }})
    </td>
    <td>
-     {{ stats.started|percentage:stats.assigned }} ({{ stats.started }})
+     {{ stats.started|percentage:stats.assigned }} ({{ stats.started }}) / {{ stats.email_started|percentage:stats.opened }}
    </td>
    <td>
-     {{ stats.completed|percentage:stats.started }} ({{ stats.completed }})
+     {{ stats.completed|percentage:stats.started }} ({{ stats.completed }}) / {{ stats.email_completed|percentage:stats.email_started }}
    </td>
    <td>
      {{ stats.ignored|percentage:stats.assigned }} ({{ stats.ignored }})
@@ -62,10 +62,10 @@
      {{ stats.opened|percentage:stats.sent }} ({{ stats.opened }})
    </td>
    <td>
-     {{ stats.started|percentage:stats.assigned }} ({{ stats.started }})
+     {{ stats.started|percentage:stats.assigned }} ({{ stats.started }})  / {{ stats.email_started|percentage:stats.opened }}
    </td>
    <td>
-     {{ stats.completed|percentage:stats.started }} ({{ stats.completed }})
+     {{ stats.completed|percentage:stats.started }} ({{ stats.completed }}) / {{ stats.email_completed|percentage:stats.email_started }}
    </td>
    <td>
      {{ stats.ignored|percentage:stats.assigned }} ({{ stats.ignored }})
