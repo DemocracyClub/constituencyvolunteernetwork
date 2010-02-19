@@ -57,7 +57,10 @@
         </div>
         <input type="hidden" name="id" value="{{ issue.id }}" />
         <input type="submit" value="Approve" id="id_approve" name="Approve" /> 
-        <input type="submit" value="Hide" id="id_hide" name="Hide" /> 
+        <input type="submit" value="Hide (not local)" id="id_hide" name="Hide-notlocal" /> 
+        <input type="submit" value="Hide (too general, can't make yes/no)" id="id_hide" name="Hide-toogeneral" /> 
+        <input type="submit" value="Hide (can't formulate a policy)" id="id_hide" name="Hide-nopolicy" /> 
+        <input type="submit" value="Hide (other)" id="id_hide" name="Hide-other" /> 
     </form>
 {% endif %}
  <p></p>

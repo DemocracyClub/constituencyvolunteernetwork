@@ -9,7 +9,10 @@ import collections
 STATUS_CHOICES = (
     ('new', 'New'),
     ('approved', 'Approved'),
-    ('hide', 'Hide'),
+    ('hide-notlocal', 'Hide - not local'),
+    ('hide-toogeneral', 'Hide - too general'),
+    ('hide-nopolicy', 'Hide - no clear policy'),
+    ('hide-other', 'Hide - other'),
 )
 
 class VisibleIssuesManager(models.Manager):
@@ -31,9 +34,13 @@ class Issue(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
-    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='new')
+    status = models.CharField(max_length=20,
+                              choices=STATUS_CHOICES,
+                              default='new')
 
-    last_updated_by = models.ForeignKey(CustomUser, null=True, related_name='issues_last_updater')
+    last_updated_by = models.ForeignKey(CustomUser,
+                                        null=True,
+                                        related_name='issues_last_updater')
 
     def __unicode__(self):
         return self.question

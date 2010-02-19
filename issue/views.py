@@ -59,15 +59,18 @@ def moderate_issue(request):
     if request.method == "POST":
         issue = Issue.objects.get(pk=request.POST['id'])
         issue.question = request.POST['question']
-        issue.reference_Url = request.POST['reference_url']
-
-        if 'Hide' in request.POST:
-            issue.status = 'hide'
-            notice = "Issue hidden, thank you! Here's another issue to moderate."
-        elif 'Approve' in request.POST:
+        issue.reference_url = request.POST['reference_url']
+        found = False
+        for k in request.POST.keys():
+            if k.startswith("Hide"):
+                issue.status = k.lower()
+                notice = ("Issue hidden, thank you! Here's another "
+                          "issue to moderate.")
+                found = True
+        if not found and 'Approve' in request.POST:
             issue.status = 'approved'
             notice = "Issue moderated, thank you! Here's another issue to moderate."
-        else:
+        elif not found:
             raise Exception("No known button submitted in form data")
 
         issue.last_updated_by = CustomUser.objects.get(user_ptr=request.user) # XXX how should this be done?
