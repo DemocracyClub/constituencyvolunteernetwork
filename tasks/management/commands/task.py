@@ -171,14 +171,17 @@ class Command(BaseCommand):
                                         if x[1]])
             elif args[0] == "email":
                 emailed_on_this_round = []
-                for task in TaskUser.objects.filter(emails_sent=0,
-                                                    user=user):
+                for task in TaskUser.objects.filter(user=user):
                     if task_slug and task_slug != task.task.slug:
                         continue
                     if user.email not in emailed_on_this_round:
-                        msg += "\n  emailing about %s" % task.task.slug
+                        sent = False
                         if not dry_run:
-                            task.send_email()
+                            sent = task.send_email(force=True)
+                        if sent:
+                            msg += "\n  emailing about %s" % task.task.slug
+                        else:
+                            msg += "\n  no emails assigned for %s" % task.task.slug
                         emailed_on_this_round.append(user.email)
                     else:
                         msg += "\n   already emailed today"
