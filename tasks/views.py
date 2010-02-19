@@ -263,8 +263,8 @@ def manage_assign_tasks(request, task_pk):
                 count += 1
         context['matched_users'] = matched_users
     context['emails'] = TaskEmail.objects\
-                        .filter(taskuser__task=task)\
-                        .distinct()
+                        .distinct()\
+                        .order_by("-date_created")
     context['dry_run'] = dry_run
     context['count'] = count
     context['skip'] = skip
