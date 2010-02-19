@@ -28,7 +28,7 @@ def callback_interest_expressed(sender, **kwargs):
             badge.number += 1
             badge.save()
         except Badge.DoesNotExist:
-            badge = Badge.objects.create(name="Organised a local meeting",
+            badge = Badge.objects.create(name="Attended a local meeting",
                                          task=task,
                                          user=user)
 
