@@ -5,6 +5,7 @@ from django.core.management.base import BaseCommand
 from django.core.management.base import CommandError
 
 from signup.models import CustomUser
+from signup.models import RegistrationProfile
 from signup.models import Constituency
 from signup.signals import user_touch
 from tasks.models import TaskUser
@@ -177,7 +178,10 @@ class Command(BaseCommand):
                     if user.email not in emailed_on_this_round:
                         sent = False
                         if not dry_run:
-                            sent = task.send_email(force=True)
+                            try:
+                                sent = task.send_email(force=True)
+                            except RegistrationProfile.DoesNotExist:
+                                msg + "\n  no profile found for %s" % user.email
                         if sent:
                             msg += "\n  emailing about %s" % task.task.slug
                         else:
