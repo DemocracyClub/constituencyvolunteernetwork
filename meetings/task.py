@@ -23,15 +23,14 @@ def callback_interest_expressed(sender, **kwargs):
     # Only do the task once?
     if task_user.state != TaskUser.States.completed:
         task_user.complete()
-        if task.organiser:
-            try:
-                badge = Badge.objects.get(task=task, user=user)
-                badge.number += 1
-                badge.save()
-            except Badge.DoesNotExist:
-                badge = Badge.objects.create(name="Organised a local meeting",
-                                             task=task,
-                                             user=user)
+        try:
+            badge = Badge.objects.get(task=task, user=user)
+            badge.number += 1
+            badge.save()
+        except Badge.DoesNotExist:
+            badge = Badge.objects.create(name="Organised a local meeting",
+                                         task=task,
+                                         user=user)
 
 @task_assign(task_slug)
 def callback_assign(sender, **kwargs):
