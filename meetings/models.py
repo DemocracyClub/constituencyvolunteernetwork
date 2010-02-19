@@ -20,4 +20,4 @@ class MeetingInterestCompletenessTask(Task):
         count = MeetingInterest.objects\
                 .filter(organiser=True)\
                 .count()
-        return int(float(count)/100 * 100)
+        return int(float(count)/600 * 100)
