@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% load signup_extras %}
+
+{% block title %}Signup to event{% endblock %}
+
+{% block content %}
+
+
+{% if interest %}
+<h2>Thankyou!</h2>
+
+ <p>Thanks for expressing your interest in meeting up.  Someone from Democracy Club will be in touch soon to about the next steps.</p>
+
+{% else %}
+<h2>If you can't make it...</h2>
+ <p>To stop us asking you again about this event, please visit <a href="/">the home page</a> and click the "ignore" button under this task.</p>
+
+{% endif %}
+
+{% endblock %}
+
+

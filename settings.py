@@ -105,6 +105,7 @@ INSTALLED_APPS = (
     'issue',
     'tsc',
     'shorten',
+    'meetings',
 )
 
 AUTHENTICATION_BACKENDS = ('backends.NoAuthBackend',

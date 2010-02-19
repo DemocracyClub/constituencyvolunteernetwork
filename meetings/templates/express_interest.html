@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% load signup_extras %}
+
+{% block title %}Sign up to event{% endblock %}
+
+{% block content %}
+
+
+<h2>Interested in a local Democracy Club meeting?</h2>
+<p>Would you be able to attend a meeting with other Democracy Club volunteers on Thursday 25th February? <em>Even better</em>, would you be able to volunteer to help organise one?</p>
+<p>Answer these questions to express an interest and we'll get in touch next week to help you get together with other people in your area who'd like to do the same.</p>
+<div id="search-constituency" class="span-4 gradient-box">
+ <form action="" method="POST">
+  <strong>1.</strong> Please give a postcode near where you could attend a meeting (we've suggested your home postcode): 
+  <input type="text" name="postcode" value="{{ request.user.postcode }}" />
+  <br />
+  <br />
+  <p><strong>2.</strong> Now select one of these options:</p>
+  <input type="submit" 
+ 	name="organise" 
+ 	value="I'll volunteer to help organise a meeting" />
+  <br />
+  <br />
+  <input type="submit" 
+ 	name="interest" 
+ 	value="I'm interested in attending a meeting" />
+  <br />
+  <br />
+  <input type="submit" 
+ 	name="nothanks" 
+ 	value="No thanks, I'm not interested" />
+  
+ </form>
+ <hr />
+  <p><em>Please note we'll share your email address with other local volunteers so you can organise the meeting</em></p>
+</div>
+
+{% endblock %}
+
+
