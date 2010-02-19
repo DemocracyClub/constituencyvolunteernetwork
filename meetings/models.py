@@ -10,7 +10,7 @@ class MeetingInterest(Model):
     organiser = models.BooleanField(default=False)
     
     def __unicode__(self):
-        return "Meeting interest suggested by %s" % self.organiser
+        return "Meeting interest suggested by %s" % self.user
 
 class MeetingInterestCompletenessTask(Task):
     class Meta:

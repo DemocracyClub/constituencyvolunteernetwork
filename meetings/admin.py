@@ -2,4 +2,7 @@ from django.contrib import admin
 
 import models
 
-admin.site.register(models.MeetingInterest)
+class MeetingInterestAdmin(admin.ModelAdmin):
+    search_fields = ('user__email', 'postcode')
+
+admin.site.register(models.MeetingInterest, MeetingInterestAdmin)
