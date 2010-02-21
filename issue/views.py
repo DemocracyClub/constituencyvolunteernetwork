@@ -16,6 +16,14 @@ import settings
 import signals
 import datetime
 
+def issues(request, constituency):
+    year = settings.CONSTITUENCY_YEAR
+    c = Constituency.objects.get(slug=constituency,
+                                     year=year)
+    return render_to_response("issues/issues.html",
+                              {'constituency': c,},
+                              context_instance=RequestContext(request))
+
 @login_key
 @login_required
 def add_issue(request, constituency=None, submitted=False):

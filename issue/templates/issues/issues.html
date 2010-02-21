@@ -1,0 +1,54 @@
+<html>
+    <head>
+        <style>
+            body {
+                font-size:1.0em;
+                margin:0;
+                padding:0;
+            }
+    
+            ul.issues {
+                margin:0;
+                padding:0;
+            }
+
+            ul.issues li {
+                padding:0.25em;
+                padding-bottom:2em;
+                border-bottom:1px solid #CCC;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Issues in {{ constituency.name }}</h1>
+        <ul class="issues" style="list-style:none">
+        {% for issue in constituency.issue_set.all %}
+            <li class="issue {% cycle 'row1' 'row2' %}">
+                {{ issue.question }}
+                {% if issue.reference_url %}
+                <br/><small>reference: {{ issue.reference_url }}</small>
+                {% endif %}
+            </li>
+        {% empty %}
+            <li>No issues yet, add one!</li>
+        {% endfor %}
+        </ul>
+        <h2>Guidelines for a good issue</h2>
+        <ul>
+            <li>A local issue (we'll cover national ones separately - though do talk about them!).</li>
+            <li>Possible for somebody to record agreement/disagreement/no
+            opinion.</li>
+            <li>If forward looking, the statement should argue for a
+            specific change to current or planned policy (e.g. "increase funding to provide a service",
+            not simply "provide a service")
+            </li>
+            <li>If backward looking, the statement should not aportion blame, but simply describe
+               an alternative decision.</li>
+            <li>A proper sentence, with a leading capital and 
+            a full stop.</li>
+            <li>If the issue mentions a public body, check it is the right one (e.g. has the powers
+            ascribed to it).</li>
+        </ul>
+    </body>
+</html>
+
