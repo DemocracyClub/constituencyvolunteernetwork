@@ -277,7 +277,7 @@ def constituency(request, slug, year=None):
                               request.POST['message'],
                               settings.DEFAULT_FROM_EMAIL,
                               [user.email,])
-                count += 1
+                    count += 1
             context['recipients'] = count
 
         return render_with_context(request,
