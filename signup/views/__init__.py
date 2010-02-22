@@ -270,8 +270,7 @@ def constituency(request, slug, year=None):
         context['within_km'] = within_km
         if request.POST.get('go', ''):
             count = 0
-            for c in constituency.neighbors(limit=100,
-                                            within_km=within_km):
+            for c in nearest:
                 for user in c.customuser_set.filter(is_active=True).all():
                     send_mail(request.POST['subject'],
                               request.POST['message'],
