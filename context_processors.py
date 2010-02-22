@@ -4,7 +4,7 @@ from django.contrib.sites.models import Site
 import settings
 
 def navigation(context):
-    context = {'pages': FlatPage.objects.all(),
+    context = {'pages': FlatPage.objects.all().order_by('id'),
                'needs_activation': (not context.user.is_anonymous()) and (not context.user.is_active),}
 
     return context
