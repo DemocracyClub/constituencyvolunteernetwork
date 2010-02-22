@@ -54,7 +54,7 @@
             </p>
 
             <ul class="info">
-                <li><label>Current MP</label> <a href="http://www.theyworkforyou.com/mp/?p={{ constituency.current_mp.person_id }}">{{ constituency.current_mp.full_name }}</a> ({{ constituency.current_mp.party }})</li>
+                <li><label>Current MP</label> {% if constituency.current_mp.full_name %}<a href="http://www.theyworkforyou.com/mp/?p={{ constituency.current_mp.person_id }}">{{ constituency.current_mp.full_name }} ({{ constituency.current_mp.party }})</a>{% else %}None (this is a new constituency){% endif %}</li>
                 <li><label>On the web</label> <a href='{{ constituency.wikipedia_url }}' target="_blank">{{ constituency.name }} on Wikipedia</a></li>
                 <li><label>&nbsp;</label> <a href='http://openlylocal.com/hyperlocal_sites?location={{ constituency.name }},%20UK&commit=Search' target="_blank">Local blogs</a> near {{ constituency.name }}</li>
             {% with constituency.issue_set.latest as latest_issue %}
