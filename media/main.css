@@ -26,8 +26,18 @@ h2
     margin-bottom:0.5em;
 }
 
+a:focus, a:hover {
+    color:#000;
+}
+
 a {
+    color:#009;
+    text-decoration:underline;
     cursor:pointer;
+}
+
+a.constituency {
+    color:inherit;
 }
 
 .clear {

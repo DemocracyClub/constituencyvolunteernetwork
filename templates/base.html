@@ -47,7 +47,7 @@
             {% block sneakytitle %}
             <ul>
               {% if not user.is_anonymous %}
-                <span class="login-status">Signed in as <a href='{{ user.get_absolute_url|safe }}'>{{ user.private_name }}</a> (<a href='{% url logout %}'>logout</a>)</span>
+                <span class="login-status">Signed in as <a href='{{ user.get_absolute_url|safe }}'>{{ user.private_name }}</a> (<a href='{% url logout %}'>logout</a>, <a href='{% url edit_user id=user.id %}'>edit</a>)</span>
                 <li><a href="{% url welcome %}">Home</a></li>
               {#<li><a href="{% url add_constituency %}">Your constituencies</a></li>#}
               {# <li><a href="{% url user id=user.id %}">Your profile</a></li> #}

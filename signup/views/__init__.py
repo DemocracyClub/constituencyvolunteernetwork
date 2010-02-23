@@ -230,8 +230,7 @@ def add_constituency(request):
             request.user.save()
             sig = signals.user_join_constituency
             sig.send(None,
-                     user=request.user,
-                     constituencies=constituencies.all())
+                     user=request.user)
             return HttpResponseRedirect("/add_constituency/")
 
     return render_with_context(request,

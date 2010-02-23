@@ -12,7 +12,6 @@
 <div class="span-5">
  <div class="gradient-box">
  {% if first_time %}
-   <p><strong>Hi {{ user.private_name}}</strong>, and thanks for joining Democracy Club! You've joined thousands of people across the country to create a powerful team of volunteers who want to hold our representatives to account.</p>
    <p>You might want to <a href="http://{{ current_site.domain }}{{ user.registrationprofile_set.get.get_login_url }}">bookmark this link so you can log in</a> (right click it, then click either 'Bookmark this link' or 'Add to favourites')</p>
  {% endif %}
  <h2>Your Democracy Club tasks</h2>
@@ -20,7 +19,7 @@
     <p>You need to activate your account to participate in the website. Please check your inbox (and your spam folder) for a confirmation email.</p>
  {% else %} 
   {% if all_tasks or ignored_tasks %}
-   <span class="quiet">Click on a task title to see more information. {% if ignored_tasks %}<a onclick="$('.task-ignored').toggle();">Show ignored tasks</a>{% endif %}</span>
+   {% if ignored_tasks %}<span class="quiet"><a onclick="$('.task-ignored').toggle();">Show ignored tasks</a></span>{% endif %}
    {% if all_tasks %}
      {% with all_tasks as usertasks %}
        {% include "tasks/task_list.html" %}
@@ -35,8 +34,6 @@
  {% endif %}
   <div class="clear"> </div>
   </div>
-  <h4>About your tasks</h4>
-  <p>On this page, we display a list of tasks that we've asked you to consider doing. Click on a task title to display more information about the task. Click "begin task" to get started with one of them. You can always ignore a task that you can't do (or don't want to do).</p>
   
   <h3>Recent activity in your {% ifnotequal request.user.constituencies.count 1 %}constituencies{% else %}constituency{% endifnotequal %}</h3>
   {% if activity %}
@@ -44,19 +41,9 @@
   {% else %}
     There has been no activity near you - be the first, do a task! Maybe you need to <a href='{% url inviteindex %}'>invite some friends</a>.
   {% endif %}
-  <a href='#' onclick='$(this).hide(); $("#about_activity").show(); return false;' class='help_button'>what is this?</a>
-  <div id="about_activity"><h4>About recent activity</h4>
-  <p>This shows what people in your constituencies have been doing recently.</p>
-  </div>
 </div>
 
-<div class="span-3 activity-bar last">
-    <h3>Your account</h3>
-    <ul id="account-actions">
-        <li><a href='{% url user id=user.id %}'>View your profile</a> (<a href='{% url edit_user id=user.id %}'>edit profile</a>)</li>
-        <li><a href="http://{{ current_site.domain }}{{ user.registrationprofile_set.get.get_login_url }}">Bookmark this link for you login url</a></li>
-    </ul>
-    
+<div class="span-3 activity-bar last">   
     <h3>Your constituencies</h3>
     <ul id="account-constituencies">
         {% for c in user.current_constituencies.all %}
@@ -125,7 +112,7 @@
 {% block js %}
  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script> 
  <script type="text/javascript">
-   $(document).ready(function () {
+   /*$(document).ready(function () {
 	$('div.tasks a.usertask').click(function() {
            
            //var target = $('#task-description div');
@@ -134,7 +121,7 @@
            //target.html(desc.html());
            return false;
 	});
-    });
+    });*/
 
  </script>
 {% endblock %}

@@ -158,6 +158,10 @@ ul.activity li.row2 {
   background:#FFF;
 }
 
+ul.activity li div.activity-description {
+  font-size:0.9em;
+}
+
 ul.activity li div.activity-comment {
 
 }
