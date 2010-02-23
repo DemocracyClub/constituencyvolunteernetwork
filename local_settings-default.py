@@ -1,5 +1,8 @@
 # Local settings file for Democracy Club website
 
+# make this unique
+SECRET_KEY = 'nsryqx^q8*0$2f8vdwm^_e0bawp=_c5(&$maleaix^exjzvain'
+
 # Debug settings
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
