@@ -1,5 +1,6 @@
 from django.conf.urls.defaults import *
 import views, views.user, views.statistics
+from django.views.generic.simple import direct_to_template
 from tasks.views import home
 
 ################################################################################
@@ -58,6 +59,9 @@ urlpatterns = patterns('casestudies',
     url(r'^statistics/(?P<date>[\w-]+)/heatmap.svg$',
         views.statistics.generate_map_2010,
         name="map_on_date"),
+    url(r'^manage$',
+        direct_to_template,
+        {'template':'manage.html'},
+        name="manage"),
                       
 )
-

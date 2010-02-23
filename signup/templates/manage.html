@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block title %}Management functions{% endblock %}
+
+{% block content %}
+<ul>
+ <li>
+  <a href="{% url moderate_issue %}">Moderate issues</a>
+ </li>
+ <li>
+  <a href="{% url manage_tasks %}">Manage and track tasks</a>
+ </li>
+</ul>
+
+{% endblock %}
