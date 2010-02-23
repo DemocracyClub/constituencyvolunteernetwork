@@ -30,3 +30,6 @@ EMAIL_HOST = "localhost"
 
 # Setting this to blank disables GA tracking
 GOOGLE_ANALYTICS_ID = ""
+
+# in a live server, you'd use something like memcached
+CACHE_BACKEND= "locmem://"
