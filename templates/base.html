@@ -50,7 +50,7 @@
                 <span class="login-status">Signed in as <a href='{{ user.get_absolute_url|safe }}'>{{ user.private_name }}</a> (<a href='{% url logout %}'>logout</a>)</span>
                 <li><a href="{% url welcome %}">Home</a></li>
               {#<li><a href="{% url add_constituency %}">Your constituencies</a></li>#}
-                <li><a href="{% url user id=user.id %}">Your profile</a></li>
+              {# <li><a href="{% url user id=user.id %}">Your profile</a></li> #}
               {% else %}
                 <li><a href="{% url home %}">Home</a></li>
                 <li><a href="/aboutus/">About us</a></li>
