@@ -4,6 +4,8 @@ import re
 from django.shortcuts import render_to_response, get_object_or_404
 from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponseRedirect, Http404, HttpResponse
+from django.views.decorators.vary import vary_on_cookie
+from django.views.decorators.cache import cache_page
 from django.core.urlresolvers import reverse
 from django.template import RequestContext
 from django.contrib.auth.decorators import login_required
@@ -56,6 +58,8 @@ def _get_statistics_context():
                                                .filter(can_cc=True)[:5]
     return context
 
+@vary_on_cookie
+@cache_page(60 * 15)
 def home(request):
     context = _get_statistics_context()
     if request.user.is_anonymous():
@@ -234,6 +238,7 @@ def add_constituency(request):
                                'add_constituency.html',
                                context)
 
+@cache_page(60 * 60 * 24)
 def constituencies(request):
     year = settings.CONSTITUENCY_YEAR
     context = {}

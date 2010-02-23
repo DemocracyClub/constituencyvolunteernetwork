@@ -61,12 +61,14 @@ TEMPLATE_LOADERS = (
 )
 
 MIDDLEWARE_CLASSES = (
+    'django.middleware.cache.UpdateCacheMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.flatpages.middleware.FlatpageFallbackMiddleware',
     'django.middleware.transaction.TransactionMiddleware',
-    'reversion.middleware.RevisionMiddleware'
+    'reversion.middleware.RevisionMiddleware',
+    'django.middleware.cache.FetchFromCacheMiddleware' # always @end
 )
 
 ROOT_URLCONF = 'urls'
@@ -126,6 +128,10 @@ GOOGLE_ANALYTICS_ID = "UA-10926972-1"
 
 SOUTH_AUTO_FREEZE_APP = True
 
+CACHE_MIDDLEWARE_SECONDS = 60 * 60 
+CACHE_MIDDLEWARE_KEY_PREFIX = ""
+CACHE_MIDDLEWARE_ANONYMOUS_ONLY = True
+CACHE_BACKEND = "memcached://127.0.0.1:11211/"
 try:
     from local_settings import *
 except ImportError:
