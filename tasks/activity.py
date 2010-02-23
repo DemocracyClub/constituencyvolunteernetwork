@@ -4,6 +4,7 @@ from comments_custom.models import CommentSimple
 
 def generate_activity(constituencies, **kwargs):
     from models import Task, TaskUser
+    from issue.models import Issue
     if constituencies:
         # the strange way we construct the query with "__id__in"
         # operators is necessary because otherwise we get
@@ -37,6 +38,16 @@ def generate_activity(constituencies, **kwargs):
                                                  {'comment': comment,
                                                   'show_constituency': show_constituency,}),
                               ) for comment in comments]
+
+        # Pull out activity for people posting issues
+        issues = Issue.objects.filter(constituency__id__in=ids)\
+                              .order_by('-created_at').distinct().all()
+
+        issues_activity = [(issue.created_at,
+                            render_to_string('tasks/activity_issue.html',
+                                             {'issue': issue,
+                                              'show_constituency': show_constituency,}),
+                           ) for issue in issues]
         
-        # Combine the two, sorted by date, and get rid of the date
-        return [x[1] for x in sorted(task_user_activity + comments_activity, reverse=True)]
+        # Combine the three, sorted by date, and get rid of the date
+        return [x[1] for x in sorted(task_user_activity + comments_activity + issues_activity, reverse=True)]
