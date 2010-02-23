@@ -12,7 +12,7 @@
 <div class="span-5">
  <div class="gradient-box">
  {% if first_time %}
-   <p id="signupthanks">Thanks for signing up, {{ user.private_name }}! You can get started right away adding local issues that you want to hear about by clicking <a class="action start-task">Begin task</a> below, or you can click the link to read more about the task. You can also view your constituency page by clicking "{{ user.home_constituency.name }}" on the right</p>
+   <p id="signupthanks">Now click <a class="action start-task">Begin task</a> below to get started adding local issues you want to hear about from your candidates.</p>
  {% endif %}
  <h2>Your Democracy Club tasks</h2>
  {% if not user.is_active %}
@@ -44,7 +44,7 @@
 </div>
 
 <div class="span-3 activity-bar last">   
-    <h3>Your constituencies</h3>
+    <h3>Your {% ifnotequal request.user.constituencies.count 1 %}constituencies{% else %}constituency{% endifnotequal %}</h3>
     <ul id="account-constituencies">
         {% for c in user.current_constituencies.all %}
             <li><a href="{% url constituency c.slug %}">{{ c.name }}</a></li>
