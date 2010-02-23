@@ -113,6 +113,7 @@ class CustomUser(User):
     can_cc = models.BooleanField(default=False)
     login_count = models.IntegerField(default=0)
     seen_invite = models.BooleanField(default=False)
+    unsubscribed = models.BooleanField(default=False)
     objects = UserManager()
     display_name = models.CharField(max_length=30, default="Someone")
 
@@ -187,7 +188,8 @@ class RegistrationManager(models.Manager):
         #profile = self.get_user(activation_key,
         #                        only_activated=False)
         if profile and not profile.activated and \
-               not profile.activation_key_expired():
+               not profile.activation_key_expired() and \
+               not profile.user.unsubscribed:
             user = profile.user
             user.is_active = True
             user.save()
@@ -198,10 +200,12 @@ class RegistrationManager(models.Manager):
         else:
             return False
 
-    def deactivate_user(self, profile):
+    def deactivate_user(self, profile, user_request=False):
         if profile:
             user = profile.user
             user.is_active = False
+            if user_request:
+                user.unsubscribed = True
             user.save()
             profile.activated = False
             profile.save()

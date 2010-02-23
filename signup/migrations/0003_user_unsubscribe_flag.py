@@ -5,33 +5,24 @@ from signup.models import *
 
 class Migration:
     
-    def forwards(self, orm):        
-        # Adding field 'CustomUser.display_name'
-        db.add_column('signup_customuser', 'display_name', orm['signup.customuser:display_name'])
-
-        # XXX this doesn't work against a clean database, because of
-        # later migrations; the following loop tries to build a cache
-        # that uses fields that have only appeared in later models of
-        # CustomUser.  As by now this has been run on the live server,
-        # am simply commenting this out now.  See:
-        # http://south.aeracode.org/wiki/Tutorial3
+    def forwards(self, orm):
         
-        #for user in CustomUser.objects.all():
-        #    user.display_name = user.first_name
-        #    user.save()       
+        # Adding field 'CustomUser.unsubscribed'
+        db.add_column('signup_customuser', 'unsubscribed', orm['signup.customuser:unsubscribed'])
+        
     
     
     def backwards(self, orm):
         
-        # Deleting field 'CustomUser.display_name'
-        db.delete_column('signup_customuser', 'display_name')
+        # Deleting field 'CustomUser.unsubscribed'
+        db.delete_column('signup_customuser', 'unsubscribed')
         
     
     
     models = {
         'auth.group': {
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'name': ('django.db.models.fields.CharField', [], {'unique': 'True', 'max_length': '80'}),
+            'name': ('django.db.models.fields.CharField', [], {'max_length': '80', 'unique': 'True'}),
             'permissions': ('django.db.models.fields.related.ManyToManyField', [], {'to': "orm['auth.Permission']", 'blank': 'True'})
         },
         'auth.permission': {
@@ -54,7 +45,7 @@ class Migration:
             'last_name': ('django.db.models.fields.CharField', [], {'max_length': '30', 'blank': 'True'}),
             'password': ('django.db.models.fields.CharField', [], {'max_length': '128'}),
             'user_permissions': ('django.db.models.fields.related.ManyToManyField', [], {'to': "orm['auth.Permission']", 'blank': 'True'}),
-            'username': ('django.db.models.fields.CharField', [], {'unique': 'True', 'max_length': '30'})
+            'username': ('django.db.models.fields.CharField', [], {'max_length': '30', 'unique': 'True'})
         },
         'contenttypes.contenttype': {
             'Meta': {'unique_together': "(('app_label', 'model'),)", 'db_table': "'django_content_type'"},
@@ -74,10 +65,11 @@ class Migration:
         'signup.customuser': {
             'can_cc': ('django.db.models.fields.BooleanField', [], {'default': 'False', 'blank': 'True'}),
             'constituencies': ('django.db.models.fields.related.ManyToManyField', [], {'to': "orm['signup.Constituency']"}),
-            'display_name': ('django.db.models.fields.CharField', [], {'max_length': '30', 'default': '"Someone"'}),
+            'display_name': ('django.db.models.fields.CharField', [], {'default': "'Someone'", 'max_length': '30'}),
             'login_count': ('django.db.models.fields.IntegerField', [], {'default': '0'}),
             'postcode': ('django.db.models.fields.CharField', [], {'max_length': '9'}),
             'seen_invite': ('django.db.models.fields.BooleanField', [], {'default': 'False', 'blank': 'True'}),
+            'unsubscribed': ('django.db.models.fields.BooleanField', [], {'default': 'False', 'blank': 'True'}),
             'user_ptr': ('django.db.models.fields.related.OneToOneField', [], {'to': "orm['auth.User']", 'unique': 'True', 'primary_key': 'True'})
         },
         'signup.registrationprofile': {

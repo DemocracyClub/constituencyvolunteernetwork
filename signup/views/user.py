@@ -44,8 +44,9 @@ def unsubscribe(request, key):
     profile = RegistrationProfile.objects.get_user(key, only_activated=False)
     
     error = notice = ""
-
-    if RegistrationProfile.objects.deactivate_user(profile):
+    if RegistrationProfile.objects.deactivate_user(profile,
+                                                   user_request=True):
+        logout(request)            
         notice = "Your user account has been deactivated and will no longer receive emails"
     else:
         error = "Invalid key"
@@ -109,6 +110,10 @@ def email_reminder(request):
         except CustomUser.DoesNotExist:
             messages.append("I couldn't find a user with email address %s" % email)
         else:
+            # we assume that if they previously unsubscribed, they've
+            # now changed their minds
+            user.unsubscribed = False
+            user.save()
             profile = user.registrationprofile_set.get()
             profile.send_activation_email()
             messages.append("Activation email re-sent. Please check your %s inbox. If it isn't there, check your spam folders" % email)

@@ -1,0 +1,2 @@
+You received this email because you signed up to support Democracy Club (http://www.democracyclub.org.uk). {% load signup_extras %}If you want to stop receiving these emails from us you can unsubscribe at {% short_url unsubscribe key=user_profile.activation_key %}.
+

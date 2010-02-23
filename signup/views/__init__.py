@@ -270,10 +270,17 @@ def constituency(request, slug, year=None):
         context['within_km'] = within_km
         if request.POST.get('go', ''):
             count = 0
+            site = Site.objects.get_current()
             for c in nearest:
-                for user in c.customuser_set.filter(is_active=True).all():
+                for user in c.customuser_set.filter(is_active=True):
+                    profile = user.registrationprofile_set.get()                    
+                    footer = render_to_string('email_unsub_footer.txt',
+                                              {'site':site,
+                                               'user_profile':profile})
+                    message = "%s\n\n%s" % (request.POST['message'],
+                                            footer)
                     send_mail(request.POST['subject'],
-                              request.POST['message'],
+                              message,
                               settings.DEFAULT_FROM_EMAIL,
                               [user.email,])
                     count += 1
@@ -310,5 +317,4 @@ def constituency(request, slug, year=None):
         return render_with_context(request,
                                    'constituency.html',
                                    context)
-
 

@@ -13,7 +13,8 @@
 <img src="http://{{ site.domain }}{{ spacer_url }}" />
 <a href="http://{{ site.domain }}">http://{{ site.domain }}</a><br/>
 <a href="http://www.twitter.com/democlub/">http://www.twitter.com/democlub</a>
-<br><br>If you want to stop receiving these emails from us you can unsubscribe at <a href="http://{{ site.domain }}{% url unsubscribe key=user_profile.activation_key %}">http://{{ site.domain }}{% url unsubscribe key=user_profile.activation_key %}</a>. This will disable your account, but it will be re-enabled if you ever log in again.
+<br><br>
+{% include "email_unsub_footer.txt" %}
 </td>
 
 </tr>
