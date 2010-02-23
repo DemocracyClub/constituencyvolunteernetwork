@@ -1,5 +1,8 @@
-from django import template
 from datetime import datetime, timedelta
+
+from django import template
+from django.template import Node
+
 from signup.models import CustomUser
 from shorten.models import Shortened
 
@@ -48,9 +51,6 @@ def naturalTimeDifference(value):
 
 @register.filter
 def shorten(url):
-    #api_url = "http://api.bit.ly/shorten?version=2.0.1&longUrl=%s&login=democlub&apiKey=R_d97512b89021d2c7503f87630821f5dd " % url
-    #resp = urllib.urlopen(api_url)
-    #return resp.read()
     return Shortened.objects.make(url, "constituency link")
 
 @register.filter
@@ -59,4 +59,16 @@ def user_get_name(user):
         return CustomUser.objects.get(id=user.id).display_name
     except CustomUser.DoesNotExist:
         return "Admin"
-       
+
+@register.tag(name="short_url")       
+def short_url(parser, token):
+    url = template.defaulttags.url(parser, token)
+    return ShortenedUrlNode(url)
+
+class ShortenedUrlNode(Node):
+    def __init__(self, urlnode):
+        self.urlnode = urlnode
+
+    def render(self, context):
+        url = self.urlnode.render(context)
+        return Shortened.objects.make(url, "")

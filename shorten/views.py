@@ -1,4 +1,4 @@
-from django.http import HttpResponseRedirect, Http404, HttpResponse
+from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404
 
 from models import Shortened

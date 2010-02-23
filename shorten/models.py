@@ -3,7 +3,6 @@ import hashlib
 from django.db import models
 from django.contrib.sites.models import Site
 
-from signup.models import Model
 from django.core.urlresolvers import reverse
 
 class ShortenedManager(models.Manager):
@@ -25,7 +24,7 @@ class ShortenedManager(models.Manager):
         return "http://%s%s" % (current_site.domain,
                                 reverse('shorten', kwargs={'key': key}))
 
-class Shortened(Model):
+class Shortened(models.Model):
     key = models.CharField(max_length=50)
     description = models.TextField()
     url = models.CharField(max_length=2048)
