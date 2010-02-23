@@ -12,7 +12,7 @@
 <div class="span-5">
  <div class="gradient-box">
  {% if first_time %}
-   <p>You might want to <a href="http://{{ current_site.domain }}{{ user.registrationprofile_set.get.get_login_url }}">bookmark this link so you can log in</a> (right click it, then click either 'Bookmark this link' or 'Add to favourites')</p>
+   <p id="signupthanks">Thanks for signing up, {{ user.private_name }}! You can get started right away adding local issues that you want to hear about by clicking <a class="action start-task">Begin task</a> below, or you can click the link to read more about the task. You can also view your constituency page by clicking "{{ user.home_constituency.name }}" on the right</p>
  {% endif %}
  <h2>Your Democracy Club tasks</h2>
  {% if not user.is_active %}
@@ -104,6 +104,8 @@
 
     <h3>Recent signups</h3>
     {% include "new_signup_list.html" %}
+    <br/>
+    <p>You might want to <a href="http://{{ current_site.domain }}{{ user.registrationprofile_set.get.get_login_url }}">bookmark this link so you can log in</a> (right click it, then click either 'Bookmark this link' or 'Add to favourites')</p>
 </div>
  
 {% endblock %}
