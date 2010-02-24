@@ -52,6 +52,7 @@
               {#<li><a href="{% url add_constituency %}">Your constituencies</a></li>#}
               {# <li><a href="{% url user id=user.id %}">Your profile</a></li> #}
               {% else %}
+                <span class="login-status"><a href="{% url email_reminder %}">Log in</a></span>
                 <li><a href="{% url home %}">Home</a></li>
                 <li><a href="/aboutus/">About us</a></li>
               {% endif %}

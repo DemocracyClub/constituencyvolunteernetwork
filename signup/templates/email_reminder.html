@@ -3,12 +3,12 @@
 {% block title %}Resend login email{% endblock %}
 
 {% block content %}
-<h2>Send login email reminder</h2>
+<h2>Send login email</h2>
 {% for message in messages %}
 <p class="notice">{{ message }}</p>
 {% endfor %}
+<p>On this site you don't log in with a username and password, but <strong>via a link in your email</strong>.  If you've lost your login link, enter your email here and we'll resend your welcome email.</p>
 
-If you need us to send your login details again, just give the email address you signed up with and click "send"
 <form method="POST" action="{% url email_reminder %}">
 <input type="text" name="email"/>
 <input type="submit" value="send"/>
