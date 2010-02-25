@@ -58,8 +58,6 @@ def _get_statistics_context():
                                                .filter(can_cc=True)[:5]
     return context
 
-@vary_on_cookie
-@cache_page(60 * 15)
 def home(request):
     context = _get_statistics_context()
     if request.user.is_anonymous():
@@ -237,7 +235,6 @@ def add_constituency(request):
                                'add_constituency.html',
                                context)
 
-@cache_page(60 * 60 * 24)
 def constituencies(request):
     year = settings.CONSTITUENCY_YEAR
     context = {}
@@ -272,24 +269,28 @@ def constituency(request, slug, year=None):
         context['subject'] = request.POST['subject']
         context['message'] = request.POST['message']
         context['within_km'] = within_km
+        couldnt_send = []
         if request.POST.get('go', ''):
             count = 0
             site = Site.objects.get_current()
             for c in nearest:
                 for user in c.customuser_set.filter(is_active=True):
-                    profile = user.registrationprofile_set.get()                    
-                    footer = render_to_string('email_unsub_footer.txt',
-                                              {'site':site,
-                                               'user_profile':profile})
-                    message = "%s\n\n%s" % (request.POST['message'],
-                                            footer)
-                    send_mail(request.POST['subject'],
-                              message,
-                              settings.DEFAULT_FROM_EMAIL,
-                              [user.email,])
-                    count += 1
+                    try:
+                        profile = user.registrationprofile_set.get()
+                        footer = render_to_string('email_unsub_footer.txt',
+                                                  {'site':site,
+                                                   'user_profile':profile})
+                        message = "%s\n\n%s" % (request.POST['message'],
+                                                footer)
+                        send_mail(request.POST['subject'],
+                                  message,
+                                  settings.DEFAULT_FROM_EMAIL,
+                                  [user.email,])
+                        count += 1
+                    except RegistrationProfile.DoesNotExist:
+                        couldnt_send.append(user)
             context['recipients'] = count
-
+            context['error_recipients'] = couldnt_send
         return render_with_context(request,
                                    'constituency_email.html',
                                    context)

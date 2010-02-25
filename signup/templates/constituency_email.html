@@ -4,6 +4,14 @@
 {% block content %}
 {% if recipients %}
 <p>Message sent to {{ recipients }} recipients</p>
+{% if error_recipients %}
+ <p>Error sending to:</p>
+ <ul>
+   {% for user in error_recipients %}
+    <li>user.email</li>
+   {% endfor %}
+ </ul>
+{% endif %}
 {% else %}
 <p>I'll send your email to people in the constituencies listed below.</p>
 <form method="post">
