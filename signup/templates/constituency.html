@@ -91,6 +91,7 @@
 </div>
 <div id="tab-2" class="tab">
     <h3>Local issues in {{ constituency.name }}</h3>
+    <p><a href='{% url issues_page constituency=constituency.slug %}'>Printable page of issues for {{ constituency.name }}</a></p>
     <p>We're collecting local issues in {{ constituency.name }} to put to the candidates standing at the 2010 general election in the form of a questionnaire. A good local issue will be about a problem of local relevance, possibly suggesting how something should have been/be done, and be something someone can either agree or disagree with.</p>
     {% include 'issues/issue_list.html' %}
 </div>
