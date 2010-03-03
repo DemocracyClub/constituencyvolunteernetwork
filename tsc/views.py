@@ -1,17 +1,14 @@
 import re
-from types import ListType
 
-from django.core.urlresolvers import reverse
-from django.http import HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
+import signals
 
 import signup.views
 from signup.views import render_with_context
 from signup.models import Constituency
 from tasks.util import login_key
-
+import settings
 from models import UploadedLeaflet
-import signals
 
 url_regex = re.compile(ur'http://www.thestraightchoice.org/leaflet.php?q=(\d+)', re.U)
 
@@ -25,7 +22,9 @@ def add(request, constituency_slug=None):
 
     c = None
     if constituency_slug:
-        c = Constituency.objects.get(slug=constituency_slug)
+        year = settings.CONSTITUENCY_YEAR
+        c = Constituency.objects.get(slug=constituency_slug,
+                                     year=year)
     else:
         c = request.user.home_constituency
     
