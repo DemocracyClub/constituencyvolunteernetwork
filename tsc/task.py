@@ -64,7 +64,7 @@ def callback_assign(sender, **kwargs):
         try:                
             TaskUser.objects.assign_task(task,
                                          user,
-                                         add_issue_url,
+                                         add_leaflet_url,
                                          constituency=constituency)
         except TaskUser.AlreadyAssigned:
             msg = "%s already assigned to %s in %s"
