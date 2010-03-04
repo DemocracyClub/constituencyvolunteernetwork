@@ -5,7 +5,7 @@ from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required, permission_required
 
 from signup.models import Constituency, CustomUser
-from models import Issue, make_league_table
+from models import RefinedIssue, Issue, make_league_table
 from task import task_slug
 from tasks.util import login_key
 from forms import AddIssueForm, ModerateIssueForm
@@ -66,8 +66,8 @@ def moderate_issue(request):
     moderate_issue_form = None
     if request.method == "POST":
         issue = Issue.objects.get(pk=request.POST['id'])
-        issue.question = request.POST['question']
-        issue.reference_url = request.POST['reference_url']
+        # issue.question = request.POST['question'] Don't modify original issue
+        # issue.reference_url = request.POST['reference_url']
         found = False
         for k in request.POST.keys():
             if k.startswith("Hide"):
@@ -75,8 +75,20 @@ def moderate_issue(request):
                 notice = ("Issue hidden, thank you! Here's another "
                           "issue to moderate.")
                 found = True
+        
         if not found and 'Approve' in request.POST:
             issue.status = 'approved'
+            
+            question = request.POST['question']
+            reference_url = request.POST['reference_url']
+            
+            new_issue = RefinedIssue.objects.create(question=question,
+                                                    reference_url=reference_url,
+                                                    constituency=issue.constituency,
+                                                    moderator=request.user,
+                                                    based_on=issue
+                                                    )
+
             notice = "Issue moderated, thank you! Here's another issue to moderate."
         elif not found:
             raise Exception("No known button submitted in form data")

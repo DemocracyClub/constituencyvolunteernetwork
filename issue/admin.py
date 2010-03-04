@@ -12,4 +12,4 @@ class IssueAdmin(VersionAdmin):
     list_filter = ('status',)
 
 admin.site.register(models.Issue, IssueAdmin)
-
+admin.site.register(models.RefinedIssue)

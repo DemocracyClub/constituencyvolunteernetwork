@@ -53,6 +53,18 @@ class Issue(models.Model):
     hidden_objects = HiddenIssuesManager()
     all_objects = models.Manager() # visible and hidden ones
 
+class RefinedIssue(models.Model):
+    question = models.TextField()
+    reference_url = models.URLField(max_length=2048, # reasonable maximum: http://www.boutell.com/newfaq/misc/urllength.html
+                                    blank=True,
+                                    null=True) 
+    constituency = models.ForeignKey(Constituency)
+    based_on = models.ForeignKey(Issue, related_name="refined")
+    moderator = models.ForeignKey(CustomUser, related_name="moderated_issues")
+
+    def __unicode__(self):
+        return "%s based on issue by %s" % (self.question, self.based_on.created_by)
+
 def make_league_table(issues = None):
     if not issues:
         issues = Issue.all_objects.all()

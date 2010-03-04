@@ -125,12 +125,30 @@ ul.issues li.add-issue-button a:hover
     background:url("/media/gradient.png") repeat-x;
 }
 
+#moderate_issue h4 {
+    margin:0;
+    padding:0;
+}
+
 #id_approve, #id_hide
 {
+    font-size: 100%;
+}
+
+#id_question, #id_reference_url {
     font-size: 150%;
+    width:100%;
+    font-family:sans-serif;
 }
 
-#id_question {
-    font-size: 125%;
+ul.moderate_buttons {
+    list-style-type:none;
+    margin:0;
+    padding:0;
 }
 
+ul.moderate_buttons li {
+    list-style:none;
+    float:left;
+    margin:0.25em;
+}

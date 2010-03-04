@@ -35,37 +35,31 @@
 
 {% if form %}
     <form action="" method="post" id="moderate_issue" >
+        <input type="hidden" name="id" value="{{ issue.id }}"/>
         <div class="fieldWrapper">
             {{ form.reference_url.errors }}
-            <label for="id_reference_url">
-                1. Check the source link (if there is one).
-            </label>
-            <br>
-            <a href="{{ issue.reference_url }}" target="_blank">Open source link (in new window)</a>
+            <h4>1. Check the source link (if there is one)</h4>
             {{ form.reference_url }}
-            <br>If you can find a more detailed, or less partisan, article about the issue,
-            change the link to that.
+            <br/><a href="{{ issue.reference_url }}" target="_blank">Open source link (in new window)</a>
+            <p>If you can find a more detailed, or less partisan, article about the issue,
+            change the link to that.</p>
         </div>
-        <p></p>
         <div class="fieldWrapper">
             {{ form.question.errors }}
-            <label for="id_question">
-                2. Tidy statement of the local issue
-            </label>
-            <br>See guidelines below.
-            <br>{{ form.question }}
+            <h4>2. Tidy statement of the local issue</h4>
+            {{ form.question }}
         </div>
-        <input type="hidden" name="id" value="{{ issue.id }}" />
-        <input type="submit" value="Approve" id="id_approve" name="Approve" /> 
-        <input type="submit" value="Hide (not local)" id="id_hide" name="Hide-notlocal" /> 
-        <input type="submit" value="Hide (too general, can't make yes/no)" id="id_hide" name="Hide-toogeneral" /> 
-        <input type="submit" value="Hide (can't formulate a policy)" id="id_hide" name="Hide-nopolicy" /> 
-        <input type="submit" value="Hide (other)" id="id_hide" name="Hide-other" /> 
+        <ul class="moderate_buttons">
+            <li><input type="submit" value="Approve" id="id_approve" name="Approve" /></li>
+            <li><input type="submit" value="Hide (not local)" id="id_hide" name="Hide-notlocal" /></li>
+            <li><input type="submit" value="Hide (too general, can't make yes/no)" id="id_hide" name="Hide-toogeneral" /></li>
+            <li><input type="submit" value="Hide (can't formulate a policy)" id="id_hide" name="Hide-nopolicy" /></li>
+            <li><input type="submit" value="Hide (other)" id="id_hide" name="Hide-other" /></li>
+            <li><a href="?">Skip this issue</a></li>
+        </ul>
+        <div class="clear"></div>
     </form>
 {% endif %}
- <p></p>
- <p>If you don't want to do this issue, <a href="?">refresh the page</a> for a new one.</p>
-
     <h3>Guidelines for tidying local issue statements</h3>
     <p>Rewrite the statement so that it is:</p>
         <ul>
@@ -110,7 +104,7 @@
 
 <div class="span-2 last">
     <p style="text-align: center">
-        <img width=250 height=125 src="http://chart.apis.google.com/chart?chs=250x125&cht=gom&chd=t:{{ percentage }}" alt="{{ percentage }} of issues have been moderated">
+        <img width="200" height="125" src="http://chart.apis.google.com/chart?chs=200x125&cht=gom&chd=t:{{ percentage }}" alt="{{ percentage }} of issues have been moderated">
         <br>{{ missing }} issue{{ missing|pluralize }} left to moderate / {{ total }} total
     </p>
 
