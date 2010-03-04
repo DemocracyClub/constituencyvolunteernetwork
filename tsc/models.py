@@ -14,7 +14,8 @@ class UploadedLeaflet(Model):
     user = models.ForeignKey(CustomUser)
     date = models.DateTimeField(auto_now_add=True)
     constituency = models.ForeignKey(Constituency)
-
+    thumb_url = models.URLField(null=True, blank=True)
+    
     @property
     def tsc_id(self):
         result = url_regex.findall(self.url)
@@ -25,16 +26,18 @@ class UploadedLeaflet(Model):
 
     @property
     def thumbnail_url(self):
-        api_call = "http://www.thestraightchoice.org/api/call.php?method=image&output=url&leaflet_id=%d&size=t" % (self.tsc_id)
-        
-        print api_call
+        if not self.thumb_url:
+            api_call = "http://www.thestraightchoice.org/api/call.php?method=image&output=url&leaflet_id=%d&size=t" % (self.tsc_id)
+            
+            print api_call
 
-        response = urllib.urlopen(api_call)
+            response = urllib.urlopen(api_call)
 
-        if response:
-            return response.read()
-        else:
-            return "No url"
+            if response:
+                self.thumb_url = response.read()
+                self.save()
+
+        return self.thumb_url
 
     def __unicode__(self):
         return "Leaflet uploaded by %s to %s on %s" % (self.user,
