@@ -1,6 +1,4 @@
-{% autoescape off %}Hi {{ user.private_name }},
-
-{{ text }}
+{% autoescape off %}{{ text }}
 
 http://{{ site.domain }}
 
