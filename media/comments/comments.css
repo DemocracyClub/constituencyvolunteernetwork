@@ -25,6 +25,16 @@ div.comment .text
     margin-right:0.25em;
 }
 
+div.comment .moderated
+{
+    color:#CCC;
+}
+
+div.comment .moderated a
+{
+    color:#666;
+}
+
 div.comment .time {
     font-size:0.8em;
     color:#CCC;

@@ -50,8 +50,12 @@ function update_notify()
     <div class="comment">
         {#{% ifequal comment.user user %}<a href='#' style="float:right;">delete</a>{% endifequal %}#}
         {% if perms.delete_comment %}<a href='{% url custom_comment_delete comment.id,request.path %}' class="comment_action">delete</a>{% endif %}
-        <span class="poster">{{ comment.user.display_name }}</span>
-        <span class="text">{{ comment.comment }}</span>
+        {% ifequal comment.removal_reason 'none' %}
+            <span class="poster">{{ comment.user.display_name }}</span>
+            <span class="text">{{ comment.comment }}</span>
+        {% else %}
+            <span class="text moderated">This comment was removed because: <a href='/moderation/#{{ comment.removal_reason }}'>{{ comment.long_removal_reason }}</a>.</span>
+        {% endifequal %}
         <span class="time">{{ comment.submit_date|naturalTimeDifference }}</span>
     </div>
 {% empty %}

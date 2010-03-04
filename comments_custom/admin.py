@@ -4,7 +4,7 @@ import models
 
 
 class CommentAdmin(admin.ModelAdmin):
-    list_display = ('submit_date', 'user', 'comment', 'is_public')
+    list_display = ('submit_date', 'user', 'comment', 'is_public', 'removal_reason')
     list_filter = ('is_public', 'is_removed')
     search_fields = ('user__email',)    
 

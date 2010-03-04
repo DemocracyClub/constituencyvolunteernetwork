@@ -64,7 +64,16 @@ class NotifyComment(Model):
                                      [self.user.email, ])
         msg.send()
 
+MODERATION_REASON = (
+    ('none', ''),
+    ('spam', 'Comment is spam'),
+    ('partisan', 'Comment advocates particular party or candidate'),
+    ('interest', 'Comment advocates or advertises a particular interest group'),
+    ('abusive', 'Comment is abusive'),
+)
+
 class CommentSimple(BaseCommentAbstractModel):
+    moderation_reasons = dict(MODERATION_REASON)
     """
         There must be a better way to subclass from Comment remove the fields
         instead of duplicating it...
@@ -85,6 +94,13 @@ class CommentSimple(BaseCommentAbstractModel):
                     help_text=_('Check this box if the comment is inappropriate. ' \
                                 'A "This comment has been removed" message will ' \
                                 'be displayed instead.'))
+    removal_reason = models.CharField(max_length=20,
+                                      choices=MODERATION_REASON,
+                                      default='none')
+
+    @property
+    def long_removal_reason(self):
+        return self.moderation_reasons[self.removal_reason]
 
     # Manager
     objects = CommentManager()
