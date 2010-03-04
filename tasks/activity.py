@@ -5,6 +5,8 @@ from comments_custom.models import CommentSimple
 def generate_activity(constituencies, **kwargs):
     from models import Task, TaskUser
     from issue.models import Issue
+    from tsc.models import UploadedLeaflet
+    
     if constituencies:
         # the strange way we construct the query with "__id__in"
         # operators is necessary because otherwise we get
@@ -48,6 +50,16 @@ def generate_activity(constituencies, **kwargs):
                                              {'issue': issue,
                                               'show_constituency': show_constituency,}),
                            ) for issue in issues]
+
+        # Activity for people posting leaflets
+        leaflets = UploadedLeaflet.objects.filter(constituency__id__in=ids)\
+                                  .order_by('-date').distinct().all()
+
+        leaflets_activity = [(leaflet.date,
+                            render_to_string('tasks/activity_leaflet.html',
+                                             {'leaflet': leaflet,
+                                              'show_constituency': show_constituency,}),
+                            ) for leaflet in leaflets]
         
         # Combine the three, sorted by date, and get rid of the date
-        return [x[1] for x in sorted(task_user_activity + comments_activity + issues_activity, reverse=True)]
+        return [x[1] for x in sorted(task_user_activity + comments_activity + issues_activity + leaflets_activity, reverse=True)][0:10]
