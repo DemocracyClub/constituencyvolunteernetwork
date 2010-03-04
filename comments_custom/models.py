@@ -114,20 +114,21 @@ def callback_comment_posted(**kwargs):
     users = constituency.customuser_set.all()
     
     for user in users:
-        try:
-            notify_obj = NotifyComment.objects.get(user=user,
-                                                   constituency=constituency)
-        except NotifyComment.DoesNotExist:
-            notify_obj = None
+        if user != comment.user:
+            try:
+                notify_obj = NotifyComment.objects.get(user=user,
+                                                       constituency=constituency)
+            except NotifyComment.DoesNotExist:
+                notify_obj = None
 
-        if notify_obj:
-            if notify_obj.notify_type == NotifyComment.Types.every:
-                notify_obj.send_email(comment, False)
-        else:
-            # Send the email and notifications will be deactivated in the future
-            notify_obj =  NotifyComment.objects.create(user=user,
-                                                       constituency=constituency,
-                                                       notify_type=NotifyComment.Types.none)
-            notify_obj.send_email(comment, True)
+            if notify_obj:
+                if notify_obj.notify_type == NotifyComment.Types.every:
+                    notify_obj.send_email(comment, False)
+            else:
+                # Send the email and notifications will be deactivated in the future
+                notify_obj =  NotifyComment.objects.create(user=user,
+                                                           constituency=constituency,
+                                                           notify_type=NotifyComment.Types.none)
+                notify_obj.send_email(comment, True)
     
 comment_was_posted.connect(callback_comment_posted)
