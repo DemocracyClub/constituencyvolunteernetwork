@@ -63,6 +63,7 @@ ul.tabswitcher li a
     height:1.8em;
     text-decoration:none;
     padding-top: 0.65em;
+    outline:none;
 }
 
 ul.tabswitcher li a:link

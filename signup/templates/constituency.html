@@ -15,7 +15,7 @@
 {% block js %}
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
 
-    <script>
+    <script>       
         function show_tab(tab_id, switcher_id)
         {
             $('.tab').hide();
@@ -23,15 +23,30 @@
             $('.tabswitcher li').removeClass('active');
             $('#'+switcher_id).addClass('active');
         }
+
+        $(document).ready(function () {
+            if(window.location.hash == "#issues")
+            {
+                show_tab('tab-2', 'switcher2');
+            }
+            else if(window.location.hash == "#email")
+            {
+                show_tab('tab-3', 'switcher3');
+            }
+            else
+            {
+                
+            }
+        });
     </script>
 {% endblock %}
 
 {% block content %}
 <ul class="tabswitcher">
-    <li id="switcher1" class="first active"><a onclick="show_tab('tab-1', 'switcher1')">{{ constituency.name }} information</a></li>
-    <li id="switcher2" class="inactive"><a onclick="show_tab('tab-2', 'switcher2')">Local issues</a></li>
+    <li id="switcher1" class="first active"><a href="#" onclick="show_tab('tab-1', 'switcher1')">{{ constituency.name }} information</a></li>
+    <li id="switcher2" class="inactive"><a href="#issues" onclick="show_tab('tab-2', 'switcher2')">Local issues</a></li>
 {% if request.user.is_superuser %}
-    <li id="switcher3" class="inactive"><a onclick="show_tab('tab-3', 'switcher3')">Email nearby users</a></li>
+    <li id="switcher3" class="inactive"><a href="#email" onclick="show_tab('tab-3', 'switcher3')">Email nearby users</a></li>
 {% endif %}
 <div class="clear"></div>
 </ul>
@@ -58,7 +73,7 @@
                 <li><label>On the web</label> <a href='{{ constituency.wikipedia_url }}' target="_blank">{{ constituency.name }} on Wikipedia</a></li>
                 <li><label>&nbsp;</label> <a href='http://openlylocal.com/hyperlocal_sites?location={{ constituency.name }},%20UK&commit=Search' target="_blank">Local blogs</a> near {{ constituency.name }}</li>
             {% with constituency.issue_set.latest as latest_issue %}
-                <li><label>Latest issue</label> {% if latest_issue %}<a href='#' onclick="show_tab('tab-2', 'switcher2')">"{{ latest_issue.question }}" from {{ latest_issue.created_by.display_name }}</a> (<a href='{% url add_issue constituency=constituency.slug %}'>add issue</a>){% else %}<a href='{% url add_issue constituency=constituency.slug %}'>no issues yet, add one!</a>{% endif %}
+                <li><label>Latest issue</label> {% if latest_issue %}<a href='#issues' onclick="show_tab('tab-2', 'switcher2')">"{{ latest_issue.question }}" from {{ latest_issue.created_by.display_name }}</a> (<a href='{% url add_issue constituency=constituency.slug %}'>add issue</a>){% else %}<a href='{% url add_issue constituency=constituency.slug %}'>no issues yet, add one!</a>{% endif %}
             {% endwith %}
             </ul>
         </div>
