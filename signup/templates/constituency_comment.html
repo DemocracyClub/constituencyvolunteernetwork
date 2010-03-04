@@ -4,7 +4,28 @@
 <a id="comments"></a><h3>{{ constituency.name }} discussion</h3>
 {% if can_post %}
 {% if not user.is_anonymous %}{% if user.is_active %}
-<p class="quiet">Discuss with other people what you're doing in this constituency</p>
+<p class="quiet">Discuss with other people what you're doing in this constituency.</p>
+
+<script>
+function update_notify()
+{
+    /*state = $('input#notify').value;
+    alert(state);*/
+    $('#notifyform').submit();
+}
+</script>
+
+{% with notify_object as notify %}
+  <form method="post" id="notifyform" action="">
+    <label for="notify">Email me when someone posts here</label>
+    {% if notify %}
+         <input name="notify" type="checkbox" id="notify" value="yes" {% ifnotequal notify.notify_type 0 %}checked{% endifnotequal %} onchange="update_notify()"/>
+    {% else %}
+         <input name="notify" type="checkbox" id="notify" value="yes" onchange="update_notify()"/>
+    {% endif %}
+  </form>
+{% endwith %}
+
 {% get_comment_form for constituency as form %}
 <form action="{% comment_form_target %}" method="post" id="post-comment">
   {{ form.content_type }}
@@ -23,7 +44,7 @@
 
 {% get_comment_list for constituency as comment_list %}
 <div class="comments">
-{% for comment in comment_list %}
+{% for comment in comment_list reversed %}
     <div class="comment">
         {#{% ifequal comment.user user %}<a href='#' style="float:right;">delete</a>{% endifequal %}#}
         {% if perms.delete_comment %}<a href='{% url custom_comment_delete comment.id,request.path %}' class="comment_action">delete</a>{% endif %}

@@ -25,6 +25,7 @@ import signup.signals as signals
 import signup.geo as geo
 
 from tasks.activity import generate_activity
+from comments_custom.models import NotifyComment
 
 def render_with_context(request,
                         template,
@@ -260,7 +261,29 @@ def constituency(request, slug, year=None):
         context['constituency'] = constituency
     except Constituency.DoesNotExist:
         raise Http404
-    if request.method == "POST":
+    
+    print request.POST
+
+    if request.method == "POST" and 'notify' in request.POST:
+        try:
+            notify_object = NotifyComment.objects.get(user=request.user,
+                                                      constituency=constituency)
+        except NotifyComment.DoesNotExist:
+            notify_object = NotifyComment.objects.create(user=request.user,
+                                                         constituency=constituency,
+                                                         notify_type=NotifyComment.Types.none)
+
+        if request.POST['notify'] == "yes":
+            notify_object.notify_type = NotifyComment.Types.every
+        else:
+            print "none"
+            notify_object.notify_type = NotifyComment.Types.none
+
+        notify_object.save()
+
+        return HttpResponseRedirect(reverse('constituency', [slug]))
+    
+    elif request.method == "POST" and 'subject' in request.POST:
         within_km = int(request.POST['within_km'])
         nearest = constituency.neighbors(limit=100,
                                          within_km=within_km)
@@ -318,6 +341,12 @@ def constituency(request, slug, year=None):
             context['volunteer_here'] = False
 
         context['is_constituency_page'] = True
+    
+        try:
+            context['notify_object'] = NotifyComment.objects.get(user=request.user,
+                                                          constituency=constituency)
+        except NotifyComment.DoesNotExist:
+            context['notify_object'] = None
         
         return render_with_context(request,
                                    'constituency.html',

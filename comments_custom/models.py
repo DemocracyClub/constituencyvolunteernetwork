@@ -4,10 +4,39 @@ from django.db import models
 from django.contrib.comments.models import BaseCommentAbstractModel, Comment
 from django.contrib.comments.managers import CommentManager
 from django.conf import settings
-from signup.models import CustomUser
+from signup.models import Model, CustomUser, Constituency
 from django.utils.translation import ugettext_lazy as _
 
 COMMENT_MAX_LENGTH = getattr(settings,'COMMENT_MAX_LENGTH',3000)
+
+class NotifyComment(Model):
+    """
+        Specifies that a user should be notified when a comment is posted on
+        a constituency discussion page
+    """
+    
+    class Types:
+        none = 0 # No notify
+        every = 1 # Notify for every comment
+        digest = 2 # Email a weekly digest
+    
+        strings = (
+            (none, 'Don\'t notify'),
+            (every, 'Notify for every comment'),
+            (digest, 'Email a weekly digest'),
+        )
+
+    user = models.ForeignKey(CustomUser)
+    constituency = models.ForeignKey(Constituency)
+    created_at = models.DateTimeField(auto_now_add=True)
+    notify_type = models.SmallIntegerField(choices=Types.strings)
+
+    def on(self):
+        self.notify_type = self.Types.every
+
+    def off(self):
+        self.notify_type = self.Types.none
+    
 
 class CommentSimple(BaseCommentAbstractModel):
     """
