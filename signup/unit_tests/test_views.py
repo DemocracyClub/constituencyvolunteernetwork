@@ -6,6 +6,7 @@ import cgi
 from django.conf import settings
 from django.contrib.flatpages.models import FlatPage
 from django.contrib.sites.models import Site
+from django.core.urlresolvers import reverse
 
 # app
 from testbase import TestCase
@@ -50,7 +51,22 @@ constituencies = [{'name':'Glasgow North',
                    'lat':53.2797662137,
                    'lon':-2.38760476605,
                    }]
-        
+
+def create_activated_user(self, postcode):
+    response = self.client.post("/",
+        {'email':'a@b.com',
+         'postcode': postcode,
+         'can_cc':True,
+         'first_name':'foo',
+         'last_name':'bar'})
+    
+    user = CustomUser.objects.get(email="a@b.com")
+    reg_prof = user.registrationprofile_set.get()
+    reg_prof.activated = True
+    reg_prof.save()
+
+    return user
+
 class ViewsTestCase(TestCase):
     
     def setUp(self):
@@ -159,7 +175,7 @@ class TestSignup(TestCase):
                   'expect':'Unknown postcode'},
                  {'form':{'email':'321@mailinator.com',
                           'postcode':'cw16ar'},
-                  'expect':'thanks for joining Democracy Club!'},]
+                  'expect':'You have not confirmed your email address yet.'},]
         for test in tests:
             response = self.client.post("/", test['form'],
                                         follow=True)
@@ -170,13 +186,14 @@ class TestAddConstituencies(TestCase):
         crewe = Constituency.objects.create(
             name="Crewe & Nantwich",
             year = this_year)
-        user = CustomUser.objects.create(
-            username = "Frank",
-            password = "",
-            postcode = "CW1 6AR",
-            can_cc = True)
+
+        Constituency.objects.create(
+            name = "Coventry North West",
+            year = this_year)
+        user = create_activated_user(self, "CV7 8AH")
+
         user.constituencies = [crewe]
-        self.assert_(self.client.login(username="Frank", password=""))
+        user.save()
         
     def test_postcode_search(self):
         """ User can enter a postcode into the search box to find a constituency. """
@@ -184,7 +201,6 @@ class TestAddConstituencies(TestCase):
         newcastle = Constituency.objects.create(
             name = "Hendon",
             year = this_year)
-        self.assert_(self.client.login(username="Frank", password=""))
         # NW4 is in Hendon
         response = self.client.get("/add_constituency/#search", {"q":"NW4 3AS"})
         self.assertContains(response, "Hendon")
@@ -233,17 +249,10 @@ class TestLeaveAllConstituencies(TestCase):
             year = this_year)
 
         # user signs up
-        response = self.client.post("/",
-            {'email':'foo@mailinator.com',
-             'postcode':'G206BT',
-             'can_cc':True,
-             'first_name':'foo',
-             'last_name':'bar'},
-                                    follow=True)
-        self.assertRedirects(response, "/welcome")
+        
+        user = create_activated_user(self, 'G206BT')
 
         # they have a constituency
-        user = CustomUser.objects.get(email="foo@mailinator.com")
         self.assertEquals(1, len(user.current_constituencies))
         response = self.client.get("/add_constituency/")
         self.assertContains(response, "Glasgow North")
@@ -271,40 +280,11 @@ class TestNorthernIreland(TestCase):
             name = "South Down",
             year = this_year)
 
-        user = CustomUser.objects.create(
-            username="foo",
-            password="",
-            email="foo@mailinator.com",
-            postcode="BT30 8AH",
-            first_name="foo",
-            last_name="bar",
-            can_cc=False)
+        user = create_activated_user(self, "BT30 8AH")
         user.constituencies = [south_down]
         user.save()
-        self.client.login(username="foo")
+        
         response = self.client.get("/add_constituency/")
-
-    def test_missing_neighbours(self):
-        belfast_north = Constituency.objects.create(
-            name = "Belfast North",
-            year = this_year)
-        belfast_north.save()
-        south_down = Constituency.objects.create(
-            name = "South Down",
-            year = this_year)
-        south_down.save()
-        user = CustomUser.objects.create(
-            username="foo",
-            password="",
-            email="foo@mailinator.com",
-            postcode="BT30 8AH",
-            first_name="foo",
-            last_name="bar",
-            can_cc=False)
-        user.constituencies = [south_down]
-        user.save()
-        self.client.login(username="foo")
-        response = self.client.get("/constituency/south-down/")
 
 class TestBoundryPostcodes(TestCase):
     """
@@ -327,7 +307,10 @@ class TestBoundryPostcodes(TestCase):
              'first_name':'foo',
              'last_name':'bar'})
         self.user = CustomUser.objects.get(email="a@b.com")
-
+        reg_prof = self.user.registrationprofile_set.get()
+        reg_prof.activated = True
+        reg_prof.save()
+    
     def test_signup(self):
         # the constituency _should_ be North Warwickshire, but it's
         # wrong in OS Borderline
@@ -339,6 +322,7 @@ class TestBoundryPostcodes(TestCase):
         # correct constituency
         response = self.client.get("/add_constituency/#search",
                                    {"q": u"Warwickshire"})
+
         self.assertContains(response, "Warwickshire North")
 
 
