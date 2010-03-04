@@ -28,8 +28,6 @@ class UploadedLeaflet(Model):
     def thumbnail_url(self):
         if not self.thumb_url:
             api_call = "http://www.thestraightchoice.org/api/call.php?method=image&output=url&leaflet_id=%d&size=t" % (self.tsc_id)
-            
-            print api_call
 
             response = urllib.urlopen(api_call)
 
