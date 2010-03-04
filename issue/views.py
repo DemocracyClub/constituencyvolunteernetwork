@@ -93,7 +93,7 @@ def moderate_issue(request):
         elif not found:
             raise Exception("No known button submitted in form data")
 
-        issue.last_updated_by = CustomUser.objects.get(user_ptr=request.user) # XXX how should this be done?
+        issue.last_updated_by = request.user
         issue.save()
 
         signals.issue_moderated.send(None, user=request.user, issue=issue)

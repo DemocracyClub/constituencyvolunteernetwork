@@ -55,12 +55,15 @@ class Issue(models.Model):
 
 class RefinedIssue(models.Model):
     question = models.TextField()
-    reference_url = models.URLField(max_length=2048, # reasonable maximum: http://www.boutell.com/newfaq/misc/urllength.html
+    reference_url = models.URLField(max_length=2048,
                                     blank=True,
                                     null=True) 
     constituency = models.ForeignKey(Constituency)
     based_on = models.ForeignKey(Issue, related_name="refined")
     moderator = models.ForeignKey(CustomUser, related_name="moderated_issues")
+
+    updated_at = models.DateTimeField(auto_now=True)
+    created_at = models.DateTimeField(auto_now_add=True)
 
     def __unicode__(self):
         return "%s based on issue by %s" % (self.question, self.based_on.created_by)
