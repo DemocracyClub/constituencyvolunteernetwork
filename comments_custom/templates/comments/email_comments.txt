@@ -1,0 +1,14 @@
+Hi {{ user.private_name }},
+
+{{ comment.user.display_name }} posted a message on the discussion in {{ constituency.name }}. You can view the comment and reply on this page
+
+http://{{ site.domain }}{{ link }}
+
+{% if first %}This is your first notification. You won't receive any more unless you manually turn them on on the above page.
+
+{% endif %}Thanks,
+
+Democracy Club
+
+http://{{ site.domain }}
+http://www.twitter.com/democlub/

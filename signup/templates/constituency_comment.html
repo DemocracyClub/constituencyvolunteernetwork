@@ -16,13 +16,15 @@ function update_notify()
 </script>
 
 {% with notify_object as notify %}
-  <form method="post" id="notifyform" action="">
+  <form method="post" id="notifyform">
+    <input type="hidden" name="notifypost" value="1"/>
     <label for="notify">Email me when someone posts here</label>
     {% if notify %}
-         <input name="notify" type="checkbox" id="notify" value="yes" {% ifnotequal notify.notify_type 0 %}checked{% endifnotequal %} onchange="update_notify()"/>
+         <input name="notify" type="checkbox" value="yes" {% ifnotequal notify.notify_type 0 %}checked{% endifnotequal %} onchange="update_notify()"/>
     {% else %}
-         <input name="notify" type="checkbox" id="notify" value="yes" onchange="update_notify()"/>
+         <input name="notify" type="checkbox" value="yes" onchange="update_notify()"/>
     {% endif %}
+    <input type="submit" value="save"/>
   </form>
 {% endwith %}
 

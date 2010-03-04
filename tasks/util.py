@@ -1,5 +1,5 @@
 from django.core.urlresolvers import reverse
-from signup.views.user import do_login
+from signup.util import key_login
 from shorten.models import Shortened
 from django.contrib.sites.models import Site
 
@@ -15,7 +15,8 @@ def login_key(func):
         
             if login_key is not None:
                 # should we generate separate login keys for each taskuser for security?
-                do_login(request, login_key)
+                key_login(request, login_key)
+                pass
         
             del kwargs['login_key']
 

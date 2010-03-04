@@ -26,7 +26,6 @@ class TemplatedForm(forms.Form):
 
     def as_table(self):
         return self.output_via_template()
-    
 
 def addToQueryString(orig, extra_data):
     scheme, netloc, path, params, query, fragment = urlparse(orig)

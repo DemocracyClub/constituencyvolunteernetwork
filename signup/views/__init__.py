@@ -1,13 +1,8 @@
 import types
-import re
 
-from django.shortcuts import render_to_response, get_object_or_404
-from django.contrib.auth import authenticate, login, logout
-from django.http import HttpResponseRedirect, Http404, HttpResponse
-from django.views.decorators.vary import vary_on_cookie
-from django.views.decorators.cache import cache_page
+from django.contrib.auth import authenticate, login
+from django.http import HttpResponseRedirect, Http404
 from django.core.urlresolvers import reverse
-from django.template import RequestContext
 from django.contrib.auth.decorators import login_required
 from django.utils.html import escape
 from django.utils.safestring import SafeUnicode
@@ -15,7 +10,7 @@ from django.contrib.sites.models import Site
 from django.template.loader import render_to_string
 from django.core.mail import send_mail
 
-import utils
+from signup.util import render_with_context
 import settings
 
 import signup.models as models
@@ -24,18 +19,10 @@ from signup.forms import UserForm
 import signup.signals as signals
 import signup.geo as geo
 
+from tasks.util import login_key
+
 from tasks.activity import generate_activity
 from comments_custom.models import NotifyComment
-
-def render_with_context(request,
-                        template,
-                        context,
-                        **kw):
-    kw['context_instance'] = RequestContext(request)
-    return render_to_response(template,
-                              context,
-                              **kw)
-
 
 def _get_statistics_context():
     context = {}
@@ -246,9 +233,9 @@ def constituencies(request):
                                'constituencies.html',
                                context)
 
+@login_key
 def constituency(request, slug, year=None):
     context = _get_nearby_context(request)
-    from tasks.models import TaskUser
 
     if year:
         year = "%s-01-01" % year
@@ -262,9 +249,7 @@ def constituency(request, slug, year=None):
     except Constituency.DoesNotExist:
         raise Http404
     
-    print request.POST
-
-    if request.method == "POST" and 'notify' in request.POST:
+    if request.method == "POST" and 'notifypost' in request.POST:
         try:
             notify_object = NotifyComment.objects.get(user=request.user,
                                                       constituency=constituency)
@@ -273,15 +258,14 @@ def constituency(request, slug, year=None):
                                                          constituency=constituency,
                                                          notify_type=NotifyComment.Types.none)
 
-        if request.POST['notify'] == "yes":
+        if 'notify' in request.POST:
             notify_object.notify_type = NotifyComment.Types.every
         else:
-            print "none"
             notify_object.notify_type = NotifyComment.Types.none
 
         notify_object.save()
 
-        return HttpResponseRedirect(reverse('constituency', [slug]))
+        return HttpResponseRedirect(reverse('constituency', args=[slug]))
     
     elif request.method == "POST" and 'subject' in request.POST:
         within_km = int(request.POST['within_km'])
