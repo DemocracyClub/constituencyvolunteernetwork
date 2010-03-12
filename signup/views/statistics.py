@@ -36,11 +36,12 @@ def constituencies_with_more_than_rss(request,
 
 def statistics(request):
     context = {}
+    year = settings.CONSTITUENCY_YEAR
     context['histogram'] = models.date_joined_histogram()
     num_rows = context['histogram'].rowcount
     context['categorystep'] = int(num_rows / 40.0 * 4) + 1
     context['const_volunteers'] = \
-      models.constituency_volunteers_histogram(Constituency.objects.all())
+      models.constituency_volunteers_histogram(Constituency.objects.filter(year=year))
     
     return render_with_context(request,
                                'statistics.html',
