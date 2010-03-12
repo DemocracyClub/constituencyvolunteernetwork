@@ -1,7 +1,5 @@
 from django.db import models
-from django.conf import settings
 
-from tasks.models import Task
 from signup.models import Constituency, CustomUser
 
 import collections
