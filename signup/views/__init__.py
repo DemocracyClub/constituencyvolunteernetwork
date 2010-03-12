@@ -317,20 +317,25 @@ def constituency(request, slug, year=None):
                 lonspan = abs(furthest.lon - constituency.lon) * 2
         context['latspan'] = latspan
         context['lonspan'] = lonspan
-        context['activity'] = generate_activity([constituency], show_constituency=False)
+        context['activity'] = generate_activity([constituency],
+                                                show_constituency=False)
   
         if request.user.is_authenticated():
-            context['volunteer_here'] = bool(request.user.constituencies.filter(id=constituency.id))
+            context['volunteer_here'] = \
+                 bool(request.user.constituencies\
+                      .filter(id=constituency.id))
         else:
             context['volunteer_here'] = False
 
         context['is_constituency_page'] = True
-    
-        try:
-            context['notify_object'] = NotifyComment.objects.get(user=request.user,
-                                                          constituency=constituency)
-        except NotifyComment.DoesNotExist:
-            context['notify_object'] = None
+        context['notify_object'] = None
+        if request.user.is_authenticated():
+            try:
+                context['notify_object'] = \
+                     NotifyComment.objects.get(user=request.user,
+                                               constituency=constituency)
+            except NotifyComment.DoesNotExist:
+                pass
         
         return render_with_context(request,
                                    'constituency.html',
