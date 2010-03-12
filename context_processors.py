@@ -1,11 +1,20 @@
 from django.contrib.flatpages.models import FlatPage
 from django.contrib.sites.models import Site
 
+from signup.models import RegistrationProfile
 import settings
 
 def navigation(context):
+    needs_activation = False
+    if not context.user.is_anonymous():
+        try:
+            profile = context.user.registrationprofile_set.get()
+            if not profile.activated:
+                needs_activation = True
+        except RegistrationProfile.DoesNotExist:
+            pass
     context = {'pages': FlatPage.objects.all().order_by('id'),
-               'needs_activation': (not context.user.is_anonymous()) and (not context.user.registrationprofile_set.get().activated),}
+               'needs_activation': needs_activation}
 
     return context
 
