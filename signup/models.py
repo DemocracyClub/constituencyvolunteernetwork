@@ -158,6 +158,14 @@ class CustomUser(User):
         return name
 
     @property
+    def full_name(self):
+        if self.first_name or self.last_name:
+            name = "%s %s" % (self.first_name, self.last_name)
+        else:
+            name = self.email
+        return name
+
+    @property
     def safe_email(self):
         return self.email.replace("@", " at ")
     

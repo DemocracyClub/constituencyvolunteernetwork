@@ -1,6 +1,6 @@
 {% autoescape off %}Hi,
 
-{{ user.display_name }} has sent an invitation for you to join the Democracy Club.
+{{ user.full_name }} has sent an invitation for you to join Democracy Club.
 
 They say:
 {{ message }}
@@ -10,4 +10,5 @@ Join at http://{{ site }}
 Thanks,
 
 Democracy Club
-http://{{ site }}{% endautoescape %}
+http://{{ site }}{% endautoescape %}http://twitter.com/democlub
+

@@ -47,10 +47,12 @@ def callback_assign(sender, **kwargs):
     """
     user = kwargs['user']
     task = kwargs['task']
+    msg = ""
     try:
         TaskUser.objects.assign_task(task, user, reverse("inviteindex"))
     except TaskUser.AlreadyAssigned:
-        return "%s already assigned to %s" % (task, user)
+        msg = "%s already assigned to %s" % (task, user)
+    return msg
 
 # Assignment signals
 # user_activated.connect(callback_assign)
@@ -59,3 +61,4 @@ user_touch.connect(callback_assign)
 # Completion signals
 invitation_sent.connect(callback_invites_sent)
 user_touch.connect(callback_invites_sent)
+
