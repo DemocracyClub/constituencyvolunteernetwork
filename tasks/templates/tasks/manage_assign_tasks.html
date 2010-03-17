@@ -43,5 +43,7 @@ Pick an email campaign (optional -- we won't send the emails straight away)
 users.filter(email="foo@example.com")
 users.filter(name__icontains="smith")
 users.filter(constituencies__name__icontains="manchester")
+users.exclude(taskuser__task__id__in=[1,2,3,4,5],taskuser__state=3).distinct()
+
 </pre>
 {% endblock %}
