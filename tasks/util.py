@@ -2,6 +2,7 @@ from django.core.urlresolvers import reverse
 from signup.util import key_login
 from shorten.models import Shortened
 from django.contrib.sites.models import Site
+from django.http import HttpResponse
 
 def login_key(func):
     """
@@ -14,9 +15,10 @@ def login_key(func):
             request = args[0]
         
             if login_key is not None:
-                # should we generate separate login keys for each taskuser for security?
-                key_login(request, login_key)
-                pass
+                result = key_login(request, login_key)
+                
+                if result['error']: # Ditch out of the view with 401 Unauthorized
+                    return HttpResponse(content="Bad login key.", status=401)
         
             del kwargs['login_key']
 
