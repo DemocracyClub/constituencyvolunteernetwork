@@ -1,42 +1,80 @@
 {% extends 'base.html' %}
+{% load signup_extras %}
 {% block content %}
 <h2>Manage tasks</h2>
+<a href='{% url scan_email_queue %}'>Check email queue</a>
 <table>
  <tr>
   <th>Task</th>
-  <th>% complete</th>
-  <th>Tasks sent</th>
+  <th></th>
+  <th>Tasks assigned</th>
+  <th>Emails sent</th>
   <th>Emails opened</th>
   <th>Tasks started</th>
-  <th>Tasks completed</th>
+  <th>(of which) tasks completed</th>
   <th>Tasks ignored</th>
   <td></td>
  </tr>
  {% for task in tasks %}
+ {% with task.getStatistics as stats %}
  <tr>
    <td>
-     <a href="{{ task.absolute_url }}">{{ task.name }}</a>
+     <a href="{{ task.absolute_url }}">{{ task.name }}</a><br />
+     {{ task.percent_complete }}% complete
+   </td>
+   <td>All email variations
    </td>
    <td>
-     {{ task.percent_complete }}%
+     {{ stats.assigned }}
    </td>
    <td>
-     {{ task.taskuser_set.count }}
+     {{ stats.sent }}
    </td>
    <td>
-     {{ task.emails_opened }}%
+     {{ stats.opened|percentage:stats.sent }} ({{ stats.opened }})
    </td>
    <td>
-     {{ task.started }}%
+     {{ stats.started|percentage:stats.assigned }} ({{ stats.started }}) / {{ stats.email_started|percentage:stats.opened }}
    </td>
    <td>
-     {{ task.completed }}%
+     {{ stats.completed|percentage:stats.started }} ({{ stats.completed }}) / {{ stats.email_completed|percentage:stats.email_started }}
    </td>
    <td>
-     {{ task.ignored }}%
+     {{ stats.ignored|percentage:stats.assigned }} ({{ stats.ignored }})
+   </td>
+   <td><a href="{% url manage_assign_tasks task_pk=task.pk %}">assign</a><br/><a href="{% url manage_assign_email task_pk=task.pk %}">email</a></td>
+ </tr>
+ {% endwith %}
+ {% for email in task.taskemails %}
+  {% with email.getStatistics as stats %}
+ <tr>
+   <td>
+   </td>
+   <td>
+     {{ email.subject }}
+   </td>
+   <td>
+     {{ stats.assigned }}
+   </td>
+   <td>
+     {{ stats.sent }}
+   </td>
+   <td>
+     {{ stats.opened|percentage:stats.sent }} ({{ stats.opened }})
+   </td>
+   <td>
+     {{ stats.started|percentage:stats.assigned }} ({{ stats.started }})  / {{ stats.email_started|percentage:stats.opened }}
+   </td>
+   <td>
+     {{ stats.completed|percentage:stats.started }} ({{ stats.completed }}) / {{ stats.email_completed|percentage:stats.email_started }}
+   </td>
+   <td>
+     {{ stats.ignored|percentage:stats.assigned }} ({{ stats.ignored }})
    </td>
    <td><a href="{% url manage_assign_tasks task_pk=task.pk %}">assign</a></td>
- </tr>
+ </tr>    
+  {% endwith %}
+ {% endfor %}
  {% endfor %}
 </table>
 

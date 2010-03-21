@@ -1,35 +1,39 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h2>Assign tasks</h2>
-<a href='{% url admin_assign_all %}'>To everyone</a> | <a href='{% url admin_assign_constituency %}'>By constituency</a>
+<h2>Assign <em>{{ task.name }}</em></h2>
 
-{% for task, assigned, already_assigned in message %}
-{% if assigned %}
-Assigned <em>{{ task }}</em> to<br/>
-<ul>
-    {% for user in assigned %}
-      <li>{{ user }}</li>
-    {% endfor %}
-</ul>
+{% if posted %}
+ <p>This filter {% if dry_run %}would have{% endif %} assigned 
+ <em>{{ task.name }}</em> to {{ count }} users{% if selected_email %} with email '<em>{{ selected_email.subject }}</em>'{% endif %}.</p>
+ {% if skip %}
+  <p>A further {{ skip }} users who matched the query were already 
+  assigned it.</p>
+ {% endif %}
+ <p>First 10 matched users:</p>
+ <ul>
+  {% for user in matched_users|slice:"10" %}
+   <li>{{ user }}</li>
+  {% endfor %}
+ </ul>
 {% endif %}
-{% if already_assigned %}
-Already assigned <em>{{ task }}</em> to<br/>
-<ul>
-    {% for user in already_assigned %}
-      <li>{{ user }}</li>
-    {% endfor %}
-</ul>
-{% endif %}
-{% endfor %}
 
-<form action="" method="post">as
-  <table>
-  {{ form.as_table }}
-  <tr>
-   <td></td>
-   <td><input type="submit" value="assign" /></td>
-  </tr>
-  </table>
+<form action="" method="post">
+<p>Enter a django filter against a queryset called <code>users</code>.  Leave blank to select all users.</p>
+<textarea cols="79" rows="5" name="queryfilter">
+{% if queryfilter %}{{ queryfilter }}
+{% else %}users.filter(email="seb.bacon@gmail.com"){% endif %}
+</textarea><br />
+<input type="checkbox" {% if posted and not dry_run %}{% else %}checked="checked"{% endif %} name="dry_run" /> Dry run?
+<input type="submit">
 </form>
+<hr />
+<h3>Examples</h3>
+<pre>
+users.filter(email="foo@example.com")
+users.filter(name__icontains="smith")
+users.filter(constituencies__name__icontains="manchester")
+users.exclude(taskuser__task__id__in=[1,2,3,4,5],taskuser__state=3).distinct()
+
+</pre>
 {% endblock %}

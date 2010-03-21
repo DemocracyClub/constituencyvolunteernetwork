@@ -16,6 +16,7 @@
    <li>{{ user }}</li>
   {% endfor %}
  </ul>
+ <em>You might also want to <a href='{% url manage_assign_email task_pk=task.id %}'>assign other email campaigns</a> to this task.</em>
 {% endif %}
 
 <form action="" method="post">
@@ -24,16 +25,6 @@
 {% if queryfilter %}{{ queryfilter }}
 {% else %}users.filter(email="seb.bacon@gmail.com"){% endif %}
 </textarea><br />
-Pick an email campaign (optional -- we won't send the emails straight away)
-<select name="email">
- {% for email in emails %}
-  {% if forloop.first %}
-  <option value="">select one</option>
-  {% endif %}
-  <option value="{{ email.pk }}"{% ifequal selected_email email %} selected="selected"{% endifequal %}>{{ email.subject }}</option>
- {% endfor %}
-</select>
-<br />
 <input type="checkbox" {% if posted and not dry_run %}{% else %}checked="checked"{% endif %} name="dry_run" /> Dry run?
 <input type="submit">
 </form>

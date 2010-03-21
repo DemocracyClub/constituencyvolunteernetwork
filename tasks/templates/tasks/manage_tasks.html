@@ -2,6 +2,7 @@
 {% load signup_extras %}
 {% block content %}
 <h2>Manage tasks</h2>
+<a href='{% url scan_email_queue %}'>Check email queue</a>
 <table>
  <tr>
   <th>Task</th>
@@ -41,7 +42,7 @@
    <td>
      {{ stats.ignored|percentage:stats.assigned }} ({{ stats.ignored }})
    </td>
-   <td><a href="{% url manage_assign_tasks task_pk=task.pk %}">assign</a></td>
+   <td><a href="{% url manage_assign_tasks task_pk=task.pk %}">assign</a> / <a href="{% url manage_assign_email task_pk=task.pk %}">email</a></td>
  </tr>
  {% endwith %}
  {% for email in task.taskemails %}
