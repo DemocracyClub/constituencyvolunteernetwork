@@ -366,10 +366,12 @@ def scan_queue(request):
         else:
             week_ago = datetime.datetime.now() - datetime.timedelta(7)
 
+            # Find unsent reminders first
             reminders = emails.filter(date_sent=None,
                                       task_email__email_type=TaskEmail.EmailTypes.reminder
                                      ).order_by('date_sent')
 
+            # If we cant find unsent reminders, find the oldest reminder sent more than a week ago
             if not reminders:
                 reminders = emails.filter(date_sent__lte=week_ago,
                                           task_email__email_type=TaskEmail.EmailTypes.reminder

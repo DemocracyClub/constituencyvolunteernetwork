@@ -549,8 +549,8 @@ class TaskEmail(Model):
             message_plain = render_to_string('tasks/email_new_task.txt',
                                              context_plain)
             constituency = context['task_user'].constituency
-            if constituency:            
-                subject_context = {'constituency':constituency.name}
+            if constituency:
+                subject_context = {'constituency': constituency.name}
                 subject = self.subject % subject_context
             else:
                 subject = self.subject                
