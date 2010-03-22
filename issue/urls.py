@@ -24,6 +24,10 @@ urlpatterns = patterns('issue.views',
         views.moderate_issue,
         name="moderate_issue"),
 
+    url(r'^refined_csv$',
+        views.refined_csv,
+        name="refined_csv"),
+
     url(r'^add/thanks$',
         views.add_issue,
         kwargs={'submitted':True},
