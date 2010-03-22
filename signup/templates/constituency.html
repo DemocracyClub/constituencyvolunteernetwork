@@ -44,6 +44,7 @@
 {% block content %}
 <ul class="tabswitcher">
     <li id="switcher1" class="first active"><a href="#" onclick="show_tab('tab-1', 'switcher1')">{{ constituency.name }} information</a></li>
+    <li id="switcher4" class="inactive"><a href="#questions" onclick="show_tab('tab-4', 'switcher4')">Local questions</a></li>
     <li id="switcher2" class="inactive"><a href="#issues" onclick="show_tab('tab-2', 'switcher2')">Local issues</a></li>
 {% if request.user.is_superuser %}
     <li id="switcher3" class="inactive"><a href="#email" onclick="show_tab('tab-3', 'switcher3')">Email nearby users</a></li>
@@ -121,6 +122,28 @@
         <input name="within_km" size="3" value="50" />km of here<br />
         <input type="submit" name="value" />
     </form>    
+</div>
+<div id="tab-4" class="tab">
+    <h3>Local questions for candidate questionnaire</h3>
+    <p>These are the questions that have been made out of the local issues Demoracy Club volunteers have posted. They'll make up the 'local' section of a questionnaire that <a href='http://www.theyworkforyou.com/'>TheyWorkForYou</a> is developing in conjunction with Demoracy Club. Click on a question to see the local issue it's derived from. A list of issues that could not be turned into questions (and the reasons why) are also listed at the bottom.</p>
+    <ul class="refined_issues">
+        {% for refined_issue in constituency.refinedissue_set.all %}
+            <li class="issue">{{ refined_issue.question }}{% if refined_issue.reference_url %} (<a href='{{ refined_issue.reference_url }}'>source</a>){% endif %}
+                <div class="based_on">
+                    {% with refined_issue.based_on as issue %}
+                        {{ issue.question }}{% if refined_issue.reference_url %} (<a href='{{ issue.reference_url }}'>source</a>){% endif %}
+                    {% endwith %}
+                </div>
+            </li>
+        {% endfor %}
+    </ul>
+    <ul class="unrefined_issues">
+        {% for unrefined_issue in unrefined_issues %}
+            <li class="issue">
+                {{ issue.question }}{% if refined_issue.reference_url %} (<a href='{{ issue.reference_url }}'>source</a>){% endif %} - {{ issue.status_string }}
+            </li>
+        {% endfor %}
+    </ul>
 </div>
 {% endif %}
 {% endblock %}

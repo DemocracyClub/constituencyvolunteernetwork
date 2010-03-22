@@ -13,6 +13,8 @@ STATUS_CHOICES = (
     ('hide-other', 'Hide - other'),
 )
 
+status_choices_dictionary = dict(STATUS_CHOICES)
+
 class VisibleIssuesManager(models.Manager):
     def get_query_set(self):
         return super(VisibleIssuesManager, self).get_query_set().exclude(status='hide')
@@ -42,6 +44,9 @@ class Issue(models.Model):
 
     def __unicode__(self):
         return self.question
+
+    def status_string(self):
+        return status_choices_dictionary[self.status]
 
     class Meta:
         get_latest_by = 'created_at'
