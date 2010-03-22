@@ -116,7 +116,8 @@ class CustomUser(User):
     unsubscribed = models.BooleanField(default=False)
     objects = UserManager()
     display_name = models.CharField(max_length=30, default="Someone")
-
+    points = models.IntegerField(default=0)
+    
     @property
     def current_constituencies(self):
         "Return constituencies matching current year"

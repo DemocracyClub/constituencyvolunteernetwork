@@ -108,6 +108,7 @@ INSTALLED_APPS = (
     'tsc',
     'shorten',
     'meetings',
+    'ynmp',
 )
 
 AUTHENTICATION_BACKENDS = ('backends.NoAuthBackend',
