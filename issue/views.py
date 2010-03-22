@@ -1,6 +1,6 @@
 from django.shortcuts import render_to_response
 from django.template import RequestContext
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
 from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required, permission_required
 
@@ -15,6 +15,7 @@ import settings
 
 import signals
 import datetime
+import csv
 
 def issues(request, constituency):
     year = settings.CONSTITUENCY_YEAR
@@ -138,6 +139,21 @@ def moderate_issue(request):
 
     return render_to_response("moderate_issue.html", vars,
                               context_instance=RequestContext(request))
+
+# Export CSV file of all refined issues (initially made for loading 
+# into TheyWorkForYou survey)
+def refined_csv(request):
+    refined_local_issues = RefinedIssue.objects.all()
+
+    response = HttpResponse(mimetype='text/csv')
+    response['Content-Disposition'] = 'attachment; filename=refined_local_issues.csv'
+
+    writer = csv.writer(response)
+    for i in refined_local_issues: 
+        writer.writerow([i.id, i.question, i.reference_url, i.constituency.name, 
+            i.created_at.strftime("%Y-%m-%dT%H:%M:%S"), i.updated_at.strftime("%Y-%m-%dT%H:%M:%S")])
+
+    return response
 
 
 
