@@ -108,6 +108,7 @@ INSTALLED_APPS = (
     'tsc',
     'shorten',
     'meetings',
+    'ynmp',
 )
 
 AUTHENTICATION_BACKENDS = ('backends.NoAuthBackend',
@@ -132,6 +133,10 @@ CACHE_MIDDLEWARE_SECONDS = 60 * 60
 CACHE_MIDDLEWARE_KEY_PREFIX = ""
 CACHE_MIDDLEWARE_ANONYMOUS_ONLY = True
 CACHE_BACKEND = "memcached://127.0.0.1:11211/"
+
+YNMP_URL = "http://stage.yournextmp.com/"
+YNMP_SECRET_KEY = "SECRET_KEY"
+
 try:
     from local_settings import *
 except ImportError:
