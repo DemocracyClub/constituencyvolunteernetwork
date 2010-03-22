@@ -39,6 +39,10 @@ def api(request):
     points_awarded = int(request.REQUEST['points_awarded'])
     task = str(request.REQUEST['task'])
     summary = str(request.REQUEST['summary'])
+    candidate_code = str(request.REQUEST['candidate_code'])
+    candidate_name = str(request.REQUEST['candidate_name'])
+    party_name = str(request.REQUEST['party_name'])
+    details_added = str(request.REQUEST['details_added'])
 
     user = None
     try:
@@ -50,7 +54,11 @@ def api(request):
         ynmp_action = YNMPAction.objects.create(user=user,
                                                 points_awarded=points_awarded,
                                                 task=task,
-                                                summary=summary)
+                                                summary=summary,
+                                                candidate_code=candidate_code,
+                                                candidate_name=candidate_name,
+                                                party_name=party_name,
+                                                details_added=details_added)
         user.points += points_awarded
         user.save()
 
