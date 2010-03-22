@@ -100,6 +100,10 @@ class Constituency(Model):
         except KeyError:
             return "http://en.wikipedia.org/wiki/Special:Search/%s_(UK_Parliament_constituency)" % self.slug
 
+    @property
+    def ynmp_url(self):
+        return "http://www.yournextmp.com/seats/%s" % self.slug.replace('-','_')
+
     @permalink
     def get_absolute_url(self):
         return ("constituency", (self.slug,))
