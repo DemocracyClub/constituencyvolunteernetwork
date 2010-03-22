@@ -54,7 +54,7 @@ def api(request):
         user.points += points_awarded
         user.save()
 
-        ynmp_action_done.send(None, kwargs={'user':user, 'ynmp_action':ynmp_action})
+        ynmp_action_done.send(None, user=user, ynmp_action=ynmp_action)
 
     json_response = _build_json_response(user)
 
