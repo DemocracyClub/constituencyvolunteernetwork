@@ -7,12 +7,12 @@ class YNMPAction(Model):
     user = models.ForeignKey(CustomUser)
     points_awarded = models.IntegerField()
     task = models.CharField(max_length=32)
-    summary_of_task = models.TextField()
+    summary = models.TextField(null=True)
     date = models.DateTimeField(auto_now_add=True)
     
     def __unicode__(self):
         return "%s did %s (%s) getting %d points" % (self.user,
                                                      self.task,
-                                                     self.summary_of_task,
+                                                     self.summary,
                                                      self.points_awarded)
 

@@ -9,7 +9,7 @@ from signup.signals import *
 from tasks.decorators import task_assign, task_completion
 
 from signals import *
-import util
+from util import ynmp_login_url
 
 task_slug = "ynmp-details"
 
@@ -44,6 +44,8 @@ def callback_assign(sender, **kwargs):
     user = kwargs['user']
     task = kwargs['task']
     url = ynmp_login_url(user, "bad_details")
+    msg = ""
+
     try:                
         TaskUser.objects.assign_task(task,
                                      user,
@@ -57,5 +59,5 @@ def callback_assign(sender, **kwargs):
 user_touch.connect(callback_assign)
 
 # Completion signals
-interest_expressed.connect(callback_interest_expressed)
+# interest_expressed.connect(callback_interest_expressed)
 

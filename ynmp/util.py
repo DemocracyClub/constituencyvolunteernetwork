@@ -1,9 +1,8 @@
 from hashlib import md5
-
-ynmp_url = "http://stage.yournextmp.com"
-YNMP_SECRET = "SECRET_KEY"
+from settings import YNMP_SECRET_KEY, YNMP_URL
 
 def ynmp_login_url(user, task):
-    sig = md5("%d%s" % (user.id, YNMP_SECRET)).digest()
-    return "%s/democracyclub/login?dc_user_id=%d&name=%s&task=%s&sig=%s" %
-                (ynmp_url, user.id, user.display_name, task, sig)
+    sig = md5("%d%s" % (user.id, YNMP_SECRET_KEY)).hexdigest()
+    return "%sauth/dc_login?dc_user_id=%d&name=%s&task=%s&sig=%s" % \
+                (YNMP_URL, user.id, user.display_name, task, sig)
+

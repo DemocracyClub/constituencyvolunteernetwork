@@ -13,7 +13,7 @@ class Migration:
             ('user', orm['ynmp.YNMPAction:user']),
             ('points_awarded', orm['ynmp.YNMPAction:points_awarded']),
             ('task', orm['ynmp.YNMPAction:task']),
-            ('summary_of_task', orm['ynmp.YNMPAction:summary_of_task']),
+            ('summary', orm['ynmp.YNMPAction:summary']),
             ('date', orm['ynmp.YNMPAction:date']),
         ))
         db.send_create_signal('ynmp', ['YNMPAction'])
@@ -85,7 +85,7 @@ class Migration:
             'date': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'points_awarded': ('django.db.models.fields.IntegerField', [], {}),
-            'summary_of_task': ('django.db.models.fields.TextField', [], {}),
+            'summary': ('django.db.models.fields.TextField', [], {'null': 'True'}),
             'task': ('django.db.models.fields.CharField', [], {'max_length': '32'}),
             'user': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['signup.CustomUser']"})
         }

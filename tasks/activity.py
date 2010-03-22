@@ -6,6 +6,7 @@ def generate_activity(constituencies, **kwargs):
     from models import Task, TaskUser
     from issue.models import Issue
     from tsc.models import UploadedLeaflet
+    from ynmp.models import YNMPAction
     
     if constituencies:
         # the strange way we construct the query with "__id__in"
@@ -60,6 +61,19 @@ def generate_activity(constituencies, **kwargs):
                                              {'leaflet': leaflet,
                                               'show_constituency': show_constituency,}),
                             ) for leaflet in leaflets]
+
+        # Activity for people on YNMP
+        ynmp_actions = YNMPAction.objects.filter(user__constituencies__id__in=ids)\
+                                         .order_by('-date').distinct().all()
         
-        # Combine the three, sorted by date, and get rid of the date
-        return [x[1] for x in sorted(task_user_activity + comments_activity + issues_activity + leaflets_activity, reverse=True)][0:10]
+        ynmp_activity = [(ynmp_action.date,
+                          render_to_string('tasks/activity_ynmp.html',
+                                           {'ynmp_action': ynmp_action,}),
+                          ) for ynmp_action in ynmp_actions]
+        
+        # Combine them all, sorted by date, and get rid of the date and cut to 10
+        return [x[1] for x in sorted(task_user_activity + \
+                                     comments_activity + \
+                                     issues_activity + \
+                                     leaflets_activity + \
+                                     ynmp_activity, reverse=True)][0:10]
