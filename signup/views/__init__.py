@@ -269,19 +269,27 @@ def constituency(request, slug, year=None):
     
     elif request.method == "POST" and 'subject' in request.POST:
         within_km = int(request.POST['within_km'])
-        nearest = constituency.neighbors(limit=100,
-                                         within_km=within_km)
-        nearest = nearest + [constituency]
+
+        nearest = None
+        if within_km == -1:
+            nearest = Constituency.objects.all()
+        else:
+            nearest = constituency.neighbors(limit=100,
+                                             within_km=within_km)
+            nearest = nearest + [constituency]
         context['nearest'] = nearest
         context['subject'] = request.POST['subject']
         context['message'] = request.POST['message']
         context['within_km'] = within_km
         couldnt_send = []
+        sent = []
         if request.POST.get('go', ''):
             count = 0
             site = Site.objects.get_current()
             for c in nearest:
                 for user in c.customuser_set.filter(is_active=True):
+                    if user in sent: # send once
+                        continue
                     try:
                         profile = user.registrationprofile_set.get()
                         footer = render_to_string('email_unsub_footer.txt',
@@ -294,6 +302,7 @@ def constituency(request, slug, year=None):
                                   settings.DEFAULT_FROM_EMAIL,
                                   [user.email,])
                         count += 1
+                        sent.append(user)
                     except RegistrationProfile.DoesNotExist:
                         couldnt_send.append(user)
             context['recipients'] = count
