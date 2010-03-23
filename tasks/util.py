@@ -17,8 +17,10 @@ def login_key(func):
             if login_key is not None:
                 result = key_login(request, login_key)
                 
-                if result['error']: # Ditch out of the view with 401 Unauthorized
-                    return HttpResponse(content="Bad login key.", status=401)
+                if result['error']:
+                    # Ditch out of the view with 401 Unauthorized
+                    return HttpResponse(content="Bad login key.",
+                                        status=401)
         
             del kwargs['login_key']
 
