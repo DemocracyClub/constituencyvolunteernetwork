@@ -6,7 +6,6 @@ from django.http import HttpResponse
 from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required, permission_required
 from django.utils.http import urlquote
-from django.db.models import Sum
 from django.shortcuts import get_object_or_404
 
 from models import Task, TaskUser
