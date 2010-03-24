@@ -409,3 +409,8 @@ div.topbox > h3
 {
     background:rgba(255, 255, 220, 0.5);
 }
+
+div.sidebar h2 {
+ font-size: 1em;
+ margin: 0;
+}
