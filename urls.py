@@ -1,12 +1,17 @@
 from django.conf.urls.defaults import *
 from settings import MEDIA_ROOT
 from django.views.static import serve
+from issue.feeds import AllIssues
 
 import signup
 
 # Uncomment the next two lines to enable the admin:
 from django.contrib import admin
 admin.autodiscover()
+
+feeds = {
+    'allissues': AllIssues,
+    }
 
 urlpatterns = patterns('',
     # Uncomment the admin/doc line below and add 'django.contrib.admindocs' 
@@ -28,4 +33,6 @@ urlpatterns = patterns('',
     (r'^comments/', include('comments_custom.urls')),
     (r'^ynmp/', include('ynmp.urls')),
     ('^', include('signup.urls')),
+    (r'^feeds/(?P<url>.*)/$', 'django.contrib.syndication.views.feed',
+     {'feed_dict': feeds}),       
 )
