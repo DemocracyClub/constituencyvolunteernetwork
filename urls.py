@@ -27,5 +27,6 @@ urlpatterns = patterns('',
     (r'^comments/core/', include('django.contrib.comments.urls')),
     (r'^comments/', include('comments_custom.urls')),
     (r'^ynmp/', include('ynmp.urls')),
+    (r'^map/', include('boundaries.urls')),
     ('^', include('signup.urls')),
 )
