@@ -22,6 +22,12 @@ maps = {"id": {"polygon_options": lambda boundary:{"fill": (boundary.constituenc
                        }
         }
 
+def getDBzoom(z):
+    if int(z) > 10:
+        return 10
+    else:
+        return int(z)
+
 def tile(request, mapname, tz=None, tx=None, ty=None):
     options = maps[str(mapname)]
     west, south, east, north = getTileRect(tx, ty, tz)
@@ -30,10 +36,8 @@ def tile(request, mapname, tz=None, tx=None, ty=None):
     ty = float(ty)
     image = Image.new("RGBA", (256, 256), (0, 0, 0, 0))
     draw = ImageDraw.Draw(image)
-    #rr = 10
-    for boundary in Boundary.objects.filter(boundary__intersects=Polygon([(east, north),(west, north),(west, south),(east, south),(east, north)])):
-        #draw.text((10, rr),boundary.constituency.name, "black")
-        #rr = rr + 10
+    dbz = getDBzoom(tz)
+    for boundary in Boundary.objects.filter(zoom=int(dbz), boundary__intersects=Polygon([(east, north),(west, north),(west, south),(east, south),(east, north)])):
         polyggon_options = options["polygon_options"](boundary)
         for polygon in boundary.boundary.coords:
                 l = []
@@ -41,15 +45,28 @@ def tile(request, mapname, tz=None, tx=None, ty=None):
                     x = 256 * (lat - west) / (east - west)
                     y = 256 * (lng - north) / (south - north)
                     l.append((x, y))
+                l = reduce_polygon(l)
                 draw.polygon(l, **polyggon_options)
     del draw
     response = HttpResponse(mimetype="image/png")
     image.save(response, "PNG")
     return response
 
-def popup(request, mapname, x=None, y=None):
+def reduce_polygon(l):
+    r = l[:1]
+    for p in l[1:-1]:
+        if dist2(r[-1], p) > 1:
+            r.append(p)
+    r.append(l[-1])
+    return r
+
+def dist2((ax, ay), (bx, by)):
+    return (ax - bx) ** 2 + (ay - by) ** 2
+
+def popup(request, mapname, x=None, y=None, z=None):
     options = maps[str(mapname)]
-    b = Boundary.objects.filter(boundary__contains=Point(float(x), float(y)))
+    dbz = getDBzoom(z)
+    b = Boundary.objects.filter(zoom=int(dbz), boundary__contains=Point(float(x), float(y)))
     if len(b) == 0:
         raise Http404
     return render_to_response(options["template"](b[0]), {'constituency': b[0].constituency})

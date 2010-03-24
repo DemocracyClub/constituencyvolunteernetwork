@@ -5,6 +5,7 @@ class Boundary(models.Model):
     constituency = models.ForeignKey(Constituency)
     boundary = models.PolygonField(srid=900913)
     objects = models.GeoManager()
+    zoom = models.IntegerField()
 
 #To find what constituencies where clicked on
 #qs = Boundary.objects.filter(boundary__poly__contains='POINT(-104.590948 38.319914)')

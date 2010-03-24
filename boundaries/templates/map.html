@@ -54,7 +54,7 @@
                 }
 
                 var request = OpenLayers.Request.GET({
-                    url: '{% url boundaries.views.popup "id"%}/' + lonlat.lon + '/' + lonlat.lat,
+                    url: '{% url boundaries.views.popup "id"%}/' + lonlat.lon + '/' + lonlat.lat + '/' + map.zoom,
                     callback: handler
                 });
             }
