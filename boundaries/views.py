@@ -1,6 +1,7 @@
 from PIL import Image, ImageDraw
 from django.http import HttpResponse, Http404
 from django.shortcuts import render_to_response
+from django.db.models import Q
 from boundaries.models import Boundary
 # from django.contrib.gis.geos import Polygon, Point
 import math
@@ -29,7 +30,23 @@ def getDBzoom(z):
         return int(z)
 
 def get_within(dbz, viewport):
-    return Boundary.objects.filter(zoom=5)
+    # print "SELECT * FROM boundary WHERE zoom=%d AND abs((west+east)/2 - %d) <= (east-west)/2 - %d AND abs((north+south)/2 - %d) <= (north-south)/2 - %d" % (dbz, center1[0], length1[0], center1[1], length1[1])
+    #print "SELECT * FROM boundaries_boundary WHERE (north > %(viewport_south)d AND north <= %(viewport_north)d AND west > %(viewport_west)d AND west < %(viewport_east)d) OR\
+    #       (north > %(viewport_south)d AND north <= %(viewport_north)d AND east > %(viewport_west)d AND east < %(viewport_east)d) OR\
+    #       (south > %(viewport_south)d AND south <= %(viewport_north)d AND west > %(viewport_west)d AND west < %(viewport_east)d) OR\
+    #       (south > %(viewport_south)d AND south <= %(viewport_north)d AND east > %(viewport_west)d AND east < %(viewport_east)d);" % {'viewport_north': viewport[0],
+    #                                                                                                                                   'viewport_east': viewport[1],
+    #                                                                                                                                   'viewport_south': viewport[2],
+    #                                                                                                                                   'viewport_west': viewport[3],}
+    
+    boundaries = Boundary.objects.filter(zoom=dbz)
+
+    boundaries = boundaries.filter(north_gt=viewport[2],north_lt=viewport[0],west_gt=viewport[3],west_lt=viewport[1])# | 
+#    Q(north_gt=viewport[2],north_lt=viewport[0],east_gt=viewport[3],east_lt=viewport[1]) |
+#    Q(south_gt=viewport[2],south_lt=viewport[0],west_gt=viewport[3],west_lt=viewport[1]) |
+#    Q(south_gt=viewport[2],south_lt=viewport[0],east_gt=viewport[3],east_lt=viewport[1]))
+    
+    return boundaries
 
 def contains_point(dbz, x, y):
     return Boundary.objects.filter(zoom=5)[0]
@@ -63,7 +80,7 @@ def tile(request, mapname, tz=None, tx=None, ty=None):
     draw = ImageDraw.Draw(image)
     dbz = getDBzoom(tz)
     
-    viewport = [(east, north),(west, north),(west, south),(east, south),(east, north)]
+    viewport = (north, east, south, west)
     boundaries_within = get_within(dbz, viewport) # Boundary.objects.filter(zoom=int(dbz), boundary__intersects=viewport):
     for boundary in boundaries_within:
         polyggon_options = options["polygon_options"](boundary)
