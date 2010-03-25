@@ -3,9 +3,9 @@ from django.http import HttpResponse, Http404
 from django.shortcuts import render_to_response
 from django.db.models import Q
 from boundaries.models import Boundary
-# from django.contrib.gis.geos import Polygon, Point
 import math
 import random
+google_dist = 20037508.34
 
 maps = {"id": {"polygon_options": lambda boundary:{"fill": (boundary.constituency.id / 3,  
                                                             boundary.constituency.id / 6, 
@@ -29,47 +29,6 @@ def getDBzoom(z):
     else:
         return int(z)
 
-def get_within(dbz, viewport):
-    # print "SELECT * FROM boundary WHERE zoom=%d AND abs((west+east)/2 - %d) <= (east-west)/2 - %d AND abs((north+south)/2 - %d) <= (north-south)/2 - %d" % (dbz, center1[0], length1[0], center1[1], length1[1])
-    #print "SELECT * FROM boundaries_boundary WHERE (north > %(viewport_south)d AND north <= %(viewport_north)d AND west > %(viewport_west)d AND west < %(viewport_east)d) OR\
-    #       (north > %(viewport_south)d AND north <= %(viewport_north)d AND east > %(viewport_west)d AND east < %(viewport_east)d) OR\
-    #       (south > %(viewport_south)d AND south <= %(viewport_north)d AND west > %(viewport_west)d AND west < %(viewport_east)d) OR\
-    #       (south > %(viewport_south)d AND south <= %(viewport_north)d AND east > %(viewport_west)d AND east < %(viewport_east)d);" % {'viewport_north': viewport[0],
-    #                                                                                                                                   'viewport_east': viewport[1],
-    #                                                                                                                                   'viewport_south': viewport[2],
-    #                                                                                                                                   'viewport_west': viewport[3],}
-    
-    boundaries = Boundary.objects.filter(zoom=dbz)
-
-    boundaries = boundaries.filter(north_gt=viewport[2],north_lt=viewport[0],west_gt=viewport[3],west_lt=viewport[1])# | 
-#    Q(north_gt=viewport[2],north_lt=viewport[0],east_gt=viewport[3],east_lt=viewport[1]) |
-#    Q(south_gt=viewport[2],south_lt=viewport[0],west_gt=viewport[3],west_lt=viewport[1]) |
-#    Q(south_gt=viewport[2],south_lt=viewport[0],east_gt=viewport[3],east_lt=viewport[1]))
-    
-    return boundaries
-
-def contains_point(dbz, x, y):
-    return Boundary.objects.filter(zoom=5)[0]
-
-def parse_polygon(poly_string):
-    poly_string = poly_string.replace(u'POLYGON ((', u'')
-    poly_string = poly_string.replace(u'))', u'')
-    points = poly_string.split(u",")
-    
-    poly_coords = []
-    for point in points:
-        coords = point.split()
-        
-        if len(coords) == 2:
-            poly_coords.append((float(coords[0]), float(coords[1])))
-    
-    return poly_coords
-
-def parse_polygons(polys_string):
-    return [polys_string]
-
-"POLYGON ((-191270.3444430000090506 7060970.6321040000766516, -201139.8683899999887217 7078288.7933710003271699, -220550.1566870000096969 7073259.3950990000739694, -224321.5654670000076294 7053705.0302200000733137, -223377.9022230000118725 7033390.6230990001931787, -207366.0382690000114962 7021074.8138929996639490, -202005.1803490000020247 7040062.0499020004644990, -185182.9440060000051744 7053874.2623749999329448, -191270.3444430000090506 7060970.6321040000766516))"
-
 def tile(request, mapname, tz=None, tx=None, ty=None):
     options = maps[str(mapname)]
     west, south, east, north = getTileRect(tx, ty, tz)
@@ -79,58 +38,39 @@ def tile(request, mapname, tz=None, tx=None, ty=None):
     image = Image.new("RGBA", (256, 256), (0, 0, 0, 0))
     draw = ImageDraw.Draw(image)
     dbz = getDBzoom(tz)
-    
-    viewport = (north, east, south, west)
-    boundaries_within = get_within(dbz, viewport) # Boundary.objects.filter(zoom=int(dbz), boundary__intersects=viewport):
+    boundaries_within = Boundary.objects.filter(zoom=dbz, south__lt=north, north__gt=south, east__gt=west, west__lt=east)
     for boundary in boundaries_within:
         polyggon_options = options["polygon_options"](boundary)
-
-        coords = parse_polygons(boundary.boundary)
-        
-        for polygon in coords:
-            poly_coords = parse_polygon(polygon)
-            
-            l = []
-            for lat, lng in poly_coords:
-                x = 256 * (lat - west) / (east - west)
-                y = 256 * (lng - north) / (south - north)
-                l.append((x, y))
-            l = reduce_polygon(l)
-            
-            draw.polygon(l, **polyggon_options)
+        coords = eval(boundary.boundary)
+        l = []
+        for lat, lng in coords:
+            x = 256 * (lat - west) / (east - west)
+            y = 256 * (lng - north) / (south - north)
+            l.append((x, y))
+        draw.polygon(l, **polyggon_options)
     del draw
     response = HttpResponse(mimetype="image/png")
     image.save(response, "PNG")
     return response
 
-def reduce_polygon(l):
-    r = l[:1]
-    for p in l[1:-1]:
-        if dist2(r[-1], p) > 1:
-            r.append(p)
-    r.append(l[-1])
-    return r
-
-def dist2(a, b):
-    (ax, ay) = a
-    (bx, by) = b
-    return (ax - bx) ** 2 + (ay - by) ** 2
-
 def popup(request, mapname, x=None, y=None, z=None):
     options = maps[str(mapname)]
+    x = float(x)
+    y = float(y)
     dbz = getDBzoom(z)
-    b = contains_point(int(dbz), x, y)# Boundary.objects.filter(zoom=int(dbz), boundary__contains=Point(float(x), float(y)))
-    if len(b) == 0:
-        raise Http404
-    return render_to_response(options["template"](b[0]), {'constituency': b[0].constituency})
+    possible_boundaries = Boundary.objects.filter(zoom=int(dbz), south__lt=y, north__gt=y, east__gt=x, west__lt=x)
+    for boundary in possible_boundaries:
+        coords = eval(boundary.boundary)
+        inside = False
+        for (vx0, vy0), (vx1, vy1) in zip(coords, coords[1:] + coords[:1]):
+            if ((vy0>y) != (vy1>y)) and (x < (vx1-vx0) * (y-vy0) / (vy1-vy0) + vx0):
+                inside = not(inside)
+        if inside:
+            return render_to_response(options["template"](boundary), {'constituency': boundary.constituency})
+    raise Http404
 
-
-dist = 20037508.34
-def to_googleX(x, tilesAtThisZoom):
-  return -20037508.34 * (1 - 2 * float(x) / tilesAtThisZoom)
-
-def to_googleY(x, tilesAtThisZoom):
-  return 20037508.34 * (1 - 2 * float(x) / tilesAtThisZoom)
+def to_google(x, tilesAtThisZoom):
+  return google_dist * (1 - 2 * float(x) / tilesAtThisZoom)
 
 def getTileRect(xt, yt, zoomt):
            zoom = int(zoomt)
@@ -138,7 +78,7 @@ def getTileRect(xt, yt, zoomt):
            y = int(yt)
            tilesAtThisZoom = 2 ** zoom
 
-           return (to_googleX(x, tilesAtThisZoom), 
-                   to_googleY(y + 1, tilesAtThisZoom), 
-                   to_googleX(x + 1, tilesAtThisZoom), 
-                   to_googleY(y, tilesAtThisZoom))
+           return (-to_google(x, tilesAtThisZoom), 
+                   to_google(y + 1, tilesAtThisZoom), 
+                   -to_google(x + 1, tilesAtThisZoom), 
+                   to_google(y, tilesAtThisZoom))
