@@ -127,7 +127,7 @@ def callback_comment_posted(**kwargs):
     request = kwargs['request'] 
     constituency = comment.content_object
 
-    users = constituency.customuser_set.filter(active=True, unsubscribed=False)
+    users = constituency.customuser_set.filter(is_active=True, unsubscribed=False)
     
     for user in users:
         if user != comment.user:
