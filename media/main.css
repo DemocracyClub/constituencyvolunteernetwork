@@ -372,6 +372,10 @@ ul#account-constituencies li {
     list-style:none;
 }
 
+ul#account-constituencies ul {
+    font-size:0.9em;
+}
+
 /* Homepage2 styles */
 div.topboxwrap
 {

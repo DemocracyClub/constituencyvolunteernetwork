@@ -1,5 +1,8 @@
 import re
 
+from django.contrib.sites.models import Site
+from django.http import HttpResponseRedirect
+from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
 import signals
 
@@ -9,6 +12,7 @@ from signup.models import Constituency
 from tasks.util import login_key
 import settings
 from models import UploadedLeaflet
+from task import tsc_url
 
 url_regex = re.compile(ur'http://www.thestraightchoice.org/leaflet.php?q=(\d+)', re.U)
 
@@ -43,3 +47,17 @@ def add(request, constituency_slug=None):
     else:
         return render_with_context(request, 'tsc/add.html', context)
 
+def make_tsc_url(constituency):
+    current_site = Site.objects.get_current()
+    callback_url = "http://%s%s" % (current_site.domain,
+                                    reverse("tsc_add",
+                                            kwargs={'constituency_slug': constituency.slug }))
+    add_leaflet_url = "%s?callback=%s" % (tsc_url, callback_url)
+
+    return add_leaflet_url
+
+@login_required
+def start(request, constituency_slug):
+    c = Constituency.objects.get(slug=constituency_slug, year=settings.CONSTITUENCY_YEAR)
+
+    return HttpResponseRedirect(make_tsc_url(c))
