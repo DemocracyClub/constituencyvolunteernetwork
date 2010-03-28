@@ -7,11 +7,15 @@
  <h2>All constituencies</h2>
  <p>This is a list of all constituencies for the 2010 election.  We'll make this page more useful and attractive some time soon!</p>
  <p>You can sign up to volunteer in other constituencies <a href='{% url add_constituency %}'>on this page</a></p>
- <ul>
+ <table class="constituencies">
    {% for constituency in constituencies %}
-   <li><a href="{% url constituency slug=constituency.slug %}">{{ constituency.name }}</a></li>
+    <tr>
+        <td><a href="{% url constituency slug=constituency.slug %}">{{ constituency.name }}</a></td>
+        <td class="count-volunteer">{{ constituency.customuser_set.count }} volunteers</td>
+        <td class="count-issues">{{ constituency.issue_set.count }} issues posted</td>
+    </tr>
    {% endfor %}
- </ul>
+ </table>
 
 </div>
 

@@ -372,6 +372,10 @@ ul#account-constituencies li {
     list-style:none;
 }
 
+ul#account-constituencies ul {
+    font-size:0.9em;
+}
+
 /* Homepage2 styles */
 div.topboxwrap
 {
@@ -408,4 +412,9 @@ div.topbox > h3
 #signup
 {
     background:rgba(255, 255, 220, 0.5);
+}
+
+div.sidebar h2 {
+ font-size: 1em;
+ margin: 0;
 }

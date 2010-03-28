@@ -16,6 +16,10 @@ urlpatterns = patterns('tsc',
         views.add,
         name="tsc_add"),
 
+        url(r'^start/(?P<constituency_slug>[\w-]+)/$',
+        views.start,
+        name="tsc_start"),
+
         url(r'^test$',
             direct_to_template,
             {'template':'tsc_test.html'},

@@ -57,12 +57,18 @@
                 <li><a href="/aboutus/">About us</a></li>
               {% endif %}
                 <li><a href="/constituencies/">Constituency list</a></li>
+                <li><a href="/blog/">Blog</a></li> 
+              
 <!--                <li><a href='http://democracyclub.activeboard.com/index.spark?aBID=134686&p=1'>Discussion forum</a></li> -->
             </ul>
             {% endblock %}
           </div> 
       </div>
         <div id="main" class="container">
+          <div class="notice">
+            <p>Urgent! There are only <strong>a few days left</strong> to submit local issues for inclusion in our survey of all candidates.</p>
+            <p>Click "add local issue" below your constituency on your home page. Finding an issue could be as simple as Googling, or looking at the local paper, or reading an election leaflet.</p>
+          </div>
           {% if not is_constituency_page %}
               {% if constituency  %}
               <div id="constituency-header">
