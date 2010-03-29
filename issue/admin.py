@@ -10,6 +10,7 @@ class IssueAdmin(VersionAdmin):
                     'created_by',
                     'status')
     list_filter = ('status',)
+    search_fields = ('question', 'created_by__email')
 
 admin.site.register(models.Issue, IssueAdmin)
 admin.site.register(models.RefinedIssue)
