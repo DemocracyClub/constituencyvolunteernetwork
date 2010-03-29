@@ -150,7 +150,7 @@ def refined_csv(request):
 
     writer = csv.writer(response)
     for i in refined_local_issues: 
-        writer.writerow([i.id, i.question, i.reference_url, i.constituency.name, 
+        writer.writerow([i.id, i.question.encode('utf-8'), i.reference_url.encode('utf-8'), i.constituency.name.encode('utf-8'), 
             i.created_at.strftime("%Y-%m-%dT%H:%M:%S"), i.updated_at.strftime("%Y-%m-%dT%H:%M:%S")])
 
     return response
