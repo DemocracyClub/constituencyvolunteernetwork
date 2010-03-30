@@ -56,7 +56,7 @@ def callback_assign(sender, **kwargs):
 
 # Assignment signals
 # user_activated.connect(callback_assign)
-user_touch.connect(callback_assign)
+#user_touch.connect(callback_assign)
 
 # Completion signals
 ynmp_action_done.connect(callback_ynmp_done)
