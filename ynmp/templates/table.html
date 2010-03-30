@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block title %}YourNextMP points leaderboard{% endblock %}
+{% block section %}ynmp{% endblock %}
+
+{% block content %}
+<h3>Competition leaderboard</h3>
+
+<table>
+ <tr>
+   <th>Position</th>
+   <th>Points</th>
+   <th>Name</th>
+   <th>Constituency</th> 
+ </tr>
+ {% for row in full_table %}
+ <tr>
+   <td>{{ row.position }}</td>
+   <td>{{ row.points }}</td>
+   <td><a href="{{ row.user.get_absolute_url }}">{{ row.user.display_name }}</a></td>
+   <td>{{ row.user.home_constituency.name }}</td>
+ </tr>
+ {% endfor %}
+</table>
+{% endblock %}
+

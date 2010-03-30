@@ -3,7 +3,10 @@ from django.conf.urls.defaults import *
 import views
 
 ################################################################################
-urlpatterns = patterns('ymmp',
+urlpatterns = patterns('ynmp',
     url(r'^api/$', views.api, name="ynmp_api"),
-    url(r'^start/$', views.start, name="ynmp_start"),
+    url(r'^table/$', views.table, name="ynmp_table"),
+    url(r'^start/(?P<login_key>[\w-]+)$',
+        views.start,
+        name="ynmp_start"),
 )
