@@ -9,4 +9,7 @@ urlpatterns = patterns('ynmp',
     url(r'^start/(?P<login_key>[\w-]+)$',
         views.start,
         name="ynmp_start"),
+    url(r'^start/$',
+        views.start,
+        name="ynmp_start"),
 )

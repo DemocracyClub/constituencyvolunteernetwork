@@ -116,7 +116,6 @@ def api(request):
 @login_key
 @login_required
 def start(request):
-    import pdb; pdb.set_trace()
     # http://localhost:8008/tasks/ynmp-details/start/523bad3799ed898218d87234f47c8a7c444fb967/
     return HttpResponseRedirect(ynmp_login_url(request.user, "bad_details"))
 
