@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Assign email for <em>{{ task.name }}</em></h2>
+
+{% if posted %}
+ <p>This filter {% if dry_run %}would have {% endif %}assigned 
+ <em>{{ selected_email.subject }}</em> ({{ selected_email.email_type_string }}) for <em>{{ task.name }}</em> to {{ count }} users</p>
+ {% if skip %}
+  <p>A further {{ skip }} users who matched the email were already assigned it.</p>
+ {% endif %}
+ <p>First 10 matched users:</p>
+ <ul>
+  {% for user in matched_users|slice:"10" %}
+   <li>{{ user }}</li>
+  {% endfor %}
+ </ul>
+{% endif %}
+
+<form action="" method="post">
+<p>Enter a django filter against a queryset called <code>users</code>. Leave blank to select all users.</p>
+<textarea cols="79" rows="5" name="queryfilter">
+{% if queryfilter %}{{ queryfilter }}
+{% else %}users.filter(email="seb.bacon@gmail.com"){% endif %}
+</textarea><br />
+Pick an email campaign to assign
+<select name="email">
+ {% for email in emails %}
+  {% if forloop.first %}
+  <option value="">select one</option>
+  {% endif %}
+  <option value="{{ email.pk }}"{% ifequal selected_email email %} selected="selected"{% endifequal %}>{{ email.subject }} ({{ email.email_type_string }})</option>
+ {% endfor %}
+</select>
+<br />
+<input type="checkbox" {% if posted and not dry_run %}{% else %}checked="checked"{% endif %} name="dry_run" /> Dry run?
+<input type="submit">
+</form>
+<hr />
+<h3>Examples</h3>
+<small>.filter(is_active=True, unsubscribed=False) is appended to all queries</small>
+<pre>
+users.filter(email="foo@example.com")
+users.filter(name__icontains="smith")
+users.filter(constituencies__name__icontains="manchester")
+users.exclude(taskuser__task__id__in=[1,2,3,4,5],taskuser__state=3).distinct()
+</pre>
+{% endblock %}

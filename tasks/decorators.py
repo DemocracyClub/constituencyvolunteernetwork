@@ -14,7 +14,10 @@ def task_assign(task_slug):
                     and kwargs['task_slug'] != task_slug:
                 return None
             
-            task = Task.objects.get(slug=task_slug)
+            try:
+                task = Task.objects.get(slug=task_slug)
+            except Task.DoesNotExist:
+                return None
             
             kwargs['task'] = task # inject our task object
             result = callback(sender, **kwargs)

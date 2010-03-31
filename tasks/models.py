@@ -96,6 +96,14 @@ class Task(Model):
     def get_absolute_url(self):
         return ("task", (self.slug,))
 
+    def get_welcome_email(self):
+        try:
+            # Find welcome email for this task
+            return TaskEmail.objects.get(task=self,
+                                          email_type=TaskEmail.EmailTypes.welcome)
+        except TaskEmail.DoesNotExist:
+            return None
+
     def percent_complete(self):
         """Return a measure of completeness for this task.
 
@@ -198,6 +206,7 @@ class TaskUserManager(models.Manager):
                                    constituency=constituency):
             raise TaskUser.AlreadyAssigned()
         
+        # Assign the task to the user
         task_user = TaskUser(task=task,
                              user=user,
                              state=0,
@@ -205,8 +214,13 @@ class TaskUserManager(models.Manager):
                              post_url=post_url,
                              constituency=constituency)
         task_user.save()
-        if email:
-            task_user.send_email()
+
+        # Give them the welcome email (if it exists)
+        welcome_email = task.get_welcome_email()
+
+        if welcome_email:
+            task_email_user = TaskEmailUser.objects.create(task_email=welcome_email,
+                                                           task_user=task_user)
         
         signals.task_assigned.send(self, task_user=task_user)
 
@@ -368,6 +382,33 @@ class TaskEmail(Model):
     opened = models.IntegerField(default=0)
     count = models.IntegerField(default=0)
 
+    task = models.ForeignKey(Task, null=True, default=None)
+    queue = models.ManyToManyField(TaskUser,
+                                   through="TaskEmailUser",
+                                   related_name="emails_sent")
+    
+    class EmailTypes:
+        """ Enum of TaskUser states """
+        welcome = 0
+        reminder = 1
+        oneoff = 2
+
+        strings = (
+            (welcome, 'Welcome message'), # Automatic on assignment
+            (reminder, 'Auto-reminder message'), # Manual assignment?
+            (oneoff, 'One-off message'), # Manual assignment via admin
+        )
+
+        dstrings = dict(strings)
+
+
+    email_type = models.IntegerField(choices=EmailTypes.strings,
+                                     default=EmailTypes.oneoff)
+
+    @property
+    def email_type_string(self):
+        return TaskEmail.EmailTypes.dstrings[self.email_type]
+
     def getStatistics(self):
         """Return a dictionary of interesting stats regarding this email
         """
@@ -508,8 +549,8 @@ class TaskEmail(Model):
             message_plain = render_to_string('tasks/email_new_task.txt',
                                              context_plain)
             constituency = context['task_user'].constituency
-            if constituency:            
-                subject_context = {'constituency':constituency.name}
+            if constituency:
+                subject_context = {'constituency': constituency.name}
                 subject = self.subject % subject_context
             else:
                 subject = self.subject                
@@ -526,7 +567,29 @@ class TaskEmail(Model):
         return count
 
     def __unicode__(self):
-        return "%s sent %s" % (self.subject, self.date_last_sent)
+        return "%s (%s) sent %s" % (self.subject, self.email_type_string, self.date_last_sent)
+
+class TaskEmailUser(Model):
+    """
+        Mapping for TaskEmail <-> TaskUser
+        Determines if a user:
+            should be emailed about a task
+            has been emailed about a task
+            when and with what email
+    """
+    task_email = models.ForeignKey(TaskEmail)
+    task_user = models.ForeignKey(TaskUser)
+    date_added = models.DateTimeField(auto_now_add=True)
+    date_sent = models.DateTimeField(null=True, blank=True)
+
+    def send(self):
+        count = self.task_email.send(recipient_taskusers=[self.task_user,])
+        if count == 1: # success
+            self.date_sent = datetime.now()
+            self.save()
+            return True
+        else:
+            return False
 
 def callback_user_left_constituency(sender, **kwargs):
     constituencies = kwargs['constituencies']

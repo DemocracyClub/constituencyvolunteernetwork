@@ -11,6 +11,7 @@ from django.core.urlresolvers import reverse
 # app
 from testbase import TestCase
 
+import signup.signals as signals
 from signup.models import Constituency, CustomUser
 from signup.views import place_search
 
@@ -61,10 +62,15 @@ def create_activated_user(self, postcode):
          'last_name':'bar'})
     
     user = CustomUser.objects.get(email="a@b.com")
+    user.is_active = True
+    user.save()
+    
     reg_prof = user.registrationprofile_set.get()
     reg_prof.activated = True
     reg_prof.save()
 
+    signals.user_activated.send(self, user=user)
+    
     return user
 
 class ViewsTestCase(TestCase):

@@ -1,5 +1,7 @@
 import os
 
+import datetime
+
 from django.http import HttpResponseRedirect
 from django.http import Http404
 from django.http import HttpResponse
@@ -8,7 +10,7 @@ from django.contrib.auth.decorators import login_required, permission_required
 from django.utils.http import urlquote
 from django.shortcuts import get_object_or_404
 
-from models import Task, TaskUser
+from models import Task, TaskUser, TaskEmailUser
 from models import TaskEmail
 from models import Badge
 from signup.models import CustomUser, Constituency
@@ -231,36 +233,37 @@ def manage_assign_tasks(request, task_pk):
     count = 0
     skip = 0
     matched_users = []
-    selected_email = request.POST.get('email', None)
     email = None
+    
     if request.method == "POST":
-        context['posted'] = True
         dry_run = request.POST.get('dry_run', False)
         queryfilter = request.POST['queryfilter'].strip()
-        context['queryfilter'] = queryfilter
-        users = CustomUser.objects.filter(is_active=True)
+        users = CustomUser.objects.all()
+        
         if queryfilter:
             users = eval(queryfilter.strip())
+
+        users = users.filter(is_active=True, unsubscribed=False) # enforce
+        
         for user in users:
             matched_users.append(user.email)
+
             if TaskUser.objects.filter(user=user,
-                                       task__pk=task_pk):
+                                       task__pk=task_pk): # Already assigned
                 skip += 1
                 continue
             else:
-                if selected_email:
-                    email = TaskEmail.objects.get(pk=selected_email)
                 if not dry_run:
+                    # Trigger assignment
                     responses = user_touch.send(None,
                                                 user=user,
                                                 task_slug=task.slug)
-                    if email:
-                        taskusers = TaskUser.objects.filter(user=user,
-                                                            task__pk=task_pk)
-                        for taskuser in taskusers:
-                            email.taskusers.add(taskuser)
                 count += 1
+        
+        context['posted'] = True
+        context['queryfilter'] = queryfilter
         context['matched_users'] = matched_users
+    
     context['emails'] = TaskEmail.objects\
                         .distinct()\
                         .order_by("-date_created")
@@ -272,6 +275,120 @@ def manage_assign_tasks(request, task_pk):
                                'tasks/manage_assign_tasks.html',
                                context)
 
+@login_required
+@permission_required('tasks.add_taskuser')
+def manage_assign_email(request, task_pk):
+    """
+        Assign an email to be sent for particular users.
+        Creates TaskEmailUser objects to represent assignment
+    """
+    context = {}
+    matched_users = []
+    count = 0
+    skip = 0
+    task = get_object_or_404(Task, pk=task_pk)
+    dry_run = request.POST.get('dry_run', False)
+    selected_email = request.POST.get('email', None)
+
+    email = None
+    if selected_email:
+        email = TaskEmail.objects.get(pk=selected_email)
+    
+    if request.method == "POST":
+        queryfilter = request.POST['queryfilter'].strip()      
+        users = CustomUser.objects.all()
+        
+        if queryfilter:
+            users = eval(queryfilter.strip())
+
+        users = users.filter(is_active=True, unsubscribed=False) # enforce
+        
+        for user in users:
+            matched_users.append(user.email)
+            taskusers = TaskUser.objects.filter(user=user,
+                                                task=task)
+            for task_user in taskusers:
+                try:
+                    task_email_user = TaskEmailUser.objects.get(task_email=email,
+                                                                task_user=task_user)
+                except TaskEmailUser.DoesNotExist:
+                    if not dry_run:
+                        task_email_user = TaskEmailUser.objects.create(task_email=email,
+                                                                       task_user=task_user)        
+                    count += 1
+        
+        context['posted'] = True
+        context['matched_users'] = matched_users        
+        context['queryfilter'] = queryfilter
+
+    context['task'] = task
+    context['emails'] = TaskEmail.objects.filter(task=task) \
+                                         .order_by("-date_created")
+    context['dry_run'] = dry_run
+    context['count'] = count
+    context['skip'] = skip
+    context['selected_email'] = email
+    return render_with_context(request,
+                               'tasks/manage_assign_email.html',
+                               context)
+
+def scan_queue(request):
+    # Look at the email queue, determine if there are any emails which can be sent
+    users = CustomUser.objects.all()
+    
+    context = {}
+    sent = []
+    for user in users:
+        emails = TaskEmailUser.objects.filter(task_user__user=user).distinct()
+
+        # Find out what the date was for the last sending
+        last_sent = emails.exclude(date_sent=None).order_by('-date_added')
+        date_last_sent = None
+        if last_sent:
+            date_last_sent = last_sent[0].date_sent
+        
+        # Only email once every two days
+        if date_last_sent and date_last_sent > datetime.datetime.now() - datetime.timedelta(2):
+            print "Last sent an email for %s %s" % (user, date_last_sent)
+            continue
+        
+        # Send unsent once-off messages with priority, then look for reminders
+        # that are more than a week since they were last sent
+        oldest_unsent = emails.filter(date_sent=None,
+                                      task_email__email_type__in=[TaskEmail.EmailTypes.welcome,
+                                                                  TaskEmail.EmailTypes.oneoff,],
+                                     ).order_by('date_added')
+        
+        send_task_email_user = None
+        if oldest_unsent:
+            send_task_email_user = oldest_unsent[0]
+        else:
+            week_ago = datetime.datetime.now() - datetime.timedelta(7)
+
+            # Find unsent reminders first
+            reminders = emails.filter(date_sent=None,
+                                      task_email__email_type=TaskEmail.EmailTypes.reminder
+                                     ).order_by('date_sent')
+
+            # If we cant find unsent reminders, find the oldest reminder sent more than a week ago
+            if not reminders:
+                reminders = emails.filter(date_sent__lte=week_ago,
+                                          task_email__email_type=TaskEmail.EmailTypes.reminder
+                                         ).order_by('date_sent')
+
+            if reminders:
+                send_task_email_user = reminders[0]
+
+        if send_task_email_user:
+            success = send_task_email_user.send()
+            if success:
+                sent.append(send_task_email_user)
+    
+    context['sent'] = sent
+
+    return render_with_context(request,
+                               'tasks/emails_sent.html',
+                               context)
 
 def open_email(request, taskuser_id, taskemail_id):
     """
@@ -288,4 +405,6 @@ def open_email(request, taskuser_id, taskemail_id):
                             mimetype="image/gif")
     except TaskUser.DoesNotExist:
         raise Http404()
+
+#26;"signup";"0004_points_field";"2010-03-16 23:20:08.438685+00"
     
