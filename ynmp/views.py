@@ -82,12 +82,12 @@ def api(request):
 
     dc_user_id = int(request.REQUEST['dc_user_id'])
     points_awarded = int(request.REQUEST['points_awarded'])
-    task = str(request.REQUEST['task'])
-    summary = str(request.REQUEST['summary'])
-    candidate_code = str(request.REQUEST['candidate_code'])
-    candidate_name = str(request.REQUEST['candidate_name'])
-    party_name = str(request.REQUEST['party_name'])
-    details_added = str(request.REQUEST['details_added'])
+    task = request.REQUEST['task']
+    summary = request.REQUEST['summary']
+    candidate_code = request.REQUEST['candidate_code']
+    candidate_name = request.REQUEST['candidate_name']
+    party_name = request.REQUEST['party_name']
+    details_added = request.REQUEST['details_added']
 
     user = None
     try:
