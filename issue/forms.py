@@ -31,7 +31,7 @@ class ModerateIssueForm(forms.ModelForm):
         model = Issue
 
     question = forms.CharField(widget=forms.Textarea(attrs={'rows':3, 'cols':50}))
-    reference_url = forms.URLField(required=False, max_length=50)
+    reference_url = forms.URLField(required=False, max_length=2048)
 
     #def save(self, domain_override="", constituency=None):
     #    question = self.cleaned_data['question']
