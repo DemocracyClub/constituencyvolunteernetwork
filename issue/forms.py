@@ -8,7 +8,7 @@ class ConstituencyModelChoiceField(forms.ModelChoiceField):
 
 class AddIssueForm(forms.Form):
     question = forms.CharField(required=True, max_length=200)
-    reference_url = forms.URLField(required=False)
+    reference_url = forms.URLField(required=False, max_length=2048)
 
     # Store user, so can be used to fill in default constituency
     def __init__(self, *args, **kwargs):
