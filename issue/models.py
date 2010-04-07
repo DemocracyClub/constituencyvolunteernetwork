@@ -1,4 +1,5 @@
 from django.db import models
+from django.core.cache import cache
 
 from signup.models import Constituency, CustomUser
 
@@ -72,20 +73,22 @@ class RefinedIssue(models.Model):
         return "%s based on issue by %s" % (self.question, self.based_on.created_by)
 
 def make_league_table(issues = None):
-    if not issues:
-        issues = Issue.all_objects.all()
+    league_table = cache.get('league_table')
+    if not league_table:
+        if not issues:
+            issues = Issue.all_objects.all()
 
-    table = collections.defaultdict(lambda: 0)
-    for issue in issues:
-        user = issue.last_updated_by
-        if user:
-            table[user] += 1
+        table = collections.defaultdict(lambda: 0)
+        for issue in issues:
+            user = issue.last_updated_by
+            if user:
+                table[user] += 1
 
-    league_table = []
-    for user, count in table.iteritems():
-        league_table.append((user, count))
-    league_table.sort(lambda a,b: cmp(b[1],a[1]))
-
+        league_table = []
+        for user, count in table.iteritems():
+            league_table.append((user, count))
+        league_table.sort(lambda a,b: cmp(b[1],a[1]))
+        cache.set('league_table', league_table, 60*15)
     return league_table
 
     
