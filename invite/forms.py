@@ -46,7 +46,7 @@ class InviteForm(TemplatedForm):
                             required=True)
     message = forms.CharField(label="A short message",
                               max_length=500,
-                              widget=forms.Textarea(attrs={'rows':8,
+                              widget=forms.Textarea(attrs={'rows':12,
                                                            'cols':40}),
                               required=False,
                               initial=strings.INVITE_TEXT)
