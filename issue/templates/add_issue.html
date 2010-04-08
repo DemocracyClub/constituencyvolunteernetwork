@@ -3,7 +3,7 @@
 {% load signup_extras %}
 
 {% block title %}Local issue gathering{% endblock %}
-
+{% block section %}add-task{% endblock %}
 {% block extra-head %}
 <link rel="stylesheet" type="text/css"  media="screen" href="{{ MEDIA_URL }}issues/issues.css" />
 {% endblock %}
@@ -60,6 +60,18 @@
 {% endblock %}
 
 {% block content %}
+
+
+{% if constituency.issue_completion.get.completed %}
+<div class="notice">
+
+ <p>Note that this constituency is no longer accepting issues for
+  inclusion in our candidate questionnaire; however, we are still
+  interested in gathering local issues in our database.</p>
+
+</div>
+{% endif %}
+
 <div class="span-8 last task">
 {% if submitted %}
  <div style="padding:0.5em;border:1px solid #EEE;margin-top:1em;margin-bottom:1em;">

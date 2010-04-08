@@ -1,22 +1,46 @@
 {% extends 'base.html' %}
 {% block title %}{{constituency.name}}{% endblock %}
-
 {% block content %}
 
 <div class="span-8 last">
  <h2>All constituencies</h2>
- <p>This is a list of all constituencies for the 2010 election.  We'll make this page more useful and attractive some time soon!</p>
+ <p>This is a list of all constituencies for the 2010 election, with some key data about each one.  A "yes" in the final column indicates that new issues posted there will no longer be considered for inclusion in our candidate questionnaire.</p>
  <p>You can sign up to volunteer in other constituencies <a href='{% url add_constituency %}'>on this page</a></p>
- <table class="constituencies">
+ <table class="constituencies tablesorter">
+  <thead>
+   <tr>
+     <th>Constituency</th>
+     <th>Volunteers</th>
+     <th>Issues posted</th>
+     <th>Questions prepared</th>
+     <th>Closed for submissions?</th>
+   </tr>
+  </thead>
+  <tbody>
    {% for constituency in constituencies %}
     <tr>
         <td><a href="{% url constituency slug=constituency.slug %}">{{ constituency.name }}</a></td>
-        <td class="count-volunteer">{{ constituency.customuser_set.count }} volunteers</td>
-        <td class="count-issues">{{ constituency.issue_set.count }} issues posted</td>
+        <td class="count-volunteer">{{ constituency.customuser_set.count }}</td>
+        <td class="count-issues">{{ constituency.issue_set.count }}</td>
+        <td class="count-issues">{{ constituency.refinedissue_set.count }}</td>
+        <td class="count-issues">{% if constituency.issue_completion.get.completed %}Yes{% endif %} </td>
     </tr>
    {% endfor %}
+  </tbody>
  </table>
 
 </div>
 
+{% endblock %}
+
+
+{% block js %}
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+    <script type="text/javascript" src="{{ MEDIA_URL}}jquery.tablesorter.min.js"></script>
+
+    <script>       
+        $(document).ready(function () {
+          $('table.tablesorter').tablesorter()
+        });
+    </script>
 {% endblock %}

@@ -72,6 +72,31 @@ class RefinedIssue(models.Model):
     def __unicode__(self):
         return "%s based on issue by %s" % (self.question, self.based_on.created_by)
 
+class ConstituencyIssueCompletion(models.Model):
+    """A utility model to support fast indexing of constituencies that
+    need issue moderation.
+    """
+    constituency = models.ForeignKey(Constituency,
+                                     related_name="issue_completion")
+    number_to_moderate = models.IntegerField(default=0)
+    completed = models.BooleanField(default=False)
+    # a constituency with at least three moderated issues and no
+    # unmoderated isssues is complete
+
+    def calculate_completion(self):
+        new_issues = self.constituency.issue_set\
+                     .filter(status='new').count()
+        completed = self.constituency.refinedissue_set.count()
+        if not self.completed:
+            if not new_issues and completed > 2:
+                self.completed = True
+        if self.completed:
+            self.number_to_moderate = 0
+        else:
+            self.number_to_moderate = new_issues
+        self.save()
+    
+
 def make_league_table(issues = None):
     league_table = cache.get('league_table')
     if not league_table:

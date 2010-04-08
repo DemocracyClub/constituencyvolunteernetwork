@@ -4,9 +4,9 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required, permission_required
 
-from signup.models import Constituency, CustomUser
+from signup.models import Constituency
 from models import RefinedIssue, Issue, make_league_table
-from task import task_slug
+from models import ConstituencyIssueCompletion
 from tasks.util import login_key
 from forms import AddIssueForm, ModerateIssueForm
 from utils import addToQueryString
@@ -89,7 +89,8 @@ def moderate_issue(request):
                                                     moderator=request.user,
                                                     based_on=issue
                                                     )
-
+            completion = issue.constituency.issue_completion.get()
+            completion.calculate_completion()
             notice = "Issue moderated, thank you! Here's another issue to moderate."
         elif not found:
             raise Exception("No known button submitted in form data")
@@ -101,7 +102,8 @@ def moderate_issue(request):
         return HttpResponseRedirect(addToQueryString(reverse('moderate_issue'), 
                 { 'notice' : notice, 'prefer_constituency' : str(issue.constituency.id) }))
     else:
-        issue_list = Issue.objects.filter(status='new')
+        issue_list = Issue.objects.filter(
+            constituency__issue_completion__completed=False)
         if 'prefer_constituency' in request.GET:
             prefer_constituency = Constituency.objects.get(pk=request.GET['prefer_constituency'])
             issue_list = issue_list.filter(constituency=prefer_constituency)
