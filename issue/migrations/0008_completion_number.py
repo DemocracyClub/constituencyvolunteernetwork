@@ -8,9 +8,27 @@ class Migration:
     def forwards(self, orm):
         
         # Adding field 'ConstituencyIssueCompletion.number_to_completion'
-        db.add_column('issue_constituencyissuecompletion', 'number_to_completion', orm['issue.constituencyissuecompletion:number_to_completion'])
-        for completion in ConstituencyIssueCompletion.objects.all():
-            completion.calculate_completion()            
+        db.add_column('issue_constituencyissuecompletion',
+        'number_to_completion',
+        orm['issue.constituencyissuecompletion:number_to_completion'])
+
+        questionnaires_sent = [
+            'Airdrie and Shotts',
+            'Altrincham and Sale West',
+            'Barking',
+            'Barnsley Central',
+            'Barrow and Furness',
+            'Beckenham',
+            'Belfast North',
+            'Berwickshire, Roxburgh and Selkirk',
+            'Birkenhead',
+            'Birmingham, Erdington']            
+        for const in Constituency.objects.all():
+            create = ConstituencyIssueCompletion.objects.create
+            completion = create(constituency=const)
+            if const.name in questionnaires_sent:
+                completion.completed = True
+            completion.calculate_completion()        
     
     def backwards(self, orm):
         
