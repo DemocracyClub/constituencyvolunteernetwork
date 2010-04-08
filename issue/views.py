@@ -107,7 +107,8 @@ def moderate_issue(request):
                              constituency__issue_completion__completed=False)\
                      .order_by('constituency__issue_completion__number_to_completion')\
                      .distinct()
-        if issue_list.count() == 0:
+        if request.user.pk == 5687 or issue_list.count() == 0:
+            # 5687 is a 'special" user we want to skip
             return HttpResponseRedirect(addToQueryString("/", 
                 { 'notice' : "Every issue has now been moderated! Thank you for helping." }))
         issue = issue_list[0]
