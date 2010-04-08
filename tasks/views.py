@@ -332,7 +332,7 @@ def manage_assign_email(request, task_pk):
                                'tasks/manage_assign_email.html',
                                context)
 
-def scan_queue(request):
+def scan_queue(request, dry_run=False):
     # Look at the email queue, determine if there are any emails which can be sent
     users = CustomUser.objects.all()
     
@@ -380,8 +380,11 @@ def scan_queue(request):
                 send_task_email_user = reminders[0]
 
         if send_task_email_user:
-            success = send_task_email_user.send()
-            if success:
+            if not dry_run:
+                success = send_task_email_user.send()
+                if success:
+                    sent.append(send_task_email_user)
+            else:
                 sent.append(send_task_email_user)
     
     context['sent'] = sent
