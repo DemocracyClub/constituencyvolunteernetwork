@@ -18,11 +18,15 @@ status_choices_dictionary = dict(STATUS_CHOICES)
 
 class VisibleIssuesManager(models.Manager):
     def get_query_set(self):
-        return super(VisibleIssuesManager, self).get_query_set().exclude(status='hide')
+        return super(VisibleIssuesManager, self)\
+               .get_query_set()\
+               .exclude(status__contains='hide')
 
 class HiddenIssuesManager(models.Manager):
     def get_query_set(self):
-        return super(HiddenIssuesManager, self).get_query_set().filter(status='hide')
+        return super(HiddenIssuesManager, self)\
+               .get_query_set()\
+               .filter(status__contains='hide')
 
 class Issue(models.Model):
     question = models.TextField()
@@ -79,21 +83,25 @@ class ConstituencyIssueCompletion(models.Model):
     constituency = models.ForeignKey(Constituency,
                                      related_name="issue_completion")
     number_to_moderate = models.IntegerField(default=0)
+    number_to_completion = models.IntegerField(default=0)
     completed = models.BooleanField(default=False)
     # a constituency with at least three moderated issues and no
     # unmoderated isssues is complete
 
     def calculate_completion(self):
+        COMPLETION = 3
         new_issues = self.constituency.issue_set\
                      .filter(status='new').count()
         completed = self.constituency.refinedissue_set.count()
         if not self.completed:
-            if not new_issues and completed > 2:
+            if not new_issues and completed >= COMPLETION:
                 self.completed = True
         if self.completed:
             self.number_to_moderate = 0
+            self.number_to_completion = 0
         else:
             self.number_to_moderate = new_issues
+            self.number_to_completion = COMPLETION - completed
         self.save()
     
 

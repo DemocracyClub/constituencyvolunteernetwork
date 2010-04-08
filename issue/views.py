@@ -89,33 +89,25 @@ def moderate_issue(request):
                                                     moderator=request.user,
                                                     based_on=issue
                                                     )
-            completion = issue.constituency.issue_completion.get()
-            completion.calculate_completion()
             notice = "Issue moderated, thank you! Here's another issue to moderate."
         elif not found:
             raise Exception("No known button submitted in form data")
 
+        completion = issue.constituency.issue_completion.get()
+        completion.calculate_completion()
         issue.last_updated_by = request.user
         issue.save()
 
         signals.issue_moderated.send(None, user=request.user, issue=issue)
         return HttpResponseRedirect(addToQueryString(reverse('moderate_issue'), 
-                { 'notice' : notice, 'prefer_constituency' : str(issue.constituency.id) }))
+                                                     {'notice' : notice}))
     else:
-        issue_list = Issue.objects.filter(
-            constituency__issue_completion__completed=False)
-        if 'prefer_constituency' in request.GET:
-            prefer_constituency = Constituency.objects.get(pk=request.GET['prefer_constituency'])
-            issue_list = issue_list.filter(constituency=prefer_constituency)
-        
-        # find random one from preferred constituency (the one they were last on)
-        issue_list = issue_list.order_by('?')[:1]
-        
-        # if not found, get a totally random one
-        if len(issue_list) == 0:
-            issue_list = Issue.objects.filter(status='new').order_by('?')[:1]
-
-        if len(issue_list) == 0:
+        issue_list = Issue.objects\
+                     .filter(status='new',
+                             constituency__issue_completion__completed=False)\
+                     .order_by('constituency__issue_completion__number_to_completion')\
+                     .distinct()
+        if issue_list.count() == 0:
             return HttpResponseRedirect(addToQueryString("/", 
                 { 'notice' : "Every issue has now been moderated! Thank you for helping." }))
         issue = issue_list[0]
@@ -130,9 +122,9 @@ def moderate_issue(request):
     vars['hidden_issues'] = Issue.hidden_objects.filter(constituency=issue.constituency).order_by('-created_at')
     vars['constituency'] = issue.constituency
 
-    vars['done'] = Issue.all_objects.exclude(status='new').count()
-    vars['total'] = Issue.all_objects.count()
-    vars['missing'] = vars['total'] - vars['done']
+    vars['done'] = RefinedIssue.objects.all().count()
+    vars['missing'] = issue_list.count()
+    vars['total'] = vars['done'] + vars['missing']
     vars['percentage'] = float(vars['done']) / float(vars['total']) * 100
 
     vars['league_table_all_time'] = make_league_table()
