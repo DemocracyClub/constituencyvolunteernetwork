@@ -1,4 +1,4 @@
-# coding=utf-8
+## coding=utf-8
 
 from urlparse import urlparse
 from cgi import parse_qs
@@ -10,6 +10,11 @@ except ImportError:
 import re
 from django import forms
 from django.template import Context, loader
+from django.template.loader import render_to_string
+from django.contrib.sites.models import Site
+from django.core.mail import send_mail as django_send_mail
+
+import settings
 
 POSTCODE_RE = re.compile(r'\b[A-PR-UWYZ][A-HK-Y0-9][A-HJKSTUW0-9]?[ABEHMNPRVWXY0-9]? {0,2}[0-9][ABD-HJLN-UW-Z]{2}\b',re.I)
 
@@ -26,6 +31,25 @@ class TemplatedForm(forms.Form):
 
     def as_table(self):
         return self.output_via_template()
+
+def send_mail(user=None,
+              subject=None,
+              message=None):
+    """Send an email with the standard unsubscribe footer
+    """
+    site = Site.objects.get_current()
+    profile = user.registrationprofile_set.get()
+    footer = render_to_string('email_unsub_footer.txt',
+                              {'site':site,
+                               'user_profile':profile})
+    message = "%s\n\n%s" % (message,
+                            footer)
+    return django_send_mail(subject,
+                            message,
+                            settings.DEFAULT_FROM_EMAIL,
+                            [user.email,])
+    
+
 
 def addToQueryString(orig, extra_data):
     scheme, netloc, path, params, query, fragment = urlparse(orig)
