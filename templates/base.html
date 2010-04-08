@@ -65,7 +65,7 @@
           </div> 
       </div>
         <div id="main" class="container">
-	 {% if not user.is_anonymous %}
+	 {% if not user.is_anonymous and not needs_activation %}
           <div class="notice" id="issues-warning">
 	    {% if user.home_constituency.issue_completion.get.completed %}
 	       <p>Your home constituency is no longer accepting issues
