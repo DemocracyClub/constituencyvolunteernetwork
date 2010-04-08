@@ -14,10 +14,24 @@ class Migration:
             ('number_to_moderate', orm['issue.constituencyissuecompletion:number_to_moderate']),
             ('completed', orm['issue.constituencyissuecompletion:completed']),
         ))
-        db.send_create_signal('issue', ['ConstituencyIssueCompletion'])
+        db.send_create_signal('issue',
+        ['ConstituencyIssueCompletion'])
+        questionnaires_sent = [
+            'Airdrie and Shotts',
+            'Altrincham and Sale West',
+            'Barking',
+            'Barnsley Central',
+            'Barrow and Furness',
+            'Beckenham',
+            'Belfast North',
+            'Berwickshire, Roxburgh and Selkirk',
+            'Birkenhead',
+            'Birmingham, Erdington']            
         for const in Constituency.objects.all():
             create = ConstituencyIssueCompletion.objects.create
             completion = create(constituency=const)
+            if const.name in questionnaires_sent:
+                completion.completed = True
             completion.calculate_completion()        
     
     def backwards(self, orm):
