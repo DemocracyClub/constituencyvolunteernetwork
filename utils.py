@@ -38,7 +38,10 @@ def send_mail(user=None,
     """Send an email with the standard unsubscribe footer
     """
     site = Site.objects.get_current()
-    profile = user.registrationprofile_set.get()
+    try:
+        profile = user.registrationprofile_set.get()
+    except:
+        return 
     footer = render_to_string('email_unsub_footer.txt',
                               {'site':site,
                                'user_profile':profile})
