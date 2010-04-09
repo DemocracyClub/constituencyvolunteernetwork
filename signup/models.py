@@ -22,6 +22,7 @@ from settings import CONSTITUENCY_YEAR
 import signals
 import twfy
 import wiki_constituencies
+import hashtags
 
 SHA1_RE = re.compile('^[a-f0-9]{40}$')
 
@@ -99,6 +100,13 @@ class Constituency(Model):
             return wiki_constituencies.constituency_wikipedia[self.slug]
         except KeyError:
             return "http://en.wikipedia.org/wiki/Special:Search/%s_(UK_Parliament_constituency)" % self.slug
+
+    @property
+    def twitter_hashtag(self):
+        try:
+            return hashtags.constituency_hashtags[self.slug]
+        except KeyError:
+            return "ge2010"
 
     @property
     def ynmp_url(self):

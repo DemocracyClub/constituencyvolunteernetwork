@@ -79,6 +79,7 @@
                 <li><label>Current MP</label> {% if constituency.current_mp.full_name %}<a href="http://www.theyworkforyou.com/mp/?p={{ constituency.current_mp.person_id }}">{{ constituency.current_mp.full_name }} ({{ constituency.current_mp.party }})</a>{% else %}None (this is a new constituency){% endif %}</li>
                 <li><label>On the web</label> <a href='{{ constituency.wikipedia_url }}' target="_blank">on Wikipedia</a></li>
                 <li><label>&nbsp;</label> <a href='{{ constituency.ynmp_url }}' target="_blank">on YourNextMP</a></li>
+                <li><label>&nbsp;</label> <a href='http://twitter.com/#search?q=%23{{ constituency.twitter_hashtag }}' target="_blank">on Twitter</a></li>
                 <li><label>&nbsp;</label> <a href='http://openlylocal.com/hyperlocal_sites?location={{ constituency.name }},%20UK&commit=Search' target="_blank">nearby local websites</a></li>
             {% with constituency.issue_set.latest as latest_issue %}
                 <li><label>Latest issue</label> {% if latest_issue %}<a href='#issues' onclick="show_tab('tab-2', 'switcher2')">"{{ latest_issue.question }}" from {{ latest_issue.created_by.display_name }}</a> (<a href='{% url add_issue constituency=constituency.slug %}'>add issue</a>){% else %}<a href='{% url add_issue constituency=constituency.slug %}'>no issues yet, add one!</a>{% endif %}
@@ -97,6 +98,41 @@
         {% with volunteer_here as can_post %}
             {% include "constituency_comment.html" %}
         {% endwith %}
+
+        <script src="http://widgets.twimg.com/j/2/widget.js"></script>
+        <script>
+        new TWTR.Widget({
+          version: 2,
+          type: 'search',
+          search: '#{{ constituency.twitter_hashtag }}', // Could add #ge2010 or #ukelection or #ge10 or #election
+          interval: 6000,
+          rpp: 4,
+          title: 'Twitter search for',
+          subject: '{{ constituency.name }} constituency',
+          width: 'auto',
+          height: 300,
+          theme: {
+            shell: {
+              background: '#d9f0ff',
+              color: '#333333'
+            },
+            tweets: {
+              background: '#ffffff',
+              color: '#363636',
+              links: '#003da6'
+            }
+          },
+          features: {
+            scrollbar: false,
+            loop: false,
+            live: false,
+            hashtags: true,
+            timestamp: true,
+            avatars: false,
+            behavior: 'all'
+          }
+        }).render().start();
+        </script>
 
         <h3>Volunteers here</h3>
         {% with volunteer_here as show_email %}
