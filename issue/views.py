@@ -1,3 +1,5 @@
+import random
+
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.http import HttpResponseRedirect, HttpResponse
@@ -6,7 +8,6 @@ from django.contrib.auth.decorators import login_required, permission_required
 
 from signup.models import Constituency
 from models import RefinedIssue, Issue, make_league_table
-from models import ConstituencyIssueCompletion
 from tasks.util import login_key
 from forms import AddIssueForm, ModerateIssueForm
 from utils import addToQueryString
@@ -111,7 +112,7 @@ def moderate_issue(request):
             # 5687 is a 'special" user we want to skip
             return HttpResponseRedirect(addToQueryString("/", 
                 { 'notice' : "Every issue has now been moderated! Thank you for helping." }))
-        issue = issue_list[0]
+        issue = random.choice(issue_list[:15])
 
     if moderate_issue_form == None:
         moderate_issue_form = ModerateIssueForm(instance = issue)

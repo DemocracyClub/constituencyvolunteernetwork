@@ -76,6 +76,10 @@ class RefinedIssue(models.Model):
     def __unicode__(self):
         return "%s based on issue by %s" % (self.question, self.based_on.created_by)
 
+    class Meta:
+        ordering = ['-updated_at']
+
+
 class ConstituencyIssueCompletion(models.Model):
     """A utility model to support fast indexing of constituencies that
     need issue moderation.

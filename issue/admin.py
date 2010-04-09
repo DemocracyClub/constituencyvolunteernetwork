@@ -17,10 +17,21 @@ class RefinedIssueAdmin(VersionAdmin):
     list_display = ('question',
                     'constituency',
                     'based_on',
-                    'moderator')
+                    'moderator',
+                    'updated_at',
+                    'created_at')
     list_filter = ('moderator',)
     search_fields = ('question', 'moderator__email')
 
 
+class ConstituencyIssueCompletionAdmin(VersionAdmin):
+    list_display = ('constituency',
+                    'number_to_moderate',
+                    'number_to_completion',
+                    'completed')
+    list_filter = ('completed',)
+
 admin.site.register(models.Issue, IssueAdmin)
 admin.site.register(models.RefinedIssue, RefinedIssueAdmin)
+admin.site.register(models.ConstituencyIssueCompletion,
+                    ConstituencyIssueCompletionAdmin)
