@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% load signup_extras %}
+
+{% block title %}Fine tune questions{% endblock %}
+
+{% block extra-head %}
+<link rel="stylesheet" type="text/css"  media="screen" href="{{ MEDIA_URL }}issues/issues.css" />
+{% endblock %}
+
+{% block content %}
+{% if notice %}
+<div class="notice">
+  {{ notice }}
+</div> 
+{% endif %}
+<div class="span-6 task">
+ <h3>
+  Fine tune questions for {{ constituency.name }}
+
+ </h3>
+
+<form method="post">
+ <div>
+   {% for question in constituency.refinedissue_set.all %}
+    <textarea name="{{ question.pk }}_question" rows="5" cols="50">{{ question.question }}</textarea> <br />
+    Include this one in the final questionnaire? <input type="checkbox" name="{{ question.pk }}_status" value="approve" checked="checked" />
+    <hr />
+   {% endfor %}
+ </div>
+<input type="submit" value="This one's ready to go" />
+<input type="submit" name="skip" value="Skip this" />
+</form>
+
+{% endblock %}

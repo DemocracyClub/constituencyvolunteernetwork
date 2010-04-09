@@ -64,6 +64,38 @@ def add_issue(request, constituency=None, submitted=False):
 
 @login_required
 @permission_required('issue.change_issue')
+def fine_tune(request):
+    constituencies = Constituency.objects.filter(
+        issue_completion__completed=True,
+        issue_completion__fine_tuned=False)\
+        .order_by('?')
+    context = {}
+    context['constituency'] = constituencies[0]
+    if request.method == "POST" \
+           and not request.POST.get('skip', False):        
+        updated = False
+        for k, v in request.POST.items():
+            if k.endswith("_question"):
+                pk = int(k[:-9])
+                issue = RefinedIssue.objects.get(pk=pk)
+                issue.question = v
+                if not request.POST.get("%s_status" % pk, ''):
+                    issue.status = "hide"
+                issue.save()
+                updated = True
+        if updated:
+            completion = issue.constituency.issue_completion.get()
+            completion.fine_tuned = True
+            completion.calculate_completion()
+            context['notice'] = "issues updated"
+                
+    return render_to_response("fine_tune.html",
+                              context,
+                              context_instance=RequestContext(request))
+        
+
+@login_required
+@permission_required('issue.change_issue')
 def moderate_issue(request):
     moderate_issue_form = None
     if request.method == "POST":

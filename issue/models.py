@@ -72,6 +72,12 @@ class RefinedIssue(models.Model):
 
     updated_at = models.DateTimeField(auto_now=True)
     created_at = models.DateTimeField(auto_now_add=True)
+    status = models.CharField(max_length=20,
+                              choices=(('hide','hide'),
+                                       ('approve','approve')),
+                              default='approve')
+    fine_tuned = models.BooleanField(default=False)
+    objects = VisibleIssuesManager() 
 
     def __unicode__(self):
         return "%s based on issue by %s" % (self.question, self.based_on.created_by)
@@ -89,6 +95,7 @@ class ConstituencyIssueCompletion(models.Model):
     number_to_moderate = models.IntegerField(default=0)
     number_to_completion = models.IntegerField(default=0)
     completed = models.BooleanField(default=False)
+    fine_tuned = models.BooleanField(default=False)
     # a constituency with at least three moderated issues and no
     # unmoderated isssues is complete
 

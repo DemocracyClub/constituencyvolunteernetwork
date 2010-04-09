@@ -14,6 +14,7 @@
      <th>Issues posted</th>
      <th>Questions prepared</th>
      <th>Closed for submissions?</th>
+     <th>Questionnaire ready to go?</th>
    </tr>
   </thead>
   <tbody>
@@ -24,6 +25,7 @@
         <td class="count-issues">{{ constituency.issue_set.count }}</td>
         <td class="count-issues">{{ constituency.refinedissue_set.count }}</td>
         <td class="count-issues">{% if constituency.issue_completion.get.completed %}Yes{% endif %} </td>
+        <td class="ready">{% if constituency.issue_completion.get.fine_tuned %}Yes{% endif %} </td>
     </tr>
    {% endfor %}
   </tbody>
