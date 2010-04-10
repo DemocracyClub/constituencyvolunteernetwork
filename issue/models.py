@@ -56,10 +56,6 @@ class Issue(models.Model):
     class Meta:
         get_latest_by = 'created_at'
 
-    # override default manager so results don't show hidden objects by default
-    objects = VisibleIssuesManager() 
-    hidden_objects = HiddenIssuesManager()
-    all_objects = models.Manager() # visible and hidden ones
 
 class RefinedIssue(models.Model):
     question = models.TextField()
