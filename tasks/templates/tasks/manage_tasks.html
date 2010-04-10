@@ -2,7 +2,7 @@
 {% load signup_extras %}
 {% block content %}
 <h2>Manage tasks</h2>
-<a href='{% url scan_email_queue %}'>Check email queue</a>
+<a href='{% url scan_email_queue dry_run="dry_run" %}'>Check email queue</a>
 <table>
  <tr>
   <th>Task</th>

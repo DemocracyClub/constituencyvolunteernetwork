@@ -1,3 +1,6 @@
+{% if dry_run %}
+    # Dry run
+{% endif %}
 {% for task_email_user in sent %}
     {% now "r" %}, {{ task_email_user.task_user.user.id }}, {{ task_email_user.task_user.user.email }}, {{ task_email_user.task_user.task.name }}, {{ task_email_user.task_email.subject }}
 {% empty %}

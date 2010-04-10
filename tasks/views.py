@@ -388,6 +388,7 @@ def scan_queue(request, dry_run=False):
                 sent.append(send_task_email_user)
     
     context['sent'] = sent
+    context['dry_run'] = dry_run
 
     return render_with_context(request,
                                'tasks/emails_sent.html',
