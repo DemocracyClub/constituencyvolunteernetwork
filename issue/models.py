@@ -116,7 +116,7 @@ def make_league_table(issues = None):
     league_table = cache.get('league_table')
     if not league_table:
         if not issues:
-            issues = Issue.all_objects.all()
+            issues = Issue.objects.all()
 
         table = collections.defaultdict(lambda: 0)
         for issue in issues:

@@ -153,7 +153,6 @@ def moderate_issue(request):
     vars['issue'] = issue
     vars['form'] = moderate_issue_form
     vars['issues'] = Issue.objects.filter(constituency=issue.constituency).order_by('-created_at')
-    vars['hidden_issues'] = Issue.hidden_objects.filter(constituency=issue.constituency).order_by('-created_at')
     vars['constituency'] = issue.constituency
 
     vars['done'] = RefinedIssue.objects.all().count()
@@ -163,7 +162,7 @@ def moderate_issue(request):
 
     vars['league_table_all_time'] = make_league_table()
     one_week_ago = datetime.datetime.now() - datetime.timedelta(7)
-    vars['league_table_this_week'] = make_league_table(Issue.all_objects.filter(updated_at__gt=one_week_ago).all())
+    vars['league_table_this_week'] = make_league_table(Issue.objects.filter(updated_at__gt=one_week_ago).all())
 
     return render_to_response("moderate_issue.html", vars,
                               context_instance=RequestContext(request))
