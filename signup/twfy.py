@@ -23,8 +23,11 @@ class Fetcher(object):
         if chit:
             return chit
         else:
-            resp = urllib.urlopen(url)
-            cval = resp.headers, resp.read()
+            try:
+                resp = urllib.urlopen(url)
+                cval = resp.headers, resp.read()
+            except IOError:
+                cval = None
             cache.set(url, cval)
             return cval
             
