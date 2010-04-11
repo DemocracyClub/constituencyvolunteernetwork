@@ -27,7 +27,7 @@ class Fetcher(object):
                 resp = urllib.urlopen(url)
                 cval = resp.headers, resp.read()
             except IOError:
-                cval = None
+                cval = None, None
             cache.set(url, cval)
             return cval
             
