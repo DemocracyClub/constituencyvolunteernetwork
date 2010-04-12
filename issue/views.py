@@ -71,8 +71,10 @@ def fine_tune(request):
         .order_by('?')
     context = {}
     context['constituency'] = constituencies[0]
-    if request.method == "POST" \
-           and not request.POST.get('skip', False):        
+    if request.method == "POST"\
+       and request.POST.has_key('skip'):
+        pass
+    elif request.method == "POST":        
         updated = False
         for k, v in request.POST.items():
             if k.endswith("_question"):
@@ -88,6 +90,13 @@ def fine_tune(request):
             completion.fine_tuned = True
             completion.calculate_completion()
             context['notice'] = "issues updated"
+    elif request.GET.has_key('q'):
+        q = request.GET['q']
+        results = constituencies.filter(name__icontains=q)
+        if results:
+            context['constituency'] = results[0]
+        else:
+            context['constituency'] = None
                 
     return render_to_response("fine_tune.html",
                               context,
