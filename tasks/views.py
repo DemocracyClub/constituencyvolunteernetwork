@@ -349,7 +349,6 @@ def scan_queue(request, dry_run=False):
         
         # Only email once every two days
         if date_last_sent and date_last_sent > datetime.datetime.now() - datetime.timedelta(2):
-            print "Last sent an email for %s %s" % (user, date_last_sent)
             continue
         
         # Send unsent once-off messages with priority, then look for reminders
