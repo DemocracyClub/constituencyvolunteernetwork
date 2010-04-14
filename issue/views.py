@@ -64,17 +64,21 @@ def add_issue(request, constituency=None, submitted=False):
 
 @login_required
 @permission_required('issue.change_issue')
-def fine_tune(request):
+def fine_tune(request, constituency=None):
     constituencies = Constituency.objects.filter(
         issue_completion__completed=True,
         issue_completion__fine_tuned=False)\
         .order_by('?')
     context = {}
-    context['constituency'] = constituencies[0]
+    if not constituency:
+        context['constituency'] = constituencies[0]
+    else:
+        context['constituency'] = Constituency\
+                                  .objects.get(pk=constituency)        
     if request.method == "POST"\
        and request.POST.has_key('skip'):
         pass
-    elif request.method == "POST":        
+    elif request.method == "POST":
         updated = False
         for k, v in request.POST.items():
             if k.endswith("_question"):
@@ -85,11 +89,21 @@ def fine_tune(request):
                     issue.status = "hide"
                 issue.save()
                 updated = True
+        if request.POST.has_key('rateup'):
+            pk = request.POST['rateup']
+            issue = RefinedIssue.objects.get(pk=pk)
+            issue.rating += 1
+            issue.save()
+            return HttpResponseRedirect(
+                reverse('fine_tune',
+                        kwargs={'constituency':issue.constituency.pk}))
         if updated:
             completion = issue.constituency.issue_completion.get()
             completion.fine_tuned = True
             completion.calculate_completion()
             context['notice'] = "issues updated"
+            return HttpResponseRedirect(
+                reverse('fine_tune'))
     elif request.GET.has_key('q'):
         q = request.GET['q']
         results = constituencies.filter(name__icontains=q)

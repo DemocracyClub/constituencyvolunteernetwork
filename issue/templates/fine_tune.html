@@ -26,7 +26,9 @@
  <div>
    {% for question in constituency.refinedissue_set.all %}
     <textarea name="{{ question.pk }}_question" rows="5" cols="50">{{ question.question }}</textarea> <br />
+    Rating: {{ question.rating }}<br />
     Include this one in the final questionnaire? <input type="checkbox" name="{{ question.pk }}_status" value="approve" checked="checked" />
+    Click to rate up: <input type="submit" name="rateup" value="{{ question.pk }}" />
     <hr />
    {% endfor %}
  </div>

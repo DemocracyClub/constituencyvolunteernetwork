@@ -72,6 +72,7 @@ class RefinedIssue(models.Model):
                               choices=(('hide','hide'),
                                        ('approve','approve')),
                               default='approve')
+    rating = models.IntegerField(default=0)
     fine_tuned = models.BooleanField(default=False)
     objects = VisibleIssuesManager() 
 
@@ -79,7 +80,7 @@ class RefinedIssue(models.Model):
         return "%s based on issue by %s" % (self.question, self.based_on.created_by)
 
     class Meta:
-        ordering = ['-updated_at']
+        ordering = ['-rating', '-updated_at']
 
 
 class ConstituencyIssueCompletion(models.Model):
