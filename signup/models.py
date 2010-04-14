@@ -42,6 +42,11 @@ class Model(DjangoModel):
                               self._meta.get_all_field_names())
         super(Model, self).__init__(*args, **kwargs)
 
+class ThisYearConstituencyManager(models.Manager):
+    def get_query_set(self):
+        return super(ThisYearConstituencyManager, self)\
+               .get_query_set()\
+               .filter(year=CONSTITUENCY_YEAR)
 
 class Constituency(Model):
     name = models.CharField(max_length=80)
@@ -53,7 +58,8 @@ class Constituency(Model):
                             blank=True,
                             null=True)
     year = models.DateField()
-
+    objects = ThisYearConstituencyManager()
+    
     def __unicode__(self):
         return "%s (%s)" % (self.name, self.year)
 
