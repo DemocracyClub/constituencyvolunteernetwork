@@ -13,7 +13,7 @@ from django.shortcuts import get_object_or_404
 from models import Task, TaskUser, TaskEmailUser
 from models import TaskEmail
 from models import Badge
-from signup.models import CustomUser, Constituency
+from signup.models import CustomUser, Constituency, RegistrationProfile
 from signup.views import render_with_context
 from signup.views import _get_statistics_context
 from signup.signals import user_touch
@@ -380,9 +380,12 @@ def scan_queue(request, dry_run=False):
 
         if send_task_email_user:
             if not dry_run:
-                success = send_task_email_user.send()
-                if success:
-                    sent.append(send_task_email_user)
+                try:
+                    success = send_task_email_user.send()
+                    if success:
+                        sent.append(send_task_email_user)
+                except RegistrationProfile.DoesNotExist:
+                    pass
             else:
                 sent.append(send_task_email_user)
     
