@@ -47,6 +47,3 @@ class Command(BaseCommand):
                 surveyinvite.save()
             except Candidacy.DoesNotExist:
                 print "skipping", ynmp_id
-                
-        for party in Party.objects.all():
-            party.calculate_stats()
