@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% load signup_extras %}
+{% block title %}TWFY Election Quiz race{% endblock %}
+{% block section %}twfy{% endblock %}
+
+{% block content %}
+
+<h3>Party leader board</h3>
+<p>From the top ten parties (measured by number of candidates), which party's candidates are most interested in responding to our survey?</p>
+
+<table class="party-twfy-chart">
+ <tr>
+   <th>
+     Rank
+   </th>
+   <th>
+     Party
+   </th>
+   <th>
+     Score
+   </th>
+   <th>
+     Response rate
+   </th>
+ </tr>
+{% for party in parties %}
+ <tr>
+   <td class="rank">
+     {{ forloop.counter }}.
+   </td>
+   <td class="party">
+     {{ party.name }} 
+   </td>
+   <td>
+     <table class="bar">
+       <tr>
+	 <td class="replies" style="width: {% ifequal party.replies_received 0 %}1px{% else %}{{ party.replies_received|percentage:party.invites_sent }}{% endifequal %}">&nbsp;</td>
+	 <td class="remainder" style="">&nbsp;</td>
+	</tr>
+     </table>
+   </td>
+   <td>{{ party.replies_received|percentage:party.invites_sent }} of {{ party.invites_sent }} invites
+   </td>
+ </tr>
+{% endfor %}
+</table>
+
+{% endblock %}
+
