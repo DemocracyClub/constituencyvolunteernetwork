@@ -14,17 +14,6 @@ class Party(Model):
     ynmp_id = models.CharField(max_length=9)
     name = models.CharField(max_length=255)
 
-    def calculate_stats(self):
-        self.invites_sent = SurveyInvite.objects\
-                            .filter(emailed=True,
-                                    candidacy__party=self)\
-                                    .count()
-        self.replies_received = SurveyInvite.objects\
-                            .filter(filled_in=True,
-                                    candidacy__party=self)\
-                                    .count()
-        self.save()
-        
     def __unicode__(self):
         return "%s (ynmp id %s)" % (self.name,
                                     self.ynmp_id)
