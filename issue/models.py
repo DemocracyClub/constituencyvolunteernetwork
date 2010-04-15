@@ -97,7 +97,7 @@ class ConstituencyIssueCompletion(models.Model):
     # unmoderated isssues is complete
 
     def calculate_completion(self):
-        COMPLETION = 3
+        COMPLETION = 2
         new_issues = self.constituency.issue_set\
                      .filter(status='new').count()
         completed = self.constituency.refinedissue_set.count()

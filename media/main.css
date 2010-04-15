@@ -457,3 +457,23 @@ table.tablesorter thead tr .headerSortDown {
 table.tablesorter thead tr .headerSortDown, table.tablesorter thead tr .headerSortUp {
 background-color: #8dbdd8;
 }
+
+table.bar {
+ width: 300px;
+ margin: 0;
+}
+
+table.bar td.replies {
+ background-color: green;
+}
+
+table.bar td.remainder {
+ background-color: lightgray;
+}
+
+table.party-twfy-chart tr td {
+ padding: 2px;
+}
+
+table.party-twfy-chart {
+}
