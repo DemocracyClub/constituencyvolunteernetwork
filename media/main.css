@@ -115,11 +115,6 @@ p.small {
  padding:10px;
 }
 
-#visualization {
- width: 340px;
- height: 340px;
-}
-
 #links {
     float:right;
     margin:0.5em;

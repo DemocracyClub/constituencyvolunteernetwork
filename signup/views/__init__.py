@@ -11,18 +11,17 @@ from django.template.loader import render_to_string
 from django.core.mail import send_mail
 
 from signup.util import render_with_context
-import settings
-
 import signup.models as models
 from signup.models import CustomUser, Constituency, RegistrationProfile
 from signup.forms import UserForm
+from ynmp.models import Party
+from twfy.models import SurveyInvite
 import signup.signals as signals
 import signup.geo as geo
-
 from tasks.util import login_key
-
 from tasks.activity import generate_activity
 from comments_custom.models import NotifyComment
+import settings
 
 def _get_statistics_context():
     context = {}
@@ -37,11 +36,30 @@ def _get_statistics_context():
     context['volunteers'] = volunteers.count()
     context['total'] = total
     context['count'] = count
+
+    get = Party.objects.get
+    parties = [get(name="Conservative Party"),
+               get(name="Independent"),
+               get(name="Labour Party"),
+               get(name="Liberal Democrats")]
+                                
+    for party in parties:
+        party.replies_received = SurveyInvite.objects\
+                                 .filter(filled_in=True,
+                                         candidacy__candidate__party=party)\
+                                         .count()
+        party.invites_sent = SurveyInvite.objects\
+                             .filter(emailed=True,
+                                     candidacy__candidate__party=party)\
+                                     .count()
+    context['parties'] = parties
     if total:
         percent = int(float(count)/total*100)
         context['percent_complete'] = percent
     else:
         context['percent_complete'] = 0
+
+        
     context['new_signups'] = CustomUser.objects.order_by('-date_joined')\
                                                .filter(can_cc=True)[:5]
     return context

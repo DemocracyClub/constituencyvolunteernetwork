@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-
+{% load signup_extras %}
 {% block extra-head %}
 <link rel="stylesheet" type="text/css"  media="screen" href="{{ MEDIA_URL }}tasks/tasks.css" />
 {% endblock %}
@@ -13,13 +13,11 @@
 <script type="text/javascript">
 window.onload = function () { document.getElementById('id_first_name').focus(); }
 </script>
-<p><strong>Who are the candidates in your constituency?  What do they think about issues that matter to you?</strong></p>
+<p><strong>We're working to build <em>the</em> definitive guide to where all candidates stand on major issues, nationwide.</strong></p>
 
-<p>Sign up below, and we'll send you emails no more than twice a week, suggesting small things you can do to help answer questions like these. </p>
+<p>Join Democracy Club today to make sure your own candidates don't hide their views.</p>
 
 
-
-</p>
 {% if form %}
   <form action="" method="post" id="signup">
   <table>
@@ -47,42 +45,19 @@ We already know that mySociety wants to gather information on general election c
 </div>
 
 <div class="span-3 last">
-<div id="visualization"></div>
-<p>We're trying to get volunteers in every part of the UK.  So far, we've recruited <strong>{{ volunteers }}</strong> volunteers in {{ count }} constituencies (out of a total {{ total }}). <a href="/statistics/">Read more about how we're doing</a>. You can also <a href='http://twitter.com/democlub' target="_blank">follow us on Twitter</a> and <a href='http://www.facebook.com/pages/Democracy-Club/316731041785' target="_blank">become a fan on Facebook</a>.</p></p>
+
+<h3>Questionnaire progress</h3>
+<div id="visualization">
+<!--<img src="http://chart.apis.google.com/chart?chxt=x,y&cht=bvs&chd=s:cEj9U&chco=333399|999999|cc0000|ff9900&chls=2.0&chs=336x180&chxl=0:|Con|Ind|Lab|Lib|&chbh=a&chd=t:{% for party in parties %}{{party.replies_received|percentage:party.invites_sent}}{% if not forloop.last %},{% endif %}{% endfor %}" width="336" height="180" /> -->
+<img src="http://chart.apis.google.com/chart?chxt=x,y&chxr=1,0,650,100&chds=0,650&cht=bvs&chco=333399|999999|cc0000|ff9900&chls=2.0&chs=336x180&chxl=0:|Con|Ind|Lab|Lib|&chbh=a&chd=t:{% for party in parties %}{{party.invites_sent}}{% if not forloop.last %},{% endif %}{% endfor %}" width="336" height="180" />
+<p class="quiet" style="text-align:center">questionnaires sent to candidates, by party</p>
+</div>
+<p>We've sent questionnaires out to all the candidates we know about, and they've already <a href="{% url chart %}">started replying</a>.  Our <strong>{{ volunteers }}</strong>-strong <a href="/statistics/">army of volunteers</a> are soon going to start chasing them up to ensure they reply.</p>
+<p class="quiet"><a href='http://twitter.com/democlub' target="_blank">Follow us on Twitter</a> and <a href='http://www.facebook.com/pages/Democracy-Club/316731041785' target="_blank">become a fan on Facebook</a>!</p>
 <p>
 <h3>Recent signups</h3>
 {% include "new_signup_list.html" %}
 </p>
-
-{% block js %}
-<script type="text/javascript" src="http://www.google.com/jsapi"></script>
-<script type="text/javascript">
-  google.load('visualization', '1', {packages: ['gauge']});
-</script>
-<script type="text/javascript">
-function drawVisualization() {
-  // Create and populate the data table.
-  var data = new google.visualization.DataTable();
-  data.addColumn('string', 'Label');
-  data.addColumn('number', 'Value');
-  data.addRows(1);
-  data.setValue(0, 0, '% complete');
-  data.setValue(0, 1, {{percent_complete}});
-
-  // Create and draw the visualization.
-  var chart = new google.visualization.Gauge(document.getElementById('visualization'));
-  var opts = {redFrom: 90, 
-              redTo: 100, 
-              yellowFrom: 75,
-              yellowTo: 90, 
-              greenFrom: 35, 
-              greenTo: 75};
-
-   chart.draw(data, opts);
-}
-google.setOnLoadCallback(drawVisualization);
-</script>
-{% endblock %}
 
 
 {% endblock %}

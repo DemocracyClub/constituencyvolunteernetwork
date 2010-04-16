@@ -34,7 +34,7 @@
    <td>
      <table class="bar">
        <tr>
-	 <td class="replies" style="width: {% ifequal party.replies_received 0 %}1px{% else %}{{ party.replies_received|percentage:party.invites_sent }}{% endifequal %}">&nbsp;</td>
+	 <td class="replies" style="width: {% ifequal party.replies_received 0 %}1px{% else %}{{ party.replies_received|percentage:party.invites_sent }}%{% endifequal %}">&nbsp;</td>
 	 <td class="remainder" style="">&nbsp;</td>
 	</tr>
      </table>

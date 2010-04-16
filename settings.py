@@ -61,14 +61,12 @@ TEMPLATE_LOADERS = (
 )
 
 MIDDLEWARE_CLASSES = (
-    'django.middleware.cache.UpdateCacheMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.flatpages.middleware.FlatpageFallbackMiddleware',
     'django.middleware.transaction.TransactionMiddleware',
 #    'reversion.middleware.RevisionMiddleware',
-    'django.middleware.cache.FetchFromCacheMiddleware' # always @end
 )
 
 ROOT_URLCONF = 'urls'

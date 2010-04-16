@@ -14,7 +14,7 @@ MOMENT = 120    # duration in seconds within which the time difference
 @register.filter
 def percentage(fraction, population):
     try:  
-        return "%.0f%%" % ((float(fraction) / float(population)) * 100)  
+        return "%.0f" % ((float(fraction) / float(population)) * 100)  
     except (ValueError, ZeroDivisionError):  
         return ""
 
