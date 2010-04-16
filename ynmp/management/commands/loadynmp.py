@@ -80,6 +80,8 @@ class Command(BaseCommand):
                                 .objects.get(ynmp_seat_id=candidacy['seat_id'])
             candidate = Candidate.objects.get(ynmp_id=candidacy['candidate_id'])
             item, _ = Candidacy.objects\
-                      .get_or_create(ynmp_id=id,
-                                     ynmp_constituency=ynmp_constituency,
-                                     candidate=candidate)
+                      .get_or_create(ynmp_id=id)
+            item.ynmp_constituency = ynmp_constituency
+            item.candidate = candidate
+            item.save()
+        
