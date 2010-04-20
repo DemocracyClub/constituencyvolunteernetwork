@@ -1,0 +1,10 @@
+	{% if not candidacy.surveyinvite_set.get.filled_in %}
+	 <input type="hidden" name="candidacy_{{candidacy.pk}}" checked="checked" value="1" />
+	{% endif %}
+        {% if candidacy.candidate.party.image_url %} 
+          <img src="{{ candidacy.candidate.party.image_url}}" alt="{{ candidacy.candidate.party.name }}" title="{{ candidacy.candidate.party.name }}">
+        {% endif %}
+        {{ candidacy.candidate.name }} 
+        {% if not candidacy.candidate.party.image_url %} 
+	  ({{ candidacy.candidate.party.name }})
+	{% endif %}

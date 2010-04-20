@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+{% load signup_extras %}
+{% load twfy_extras %}
+{% block title %}TWFY Election Quiz - remind a candidate{% endblock %}
+{% block section %}twfy{% endblock %}
+
+{% block content %}
+
+<h3>Step 1. Send email reminders</h3>
+
+<div class="span-4">
+
+<p>Use the text box on the write to compose an email in your own words that will encourage the candidates to answer the questionnaire.</p>
+<p>Tips for writing an effective letter:
+
+<ol> 
+ <li>Introduce yourself, <strong>making it clear you're in their constituency</strong> (<em>{{constituency.name}}</em>).</li>
+ <li>Tell them you'd like to answer the TheyWorkForYou survey which they should have already been emailed about.  Tell them why you think it's important.</li>
+ <li>Tell them that <strong>{{ total_count }}</strong> candidates have answered it already, and that in <em>{{constituency.name}}</em> 
+    {% for c in filled_in %}
+      {% if forloop.last %} and {% endif %}the <strong>{{ c.candidate.party.name }}</strong> candidate{% if not forloop.last %}, {% else %}{% endif %}
+      {% if forloop.last %}
+        have already filled it out.
+      {% endif %}
+    {% empty %}
+      no-one has filled it out yet -- they can be the first!
+    {% endfor %}
+ </li>
+ <li>(Optionally) remind them that the results of the survey will be online as a long-term document, and will be viewed millions of times between now and the general election</li>
+ <li>Finish by telling them there's a link at the bottom of the email to the questionnaire, and say thankyou! (we automatically add the link to your email after you press 'send')</li>
+</ol>
+<p>Want to check what's in the survey? A <a target="_blank" href="http://election.theyworkforyou.com/survey/seats/{{constituency.twfy_slug}}">version of what they will see is here</a>, but <strong>don't email them this link</strong>: they can only answer the survey with a special link that we send them (and will add to the end of this email).</p>
+
+</div>
+<div class="span-4 last">
+<form method="post">
+To:
+{% for c in email_candidacies %}
+ {{ c.candidate.name }}{% if not forloop.last %},{% endif %}
+{% endfor %}<br/>
+(debug to: <input type="text" name="debug_to" value="" size="30" />)<br>
+{% if error %}
+ <div class="error">{{ error }}</div><br />
+{% endif %}
+Subject: <input type="text" name="subject" value="{{ subject }}" size="40" /><br>
+<textarea name="message" cols="50" rows="30">{{ message }}</textarea>
+<input type="submit" name="send" value="send" />
+{% for c in email_candidacies %}
+ <input type="hidden" name="candidacy" value="{{ c.pk }}" />{% endfor %}
+
+</form>
+
+</div>
+
+
+{% endblock %}
+

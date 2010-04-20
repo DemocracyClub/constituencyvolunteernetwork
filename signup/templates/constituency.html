@@ -37,6 +37,10 @@
             {
                 show_tab('tab-4', 'switcher4');
             }
+            else if(window.location.hash == "#candidates")
+            {
+                show_tab('tab-5', 'switcher5');
+            }
             else
             {
                 
@@ -55,6 +59,7 @@
 {% if request.user.is_superuser %}
     <li id="switcher3" class="inactive"><a href="#email" onclick="show_tab('tab-3', 'switcher3')">Email nearby users</a></li>
 {% endif %}
+    <li id="switcher5" class="inactive"><a href="#candidates" onclick="show_tab('tab-5', 'switcher5')">Candidate surveys</a></li>
 <div class="clear"></div>
 </ul>
 <div class="clear"></div>
@@ -75,16 +80,14 @@
              {% endifequal %}
             </p>
 
-            <ul class="info">
-                {% if constituency.current_mp.full_name %}<li><label>Current MP</label> <a href="http://www.theyworkforyou.com/mp/?p={{ constituency.current_mp.person_id }}">{{ constituency.current_mp.full_name }} ({{ constituency.current_mp.party }})</a></li>{% endif %}
-                <li><label>On the web</label> <a href='{{ constituency.wikipedia_url }}' target="_blank">on Wikipedia</a></li>
-                <li><label>&nbsp;</label> <a href='{{ constituency.ynmp_url }}' target="_blank">on YourNextMP</a></li>
-                <li><label>&nbsp;</label> <a href='http://twitter.com/#search?q=%23{{ constituency.twitter_hashtag }}' target="_blank">on Twitter</a></li>
-                <li><label>&nbsp;</label> <a href='http://openlylocal.com/hyperlocal_sites?location={{ constituency.name }},%20UK&commit=Search' target="_blank">nearby local websites</a></li>
+                {% if constituency.current_mp.full_name %}<li><label>Current MP</label> <a href="http://www.theyworkforyou.com/mp/?p={{ constituency.current_mp.person_id }}">{{ constituency.current_mp.full_name }} ({{ constituency.current_mp.party }})</a>{% endif %}
+<p>
+                <label>On the web:</label> 
+		<a href='{{ constituency.wikipedia_url }}' target="_blank">Wikipedia</a>, <a href='{{ constituency.ynmp_url }}' target="_blank">YourNextMP</a>, <a href='http://twitter.com/#search?q=%23{{ constituency.twitter_hashtag }}' target="_blank">Twitter</a>, <a href='http://openlylocal.com/hyperlocal_sites?location={{ constituency.name }},%20UK&commit=Search' target="_blank">nearby local websites</a>
+</p>
             {% with constituency.issue_set.latest as latest_issue %}
-                <li><label>Latest issue</label> {% if latest_issue %}<a href='#issues' onclick="show_tab('tab-2', 'switcher2')">"{{ latest_issue.question }}" from {{ latest_issue.created_by.display_name }}</a> (<a href='{% url add_issue constituency=constituency.slug %}'>add issue</a>){% else %}<a href='{% url add_issue constituency=constituency.slug %}'>no issues yet, add one!</a>{% endif %}
+                <label>Latest issue:</label> {% if latest_issue %}<a href='#issues' onclick="show_tab('tab-2', 'switcher2')" class="no-underline">"{{ latest_issue.question }}" from {{ latest_issue.created_by.display_name }}</a> (<a href='{% url add_issue constituency=constituency.slug %}'>add issue</a>){% else %}<a href='{% url add_issue constituency=constituency.slug %}'>no issues yet, add one!</a>{% endif %}
             {% endwith %}
-            </ul>
         </div>
         
         <h4>Recent activity in {{ constituency.name }}</h4>
@@ -150,8 +153,8 @@
 </div>
 <div id="tab-2" class="tab">
     <h3>Local issues in {{ constituency.name }}</h3>
-    <p><a href='{% url issues_page constituency=constituency.slug %}'>Printable page of issues for {{ constituency.name }}</a></p>
-    <p>We're collecting local issues in {{ constituency.name }} to put to the candidates standing at the 2010 general election in the form of a questionnaire. A good local issue will be about a problem of local relevance, possibly suggesting how something should have been/be done, and be something someone can either agree or disagree with.</p>
+    <p>We're collecting local issues in {{ constituency.name }}.  Some of these have been turned into questions to put to the candidates standing at the 2010 general election in the form of a questionnaire.</p>
+    <p>Issues are no longer being turned into questions, but we still want them!  A good local issue will be about a problem of local relevance, possibly suggesting how something should have been/be done.</p>
     {% include 'issues/issue_list.html' %}
 </div>
 {% if request.user.is_superuser %}
@@ -183,4 +186,66 @@
         {% endfor %}
     </ul>
 </div>
+<form method="get" action="{% url pester constituency=constituency.pk %}">
+
+<div id="tab-5" class="candidacy tab">
+  <h2>How well are your candidates doing at responding to our survey?</h2>
+  <div class="span-4">
+   {% if contacted %}
+   <p>We've sent questionnaires to as many candidates as we can in {{ constituency.name }}, but {% if not filled_in %} so far, none of them have managed to reply{% else %} they've not all managed to reply{% endif %}.</p>
+   <p>Can you help encourage the ones who've not replied yet? They'll respond much better to a real constituent.
+</p>
+   {% else %}
+     {% if uncontacted %}
+      <p>We've sent questionnaires to as many candidates as we can in {{ constituency.name }}, but there's still some people we've not been able to contact.</p>
+     {% else %}
+       <p>We've managed to get replies to our questionnaire from everyone in your constituency!</p>
+     {% endif %}
+   {% endif %}
+  </div>
+  <div class="span-4 last">
+   <p class="quiet">We'll be putting the results of the questionnaire online as soon as we have a few more replies.  In the mean time, you can see <a href="http://election.theyworkforyou.com/survey/seats/{{constituency.twfy_slug}}">a version of what we're sending to your candidates here</a>.</p>
+   <input style="font-size: 2em;" type="submit" name="pester" value="Send a reminder by email" />
+  </div>
+  <hr />
+
+  <div class="span-4">
+   <h3><img src="{{MEDIA_URL}}/constituency/smiley.png" alt="smiley face" />We've heard from:</h3>
+  </div>
+
+  <div class="span-4 last">
+   <h3><img src="{{MEDIA_URL}}/constituency/frowny.png" alt="frowny face" />We've not heard from:</h3>
+  </div>
+  
+  <div class="span-4">
+   <ul>
+     {% for candidacy in filled_in %}
+      <li>
+        {% include "candidacy_listitem.html" %}
+      </li>
+     {% empty %}
+      <li>
+	No-one!
+      </li>
+     {% endfor %}
+   </ul>
+  </div>
+  <div class="span-4 last">
+   <ul>
+     {% for candidacy in contacted %}
+      <li>
+        {% include "candidacy_listitem.html" %}
+      </li>
+     {% endfor %}
+     {% for candidacy in uncontacted %}
+      <li>
+        {% include "candidacy_listitem.html" %}
+      </li>
+     {% endfor %}
+   </ul>
+  </div>
+</div>
+</form>
+
+
 {% endblock %}

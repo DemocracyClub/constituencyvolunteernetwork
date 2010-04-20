@@ -9,6 +9,7 @@ from django.utils.safestring import SafeUnicode
 from django.contrib.sites.models import Site
 from django.template.loader import render_to_string
 from django.core.mail import send_mail
+from django.db.models import Max
 
 from signup.util import render_with_context
 import signup.models as models
@@ -241,15 +242,42 @@ def add_constituency(request):
                                'add_constituency.html',
                                context)
 
+def _constituency_decorator(constituencies):
+    """Decorate a queryset with info about questionnaire responses etc 
+    """
+    for constituency in constituencies:
+        context = _add_candidacy_data({}, constituency)
+        constituency.__dict__.update(context)
+        yield constituency
+
 def constituencies(request):
     year = settings.CONSTITUENCY_YEAR
     context = {}
-    context['constituencies'] = Constituency.objects.all()\
-                                .filter(year=year)\
-                                .order_by('name')
+    constituencies = Constituency.objects.all()\
+                     .filter(year=year)\
+                     .order_by('name')
+    context['constituencies'] = _constituency_decorator(
+        constituencies)
     return render_with_context(request,
                                'constituencies.html',
                                context)
+
+def _add_candidacy_data(context, constituency):
+    """decorate passed-in context with data about candidacies and
+    return    
+    """
+    candidacies = constituency.ynmpconstituency_set.get()\
+                  .candidacy_set.filter(candidate__status="standing")
+    uncontacted = candidacies.filter(surveyinvite__emailed=False) 
+    contacted = candidacies.filter(surveyinvite__emailed=True,
+                                   surveyinvite__filled_in=False)
+    filled_in = candidacies.filter(surveyinvite__filled_in=True)
+    context['candidacies'] = candidacies
+    context['uncontacted'] = uncontacted
+    context['contacted'] = contacted
+    context['filled_in'] = filled_in
+    return context
+    
 
 @login_key
 def constituency(request, slug, year=None):
@@ -264,6 +292,7 @@ def constituency(request, slug, year=None):
         constituency = Constituency.objects.all()\
                        .filter(slug=slug, year=year).get()
         context['constituency'] = constituency
+        context = _add_candidacy_data(context, constituency)
     except Constituency.DoesNotExist:
         raise Http404
     

@@ -63,6 +63,12 @@ class Constituency(Model):
     def __unicode__(self):
         return "%s (%s)" % (self.name, self.year)
 
+    def twfy_slug(self):
+        """Return a slug in the format used by the TWFY questionnaire
+        app.
+        """
+        return self.slug.replace("-", "_")
+
     def distance_from(self, other):
         if None in (self.lat, self.lon, other.lat, other.lon):
             # must be Northern Ireland

@@ -1,13 +1,14 @@
-from django.contrib.auth import authenticate, login, logout
-from django.shortcuts import render_to_response, get_object_or_404
-from django.http import HttpResponseRedirect, Http404, HttpResponse
+from django.contrib.auth import logout
+from django.shortcuts import get_object_or_404
+from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth.decorators import login_required
 
 from signup.forms import EditUserForm
-from signup.models import CustomUser, RegistrationProfile 
+from signup.models import CustomUser
+from signup.models import RegistrationProfile 
+from signup.models import Constituency
 from utils import addToQueryString
 from signup.util import render_with_context, key_login
-import signup.signals as signals
 
 def do_login(request, key):
     context = key_login(request, key)
@@ -49,6 +50,24 @@ def user(request, id):
     return render_with_context(request,
                                'user.html',
                                context)
+
+def all_users(request, slug=None):
+    context = {}
+    constituency = get_object_or_404(Constituency, slug=slug)
+    users = constituency.customuser_set.all()
+    context['users'] = users
+    context['constituency'] = constituency
+    if request.user.is_authenticated():
+        context['show_email'] = \
+            bool(request.user.constituencies\
+                 .filter(id=constituency.id))
+    else:
+        context['show_email'] = False
+
+    return render_with_context(request,
+                               'all_users.html',
+                               context)
+
 
 @login_required
 def edit_user(request, id):

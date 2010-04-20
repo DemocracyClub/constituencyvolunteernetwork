@@ -310,6 +310,7 @@ ul li {
   margin-left:-10px;
   padding-left:10px;
   margin-right:-10px;
+  margin-bottom: 20px;
   padding-right:10px;
   padding-bottom:0.5em;
   background:url('/media/gradient.png') repeat-x #f6fbff;
@@ -471,4 +472,16 @@ table.party-twfy-chart tr td {
 }
 
 table.party-twfy-chart {
+}
+
+a.no-underline {
+ text-decoration: none;
+}
+
+a.no-underline:hover {
+ text-decoration: underline;
+}
+
+div.twtr-widget {
+ margin-bottom: 20px;
 }

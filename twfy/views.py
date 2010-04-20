@@ -1,18 +1,13 @@
-try:
-    import json
-except ImportError:
-    import simplejson as json
-from itertools import chain
-
-from django.http import HttpResponse, HttpResponseBadRequest
-from django.http import HttpResponseNotFound, HttpResponseRedirect
+from django.shortcuts import get_object_or_404
+from django.core.mail import send_mail
 from django.contrib.auth.decorators import login_required
-from django.core.urlresolvers import reverse
 
-from signup.models import CustomUser
 from signup.util import render_with_context
 from models import SurveyInvite
+from signup.models import Constituency
 from ynmp.models import Party
+from ynmp.models import Candidacy
+from signup.views import _add_candidacy_data
 
 from django.db.models import aggregates,sql
 class CountIf(sql.aggregates.Count):
@@ -51,3 +46,75 @@ def chart(request):
                                'chart.html',
                                context)
 
+@login_required
+def pester(request, constituency):
+    context = {}
+    constituency = Constituency.objects.get(pk=constituency)
+    context['constituency'] = constituency
+    count = SurveyInvite.objects.filter(filled_in=True).count()
+    context['total_count'] = count
+    context = _add_candidacy_data(context, constituency)
+    if request.GET.has_key('pester'):
+        email_candidacies = []
+        no_email_candidacies = []
+        key = 'candidacy_'
+        for k, v in request.GET.items():
+            if k.startswith(key):
+                candidacy = Candidacy.objects.get(
+                    pk=k[len(key):],
+                    ynmp_constituency__constituency=constituency)
+                if candidacy.candidate.email:
+                    email_candidacies.append(candidacy)
+                else:
+                    no_email_candidacies.append(candidacy)
+        context['email_candidacies'] = email_candidacies
+        context['no_email_candidacies'] = no_email_candidacies
+
+    if request.method == "POST":
+        if request.POST.has_key('finished'):
+            return render_with_context(request,
+                                       'pester_thanks.html',
+                                       context)            
+        candidacies = []
+        for key in request.POST.getlist('candidacy'):
+            candidacy = Candidacy.objects.get(
+                pk=int(key),
+                ynmp_constituency__constituency=constituency)
+            candidacies.append(candidacy)
+        subject = request.POST['subject'].strip()
+        message = request.POST['message'].strip()
+        debug_to = request.POST.get('debug_to','').strip()
+        if not subject:
+            context['subject'] = subject
+            context['message'] = message
+            context['error'] = "You must give the email a subject"
+        else:
+            # XXX caculate the login email
+            quiz_url = "http://www.frob.com"
+            # XXX send the email
+            message += ("\n"
+                        "----\n"
+                        "To start the survey, please visit %s" % quiz_url)
+            mfrom = request.user.email
+            send_mail(subject,
+                      message,
+                      mfrom,
+                      [debug_to])
+            for candidacy in candidacies:
+                invite = candidacy.surveyinvite_set.get()
+                invite.pester_emails_sent += 1
+                invite.save()
+            # onto thankyou page
+            if no_email_candidacies:
+                return render_with_context(request,
+                                           'pester2.html',
+                                           context)
+            else:
+                return render_with_context(request,
+                                           'pester_thanks.html',
+                                           context)
+        
+    return render_with_context(request,
+                               'pester.html',
+                               context)
+    

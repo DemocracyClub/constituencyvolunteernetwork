@@ -42,9 +42,11 @@ class Command(BaseCommand):
         except ValueError:
             print "Problem parsing", data
         for id, party in parsed['Party'].items():
-            Party.objects.get_or_create(name=party['name'],
-                                            ynmp_id=id)
-                
+            p, _ = Party.objects.get_or_create(name=party['name'],
+                                                   ynmp_id=id)
+            p.image_id = party['image_id']
+            p.save()
+            
         candidates = parsed['Candidate'].items()
         for id, candidate in candidates:
             item, _ = Candidate.objects.get_or_create(ynmp_id=id)

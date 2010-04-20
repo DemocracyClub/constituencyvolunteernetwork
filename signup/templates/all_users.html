@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% load comments %}
+{% load signup_extras %}
+
+{% block title %}{{constituency.name}}{% endblock %}
+{% block section %}allusers{% endblock %}
+
+{% block extra-head %}
+<link rel="stylesheet" type="text/css"  media="screen" href="{{ MEDIA_URL }}constituency/constituency.css" />
+{% endblock %}
+
+{% block content %}
+<h1>All users in {{ constituency.name }}</h1>
+
+<p><a href="{{ constituency.get_absolute_url }}">back to constituency page</a></p>
+
+<ul class="users">
+{% for user in users %}
+    <li>{{ user.display_name }}{% if show_email %}{% if user.can_cc %} (<a href='mailto:{{ user.email }}'>{{ user.email }}</a>){% endif %}{% endif %}</li>
+{% endfor %}
+</ul>
+
+{% endblock %}

@@ -4,7 +4,7 @@
 
 <div class="span-8 last">
  <h2>All constituencies</h2>
- <p>This is a list of all constituencies for the 2010 election, with some key data about each one.  A "yes" in the final column indicates that new issues posted there will no longer be considered for inclusion in our candidate questionnaire.</p>
+ <p>This is a list of all constituencies for the 2010 election, with some key data about each one.</p>
  <p>You can sign up to volunteer in other constituencies <a href='{% url add_constituency %}'>on this page</a></p>
  <table class="constituencies tablesorter">
   <thead>
@@ -12,9 +12,8 @@
      <th>Constituency</th>
      <th>Volunteers</th>
      <th>Issues posted</th>
-     <th>Questions prepared</th>
-     <th>Closed for submissions?</th>
-     <th>Questionnaire ready to go?</th>
+     <th>Candidates</th>
+     <th>Questionnaire responses</th>
    </tr>
   </thead>
   <tbody>
@@ -23,9 +22,8 @@
         <td><a href="{% url constituency slug=constituency.slug %}">{{ constituency.name }}</a></td>
         <td class="count-volunteer">{{ constituency.customuser_set.count }}</td>
         <td class="count-issues">{{ constituency.issue_set.count }}</td>
-        <td class="count-issues">{{ constituency.refinedissue_set.count }}</td>
-        <td class="count-issues">{% if constituency.issue_completion.get.completed %}Yes{% endif %} </td>
-        <td class="ready">{% if constituency.issue_completion.get.fine_tuned %}Yes{% endif %} </td>
+	<td>{{ constituency.candidacies.count }}</td>
+	<td>{{ constituency.filled_in.count }}</td>
     </tr>
    {% endfor %}
   </tbody>

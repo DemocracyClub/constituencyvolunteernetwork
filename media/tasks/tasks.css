@@ -139,15 +139,25 @@ ul.activity {
   padding: 0;
   margin: 0;
   margin-bottom:1em;
+  font-size: 12px;
 }
 
 ul.activity li {
   margin:0;
   list-style: none;
   padding:0.25em;
+  border-bottom: 1px dotted #DDD;
   border-radius:0.4em;
   -moz-border-radius:0.4em;
   -webkit-border-radius:0.4em;
+}
+
+ul.activity li a {
+ text-decoration: none;
+}
+
+ul.activity li a:hover {
+ text-decoration: underline;
 }
 
 ul.activity li.row1 {

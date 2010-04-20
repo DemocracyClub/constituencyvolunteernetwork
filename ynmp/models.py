@@ -1,6 +1,5 @@
 from django.db import models
 
-from tasks.models import Task
 from signup.models import Model, CustomUser, Constituency
 
 def expand_item(word):
@@ -10,13 +9,26 @@ def expand_item(word):
              'address': 'a postal address',}
     return words[word]
 
+def _image_id_to_url(image_id, size):
+    padded_id = "%09i" % image_id
+    return "http://yournextmp.s3.amazonaws.com/images/%s/%s/%s-%s.png" % (padded_id[-4:-2], padded_id[-2:],padded_id, size)
+
 class Party(Model):
     ynmp_id = models.CharField(max_length=9)
+    image_id = models.CharField(max_length=9,
+                                blank=True,
+                                null=True)
     name = models.CharField(max_length=255)
 
     def __unicode__(self):
         return "%s (ynmp id %s)" % (self.name,
                                     self.ynmp_id)
+
+    def image_url(self):
+        if self.image_id:
+            return _image_id_to_url(int(self.image_id), "small")
+        else:
+            return None
     
 class YNMPConstituency(Model):
     constituency = models.ForeignKey(Constituency)
@@ -74,6 +86,9 @@ class Candidacy(Model):
         return "%s standing for %s in %s" % (self.candidate.name,
                                              self.candidate.party.name,
                                              self.ynmp_constituency.constituency.name)
+
+    def constituency(self):
+        return self.ynmp_constituency.constituency
 
 class YNMPAction(Model):
     user = models.ForeignKey(CustomUser)

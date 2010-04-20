@@ -1,7 +1,12 @@
 {# Anonymised user list, respects datasharing checkbox, pass "users" #}
 
 <ul class="users">
-{% for user in users %}
+{% for user in users|slice:":15" %}
     <li>{{ user.display_name }}{% if show_email %}{% if user.can_cc %} (<a href='mailto:{{ user.email }}'>{{ user.email }}</a>){% endif %}{% endif %}</li>
+{% endfor %}
+{% for user in users|slice:"15:" %}
+ {% if forloop.first %}
+   <li>and <a href="{% url all_users slug=constituency.slug %}">{{ users|slice:"15:"|length }} more</a></li>
+ {% endif %}
 {% endfor %}
 </ul>

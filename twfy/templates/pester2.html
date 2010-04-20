@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% load signup_extras %}
+{% load twfy_extras %}
+{% block title %}TWFY Election Quiz - remind a candidate{% endblock %}
+{% block section %}twfy{% endblock %}
+
+{% block content %}
+
+<h3>Step 2. Try to find email addresses for the rest</h3>
+<div class="notice">
+Thanks! We've sent your email.
+</div>
+<div class="span-4">
+<p>However, we haven't got email addresses for the all the candidates, which means we can't send them a questionnaire.</p>
+<p>Please see if you can find out their email address, by either using an internet search (for their name and party, for example), and if you can't find it there, please consider phoning them up.</p>
+<p>If you manage to find out their email address, please update it on their page at our partner site YourNextMP (use links on the right).</p>
+
+</div>
+<div class="span-4 last">
+
+We don't know about:
+<ul>
+{% for c in no_email_candidacies %}
+ <li>
+  {% if c.candidate.party.image_url %} 
+   <img src="{{ c.candidate.party.image_url}}" alt="{{ c.candidate.party.name }}" title="{{ c.candidate.party.name }}">
+  {% endif %}
+  {{ c.candidate.name }}<br />
+
+  <strong>Party:</strong> {{ c.candidate.party.name }}<br />
+  {% if c.candidate.phone %}<strong>Phone:</strong> {{ c.candidate.phone }}<br />{% endif %}
+  <strong><a target="_blank" href="http://www.google.co.uk/search?q={{c.candidate.name|urlencode}}+{{c.candidate.party.name|urlencode}}+email">example google search</a></strong><br/>
+  Found their email address? <a target="_blank" href="http://www.yournextmp.com/candidates/{{c.candidate.code}}">Update {{c.candidate.name}}'s record on YourNextMP</a>
+ </li>
+{% endfor %}
+</ul>
+<form method="post">
+<input type="submit" name="finished" value="OK, I've finished for now" />
+</form>
+</div>
+
+
+{% endblock %}
+

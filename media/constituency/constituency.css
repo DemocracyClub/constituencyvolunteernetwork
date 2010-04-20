@@ -16,7 +16,12 @@ ul.info li label
     display:block;
     float:left;
 }
-
+ul.info li a {
+    text-decoration: none;
+}
+ul.info li a:hover {
+    text-decoration: underline;
+}
 .tab
 {
     display:none;
@@ -88,10 +93,18 @@ ul.tabswitcher li.first a
 
 }
 
+
 ul.tabswitcher li.active a
 {
-    color:white;
+    background-color:white;
+    color: #0A5196;
 }
+
+ul.tabswitcher li.active a:hover
+{
+    color: #3A7AD2;
+}
+
 
 ul.refined_issues
 {
@@ -122,4 +135,22 @@ li.refined_issue .based_on
 {
     padding:0.5em;
     font-size:0.9em;
+}
+
+ul.users li {
+ font-size: 12px;
+}
+
+div.candidacy ul li {
+ list-style: none;
+ margin-bottom: 20px;
+}
+
+div.candidacy h3 img {
+ margin-bottom: 10px;
+}
+div.candidacy ul li img,
+div.candidacy h3 img {
+ vertical-align: middle;
+ padding-right: 5px;
 }

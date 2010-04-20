@@ -65,28 +65,6 @@
           </div> 
       </div>
         <div id="main" class="container">
-	 {% if not user.is_anonymous and not needs_activation %}
-          <div class="notice" id="issues-warning">
-	    {% if user.home_constituency.issue_completion.get.completed %}
-	       <p>Your home constituency is no longer accepting issues
-	       for inclusion in our candidate questionnaire; however,
-	       we are still interested in gathering local issues in
-	       our database.</p>
-               <p>Click "add local issue" below your constituency on
-               your home page. Finding an issue could be as simple as
-               Googling, or looking at the local paper, or reading an
-               election leaflet.</p>
-	    {% else %}
-              <p>Urgent! There are only <strong>a few days
-              left</strong> to submit local issues for inclusion in
-              our survey of all candidates.</p>
-              <p>Click "add local issue" below your constituency on
-              your home page. Finding an issue could be as simple as
-              Googling, or looking at the local paper, or reading an
-              election leaflet.</p>
-	    {% endif %}
-          </div>
-	 {% endif %}
          {% if not is_constituency_page %}
               {% if constituency  %}
               <div id="constituency-header">
