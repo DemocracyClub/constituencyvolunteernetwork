@@ -6,7 +6,9 @@
 {% endfor %}
 {% for user in users|slice:"15:" %}
  {% if forloop.first %}
+   {% if constituency.slug %}
    <li>and <a href="{% url all_users slug=constituency.slug %}">{{ users|slice:"15:"|length }} more</a></li>
+   {% endif %}
  {% endif %}
 {% endfor %}
 </ul>
