@@ -106,7 +106,7 @@ def pester(request, constituency):
                        "----------\n\n") + message
                 msg = msg + ("\n\n"
                              "-----------\n" + quiz_words)
-                mfrom = request.user.email
+                mfrom = "quiz@democracyclub.org.uk"
                 if settings.DEBUG:
                     sbj = "%s to %s" % (subject,
                                         candidacy.candidate.email)
