@@ -9,10 +9,15 @@
 
 <div class="span-4">
 
-We've sent your emails.  Hopefully we'll get a full set of answers from your candidates soon!  You'll hear from us as soon as we put them online.
+<p>We've sent your emails. Hopefully we'll get a full set of answers from your candidates soon! You'll hear from us as soon as we put them online.</p>
+<p><a href='/'>go back to the front page</a></p>
 
 </div>
 <div class="span-4 last">
+
+{% if user.is_anonymous %}
+<strong>Help out this election by joining <a href='/'>Democracy Club</a>.</strong> We're a politically neutral non-partisan group of volunteers trying to hold politicians to account and provide useful information to voters. We've already helped upload hundreds of election leaflets to <a href='http://www.thestraightchoice.org/'>TheStraightChoice</a>, built the free database of candidates at <a href='http://www.yournextmp.com/'>YourNextMP</a> and gathered lots of local issues for the <a href='http://election.theyworkforyou.com/'>TheyWorkForYou candidate quiz</a>.
+{% endif %}
 </div>
 
 
