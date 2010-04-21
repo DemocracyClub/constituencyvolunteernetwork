@@ -1,6 +1,7 @@
 from django.shortcuts import get_object_or_404
 from django.core.mail import send_mail
 from django.contrib.auth.decorators import login_required
+from django.db.models import aggregates,sql
 
 from signup.util import render_with_context
 from models import SurveyInvite
@@ -10,7 +11,8 @@ from ynmp.models import Candidacy
 from signup.views import _add_candidacy_data
 from signals import pester_action_done
 
-from django.db.models import aggregates,sql
+import settings
+
 class CountIf(sql.aggregates.Count):
     sql_template = '%(function)s(CASE WHEN %(field)s=%(equals)s THEN 1 ELSE 0 END)'
 sql.aggregates.CountIf = CountIf
@@ -90,17 +92,35 @@ def pester(request, constituency):
             context['message'] = message
             context['error'] = "You must give the email a subject"
         else:
-            # XXX caculate the login email
-            quiz_url = "http://www.frob.com"
-            # XXX send the email
-            message += ("\n"
-                        "----\n"
-                        "To start the survey, please visit %s" % quiz_url)
-            mfrom = request.user.email
-            send_mail(subject,
-                      message,
-                      mfrom,
-                      [debug_to])
+            for candidacy in candidacies:
+                # calculate the login link
+                quiz_url = "http://election.theyworkforyou.com/survey/"
+                token = candidacy.surveyinvite_set.get().survey_token
+                quiz_url += token
+                quiz_words = "To start the survey, please visit %s" % quiz_url
+                msg = ("This is a message from a voter in your "
+                       "constituency about the TheyWorkForYou "
+                       "survey. " + quiz_words + "\n"
+                       "----------\n\n") + message
+                msg = msg + ("\n\n"
+                             "-----------\n" + quiz_words)
+                mfrom = request.user.email
+                if settings.DEBUG:
+                    sbj = "%s to %s" % (subject,
+                                        candidacy.candidate.email)
+                else:
+                    sbj = subject
+                if settings.DEBUG:
+                    send_mail(sbj,
+                              msg,
+                              mfrom,
+                              [debug_to])
+                else:
+                    raise Exception
+                    send_mail(sbj,
+                              msg,
+                              mfrom,
+                              [candidacy.candidate.email])
             
             pester_action_done.send(None, user=request.user)
             for candidacy in candidacies:

@@ -10,4 +10,7 @@ class SurveyInvite(Model):
                                   null=True)
     emailed = models.BooleanField(default=False)
     filled_in = models.BooleanField(default=False)
+    survey_token = models.CharField(max_length=30,
+                                    blank=True,
+                                    null=True)
     pester_emails_sent = models.IntegerField(default=0)

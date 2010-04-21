@@ -8,6 +8,8 @@ from django.core.management.base import CommandError
 from twfy.models import SurveyInvite
 from ynmp.models import Candidacy, Party
 
+from settings import TWFY_SECRET_KEY
+
 class Command(BaseCommand):
     option_list =  BaseCommand.option_list + (
         make_option('--file', '-f', dest='filename',
@@ -25,6 +27,7 @@ class Command(BaseCommand):
         if filename:
             data = open(filename, "r").read()
         elif url:
+            url += "?secret=" + TWFY_SECRET_KEY
             resp = urllib.urlopen(url)
             _, data = resp.headers, resp.read()
         else:
@@ -44,6 +47,7 @@ class Command(BaseCommand):
                 surveyinvite.emailed = invite['survey_invite_emailed']
                 surveyinvite.filled_in = invite['survey_filled_in']
                 surveyinvite.candidacy = candidacy
+                surveyinvite.survey_token = invite['survey_token']
                 surveyinvite.save()
             except Candidacy.DoesNotExist:
                 print "skipping", ynmp_id
