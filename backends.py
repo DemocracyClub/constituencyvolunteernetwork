@@ -13,7 +13,13 @@ class NoAuthBackend(ModelBackend):
             user.save()
             return user
         except CustomUser.DoesNotExist:
-            return None
+            try:
+                user = CustomUser.objects.get(email=username)
+                user.login_count += 1
+                user.save()
+                return user
+            except:
+                return None
 
     def get_user(self, user_id):
         try:
