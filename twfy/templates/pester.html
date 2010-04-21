@@ -18,12 +18,12 @@
     <ol> 
      <li>Think of an intriguing subject that will encourage them to open it: they're receiving hundreds of emails a day!  A question is good.</li>
      <li>Introduce yourself, <strong>making it clear you're in their constituency</strong> (<em>{{constituency.name}}</em>).</li>
-     <li>Tell them you'd like to answer the TheyWorkForYou survey.  Tell them why you think it's important (for example, it's a cross-party survey that millions of people will see; or you believe it will make the election more transparent).</li>
+     <li>Say you'd like them to answer the TheyWorkForYou survey.  Tell them why you think it's important (for example, it's a cross-party survey that millions of people will see; or you believe it will make the election more transparent).</li>
      <li>Tell them that <strong>{{ total_count }}</strong> candidates have answered it already, and that in <em>{{constituency.name}}</em> 
         {% for c in filled_in %}
-          {% if forloop.last %} and {% endif %}the <strong>{{ c.candidate.party.name }}</strong> candidate{% if not forloop.last %}, {% else %}{% endif %}
+          {% if forloop.last %}{% ifnotequal 1 filled_in.count %} and {% endifnotequal %}{% endif %}the <strong>{{ c.candidate.party.name }}</strong> candidate{% if not forloop.last %}, {% else %}{% endif %}
           {% if forloop.last %}
-            have already filled it out.
+            {% ifnotequal 1 filled_in.count %}have{% else %}has{% endifnotequal %} already filled it out.
           {% endif %}
         {% empty %}
           no-one has filled it out yet -- they can be the first!
