@@ -120,11 +120,13 @@ def pester(request, constituency):
                           msg,
                           mfrom,
                           [mto])
-                logging.debug("Mail from: %s" % mfrom)
-                logging.debug("Mail to: %s" % mto)
-                logging.debug("Mail subject: %s" % sbj)
-                logging.debug("Mail body: %s" % msg)
             
+            send_mail("[%s] %s" % (constituency.slug,
+                                   sbj),
+                      msg,
+                      mfrom,
+                      ['hassle@democracyclub.org.uk'])
+                
             pester_action_done.send(None, user=request.user)
             for candidacy in candidacies:
                 invite = candidacy.surveyinvite_set.get()
