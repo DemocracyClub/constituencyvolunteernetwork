@@ -17,7 +17,7 @@
 
     <ol> 
      <li>Introduce yourself, <strong>making it clear you're in their constituency</strong> (<em>{{constituency.name}}</em>).</li>
-     <li>Tell them you'd like to answer the TheyWorkForYou survey which they should have already been emailed about.  Tell them why you think it's important (for example, it's a cross-party survey that millions of people will see; or you believe it will make the election more transparent).</li>
+     <li>Tell them you'd like to answer the TheyWorkForYou survey.  Tell them why you think it's important (for example, it's a cross-party survey that millions of people will see; or you believe it will make the election more transparent).</li>
      <li>Tell them that <strong>{{ total_count }}</strong> candidates have answered it already, and that in <em>{{constituency.name}}</em> 
         {% for c in filled_in %}
           {% if forloop.last %} and {% endif %}the <strong>{{ c.candidate.party.name }}</strong> candidate{% if not forloop.last %}, {% else %}{% endif %}
