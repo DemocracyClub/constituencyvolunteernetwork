@@ -40,6 +40,11 @@ def callback_assign(sender, **kwargs):
     """
     user = kwargs['user']
     task = kwargs['task']
+    constituency = user.home_constituency
+    if getattr(constituency,
+               'name',
+               "no constituency") == "no constituency":
+        return "No constituency for %s, not assigning" % user
     slug = user.home_constituency.slug
     url = "%s#candidates" % reverse('constituency',
                                     kwargs={'slug':slug}) 
