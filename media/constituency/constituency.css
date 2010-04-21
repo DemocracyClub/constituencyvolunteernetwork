@@ -141,6 +141,13 @@ ul.users li {
  font-size: 12px;
 }
 
+.top-hassle {
+  background:url('/media/gradient.png') repeat-x #f6fbff;
+  background-position:top;
+  padding-bottom:0.5em;
+  margin-bottom:0.5em;
+}
+
 div.candidacy ul li {
  list-style: none;
  margin-bottom: 20px;

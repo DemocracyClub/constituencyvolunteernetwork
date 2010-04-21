@@ -1,6 +1,7 @@
 body { 
   color: #333;
   font-size: 100%;
+  /*font-family:sans-serif;*/
   background:url("images/background_stripe.png") repeat-x white;
 }
 

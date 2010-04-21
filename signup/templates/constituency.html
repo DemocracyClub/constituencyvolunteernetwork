@@ -190,24 +190,26 @@
 
 <div id="tab-5" class="candidacy tab">
   <h2>How well are your candidates doing at responding to our survey?</h2>
-  <div class="span-4">
-   {% if contacted %}
-   <p>We've sent questionnaires to as many candidates as we can in {{ constituency.name }}, but {% if not filled_in %} so far, none of them have managed to reply{% else %} they've not all managed to reply{% endif %}.</p>
-   <p>Can you help encourage the ones who've not replied yet? They'll respond much better to a real constituent.
-</p>
-   {% else %}
-     {% if uncontacted %}
-      <p>We've sent questionnaires to as many candidates as we can in {{ constituency.name }}, but there's still some people we've not been able to contact.</p>
+  <div class="gradient-box">
+    <div class="span-4">
+     {% if contacted %}
+     <p>We've sent questionnaires to as many candidates as we can in {{ constituency.name }}, but {% if not filled_in %} so far, none of them have managed to reply{% else %} they've not all managed to reply{% endif %}.</p>
+     <p>Can you help encourage the ones who've not replied yet? They'll respond much better to a real constituent.
+  </p>
      {% else %}
-       <p>We've managed to get replies to our questionnaire from everyone in your constituency!</p>
+       {% if uncontacted %}
+        <p>We've sent questionnaires to as many candidates as we can in {{ constituency.name }}, but there's still some people we've not been able to contact.</p>
+       {% else %}
+         <p>We've managed to get replies to our questionnaire from everyone in your constituency!</p>
+       {% endif %}
      {% endif %}
-   {% endif %}
+    </div>
+    <div class="span-4 last">
+     <p class="quiet">We'll be putting the results of the questionnaire online as soon as we have a few more replies.  In the mean time, you can see <a href="http://election.theyworkforyou.com/survey/seats/{{constituency.twfy_slug}}">a version of what we're sending to your candidates here</a>.</p>
+     <input style="font-size: 2em;" type="submit" name="pester" value="Send a reminder by email" />
+    </div>
+    <div style="clear:both;"></div>
   </div>
-  <div class="span-4 last">
-   <p class="quiet">We'll be putting the results of the questionnaire online as soon as we have a few more replies.  In the mean time, you can see <a href="http://election.theyworkforyou.com/survey/seats/{{constituency.twfy_slug}}">a version of what we're sending to your candidates here</a>.</p>
-   <input style="font-size: 2em;" type="submit" name="pester" value="Send a reminder by email" />
-  </div>
-  <hr />
 
   <div class="span-4">
    <h3><img src="{{MEDIA_URL}}/constituency/smiley.png" alt="smiley face" />We've heard from:</h3>
