@@ -22,6 +22,8 @@ class TaskEmailAdmin(admin.ModelAdmin):
 
 class TaskEmailUserAdmin(admin.ModelAdmin):
     list_display = ('task_user', 'task_email', 'date_added', 'date_sent')
+    list_filter = ('date_sent',)
+    search_fields = ('user__email',)
 
 admin.site.register(models.TaskUser, TaskUserAdmin)
 admin.site.register(models.TaskEmail, TaskEmailAdmin)
