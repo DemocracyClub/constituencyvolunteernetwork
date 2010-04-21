@@ -41,7 +41,9 @@ To:
 {% for c in email_candidacies %}
  {{ c.candidate.name }}{% if not forloop.last %},{% endif %}
 {% endfor %}<br/>
+{% if DEBUG %}
 (debug to: <input type="text" name="debug_to" value="" size="30" />)<br>
+{% endif %}
 {% if error %}
  <div class="error">{{ error }}</div><br />
 {% endif %}

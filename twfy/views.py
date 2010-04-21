@@ -1,3 +1,5 @@
+import logging
+
 from django.shortcuts import get_object_or_404
 from django.core.mail import send_mail
 from django.contrib.auth.decorators import login_required
@@ -111,16 +113,17 @@ def pester(request, constituency):
                 else:
                     sbj = subject
                 if settings.DEBUG:
-                    send_mail(sbj,
-                              msg,
-                              mfrom,
-                              [debug_to])
+                    mto = debug_to
                 else:
-                    raise Exception
-                    send_mail(sbj,
-                              msg,
-                              mfrom,
-                              [candidacy.candidate.email])
+                    mto = candidacy.candidate.email
+                send_mail(sbj,
+                          msg,
+                          mfrom,
+                          [mto])
+                logging.debug("Mail from: %s" % mfrom)
+                logging.debug("Mail to: %s" % mto)
+                logging.debug("Mail subject: %s" % sbj)
+                logging.debug("Mail body: %s" % msg)
             
             pester_action_done.send(None, user=request.user)
             for candidacy in candidacies:

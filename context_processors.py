@@ -25,3 +25,7 @@ def current_site(context):
 def google_analytics(context):    
     context = {'google_analytics_id': settings.GOOGLE_ANALYTICS_ID}
     return context
+
+def is_debug(context):    
+    context = {'DEBUG': settings.DEBUG}
+    return context

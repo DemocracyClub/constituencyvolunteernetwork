@@ -86,6 +86,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     "context_processors.navigation",
     "context_processors.current_site",
     "context_processors.google_analytics",
+    "context_processors.is_debug",
 )
 
 INSTALLED_APPS = (
