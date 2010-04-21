@@ -8,6 +8,7 @@ from signup.models import Constituency
 from ynmp.models import Party
 from ynmp.models import Candidacy
 from signup.views import _add_candidacy_data
+from signals import pester_action_done
 
 from django.db.models import aggregates,sql
 class CountIf(sql.aggregates.Count):
@@ -100,6 +101,8 @@ def pester(request, constituency):
                       message,
                       mfrom,
                       [debug_to])
+            
+            pester_action_done.send(None, user=request.user)
             for candidacy in candidacies:
                 invite = candidacy.surveyinvite_set.get()
                 invite.pester_emails_sent += 1
