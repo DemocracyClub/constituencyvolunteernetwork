@@ -75,7 +75,9 @@ class Command(BaseCommand):
             item, _ = YNMPConstituency.objects\
                       .get_or_create(ynmp_seat_id=id,
                                      constituency=constituency)
-            
+            item.nominations_entered = bool(seat['nominations_entered'])
+            item.nomination_url = seat['nomination_url']
+            item.save()
         
         for id, candidacy in parsed['Candidacy'].items():
             ynmp_constituency = YNMPConstituency\

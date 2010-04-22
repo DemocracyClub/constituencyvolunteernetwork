@@ -276,6 +276,8 @@ def _add_candidacy_data(context, constituency):
     context['uncontacted'] = uncontacted
     context['contacted'] = contacted
     context['filled_in'] = filled_in
+    noms = constituency.ynmpconstituency_set.get().nominations_entered
+    context['nominations_entered'] = noms
     return context
     
 

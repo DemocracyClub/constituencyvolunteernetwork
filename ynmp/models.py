@@ -33,6 +33,10 @@ class Party(Model):
 class YNMPConstituency(Model):
     constituency = models.ForeignKey(Constituency)
     ynmp_seat_id = models.CharField(max_length=9)
+    nominations_entered = models.BooleanField(default=False)
+    nomination_url = models.URLField(max_length=2048,
+                                     blank=True,
+                                     null=True) 
 
     def __unicode__(self):
         return "%s (ynmp id %s)" % (self.constituency.name,

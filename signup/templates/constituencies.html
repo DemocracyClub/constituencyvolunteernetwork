@@ -14,6 +14,7 @@
      <th>Issues posted</th>
      <th>Candidates</th>
      <th>Questionnaire responses</th>
+     <th>Nominations entered?</th>
    </tr>
   </thead>
   <tbody>
@@ -24,6 +25,7 @@
         <td class="count-issues">{{ constituency.issue_set.count }}</td>
 	<td>{{ constituency.candidacies.count }}</td>
 	<td>{{ constituency.filled_in.count }}</td>
+	<td class="nominations">{{ constituency.nominations_entered }}</td>
     </tr>
    {% endfor %}
   </tbody>
