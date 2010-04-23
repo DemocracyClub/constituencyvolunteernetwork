@@ -457,6 +457,9 @@ class TaskEmail(Model):
         context['user_profile'] = profile
         context['site'] = Site.objects.get_current()
 
+        context['constituency_slug'] = taskuser.constituency.slug
+        context['constituency_tsc'] = taskuser.constituency.tsc_slug
+
         # Get shortened urls for login
         context['task_url'] = reverse_login_key_short('start_task',
                                            context['user'],
@@ -550,9 +553,7 @@ class TaskEmail(Model):
                                              context_plain)
             constituency = context['task_user'].constituency
             if constituency:
-                subject_context = {'constituency': constituency.name,
-                                   'constituency_slug': constituency.slug,
-                                   'constituency_tsc': constituency.tsc_slug,}
+                subject_context = {'constituency': constituency.name,}
                 subject = self.subject % subject_context
             else:
                 subject = self.subject                
