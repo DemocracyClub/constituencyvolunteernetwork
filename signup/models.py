@@ -70,6 +70,7 @@ class Constituency(Model):
         """
         return self.slug.replace("-", "_")
 
+    @property
     def tsc_slug(self):
         try:
             return tsc_constituencies.tsc_slugs[self.slug]

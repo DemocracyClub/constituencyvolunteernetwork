@@ -457,9 +457,6 @@ class TaskEmail(Model):
         context['user_profile'] = profile
         context['site'] = Site.objects.get_current()
 
-        context['constituency_slug'] = taskuser.constituency.slug
-        context['constituency_tsc'] = taskuser.constituency.tsc_slug
-
         # Get shortened urls for login
         context['task_url'] = reverse_login_key_short('start_task',
                                            context['user'],
@@ -500,6 +497,14 @@ class TaskEmail(Model):
                                           "Review all my tasks online") +\
                                    button(html_context['ignore_url'],
                                           "Ignore this task")
+
+        if html_context['task_user'].constituency:
+            sub_vars_html['constituencyslug'] = html_context['task_user'].constituency.slug
+            sub_vars_html['constituencytsc'] = html_context['task_user'].constituency.tsc_slug
+        else:
+            sub_vars_html['constituencyslug'] = ""
+            sub_vars_html['constituencytsc'] = ""
+
         html_context['text'] = html_context['email'].body % sub_vars_html
         kwargs = {'taskemail_id': self.pk,
                   'taskuser_id': html_context['task_user'].pk}
@@ -527,6 +532,14 @@ class TaskEmail(Model):
                                            "Review all my tasks online") +\
                                     button(plain_context['ignore_url'],
                                            "Ignore this task")
+
+        if plain_context['task_user'].constituency:
+            sub_vars_plain['constituencyslug'] = plain_context['task_user'].constituency.slug
+            sub_vars_plain['constituencytsc'] = plain_context['task_user'].constituency.tsc_slug
+        else:
+            sub_vars_plain['constituencyslug'] = ""
+            sub_vars_plain['constituencytsc'] = ""
+        
         plain_context['text'] = plain_context['email'].body \
                                 % sub_vars_plain 
         def strip_html(text):
