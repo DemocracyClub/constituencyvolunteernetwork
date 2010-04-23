@@ -550,7 +550,9 @@ class TaskEmail(Model):
                                              context_plain)
             constituency = context['task_user'].constituency
             if constituency:
-                subject_context = {'constituency': constituency.name}
+                subject_context = {'constituency': constituency.name,
+                                   'constituency_slug': constituency.slug,
+                                   'constituency_tsc': constituency.tsc_slug,}
                 subject = self.subject % subject_context
             else:
                 subject = self.subject                
