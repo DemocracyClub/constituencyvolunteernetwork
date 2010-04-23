@@ -40,11 +40,11 @@ def _get_statistics_context():
 
     get = Party.objects.get
     parties = [get(name="Conservative Party"),
-               get(name="Independent"),
                get(name="Labour Party"),
                get(name="Liberal Democrats"),
                get(name="Green Party"),
-               get(name="UK Independence Party - UKIP"),]
+               get(name="UK Independence Party - UKIP"),
+               get(name="Independent"),]
                                 
     context['max_percentage'] = 0
     for party in parties:
