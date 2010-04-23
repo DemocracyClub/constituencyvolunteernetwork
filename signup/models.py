@@ -22,6 +22,7 @@ from settings import CONSTITUENCY_YEAR
 import signals
 import twfy
 import wiki_constituencies
+import tsc_constituencies
 import hashtags
 
 SHA1_RE = re.compile('^[a-f0-9]{40}$')
@@ -68,6 +69,12 @@ class Constituency(Model):
         app.
         """
         return self.slug.replace("-", "_")
+
+    def tsc_slug(self):
+        try:
+            return tsc_constituencies.tsc_slugs[self.slug]
+        except KeyError:
+            return ""
 
     def distance_from(self, other):
         if None in (self.lat, self.lon, other.lat, other.lon):

@@ -83,7 +83,7 @@
                 {% if constituency.current_mp.full_name %}<li><label>Current MP</label> <a href="http://www.theyworkforyou.com/mp/?p={{ constituency.current_mp.person_id }}">{{ constituency.current_mp.full_name }} ({{ constituency.current_mp.party }})</a>{% endif %}
 <p>
                 <label>On the web:</label> 
-		<a href='{{ constituency.wikipedia_url }}' target="_blank">Wikipedia</a>, <a href='{{ constituency.ynmp_url }}' target="_blank">YourNextMP</a>, <a href='http://twitter.com/#search?q=%23{{ constituency.twitter_hashtag }}' target="_blank">Twitter</a>, <a href='http://openlylocal.com/hyperlocal_sites?location={{ constituency.name }},%20UK&commit=Search' target="_blank">nearby local websites</a>
+		<a href='{{ constituency.wikipedia_url }}' target="_blank">Wikipedia</a>, <a href='{{ constituency.ynmp_url }}' target="_blank">YourNextMP</a>, <a href='http://twitter.com/#search?q=%23{{ constituency.twitter_hashtag }}' target="_blank">Twitter</a>, <a href='http://openlylocal.com/hyperlocal_sites?location={{ constituency.name }},%20UK&commit=Search' target="_blank">nearby local websites</a>, <a href='http://www.thestraightchoice.org/constituencies/{{ constituency.tsc_slug }}/' target="_blank">Leaflets on TheStraightChoice</a>
 </p>
             {% with constituency.issue_set.latest as latest_issue %}
                 <label>Latest issue:</label> {% if latest_issue %}<a href='#issues' onclick="show_tab('tab-2', 'switcher2')" class="no-underline">"{{ latest_issue.question }}" from {{ latest_issue.created_by.display_name }}</a> (<a href='{% url add_issue constituency=constituency.slug %}'>add issue</a>){% else %}<a href='{% url add_issue constituency=constituency.slug %}'>no issues yet, add one!</a>{% endif %}
