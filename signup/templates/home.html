@@ -48,11 +48,11 @@ We already know that mySociety wants to gather information on general election c
 
 <h3>Questionnaire progress</h3>
 <div id="visualization">
-<!--<img src="http://chart.apis.google.com/chart?chxt=x,y&cht=bvs&chd=s:cEj9U&chco=333399|999999|cc0000|ff9900&chls=2.0&chs=336x180&chxl=0:|Con|Ind|Lab|Lib|&chbh=a&chd=t:{% for party in parties %}{{party.replies_received|percentage:party.invites_sent}}{% if not forloop.last %},{% endif %}{% endfor %}" width="336" height="180" /> -->
-<img src="http://chart.apis.google.com/chart?chxt=x,y&chxr=1,0,650,100&chds=0,650&cht=bvs&chco=333399|999999|cc0000|ff9900&chls=2.0&chs=336x180&chxl=0:|Con|Ind|Lab|Lib|&chbh=a&chd=t:{% for party in parties %}{{party.invites_sent}}{% if not forloop.last %},{% endif %}{% endfor %}" width="336" height="180" />
-<p class="quiet" style="text-align:center">questionnaires sent to candidates, by party</p>
+<img src="http://chart.apis.google.com/chart?chxt=x,y&cht=bvs&chd=s:cEj9U&chco=333399|999999|cc0000|ff9900|ab1e94|73a532&chls=2.0&chs=336x180&chxl=0:|Cons.|Ind.|Lab.|Lib.Dem.|UKIP|Green&chbh=a&chd=t:{% for party in parties %}{{party.replies_received|percentage:party.invites_sent}}{% if not forloop.last %},{% endif %}{% endfor %}&chds=0,{{ max_percentage }}&chxr=1,0,{{ max_percentage }},10" width="336" height="180" />
+<!--<img src="http://chart.apis.google.com/chart?chxt=x,y&chxr=1,0,650,100&chds=0,650&cht=bvs&chco=333399|999999|cc0000|ff9900&chls=2.0&chs=336x180&chxl=0:|Con|Ind|Lab|Lib|&chbh=a&chd=t:{% for party in parties %}{{party.invites_sent}}{% if not forloop.last %},{% endif %}{% endfor %}" width="336" height="180" />-->
+<p class="quiet" style="text-align:center">% survey response rate so far, by party</p>
 </div>
-<p>We've sent questionnaires out to all the candidates we know about, and they've already <a href="{% url chart %}">started replying</a>.  Our <strong>{{ volunteers }}</strong>-strong <a href="/statistics/">army of volunteers</a> are soon going to start chasing them up to ensure they reply.</p>
+<p>We've sent questionnaires out to all the candidates we know about, and they've already <a href="{% url chart %}">started replying</a>.  Our <strong>{{ volunteers }}</strong>-strong <a href="/statistics/">army of volunteers</a> are chasing them up to ensure they reply.</p>
 <p class="quiet"><a href='http://twitter.com/democlub' target="_blank">Follow us on Twitter</a> and <a href='http://www.facebook.com/pages/Democracy-Club/316731041785' target="_blank">become a fan on Facebook</a>!</p>
 <p>
 <h3>Recent signups</h3>

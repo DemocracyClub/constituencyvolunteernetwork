@@ -42,8 +42,11 @@ def _get_statistics_context():
     parties = [get(name="Conservative Party"),
                get(name="Independent"),
                get(name="Labour Party"),
-               get(name="Liberal Democrats")]
+               get(name="Liberal Democrats"),
+               get(name="Green Party"),
+               get(name="UK Independence Party - UKIP"),]
                                 
+    context['max_percentage'] = 0
     for party in parties:
         party.replies_received = SurveyInvite.objects\
                                  .filter(filled_in=True,
@@ -53,7 +56,12 @@ def _get_statistics_context():
                              .filter(emailed=True,
                                      candidacy__candidate__party=party)\
                                      .count()
+        percentage_done = float(party.replies_received) / party.invites_sent * 100
+        if percentage_done > context['max_percentage']:
+            context['max_percentage'] = percentage_done
+
     context['parties'] = parties
+
     if total:
         percent = int(float(count)/total*100)
         context['percent_complete'] = percent
