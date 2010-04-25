@@ -50,4 +50,4 @@ class Command(BaseCommand):
                 surveyinvite.survey_token = invite['survey_token']
                 surveyinvite.save()
             except Candidacy.DoesNotExist:
-                print "skipping", ynmp_id
+                continue
