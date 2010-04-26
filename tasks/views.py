@@ -332,8 +332,8 @@ def manage_assign_email(request, task_pk):
 def scan_queue(request, dry_run=False):
     # Look at the email queue, determine if there are any emails which can be sent
     users = CustomUser.objects.filter(is_active=True,
-                                      unsubscribed=False)
-    
+                                      unsubscribed=False,
+                                      taskuser__taskemailuser__isnull=False)
     context = {}
     sent = []
     for user in users:
