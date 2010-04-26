@@ -334,7 +334,8 @@ def manage_assign_email(request, task_pk):
 
 def scan_queue(request, dry_run=False):
     # Look at the email queue, determine if there are any emails which can be sent
-    users = CustomUser.objects.all()
+    users = CustomUser.objects.filter(is_active=True,
+                                      unsubscribed=False)
     
     context = {}
     sent = []
@@ -342,14 +343,14 @@ def scan_queue(request, dry_run=False):
         emails = TaskEmailUser.objects.filter(task_user__user=user).distinct()
 
         # Find out what the date was for the last sending
-        last_sent = emails.exclude(date_sent=None).order_by('-date_added')
-        date_last_sent = None
-        if last_sent:
-            date_last_sent = last_sent[0].date_sent
+        #last_sent = emails.exclude(date_sent=None).order_by('-date_added')
+        #date_last_sent = None
+        #if last_sent:
+        #    date_last_sent = last_sent[0].date_sent
         
         # Only email once every two days
-        if date_last_sent and date_last_sent > datetime.datetime.now() - datetime.timedelta(2):
-            continue
+        #if date_last_sent and date_last_sent > datetime.datetime.now() - datetime.timedelta(2):
+        #    continue
         
         # Send unsent once-off messages with priority, then look for reminders
         # that are more than a week since they were last sent
