@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load signup_extras %}
 {% block title %}{{constituency.name}}{% endblock %}
 {% block content %}
 
@@ -14,7 +15,7 @@
      <th>Issues posted</th>
      <th>Candidates</th>
      <th>Questionnaire responses</th>
-     <th>Nominations entered?</th>
+     <th>No. candidate reminders sent</th>
    </tr>
   </thead>
   <tbody>
@@ -24,8 +25,8 @@
         <td class="count-volunteer">{{ constituency.customuser_set.count }}</td>
         <td class="count-issues">{{ constituency.issue_set.count }}</td>
 	<td>{{ constituency.candidacies.count }}</td>
-	<td>{{ constituency.filled_in.count }}</td>
-	<td class="nominations">{{ constituency.nominations_entered }}</td>
+	<td>{{constituency.filled_in.count|percentage:constituency.candidacies.count}}% ({{ constituency.filled_in.count }})</td>
+	<td> {{ constituency.invites_sent }}</td>
     </tr>
    {% endfor %}
   </tbody>
