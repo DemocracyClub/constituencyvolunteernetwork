@@ -56,7 +56,10 @@ def _get_statistics_context():
                              .filter(emailed=True,
                                      candidacy__candidate__party=party)\
                                      .count()
-        percentage_done = float(party.replies_received) / party.invites_sent * 100
+        if party.invites_sent == 0:
+            percentage_done = 0
+        else:
+            percentage_done = float(party.replies_received) / party.invites_sent * 100
         if percentage_done > context['max_percentage']:
             context['max_percentage'] = percentage_done
 
