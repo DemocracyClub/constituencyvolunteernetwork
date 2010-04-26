@@ -239,12 +239,9 @@ def manage_assign_tasks(request, task_pk):
         dry_run = request.POST.get('dry_run', False)
         queryfilter = request.POST['queryfilter'].strip()
         users = CustomUser.objects.all()
-        
         if queryfilter:
             users = eval(queryfilter.strip())
-
         users = users.filter(is_active=True, unsubscribed=False) # enforce
-        
         for user in users:
             matched_users.append(user.email)
 
@@ -300,9 +297,9 @@ def manage_assign_email(request, task_pk):
         
         if queryfilter:
             users = eval(queryfilter.strip())
-
+        users = users.exclude(taskuser__task__pk=task_pk,
+                              taskuser__state=TaskUser.States.ignored)
         users = users.filter(is_active=True, unsubscribed=False) # enforce
-        
         for user in users:
             matched_users.append(user.email)
             taskusers = TaskUser.objects.filter(user=user,
