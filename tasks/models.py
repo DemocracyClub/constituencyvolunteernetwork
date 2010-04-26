@@ -483,16 +483,20 @@ class TaskEmail(Model):
         """
         
         html_context = dict(context)
-        def button(href, text):
-            return ("<a style=\"padding:0.5em; border-bottom:1px "
-                    "solid #CCC; background-color:#EEF;\" "
-                    "href='%s'>%s</a>\n") % (href, text)
+        def button(href, text, bold=False):
+            return ("<a style=\"padding:0.5em; "
+                    + (bold and "font-size: 1.3em; " or "") + 
+                    " border-bottom:1px "
+                    "solid #CCC; background-color:#EEF; "
+                    + (bold and "font-weight: bold; " or "") +
+                    "\" href='%s'>%s</a>\n") % (href, text)
         sub_vars_html = {}
         sub_vars_html['task_url'] = html_context['task_url']
         sub_vars_html['post_url'] = html_context['post_url']
         sub_vars_html['name'] = html_context['user'].private_name
         sub_vars_html['buttons'] = button(html_context['task_url'],
-                                          "Start this task") +\
+                                          "Start this task",
+                                          bold=True) +\
                                    button(html_context['review_url'],
                                           "Review all my tasks online") +\
                                    button(html_context['ignore_url'],
