@@ -28,7 +28,13 @@ SPACER_GIF = open(
 
 @login_required
 def home(request):
-    context = _get_statistics_context()        
+    context = _get_statistics_context()    
+
+    print request.user.hassling
+    if request.user.hassling: # Send them off a-hasslin'
+        request.user.hassling = False
+        request.user.save()
+        return HttpResponseRedirect(reverse('constituency', args=[request.user.home_constituency.slug]) + "#candidates")    
 
     tasks = TaskUser.objects.filter(
             user=request.user).order_by('state', 'date_assigned')

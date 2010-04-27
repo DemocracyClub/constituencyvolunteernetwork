@@ -1,8 +1,8 @@
 Hi {{ user.private_name }},
 
-Thanks for signing up to help out in your constituency.
+Thanks for signing up to help ask candidates to do our questionnaire, and more.
 
-Please confirm your email by following this link:
+Please confirm your email by following this link to get started:
 
 http://{{ site.domain }}{% url login key=activation_key %}
 

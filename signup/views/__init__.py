@@ -85,7 +85,12 @@ def home(request):
                 profile = form.save()
                 user = authenticate(username=profile.user.email)
                 login(request, user)
-                return HttpResponseRedirect(reverse('welcome'))
+
+                if "hassle" not in request.POST:
+                    user.hassling = True
+                    user.save()
+                else:
+                    return HttpResponseRedirect(reverse('welcome'))
             else:
                 context['form'] = form
         else:

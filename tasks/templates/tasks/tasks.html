@@ -51,6 +51,7 @@
                 <ul>
                     <li><a href='{% url add_issue constituency=c.slug %}'>add local issue</a></li>
                     <li><a href='{% url tsc_start constituency_slug=c.slug %}'>upload leaflet</a></li>
+                    <li><a href='{% url constituency slug=c.slug %}#candidates'>pester candidates on the quiz</a></li>
                 </ul></li>
         {% endfor %}
     </ul>
