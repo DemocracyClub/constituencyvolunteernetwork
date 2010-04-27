@@ -86,7 +86,7 @@ def home(request):
                 user = authenticate(username=profile.user.email)
                 login(request, user)
 
-                if "hassle" not in request.POST:
+                if "hassle" in request.POST:
                     user.hassling = True
                     user.save()
                 else:
