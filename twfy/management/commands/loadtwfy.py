@@ -1,3 +1,4 @@
+import sys
 import simplejson as json
 from optparse import make_option
 import urllib
@@ -6,7 +7,7 @@ from django.core.management.base import BaseCommand
 from django.core.management.base import CommandError
 
 from twfy.models import SurveyInvite
-from ynmp.models import Candidacy, Party
+from ynmp.models import Candidacy
 
 from settings import TWFY_SECRET_KEY
 
@@ -36,6 +37,7 @@ class Command(BaseCommand):
             parsed = json.loads(data)
         except ValueError:
             print "Problem parsing", data
+            sys.exit(1)
         for invite in parsed:
             ynmp_id = str(invite['ynmp_id'])
             try:
