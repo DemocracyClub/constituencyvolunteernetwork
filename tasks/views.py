@@ -29,8 +29,6 @@ SPACER_GIF = open(
 @login_required
 def home(request):
     context = _get_statistics_context()    
-
-    print request.user.hassling
     if request.user.hassling: # Send them off a-hasslin'
         request.user.hassling = False
         request.user.save()

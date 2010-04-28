@@ -85,7 +85,6 @@ def home(request):
                 profile = form.save()
                 user = authenticate(username=profile.user.email)
                 login(request, user)
-
                 if "hassle" in request.POST:
                     user.hassling = True
                     user.save()
@@ -302,6 +301,12 @@ def _add_candidacy_data(context, constituency):
 @login_key
 def constituency(request, slug, year=None):
     context = _get_nearby_context(request)
+    if request.GET.has_key('email'):
+        # store in a session for things coming from TWFY that don't
+        # require a login
+        request.session['email'] = request.GET['email']
+        request.session['postcode'] = request.GET.get('postcode', '')
+        request.session['name'] = request.GET.get('name', '')
 
     if year:
         year = "%s-01-01" % year

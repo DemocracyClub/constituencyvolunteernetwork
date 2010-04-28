@@ -30,7 +30,7 @@
         {% endfor %}
      </li>
      <li>Finish by telling them there's a link at the bottom of the email to the questionnaire, and say thankyou! (we automatically add the link to your email after you press 'send')</li>
-     <li>Sign off with your address below, so they can see you're really from their constituency</li>
+     <li><strong>Sign off with your address</strong>, so they can see you're really from their constituency</li>
     </ol>
 </div>
 
@@ -45,6 +45,9 @@ To:
 {% endfor %}<br/>
 {% if DEBUG %}
 (debug to: <input type="text" name="debug_to" value="" size="30" />)<br>
+{% endif %}
+{% if not user_email %}
+Your email: <input type="text" name="mfrom" value="{{ mfrom }}" size="30" /><br>
 {% endif %}
 {% if error %}
  <div class="error">{{ error }}</div><br />

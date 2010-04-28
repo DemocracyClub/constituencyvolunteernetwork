@@ -14,3 +14,14 @@ class SurveyInvite(Model):
                                     blank=True,
                                     null=True)
     pester_emails_sent = models.IntegerField(default=0)
+
+    def __unicode__(self):
+        number_emails = self.pester_emails_sent
+        if self.emailed:
+            number_emails += 1
+        return "%s\t%s\t%s\t%d\t%s" % \
+               (self.candidacy.candidate.name,
+                self.candidacy.candidate.email,
+                unicode(self.candidacy.candidate.party.name),
+                number_emails,
+                self.filled_in)

@@ -51,7 +51,6 @@ def chart(request):
                                'chart.html',
                                context)
 
-@login_required
 def pester(request, constituency):
     context = {}
     constituency = Constituency.objects.get(pk=constituency)
@@ -74,7 +73,19 @@ def pester(request, constituency):
                     no_email_candidacies.append(candidacy)
         context['email_candidacies'] = email_candidacies
         context['no_email_candidacies'] = no_email_candidacies
-
+    default_msg = "Dear candidates,\n\n\n\n\nYours,\n%s\n%s"
+    if request.user.is_anonymous():
+        user_email = request.session.get('email', '')
+        user_name = request.session.get('name', '')
+        user_postcode = request.session.get('postcode', '')
+    else:
+        user_email = request.user.email
+        user_name = "%s %s" % (request.user.first_name,
+                               request.user.last_name)
+        user_postcode = request.user.postcode
+    default_msg = default_msg % (user_name, user_postcode)
+    context['message'] = default_msg
+    context['user_email'] = user_email
     if request.method == "POST":
         if request.POST.has_key('finished'):
             return render_with_context(request,
@@ -88,10 +99,12 @@ def pester(request, constituency):
             candidacies.append(candidacy)
         subject = request.POST['subject'].strip()
         message = request.POST['message'].strip()
+        mfrom = request.POST['mfrom'].strip()
         debug_to = request.POST.get('debug_to','').strip()
         if not subject:
             context['subject'] = subject
             context['message'] = message
+            context['mfrom'] = mfrom
             context['error'] = "You must give the email a subject"
         else:
             for candidacy in candidacies:
@@ -120,14 +133,15 @@ def pester(request, constituency):
                           msg,
                           mfrom,
                           [mto])
-            
+            if not user_email:
+                user_email = request.POST.get('mfrom', 'unknown')
             send_mail("[%s] %s" % (constituency.slug,
                                    sbj),
-                      msg,
+                      "From: %s\n\n%s" % (user_email, msg),
                       mfrom,
                       ['hassle@democracyclub.org.uk'])
-                
-            pester_action_done.send(None, user=request.user)
+            if not request.user.is_anonymous():
+                pester_action_done.send(None, user=request.user)
             for candidacy in candidacies:
                 invite = candidacy.surveyinvite_set.get()
                 invite.pester_emails_sent += 1
