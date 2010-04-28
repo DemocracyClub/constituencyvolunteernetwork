@@ -99,7 +99,7 @@ def pester(request, constituency):
             candidacies.append(candidacy)
         subject = request.POST['subject'].strip()
         message = request.POST['message'].strip()
-        mfrom = request.POST['mfrom'].strip()
+        mfrom = request.POST.get('mfrom','').strip()
         debug_to = request.POST.get('debug_to','').strip()
         if not subject:
             context['subject'] = subject
