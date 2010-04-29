@@ -109,6 +109,8 @@ def pester(request, constituency):
         else:
             if not user_email:
                 user_email = request.POST.get('mfrom', 'unknown')
+            sbj = "[ NONE ]"
+            msg = ""
             for candidacy in candidacies:
                 # calculate the login link
                 quiz_url = "http://election.theyworkforyou.com/survey/"
