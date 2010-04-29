@@ -48,7 +48,7 @@ We already know that mySociety wants to gather information on general election c
 
 <h3>Questionnaire progress</h3>
 <div id="visualization">
-<img src="http://chart.apis.google.com/chart?chxt=x,y&cht=bvs&chd=s:cEj9U&chco=333399|cc0000|ff9900|ab1e94|73a532|999999&chls=2.0&chs=336x180&chxl=0:|Cons.|Lab.|Lib.Dem.|Green|UKIP|Ind.&chbh=a&chd=t:{% for party in parties %}{{party.replies_received|percentage:party.invites_sent}}{% if not forloop.last %},{% endif %}{% endfor %}&chds=0,{{ max_percentage }}&chxr=1,0,{{ max_percentage }},10" width="336" height="180" />
+<img src="http://chart.apis.google.com/chart?chxt=x,y&cht=bvs&chd=s:cEj9U&chco=333399|cc0000|ff9900|73a532|ab1e94|999999&chls=2.0&chs=336x180&chxl=0:|Cons.|Lab.|Lib.Dem.|Green|UKIP|Ind.&chbh=a&chd=t:{% for party in parties %}{{party.replies_received|percentage:party.invites_sent}}{% if not forloop.last %},{% endif %}{% endfor %}&chds=0,{{ max_percentage }}&chxr=1,0,{{ max_percentage }},10" width="336" height="180" />
 <!--<img src="http://chart.apis.google.com/chart?chxt=x,y&chxr=1,0,650,100&chds=0,650&cht=bvs&chco=333399|999999|cc0000|ff9900&chls=2.0&chs=336x180&chxl=0:|Con|Ind|Lab|Lib|&chbh=a&chd=t:{% for party in parties %}{{party.invites_sent}}{% if not forloop.last %},{% endif %}{% endfor %}" width="336" height="180" />-->
 <p class="quiet" style="text-align:center">% survey response rate so far, by party</p>
 </div>
