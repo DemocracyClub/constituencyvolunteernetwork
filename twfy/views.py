@@ -120,7 +120,7 @@ def pester(request, constituency):
                        "survey. " + quiz_words + "\n"
                        "----------\n\n") + message
                 if user_email != "unknown":
-                    msg = msg + "-----------\n\nNOTE: you can write to this voter at <"\
+                    msg = msg + "\n\n-----------\n\nNOTE: you can write to this voter at <"\
                           +user_email+\
                           ">, but please be sure not to send them the survey link when you do so."
                 msg = msg + ("\n\n"
