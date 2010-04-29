@@ -30,7 +30,7 @@ We don't know about:
   <strong>Party:</strong> {{ c.candidate.party.name }}<br />
   {% if c.candidate.phone %}<strong>Phone:</strong> {{ c.candidate.phone }}<br />{% endif %}
   <strong><a target="_blank" href="http://www.google.co.uk/search?q={{c.candidate.name|urlencode}}+{{c.candidate.party.name|urlencode}}+email">example google search</a></strong><br/>
-  Found their email address? <a target="_blank" href="http://www.yournextmp.com/candidates/{{c.candidate.code}}">Update {{c.candidate.name}}'s record on YourNextMP</a>
+  Found their email address? <a target="_blank" href="http://www.yournextmp.com/candidates/{{c.candidate.code}}">Update {{c.candidate.name}}'s record on YourNextMP</a> (look for "suggest a correction" link)
  </li>
 {% endfor %}
 </ul>
