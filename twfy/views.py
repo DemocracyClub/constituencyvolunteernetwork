@@ -119,12 +119,12 @@ def pester(request, constituency):
                        "constituency about the TheyWorkForYou "
                        "survey. " + quiz_words + "\n"
                        "----------\n\n") + message
+                if user_email != "unknown":
+                    msg = msg + "-----------\n\nNOTE: you can write to this voter at <"\
+                          +user_email+\
+                          ">, but please be sure not to send them the survey link when you do so."
                 msg = msg + ("\n\n"
                              "-----------\n" + quiz_words)
-                if user_email != "unknown":
-                    msg = msg + "\n\nYou can write to this voter at <"\
-                          +user_email+\
-                          ">, but please be sure not to send them this link when you do so."
                 mfrom = "quiz@democracyclub.org.uk"
                 if settings.DEBUG:
                     sbj = "%s to %s" % (subject,
