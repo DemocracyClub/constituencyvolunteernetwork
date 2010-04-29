@@ -107,6 +107,8 @@ def pester(request, constituency):
             context['mfrom'] = mfrom
             context['error'] = "You must give the email a subject"
         else:
+            if not user_email:
+                user_email = request.POST.get('mfrom', 'unknown')
             for candidacy in candidacies:
                 # calculate the login link
                 quiz_url = "http://election.theyworkforyou.com/survey/"
@@ -119,6 +121,10 @@ def pester(request, constituency):
                        "----------\n\n") + message
                 msg = msg + ("\n\n"
                              "-----------\n" + quiz_words)
+                if user_email != "unknown":
+                    msg = msg + "\n\nYou can write to this voter at <"\
+                          +user_email+\
+                          ">, but please be sure not to send them this link when you do so."
                 mfrom = "quiz@democracyclub.org.uk"
                 if settings.DEBUG:
                     sbj = "%s to %s" % (subject,
@@ -133,8 +139,6 @@ def pester(request, constituency):
                           msg,
                           mfrom,
                           [mto])
-            if not user_email:
-                user_email = request.POST.get('mfrom', 'unknown')
             send_mail("[%s] %s" % (constituency.slug,
                                    sbj),
                       "From: %s\n\n%s" % (user_email, msg),
