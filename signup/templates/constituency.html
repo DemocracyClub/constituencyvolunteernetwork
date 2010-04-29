@@ -25,7 +25,11 @@
         }
 
         $(document).ready(function () {
-            if(window.location.hash == "#issues")
+            if(window.location.hash == "#main")
+            {
+                show_tab('tab-1', 'switcher1');
+            }
+            else if(window.location.hash == "#issues")
             {
                 show_tab('tab-2', 'switcher2');
             }
