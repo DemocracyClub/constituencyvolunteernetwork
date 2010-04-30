@@ -415,6 +415,21 @@ div.sidebar h2 {
  font-size: 1em;
  margin: 0;
 }
+
+div.sidebar ul li {
+ font-size: 0.9em;
+}
+div.sidebar ul li ul {
+ margin-left: 5px;
+}
+div.sidebar ul li ul li {
+ list-style: none;
+}
+
+div.post td, div.post th {
+ padding: 5px;
+}
+
 /* tables */
 table.tablesorter {
 	font-family:arial;
