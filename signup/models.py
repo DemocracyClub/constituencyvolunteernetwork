@@ -132,6 +132,10 @@ class Constituency(Model):
     def ynmp_url(self):
         return "http://www.yournextmp.com/seats/%s" % self.slug.replace('-','_')
 
+    @property
+    def survey_url(self):
+        return "http://election.theyworkforyou.com/quiz/seats/%s" % self.slug.replace('-','_')
+
     @permalink
     def get_absolute_url(self):
         return ("constituency", (self.slug,))
