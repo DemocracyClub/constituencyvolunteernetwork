@@ -66,6 +66,11 @@
 
 
       <div id="main" class="container"> 
+        <div class="span-8"> 
+	 <p class="notice"> 
+	 <strong>NEW!</strong> Our candidate survey is online.  <a href="http://election.theyworkforyou.com/quiz">Find out what your candidates think about local and national issues</a>.
+	</p> 
+	</div> 
         <div class="clear"></div> 
               
          <div class="span-6"> 
