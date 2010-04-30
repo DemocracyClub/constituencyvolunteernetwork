@@ -9,16 +9,17 @@
 <h3>Step 1. Send email reminders</h3>
 
 <div class="span-4">
-
-<p>Use the text box on the right to compose an email in your own words that will encourage the candidates to answer the questionnaire.</p>
-
+ {% if one_left %}
+ <p>There's <strong>only one candidate left</strong> in your constituency who's not answered the survey!</p> 
+{% endif %}
+<p>Use the text box on the right to compose an email in your own words that will encourage the candidates to answer the questionnaire. <strong>Please read the tips below first.</strong></p>
 <div style="font-size:0.9em;color:#336;">
     <p>Tips for writing an effective email:
 
     <ol> 
      <li>Think of an intriguing subject that will encourage them to open it: they're receiving hundreds of emails a day!  A question is good.</li>
      <li>Introduce yourself, <strong>making it clear you're in their constituency</strong> (<em>{{constituency.name}}</em>).</li>
-     <li>Mention you've seen the TheyWorkForYou survey, but they hadn't filled it out yet.  Tell them why you think it's important (for example, it's a cross-party survey that millions of people will see; or you believe it will make the election more transparent).</li>
+     <li>Tell them you've been looking the TheyWorkForYou survey. Tell them why you think it's important. You might want to link to the BBC News story at <a target="_blank" href="http://bit.ly/bUJZcI">http://bit.ly/bUJZcI</a>.</li>
      <li>Tell them that <strong>{{ total_count }}</strong> candidates have answered it already, and that in <em>{{constituency.name}}</em> 
         {% for c in filled_in %}
           {% if forloop.last %}{% ifnotequal 1 filled_in.count %} and {% endifnotequal %}{% endif %}the <strong>{{ c.candidate.party.name }}</strong> candidate{% if not forloop.last %}, {% else %}{% endif %}
@@ -29,6 +30,11 @@
           no-one has filled it out yet -- they can be the first!
         {% endfor %}
      </li>
+ {% if one_tory_left %}
+  <li>Unfortunately many Conservative candidates have been <a target="_blank" href="http://www.guardian.co.uk/politics/2010/apr/29/conservative-candidates-refuse-to-answer-questions">refusing to answer surveys</a>.  Please make a particular point that you're not happy to be fobbed off with standard boilerplate text about "nuances".</li>
+ {% endif %}
+
+
      <li>Finish by telling them there's a link at the bottom of the email to the questionnaire, and say thankyou! (we automatically add the link to your email after you press 'send')</li>
      <li><strong>Sign off with your address</strong>, so they can see you're really from their constituency</li>
     </ol>

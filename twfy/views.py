@@ -58,6 +58,10 @@ def pester(request, constituency):
     count = SurveyInvite.objects.filter(filled_in=True).count()
     context['total_count'] = count
     context = _add_candidacy_data(context, constituency)
+    if context['contacted'].count() == 1:
+        context['one_left'] = True
+        if context['contacted'][0].candidate.party.name == "Conservative Party":
+            context['one_tory_left'] = True            
     if request.GET.has_key('pester'):
         email_candidacies = []
         no_email_candidacies = []
