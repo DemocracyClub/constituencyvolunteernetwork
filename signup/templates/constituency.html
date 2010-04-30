@@ -193,7 +193,16 @@
 <form method="get" action="{% url pester constituency=constituency.pk %}">
 
 <div id="tab-5" class="candidacy tab">
-  <h2>How well are your candidates doing at responding to our survey?</h2>
+ {% if came_from_ynmp %}
+  <div class="notice">
+    <img src="{{ MEDIA_URL }}images/twfy-logo.png" width="423" height="80" />
+    <h3>Welcome, visitors from the TheyWorkForYou survey! </h3>
+   <p>
+      Our partner site Democracy Club is coordinating the campaign to chase candidates.  Please click the big button below to get started.  It only takes five minutes!
+   </p>
+  </div>
+ {% endif %}
+  <h2>Which candidates have responded to our survey?</h2>
   <div class="gradient-box">
     <div class="span-4">
      {% if contacted %}

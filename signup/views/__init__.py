@@ -307,7 +307,7 @@ def constituency(request, slug, year=None):
         request.session['email'] = request.GET['email']
         request.session['postcode'] = request.GET.get('postcode', '')
         request.session['name'] = request.GET.get('name', '')
-
+        context['came_from_ynmp'] = True
     if year:
         year = "%s-01-01" % year
     else:
