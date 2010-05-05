@@ -7,6 +7,7 @@ from django.core.mail import send_mail
 from django.contrib.auth.decorators import login_required
 from django.db.models import aggregates,sql
 from django.db.models import Avg, Count, StdDev
+from django.views.decorators.cache import cache_page
 
 from signup.util import render_with_context
 from models import SurveyInvite
@@ -55,6 +56,7 @@ def chart(request):
                                'chart.html',
                                context)
 
+@cache_page(60*60)
 def parties(request):
     context = {}
     statements = []

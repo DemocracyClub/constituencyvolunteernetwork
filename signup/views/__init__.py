@@ -10,6 +10,7 @@ from django.contrib.sites.models import Site
 from django.template.loader import render_to_string
 from django.core.mail import send_mail
 from django.db.models import Max
+from django.views.decorators.cache import cache_page
 
 from signup.util import render_with_context
 import signup.models as models
@@ -265,6 +266,8 @@ def _constituency_decorator(constituencies):
         constituency.__dict__.update(context)
         yield constituency
 
+
+@cache_page(60*20)
 def constituencies(request):
     year = settings.CONSTITUENCY_YEAR
     context = {}
