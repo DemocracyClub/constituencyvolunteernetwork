@@ -101,7 +101,7 @@ def pester(request, constituency):
                 pk=int(key),
                 ynmp_constituency__constituency=constituency)
             candidacies.append(candidacy)
-        subject = request.POST['subject'].strip()
+        subject = request.POST.get('subject','').strip()
         message = request.POST['message'].strip()
         mfrom = request.POST.get('mfrom','').strip()
         debug_to = request.POST.get('debug_to','').strip()
@@ -111,6 +111,7 @@ def pester(request, constituency):
             context['mfrom'] = mfrom
             context['error'] = "You must give the email a subject"
         else:
+
             if not user_email:
                 user_email = request.POST.get('mfrom', 'unknown')
             sbj = "[ NONE ]"
