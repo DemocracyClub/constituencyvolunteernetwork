@@ -98,7 +98,7 @@ def parties(request):
                 party.avg = ""
                 party.stddev = ""
                 party.error = ""
-        chart = "http://www.google.com/chart?chs=800x125&cht=lc&chd=t0:"
+        chart = "http://chart.apis.google.com/chart?chs=800x125&cht=lc&chd=t0:"
         chart += ",".join(bottoms)
         chart += "|"
         chart += ",".join(boxbottoms)
