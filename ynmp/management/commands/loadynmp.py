@@ -71,7 +71,12 @@ class Command(BaseCommand):
             except Constituency.DoesNotExist:
                 name = name.replace(" and ", " & ")
                 name = name.replace(u" M\xf4n", " Mon")
-                constituency = Constituency.objects.get(name=name)
+                name = name.replace(u"Super", "super")
+                try:
+                    constituency = Constituency.objects.get(name=name)
+                except Constituency.DoesNotExist:
+                    print "could not find", name
+                    continue
             item, _ = YNMPConstituency.objects\
                       .get_or_create(ynmp_seat_id=id,
                                      constituency=constituency)
