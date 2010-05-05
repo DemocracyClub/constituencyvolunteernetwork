@@ -1,8 +1,28 @@
 from django.db import models
 
 from signup.models import Model
+from issue.models import RefinedIssue
+
 from ynmp.models import Candidacy
 
+class Statement(Model):
+    twfy_key = models.CharField(max_length=20)
+    refined_issue = models.ForeignKey(RefinedIssue,
+                                      blank=True,
+                                      null=True)
+    question = models.CharField(max_length=350,
+                                blank=True,
+                                null=True)
+    national = models.BooleanField(default=False)
+
+class SurveyResponse(Model):
+    candidacy = models.ForeignKey(Candidacy)
+    statement = models.ForeignKey(Statement)
+    national = models.BooleanField(default=False)
+    # 100 = strongly agree, 0 = strongly disagree
+    agreement = models.IntegerField()
+    more_explanation = models.TextField()
+                                        
 class SurveyInvite(Model):
     ynmp_id = models.CharField(max_length=9)
     candidacy = models.ForeignKey(Candidacy,

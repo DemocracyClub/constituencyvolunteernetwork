@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% load signup_extras %}
+{% block title %}TWFY Election Quiz race{% endblock %}
+{% block section %}twfy{% endblock %}
+
+{% block content %}
+
+<h3>Party average responses</h3>
+
+{% for statement in statements %}
+  <h3>{{ statement.statement.question }}</h3><br>
+
+<img src="{{statement.chart}}" />
+<div style="font-size: smaller">
+<table class="tablesorter">
+ <thead>
+ <tr>
+   <th>
+     party
+   </th>
+   <th>
+     agreement
+   </th>
+   <th>
+     stddev
+   </th>
+  </tr>
+  </thead>
+  <tbody>
+  {% for party in statement.parties %}
+   <tr>
+    <td>{{ party.name }}</td>
+    <td>{{ party.agreement|floatformat:0 }}</td>
+    <td>{{ party.stddev|floatformat:0 }}</td>
+   </tr>
+  {% endfor %}
+  </tbody>
+ </table>
+</div>
+<hr />
+{% endfor %}
+
+{% endblock %}
+
+{% block js %}
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+    <script type="text/javascript" src="{{ MEDIA_URL}}jquery.tablesorter.min.js"></script>
+
+    <script>       
+        $(document).ready(function () {
+          $('table.tablesorter').tablesorter()
+        });
+    </script>
+{% endblock %}

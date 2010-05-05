@@ -1,12 +1,16 @@
 import logging
+import urllib
 
 from django.shortcuts import get_object_or_404
 from django.core.mail import send_mail
 from django.contrib.auth.decorators import login_required
 from django.db.models import aggregates,sql
+from django.db.models import Avg, Count, StdDev
 
 from signup.util import render_with_context
 from models import SurveyInvite
+from models import Statement
+from models import SurveyResponse
 from signup.models import Constituency
 from ynmp.models import Party
 from ynmp.models import Candidacy
@@ -18,7 +22,6 @@ import settings
 class CountIf(sql.aggregates.Count):
     sql_template = '%(function)s(CASE WHEN %(field)s=%(equals)s THEN 1 ELSE 0 END)'
 sql.aggregates.CountIf = CountIf
-
 
 
 def chart(request):
@@ -49,6 +52,48 @@ def chart(request):
     context['parties'] = parties
     return render_with_context(request,
                                'chart.html',
+                               context)
+
+def parties(request):
+    context = {}
+    statements = []
+    #for party in Party.objects.all():
+    #    data = {}
+    #    statements = Statement.objects.filter(national=True).annotate(agreement=Avg('surveyresponse__agreement'))
+    for statement in Statement.objects.filter(national=True):
+        parties = Party.objects.annotate(count=Count('candidate'))\
+                  .filter(count__gt=200)\
+                  .annotate(agreement=Avg('candidate__candidacy__surveyresponse__agreement'))\
+                  .annotate(stddev=StdDev('candidate__candidacy__surveyresponse__agreement'))\
+                  .annotate(stddev2=StdDev('candidate__candidacy__surveyresponse__agreement',
+                                           sample=True))
+        bottoms = []
+        boxbottoms = []
+        boxtops = []
+        tops = []
+        for party in parties:
+            bottoms.append(str(int(party.agreement - party.stddev)))
+            boxbottoms.append(str(int(party.agreement - 1)))
+            boxtops.append(str(int(party.agreement + 1)))
+            tops.append(str(int(party.agreement + party.stddev)))
+        chart = "http://www.google.com/chart?chs=800x125&cht=lc&chd=t0:"
+        chart += ",".join(bottoms)
+        chart += "|"
+        chart += ",".join(boxbottoms)
+        chart += "|"
+        chart += ",".join(boxtops)
+        chart += "|"
+        chart += ",".join(tops)
+        chart += "&chm=F,0000FF,0,,20&chxt=x,y&chxl=0:|"
+        chart += "|".join([urllib.quote_plus("".join([y[0] for y in x.name.split(" ")])) for x in parties])
+        statements.append({'parties':parties,
+                           'statement':statement,
+                           'chart':chart})
+        
+    context['statements'] = statements
+    context['chart'] = chart
+    return render_with_context(request,
+                               'parties.html',
                                context)
 
 def pester(request, constituency):

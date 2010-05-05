@@ -238,7 +238,6 @@ def manage_assign_tasks(request, task_pk):
     skip = 0
     matched_users = []
     email = None
-    
     if request.method == "POST":
         dry_run = request.POST.get('dry_run', False)
         queryfilter = request.POST['queryfilter'].strip()
