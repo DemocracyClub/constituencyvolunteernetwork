@@ -22,7 +22,10 @@
      agreement
    </th>
    <th>
-     stddev
+     std dev
+   </th>
+   <th>
+     error
    </th>
   </tr>
   </thead>
@@ -30,8 +33,9 @@
   {% for party in statement.parties %}
    <tr>
     <td>{{ party.name }}</td>
-    <td>{{ party.agreement|floatformat:0 }}</td>
+    <td>{{ party.avg|floatformat:0 }}</td>
     <td>{{ party.stddev|floatformat:0 }}</td>
+    <td>{{ party.error|floatformat:3 }}</td>
    </tr>
   {% endfor %}
   </tbody>

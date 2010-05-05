@@ -42,7 +42,6 @@ class Command(BaseCommand):
             statement, created = Statement.objects.get_or_create(
                 twfy_key=result['refined_issue_key_name'])
             national = result['national'] == "True"
-            print national
             if created:
                 statement.question = result['question']
                 statement.national = national

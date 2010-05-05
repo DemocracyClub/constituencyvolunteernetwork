@@ -1,5 +1,6 @@
 import logging
 import urllib
+import math
 
 from django.shortcuts import get_object_or_404
 from django.core.mail import send_mail
@@ -59,23 +60,44 @@ def parties(request):
     statements = []
     #for party in Party.objects.all():
     #    data = {}
-    #    statements = Statement.objects.filter(national=True).annotate(agreement=Avg('surveyresponse__agreement'))
+    #    statements =
+    #    Statement.objects.filter(national=True).annotate(agreement=Avg('surveyresponse__agreement'))
+    chart = ""
     for statement in Statement.objects.filter(national=True):
-        parties = Party.objects.annotate(count=Count('candidate'))\
-                  .filter(count__gt=200)\
-                  .annotate(agreement=Avg('candidate__candidacy__surveyresponse__agreement'))\
-                  .annotate(stddev=StdDev('candidate__candidacy__surveyresponse__agreement'))\
-                  .annotate(stddev2=StdDev('candidate__candidacy__surveyresponse__agreement',
-                                           sample=True))
         bottoms = []
         boxbottoms = []
         boxtops = []
         tops = []
+        parties = Party.objects.annotate(count=Count('candidate'))\
+                  .filter(count__gt=200)
+        something = False
         for party in parties:
-            bottoms.append(str(int(party.agreement - party.stddev)))
-            boxbottoms.append(str(int(party.agreement - 1)))
-            boxtops.append(str(int(party.agreement + 1)))
-            tops.append(str(int(party.agreement + party.stddev)))
+            responses = SurveyResponse.objects\
+                        .filter(candidacy__candidate__party=party,
+                                statement=statement)
+            avg = responses.aggregate(avg=Avg('agreement'))['avg']
+            stddev = responses.aggregate(stddev=StdDev('agreement'))['stddev']
+            if responses.count():
+                error = stddev/math.sqrt(responses.count()-1)
+            else:
+                error = None
+            if error:
+                something = True
+                bottoms.append(str(int(avg - stddev)))
+                boxbottoms.append(str(int(avg - 1)))
+                boxtops.append(str(int(avg + 1)))
+                tops.append(str(int(avg + stddev)))            
+                party.avg = avg
+                party.stddev = stddev
+                party.error = error
+            else:
+                bottoms.append("")
+                boxbottoms.append("")
+                boxtops.append("")
+                tops.append("")
+                party.avg = ""
+                party.stddev = ""
+                party.error = ""
         chart = "http://www.google.com/chart?chs=800x125&cht=lc&chd=t0:"
         chart += ",".join(bottoms)
         chart += "|"
@@ -86,9 +108,10 @@ def parties(request):
         chart += ",".join(tops)
         chart += "&chm=F,0000FF,0,,20&chxt=x,y&chxl=0:|"
         chart += "|".join([urllib.quote_plus("".join([y[0] for y in x.name.split(" ")])) for x in parties])
-        statements.append({'parties':parties,
-                           'statement':statement,
-                           'chart':chart})
+        if something:
+            statements.append({'parties':parties,
+                               'statement':statement,
+                               'chart':chart})
         
     context['statements'] = statements
     context['chart'] = chart
