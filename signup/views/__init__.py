@@ -283,7 +283,8 @@ def _add_candidacy_data(context, constituency):
     """
     candidacies = constituency.ynmpconstituency_set.get()\
                   .candidacy_set.filter(candidate__status="standing")
-    uncontacted = candidacies.filter(surveyinvite__emailed=False) 
+    uncontacted = candidacies.filter(surveyinvite__emailed=False,
+                                     surveyinvite__filled_in=False) 
     contacted = candidacies.filter(surveyinvite__emailed=True,
                                    surveyinvite__filled_in=False)
     filled_in = candidacies.filter(surveyinvite__filled_in=True)
