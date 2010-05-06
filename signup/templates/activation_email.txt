@@ -1,10 +1,14 @@
 Hi {{ user.private_name }},
 
-Thanks for signing up to help ask candidates to do our questionnaire, and more.
+Thanks for signing up to help out with transparency and democracy-related tasks in the UK.
 
-Please confirm your email by following this link to get started:
+Please confirm your email by following this link:
 
 http://{{ site.domain }}{% url login key=activation_key %}
+
+Then, just sit back and wait until we suggest a task for you to do!
+
+(It might be a few days or a couple of months, depending on what's going on at the moment)
 
 You need to do this to be suggested tasks. In future, you can always access your account at this address
 
