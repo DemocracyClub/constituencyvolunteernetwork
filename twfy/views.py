@@ -3,11 +3,13 @@ import urllib
 import math
 
 from django.shortcuts import get_object_or_404
+from django.http import HttpResponseRedirect
 from django.core.mail import send_mail
 from django.contrib.auth.decorators import login_required
 from django.db.models import aggregates,sql
 from django.db.models import Avg, Count, StdDev
 from django.views.decorators.cache import cache_page
+from django.core.urlresolvers import reverse
 
 from signup.util import render_with_context
 from models import SurveyInvite
@@ -121,7 +123,13 @@ def parties(request):
                                'parties.html',
                                context)
 
+@login_required
 def pester(request, constituency):
+    if not request.user.is_superuser:
+        # turned off once election has started
+        return HttpResponseRedirect(
+            reverse('home'))
+
     context = {}
     constituency = Constituency.objects.get(pk=constituency)
     context['constituency'] = constituency

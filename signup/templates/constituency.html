@@ -47,7 +47,7 @@
             }
             else
             {
-                show_tab('tab-5', 'switcher5');                
+                show_tab('tab-1', 'switcher1');                
             }
         });
     </script>
@@ -198,7 +198,7 @@
     <img src="{{ MEDIA_URL }}images/twfy-logo.png" width="423" height="80" />
     <h3>Welcome, visitors from the TheyWorkForYou survey! </h3>
    <p>
-      Our partner site Democracy Club is coordinating the campaign to chase candidates.  Please click the big button below to get started.  It only takes five minutes!
+      Our partner site Democracy Club was coordinating the campaign to chase candidates.  However, the campaign is now over.  Thanks for your help!
    </p>
   </div>
  {% endif %}
@@ -206,30 +206,27 @@
   <div class="gradient-box">
     <div class="span-4">
      {% if contacted %}
-     <p>We've sent questionnaires to as many candidates as we can in {{ constituency.name }}, but {% if not filled_in %} so far, none of them have managed to reply{% else %} they've not all managed to reply{% endif %}.</p>
-     <p>Can you help encourage the ones who've not replied yet?
-  </p>
+     <p>We sent questionnaires to as many candidates as we could in {{ constituency.name }}, but {% if not filled_in %} so none of them managed to reply{% else %} they didn't all manage to reply{% endif %}.</p>
      {% else %}
        {% if uncontacted %}
-        <p>We've sent questionnaires to as many candidates as we can in {{ constituency.name }}, but there's still some people we've not been able to contact.</p>
+        <p>We sent questionnaires to as many candidates as we could in {{ constituency.name }}, but there were some people we were not able to contact.</p>
        {% else %}
-         <p>We've managed to get replies to our questionnaire from everyone in your constituency!</p>
+         <p>We managed to get replies to our questionnaire from everyone in your constituency!</p>
        {% endif %}
      {% endif %}
     </div>
     <div class="span-4 last">
      <p class="quiet">The <a href="{{ constituency.survey_url }}" target="_blank">survey results are now online</a>.</p>
-     <input style="font-size: 2em;" type="submit" name="pester" value="click here to help" />
     </div>
     <div style="clear:both;"></div>
   </div>
 
   <div class="span-4">
-   <h3><img src="{{MEDIA_URL}}/constituency/smiley.png" alt="smiley face" />We've heard from:</h3>
+   <h3><img src="{{MEDIA_URL}}/constituency/smiley.png" alt="smiley face" />We heard from:</h3>
   </div>
 
   <div class="span-4 last">
-   <h3><img src="{{MEDIA_URL}}/constituency/frowny.png" alt="frowny face" />We've not heard from:</h3>
+   <h3><img src="{{MEDIA_URL}}/constituency/frowny.png" alt="frowny face" />We didn't hear from:</h3>
   </div>
   
   <div class="span-4">
@@ -254,7 +251,7 @@
      {% endfor %}
      {% for candidacy in uncontacted %}
       <li>
-        {% include "candidacy_listitem.html" %}
+        {% include "candidacy_listitem.html" %} (no contact details)
       </li>
      {% endfor %}
    </ul>
