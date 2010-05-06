@@ -72,7 +72,6 @@ def task(request, slug, constituency=None):
                                        year=year)
     else:
         context['constituency'] = None;
-    
     if request.user.is_authenticated():
         items = TaskUser.objects
         
@@ -220,7 +219,7 @@ def admin_assign_constituency(request):
 @login_required
 @permission_required('tasks.add_taskuser')
 def manage_tasks(request):
-    tasks = Task.objects.all()
+    tasks = Task.objects.filter(archived=False)
     context= {}
     context['tasks'] = tasks
     return render_with_context(request,

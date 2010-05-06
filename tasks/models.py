@@ -30,6 +30,7 @@ class Project(Model):
     def __unicode__(self):
         return self.name
 
+
 class Task(Model):
     """A description of a task, attached to a project (optionally), with a
     list of users doing the task.
@@ -45,7 +46,8 @@ class Task(Model):
     decorator_class = models.CharField(max_length=180,
                                        null=True,
                                        blank=True)
-
+    archived = models.BooleanField(default=False)
+    
     def taskemails(self):
         return TaskEmail.objects.filter(taskuser__task=self).distinct()
         
@@ -162,6 +164,7 @@ class Task(Model):
         else:
             return target
 
+
 class ConstituencyCompletenessTask(Task):
     class Meta:
         proxy = True
@@ -183,6 +186,11 @@ class TaskUserManager(models.Manager):
     """
         Managing the TaskUser objects
     """
+    def get_query_set(self):
+        return super(TaskUserManager, self)\
+               .get_query_set()\
+               .filter(task__archived=False)
+    
     def trigger_assign(self, task, user_set, constituencies=None):
         from signup.signals import user_touch
         
