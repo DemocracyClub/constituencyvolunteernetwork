@@ -129,5 +129,8 @@ def getCurrentMP(name):
     """
     params = dict(constituency=name)
     headers, result = fetch(svcurl("getMP", params))
-    data = json.loads(result, encoding=charset(headers))
+    try:
+        data = json.loads(result, encoding=charset(headers))
+    except ValueError:
+        data = "Unknown (server error)"
     return data
